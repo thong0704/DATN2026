@@ -23,6 +23,8 @@ const userSchema = new mongoose.Schema(
     refreshToken: { type: String, select: false },
     resetPasswordToken: { type: String, select: false },
     resetPasswordExpire: { type: Date, select: false },
+    emailVerificationCode: { type: String, select: false },
+    emailVerificationExpire: { type: Date, select: false },
     isEmailVerified: { type: Boolean, default: false },
     isBlocked: { type: Boolean, default: false },
     loyaltyPoints: { type: Number, default: 0 },

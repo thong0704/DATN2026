@@ -32,6 +32,23 @@ router.post(
 router.post('/logout', ctrl.logout);
 router.post('/refresh-token', ctrl.refreshToken);
 router.get('/verify-email/:token', ctrl.verifyEmail);
+router.post(
+  '/verify-registration',
+  authLimiter,
+  [
+    body('email').isEmail().withMessage('Valid email required'),
+    body('code').isLength({ min: 6, max: 6 }).withMessage('Code must be 6 digits'),
+  ],
+  validate,
+  ctrl.verifyRegistration
+);
+router.post(
+  '/resend-verification-code',
+  authLimiter,
+  [body('email').isEmail().withMessage('Valid email required')],
+  validate,
+  ctrl.resendVerificationCode
+);
 router.post('/forgot-password', authLimiter, [body('email').isEmail()], validate, ctrl.forgotPassword);
 router.put(
   '/reset-password/:token',

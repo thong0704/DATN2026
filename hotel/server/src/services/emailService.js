@@ -60,6 +60,22 @@ exports.sendVerifyEmail = (to, link) =>
     ),
   });
 
+exports.sendVerificationCode = (to, code) =>
+  sendMail({
+    to,
+    subject: 'Mã xác thực đăng ký - 2T Hotel',
+    html: base(
+      'Xác thực email của bạn',
+      `<p>Chào bạn,</p>
+       <p>Mã xác thực đăng ký tài khoản của bạn là:</p>
+       <div style="text-align:center;margin:24px 0">
+         <span style="display:inline-block;font-size:32px;font-weight:bold;letter-spacing:8px;background:#f0fdfa;color:#0f766e;padding:16px 32px;border-radius:8px;border:2px dashed #0f766e">${code}</span>
+       </div>
+       <p>Mã này có hiệu lực trong <strong>10 phút</strong>. Vui lòng không chia sẻ mã này với bất kỳ ai.</p>
+       <p style="color:#888;font-size:13px">Nếu bạn không yêu cầu đăng ký, vui lòng bỏ qua email này.</p>`
+    ),
+  });
+
 exports.sendResetPassword = (to, link) =>
   sendMail({
     to,

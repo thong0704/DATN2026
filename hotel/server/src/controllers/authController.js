@@ -9,7 +9,7 @@ const {
   signEmailToken,
   verifyEmailToken,
 } = require('../utils/helpers');
-const { sendVerifyEmail, sendResetPassword } = require('../services/emailService');
+const { sendVerifyEmail, sendResetPassword, sendVerificationCode } = require('../services/emailService');
 
 const REFRESH_COOKIE = 'refreshToken';
 const cookieOpts = {
@@ -29,23 +29,82 @@ const issueTokens = async (user, res) => {
   return { accessToken };
 };
 
+const generateVerificationCode = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+};
+
 exports.register = catchAsync(async (req, res) => {
   const { name, email, password, phone } = req.body;
   const exists = await User.findOne({ email });
-  if (exists) throw new AppError('Email đã được đăng ký', 400);
+  if (exists && exists.isEmailVerified) throw new AppError('Email đã được đăng ký', 400);
+
+  // If exists but not verified, delete old record to allow re-registration
+  if (exists && !exists.isEmailVerified) {
+    await User.findByIdAndDelete(exists._id);
+  }
 
   if (phone) {
-    const phoneExists = await User.findOne({ phone });
+    const phoneExists = await User.findOne({ phone, isEmailVerified: true });
     if (phoneExists) throw new AppError('Số điện thoại đã được sử dụng', 400);
   }
 
-  const user = await User.create({ name, email, password, phone });
-  const token = signEmailToken({ id: user._id.toString() });
-  const link = `${process.env.CLIENT_URL}/verify-email/${token}`;
-  sendVerifyEmail(email, link).catch(() => {});
+  const code = generateVerificationCode();
+  const hashedCode = crypto.createHash('sha256').update(code).digest('hex');
+
+  const user = await User.create({
+    name, email, password, phone,
+    emailVerificationCode: hashedCode,
+    emailVerificationExpire: Date.now() + 10 * 60 * 1000, // 10 minutes
+  });
+
+  sendVerificationCode(email, code).catch(() => {});
+
+  res.status(201).json({
+    status: 'success',
+    message: 'Mã xác thực đã được gửi đến email của bạn',
+    data: { email },
+  });
+});
+
+exports.verifyRegistration = catchAsync(async (req, res) => {
+  const { email, code } = req.body;
+  if (!email || !code) throw new AppError('Vui lòng cung cấp email và mã xác thực', 400);
+
+  const hashedCode = crypto.createHash('sha256').update(code).digest('hex');
+  const user = await User.findOne({
+    email,
+    emailVerificationCode: hashedCode,
+    emailVerificationExpire: { $gt: Date.now() },
+  }).select('+emailVerificationCode +emailVerificationExpire');
+
+  if (!user) throw new AppError('Mã xác thực không hợp lệ hoặc đã hết hạn', 400);
+
+  user.isEmailVerified = true;
+  user.emailVerificationCode = undefined;
+  user.emailVerificationExpire = undefined;
+  await user.save({ validateBeforeSave: false });
 
   const { accessToken } = await issueTokens(user, res);
-  res.status(201).json({ status: 'success', data: { user, accessToken } });
+  res.json({ status: 'success', data: { user, accessToken } });
+});
+
+exports.resendVerificationCode = catchAsync(async (req, res) => {
+  const { email } = req.body;
+  if (!email) throw new AppError('Vui lòng cung cấp email', 400);
+
+  const user = await User.findOne({ email, isEmailVerified: false });
+  if (!user) throw new AppError('Email không tồn tại hoặc đã được xác thực', 400);
+
+  const code = generateVerificationCode();
+  const hashedCode = crypto.createHash('sha256').update(code).digest('hex');
+
+  user.emailVerificationCode = hashedCode;
+  user.emailVerificationExpire = Date.now() + 10 * 60 * 1000;
+  await user.save({ validateBeforeSave: false });
+
+  sendVerificationCode(email, code).catch(() => {});
+
+  res.json({ status: 'success', message: 'Mã xác thực mới đã được gửi' });
 });
 
 exports.login = catchAsync(async (req, res) => {
