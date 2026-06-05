@@ -124,7 +124,7 @@ export default function HotelManagement() {
         <div className={`${isManager ? 'lg:col-span-2' : 'lg:col-span-3'} space-y-3`}>
           {isLoading ? <Spinner className="py-12" /> : hotels.map((h) => (
             <div key={h._id} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex items-center gap-4 hover:shadow-md transition-shadow">
-              <img src={h.images?.[0]?.url || 'https://picsum.photos/100'} className="w-20 h-16 object-cover rounded-xl flex-shrink-0" />
+              <img src={h.images?.[0]?.url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100&h=100&fit=crop'} className="w-20 h-16 object-cover rounded-xl flex-shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-gray-900 truncate">{h.name}</p>
                 <div className="flex items-center gap-2 flex-wrap mt-1">

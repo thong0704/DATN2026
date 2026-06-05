@@ -1,7 +1,7 @@
 import { formatCurrency } from '../utils/format';
 
 export default function RoomCard({ room, onSelect, selected }) {
-  const img = room.images?.[0]?.url || `https://picsum.photos/seed/${room._id}/600/400`;
+  const img = room.images?.[0]?.url || 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=400&fit=crop';
   return (
     <div className={`card overflow-hidden flex flex-col md:flex-row ${selected ? 'ring-2 ring-brand-600' : ''}`}>
       <img src={img} alt={room.roomNumber} className="md:w-56 h-44 md:h-auto object-cover" />

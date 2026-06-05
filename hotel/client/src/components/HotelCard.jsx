@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { formatCurrency } from '../utils/format';
 
 export default function HotelCard({ hotel }) {
-  const img = hotel.images?.[0]?.url || `https://picsum.photos/seed/${hotel._id}/600/400`;
+  const img = hotel.images?.[0]?.url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop';
   return (
     <Link
       to={`/hotels/${hotel.slug}`}

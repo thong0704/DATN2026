@@ -156,7 +156,7 @@ export default function HotelListPage() {
             <>
               <div className="space-y-4">
                 {hotels.map((hotel) => {
-                  const img = hotel.images?.[0]?.url || `https://picsum.photos/seed/${hotel._id}/600/400`;
+                  const img = hotel.images?.[0]?.url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop';
                   return (
                     <div key={hotel._id} className="card overflow-hidden flex flex-col md:flex-row group">
                       {/* Image */}

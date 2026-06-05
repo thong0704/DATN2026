@@ -150,7 +150,7 @@ export default function HotelDetailPage() {
   if (isLoading) return <Spinner className="py-16" />;
   if (!hotel) return <div className="p-8 text-center">Không tìm thấy khách sạn.</div>;
 
-  const heroImg = hotel.images?.[0]?.url || `https://picsum.photos/seed/${hotel._id}/1600/600`;
+  const heroImg = hotel.images?.[0]?.url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&h=600&fit=crop';
 
   return (
     <div>
