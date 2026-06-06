@@ -1,30 +1,97 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useRegisterMutation } from '../features/auth/authApi';
+import { useRegisterMutation, useVerifyRegistrationMutation, useResendVerificationCodeMutation } from '../features/auth/authApi';
 import { setCredentials } from '../features/auth/authSlice';
 
 export default function RegisterPage() {
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
   const [doRegister, { isLoading }] = useRegisterMutation();
+  const [doVerify, { isLoading: isVerifying }] = useVerifyRegistrationMutation();
+  const [doResend, { isLoading: isResending }] = useResendVerificationCodeMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [step, setStep] = useState('form'); // 'form' | 'verify'
+  const [registeredEmail, setRegisteredEmail] = useState('');
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [countdown, setCountdown] = useState(0);
+  const otpRefs = useRef([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const password = watch('password', '');
 
+  // Countdown timer for resend
+  useEffect(() => {
+    if (countdown <= 0) return;
+    const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [countdown]);
+
   const onSubmit = async (data) => {
     try {
       const { confirmPassword, agree, ...payload } = data;
-      const res = await doRegister(payload).unwrap();
-      dispatch(setCredentials({ user: res.data.user, accessToken: res.data.accessToken }));
-      toast.success('Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.');
-      navigate('/');
+      await doRegister(payload).unwrap();
+      setRegisteredEmail(payload.email);
+      setStep('verify');
+      setCountdown(60);
+      toast.success('Mã xác thực đã được gửi đến email của bạn!');
     } catch (e) {
       toast.error(e?.data?.message || 'Đăng ký thất bại');
+    }
+  };
+
+  const handleOtpChange = (index, value) => {
+    if (!/^\d*$/.test(value)) return;
+    const newOtp = [...otp];
+    newOtp[index] = value.slice(-1);
+    setOtp(newOtp);
+    if (value && index < 5) {
+      otpRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (index, e) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      otpRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleOtpPaste = (e) => {
+    e.preventDefault();
+    const paste = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+    if (paste.length === 6) {
+      setOtp(paste.split(''));
+      otpRefs.current[5]?.focus();
+    }
+  };
+
+  const handleVerify = async () => {
+    const code = otp.join('');
+    if (code.length !== 6) {
+      toast.error('Vui lòng nhập đủ 6 số');
+      return;
+    }
+    try {
+      const res = await doVerify({ email: registeredEmail, code }).unwrap();
+      dispatch(setCredentials({ user: res.data.user, accessToken: res.data.accessToken }));
+      toast.success('Đăng ký thành công!');
+      navigate('/');
+    } catch (e) {
+      toast.error(e?.data?.message || 'Mã xác thực không đúng');
+    }
+  };
+
+  const handleResend = async () => {
+    try {
+      await doResend({ email: registeredEmail }).unwrap();
+      setOtp(['', '', '', '', '', '']);
+      setCountdown(60);
+      toast.success('Mã xác thực mới đã được gửi!');
+    } catch (e) {
+      toast.error(e?.data?.message || 'Gửi lại mã thất bại');
     }
   };
 
@@ -73,6 +140,8 @@ export default function RegisterPage() {
 
         {/* RIGHT — Form */}
         <div className="p-8 sm:p-10">
+          {step === 'form' ? (
+          <>
           <div className="mb-7">
             <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900">Tạo tài khoản</h1>
             <p className="text-gray-500 mt-1.5 text-sm">Điền thông tin bên dưới để bắt đầu sử dụng 2T Hotel</p>
@@ -219,6 +288,69 @@ export default function RegisterPage() {
               Đăng nhập
             </Link>
           </p>
+          </>
+          ) : (
+          /* OTP Verification Step */
+          <div className="flex flex-col items-center justify-center min-h-[400px]">
+            <div className="w-16 h-16 rounded-full bg-brand-50 flex items-center justify-center mb-6">
+              <svg className="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
+                  d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-extrabold text-gray-900 mb-2">Xác thực email</h2>
+            <p className="text-gray-500 text-sm text-center mb-1">
+              Chúng tôi đã gửi mã xác thực 6 số đến
+            </p>
+            <p className="text-brand-600 font-semibold text-sm mb-6">{registeredEmail}</p>
+
+            <div className="flex gap-2 mb-6" onPaste={handleOtpPaste}>
+              {otp.map((digit, i) => (
+                <input
+                  key={i}
+                  ref={(el) => (otpRefs.current[i] = el)}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={1}
+                  value={digit}
+                  onChange={(e) => handleOtpChange(i, e.target.value)}
+                  onKeyDown={(e) => handleOtpKeyDown(i, e)}
+                  className="w-12 h-14 text-center text-xl font-bold border-2 border-gray-200 rounded-xl focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition"
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={handleVerify}
+              disabled={isVerifying || otp.join('').length !== 6}
+              className="btn-primary w-full max-w-xs !py-3 text-base mb-4"
+            >
+              {isVerifying ? (<><Spinner /> Đang xác thực...</>) : 'Xác nhận'}
+            </button>
+
+            <p className="text-sm text-gray-500">
+              Không nhận được mã?{' '}
+              {countdown > 0 ? (
+                <span className="text-gray-400">Gửi lại sau {countdown}s</span>
+              ) : (
+                <button
+                  onClick={handleResend}
+                  disabled={isResending}
+                  className="text-brand-600 font-semibold hover:text-brand-700 transition"
+                >
+                  {isResending ? 'Đang gửi...' : 'Gửi lại mã'}
+                </button>
+              )}
+            </p>
+
+            <button
+              onClick={() => { setStep('form'); setOtp(['', '', '', '', '', '']); }}
+              className="mt-4 text-sm text-gray-400 hover:text-gray-600 transition"
+            >
+              ← Quay lại đăng ký
+            </button>
+          </div>
+          )}
         </div>
       </div>
     </div>

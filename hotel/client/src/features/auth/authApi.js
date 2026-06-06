@@ -5,6 +5,12 @@ export const authApi = api.injectEndpoints({
     register: b.mutation({
       query: (body) => ({ url: '/auth/register', method: 'POST', body }),
     }),
+    verifyRegistration: b.mutation({
+      query: (body) => ({ url: '/auth/verify-registration', method: 'POST', body }),
+    }),
+    resendVerificationCode: b.mutation({
+      query: (body) => ({ url: '/auth/resend-verification-code', method: 'POST', body }),
+    }),
     login: b.mutation({
       query: (body) => ({ url: '/auth/login', method: 'POST', body }),
     }),
@@ -41,6 +47,8 @@ export const authApi = api.injectEndpoints({
 
 export const {
   useRegisterMutation,
+  useVerifyRegistrationMutation,
+  useResendVerificationCodeMutation,
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,
