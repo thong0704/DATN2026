@@ -89,7 +89,7 @@ export default function App() {
           <Route path="/login" element={<PublicShell><LoginPage /></PublicShell>} />
           <Route path="/register" element={<PublicShell><RegisterPage /></PublicShell>} />
           <Route path="/forgot-password" element={<PublicShell><ForgotPasswordPage /></PublicShell>} />
-          <Route path="/reset-password/:token" element={<PublicShell><ResetPasswordPage /></PublicShell>} />
+          <Route path="/reset-password" element={<PublicShell><ResetPasswordPage /></PublicShell>} />
 
           {/* Customer-protected */}
           <Route path="/booking" element={<ProtectedRoute><PublicShell><BookingPage /></PublicShell></ProtectedRoute>} />

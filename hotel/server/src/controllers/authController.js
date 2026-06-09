@@ -9,7 +9,7 @@ const {
   signEmailToken,
   verifyEmailToken,
 } = require('../utils/helpers');
-const { sendVerifyEmail, sendResetPassword, sendVerificationCode } = require('../services/emailService');
+const { sendVerifyEmail, sendResetPassword, sendVerificationCode, sendResetPasswordCode } = require('../services/emailService');
 
 const REFRESH_COOKIE = 'refreshToken';
 const cookieOpts = {
@@ -164,31 +164,48 @@ exports.verifyEmail = catchAsync(async (req, res) => {
 
 exports.forgotPassword = catchAsync(async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
-  if (!user) return res.json({ status: 'success', message: 'If exists, reset email sent' });
+  if (!user) {
+    return res.json({
+      status: 'success',
+      message: 'Mã xác nhận đã được gửi nếu email tồn tại trong hệ thống'
+    });
+  }
 
-  const raw = crypto.randomBytes(32).toString('hex');
-  const hashed = crypto.createHash('sha256').update(raw).digest('hex');
+  const code = generateVerificationCode();
+  const hashed = crypto.createHash('sha256').update(code).digest('hex');
   user.resetPasswordToken = hashed;
-  user.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+  user.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
   await user.save({ validateBeforeSave: false });
 
-  const link = `${process.env.CLIENT_URL}/reset-password/${raw}`;
-  sendResetPassword(user.email, link).catch(() => {});
-  res.json({ status: 'success', message: 'Reset email sent' });
+  sendResetPasswordCode(user.email, code).catch(() => {});
+  res.json({
+    status: 'success',
+    message: 'Mã xác nhận đã được gửi đến email của bạn'
+  });
 });
 
 exports.resetPassword = catchAsync(async (req, res) => {
-  const { token } = req.params;
-  const hashed = crypto.createHash('sha256').update(token).digest('hex');
+  const { email, code, password } = req.body;
+  if (!email || !code || !password) {
+    throw new AppError('Vui lòng cung cấp đầy đủ thông tin', 400);
+  }
+
+  const hashed = crypto.createHash('sha256').update(code).digest('hex');
   const user = await User.findOne({
+    email,
     resetPasswordToken: hashed,
     resetPasswordExpire: { $gt: Date.now() },
   }).select('+resetPasswordToken +resetPasswordExpire');
-  if (!user) throw new AppError('Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn', 400);
-  user.password = req.body.password;
+
+  if (!user) {
+    throw new AppError('Mã xác nhận không đúng, không hợp lệ hoặc đã hết hạn', 400);
+  }
+
+  user.password = password;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpire = undefined;
   await user.save();
+
   res.json({ status: 'success', message: 'Đặt lại mật khẩu thành công' });
 });
 

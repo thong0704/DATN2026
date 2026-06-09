@@ -50,9 +50,13 @@ router.post(
   ctrl.resendVerificationCode
 );
 router.post('/forgot-password', authLimiter, [body('email').isEmail()], validate, ctrl.forgotPassword);
-router.put(
-  '/reset-password/:token',
-  [body('password').isLength({ min: 6 })],
+router.post(
+  '/reset-password',
+  [
+    body('email').isEmail().withMessage('Valid email required'),
+    body('code').isLength({ min: 6, max: 6 }).withMessage('Code must be 6 digits'),
+    body('password').isLength({ min: 6 }).withMessage('Password >= 6 chars'),
+  ],
   validate,
   ctrl.resetPassword
 );

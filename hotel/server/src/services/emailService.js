@@ -87,6 +87,22 @@ exports.sendResetPassword = (to, link) =>
     ),
   });
 
+exports.sendResetPasswordCode = (to, code) =>
+  sendMail({
+    to,
+    subject: 'Mã xác nhận đặt lại mật khẩu - 2T Hotel',
+    html: base(
+      'Đặt lại mật khẩu',
+      `<p>Chào bạn,</p>
+       <p>Chúng tôi nhận được yêu cầu đặt lại mật khẩu của bạn. Mã xác nhận của bạn là:</p>
+       <div style="text-align:center;margin:24px 0">
+         <span style="display:inline-block;font-size:32px;font-weight:bold;letter-spacing:8px;background:#fef2f2;color:#dc2626;padding:16px 32px;border-radius:8px;border:2px dashed #dc2626">${code}</span>
+       </div>
+       <p>Mã này có hiệu lực trong <strong>10 phút</strong>. Vui lòng không chia sẻ mã này với bất kỳ ai.</p>
+       <p style="color:#888;font-size:13px">Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.</p>`
+    ),
+  });
+
 exports.sendBookingConfirmation = (to, booking) =>
   sendMail({
     to,

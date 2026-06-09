@@ -32,10 +32,10 @@ export const authApi = api.injectEndpoints({
       query: (body) => ({ url: '/auth/forgot-password', method: 'POST', body }),
     }),
     resetPassword: b.mutation({
-      query: ({ token, password }) => ({
-        url: `/auth/reset-password/${token}`,
-        method: 'PUT',
-        body: { password },
+      query: ({ email, code, password }) => ({
+        url: '/auth/reset-password',
+        method: 'POST',
+        body: { email, code, password },
       }),
     }),
     uploadAvatar: b.mutation({
