@@ -338,7 +338,7 @@ export default function InvoiceManagement() {
                             ✓ Đã thu
                           </button>
                         )}
-                        {isAdmin && inv.status === 'succeeded' && (
+                        {isAdmin && inv.status === 'succeeded' && inv.method !== 'cash' && (
                           <button
                             onClick={() => onRefund(inv.booking?._id)}
                             disabled={refunding}

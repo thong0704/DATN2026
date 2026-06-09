@@ -284,8 +284,55 @@ exports.listAll = catchAsync(async (req, res) => {
 exports.updateStatus = catchAsync(async (req, res) => {
   const valid = ['pending', 'confirmed', 'paid', 'checked_in', 'checked_out', 'cancelled', 'refunded'];
   if (!valid.includes(req.body.status)) throw new AppError('Trạng thái không hợp lệ', 400);
-  const booking = await Booking.findByIdAndUpdate(req.params.id, { status: req.body.status }, { new: true });
+
+  const booking = await Booking.findById(req.params.id);
   if (!booking) throw new AppError('Không tìm thấy đơn đặt phòng', 404);
+
+  const oldStatus = booking.status;
+  booking.status = req.body.status;
+
+  // If status is changed to paid
+  if (req.body.status === 'paid') {
+    booking.paymentStatus = 'paid';
+
+    // Find the associated Payment record and mark it succeeded if it was pending/unpaid
+    const Payment = require('../models/Payment');
+    let payment = await Payment.findOne({ booking: booking._id });
+    if (payment) {
+      if (payment.status !== 'succeeded') {
+        payment.status = 'succeeded';
+        payment.paidAt = new Date();
+        await payment.save();
+      }
+      booking.paymentId = payment._id;
+    } else {
+      // If no payment record exists, create one
+      payment = await Payment.create({
+        booking: booking._id,
+        user: booking.customer,
+        amount: booking.pricing.total,
+        currency: 'VND',
+        method: 'cash', // fallback to cash
+        status: 'succeeded',
+        paidAt: new Date(),
+        stripePaymentIntentId: `pi_cash_manual_${Date.now()}`
+      });
+      booking.paymentId = payment._id;
+    }
+
+    // Send confirmation email if it wasn't paid/sent before
+    if (oldStatus !== 'paid') {
+      const User = require('../models/User');
+      const customerUser = await User.findById(booking.customer);
+      if (customerUser?.email) {
+        sendBookingConfirmation(customerUser.email, booking).catch(err => {
+          console.error(`Error sending booking confirmation email: ${err.message}`);
+        });
+      }
+    }
+  }
+
+  await booking.save();
 
   // Sync room status (all rooms in the booking)
   const allRoomIds = booking.rooms?.length

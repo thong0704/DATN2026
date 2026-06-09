@@ -33,7 +33,7 @@ export const statusColor = (status) => {
 const STATUS_LABELS = {
   // Booking statuses
   pending: 'Chờ xử lý',
-  confirmed: 'Đã xác nhận',
+  confirmed: 'Đã xử lý',
   paid: 'Đã thanh toán',
   checked_in: 'Đã nhận phòng',
   checked_out: 'Đã trả phòng',
@@ -49,6 +49,7 @@ const STATUS_LABELS = {
 
 const PAYMENT_STATUS_LABELS = {
   unpaid: 'Chưa thanh toán',
+  pending: 'Chờ thanh toán',
   partially_paid: 'Thanh toán một phần',
   paid: 'Đã thanh toán',
   refunded: 'Đã hoàn tiền',

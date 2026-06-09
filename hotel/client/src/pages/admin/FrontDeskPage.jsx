@@ -6,7 +6,7 @@ import { formatDate, formatCurrency, tStatus } from '../../utils/format';
 
 const STATUS_OPTIONS = [
   { value: 'pending', label: 'Chờ xử lý' },
-  { value: 'confirmed', label: 'Đã xác nhận' },
+  { value: 'confirmed', label: 'Đã xử lý' },
   { value: 'paid', label: 'Đã thanh toán' },
   { value: 'checked_in', label: 'Đã check-in' },
   { value: 'checked_out', label: 'Đã check-out' },
