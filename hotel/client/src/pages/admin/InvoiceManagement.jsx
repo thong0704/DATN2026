@@ -87,7 +87,11 @@ function InvoiceDetailModal({ id, onClose }) {
               <p className="text-xs uppercase font-semibold text-gray-500 mb-2">Thông tin đặt phòng</p>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div><span className="text-gray-500">Mã booking:</span> <span className="font-mono font-semibold">{inv.booking?.bookingCode}</span></div>
-                <div><span className="text-gray-500">Phòng:</span> <span className="font-semibold">{inv.booking?.room?.roomNumber}</span></div>
+                <div><span className="text-gray-500">Phòng:</span> <span className="font-semibold">
+                  {inv.booking?.rooms && inv.booking?.rooms.length > 0
+                    ? inv.booking.rooms.map(r => r.room?.roomNumber || inv.booking.room?.roomNumber).join(', ')
+                    : inv.booking?.room?.roomNumber}
+                </span></div>
                 <div><span className="text-gray-500">Check-in:</span> <span className="font-semibold">{formatDate(inv.booking?.checkIn)}</span></div>
                 <div><span className="text-gray-500">Check-out:</span> <span className="font-semibold">{formatDate(inv.booking?.checkOut)}</span></div>
                 <div><span className="text-gray-500">Số đêm:</span> <span className="font-semibold">{inv.booking?.nights}</span></div>
@@ -325,7 +329,7 @@ export default function InvoiceManagement() {
                         >
                           Xem
                         </button>
-                        {inv.status === 'pending' && (
+                        {inv.status === 'pending' && inv.method === 'cash' && (
                           <button
                             onClick={() => onMarkPaid(inv._id)}
                             disabled={marking}
@@ -334,7 +338,7 @@ export default function InvoiceManagement() {
                             ✓ Đã thu
                           </button>
                         )}
-                        {isAdmin && inv.status === 'succeeded' && inv.method === 'credit_card' && (
+                        {isAdmin && inv.status === 'succeeded' && (
                           <button
                             onClick={() => onRefund(inv.booking?._id)}
                             disabled={refunding}

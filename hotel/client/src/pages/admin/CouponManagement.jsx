@@ -20,6 +20,22 @@ export default function CouponManagement() {
   const [editing, setEditing] = useState(null);
   const { register, handleSubmit, reset } = useForm();
 
+  const onEdit = (c) => {
+    setEditing(c);
+    reset({
+      code: c.code,
+      description: c.description || '',
+      discountType: c.discountType || 'percent',
+      discountValue: c.discountValue,
+      maxDiscount: c.maxDiscount || 0,
+      minOrderAmount: c.minOrderAmount || 0,
+      maxUses: c.maxUses || 0,
+      validFrom: c.validFrom ? dayjs(c.validFrom).format('YYYY-MM-DD') : '',
+      validTo: c.validTo ? dayjs(c.validTo).format('YYYY-MM-DD') : '',
+      isActive: c.isActive !== false,
+    });
+  };
+
   const onSave = async (form) => {
     const payload = {
       code: form.code,
@@ -29,8 +45,8 @@ export default function CouponManagement() {
       maxDiscount: Number(form.maxDiscount || 0),
       minOrderAmount: Number(form.minOrderAmount || 0),
       maxUses: Number(form.maxUses || 0),
-      validFrom: form.validFrom || undefined,
-      validTo: form.validTo || undefined,
+      validFrom: form.validFrom || null,
+      validTo: form.validTo || null,
       isActive: form.isActive !== false,
     };
     try {
@@ -69,34 +85,34 @@ export default function CouponManagement() {
             {editing ? 'Sửa' : 'Tạo'} mã giảm giá
           </h2>
 
-          <div><label className="label">Mã *</label><input className="input uppercase font-mono" defaultValue={editing?.code} {...register('code', { required: true })} /></div>
-          <div><label className="label">Mô tả</label><input className="input" defaultValue={editing?.description} {...register('description')} /></div>
+          <div><label className="label">Mã *</label><input className="input uppercase font-mono" {...register('code', { required: true })} /></div>
+          <div><label className="label">Mô tả</label><input className="input" {...register('description')} /></div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
               <label className="label">Loại giảm giá</label>
-              <select className="input" defaultValue={editing?.discountType || 'percent'} {...register('discountType')}>
+              <select className="input" {...register('discountType')}>
                 <option value="percent">Phần trăm (%)</option>
                 <option value="fixed">Số tiền cố định</option>
               </select>
             </div>
-            <div><label className="label">Giá trị *</label><input type="number" className="input" defaultValue={editing?.discountValue} {...register('discountValue', { required: true })} /></div>
+            <div><label className="label">Giá trị *</label><input type="number" className="input" {...register('discountValue', { required: true })} /></div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <div><label className="label">Giảm tối đa</label><input type="number" className="input" defaultValue={editing?.maxDiscount} {...register('maxDiscount')} /></div>
-            <div><label className="label">Đơn tối thiểu</label><input type="number" className="input" defaultValue={editing?.minOrderAmount} {...register('minOrderAmount')} /></div>
+            <div><label className="label">Giảm tối đa</label><input type="number" className="input" {...register('maxDiscount')} /></div>
+            <div><label className="label">Đơn tối thiểu</label><input type="number" className="input" {...register('minOrderAmount')} /></div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <div><label className="label">Từ ngày</label><input type="date" className="input" defaultValue={editing?.validFrom ? dayjs(editing.validFrom).format('YYYY-MM-DD') : ''} {...register('validFrom')} /></div>
-            <div><label className="label">Đến ngày</label><input type="date" className="input" defaultValue={editing?.validTo ? dayjs(editing.validTo).format('YYYY-MM-DD') : ''} {...register('validTo')} /></div>
+            <div><label className="label">Từ ngày</label><input type="date" className="input" {...register('validFrom')} /></div>
+            <div><label className="label">Đến ngày</label><input type="date" className="input" {...register('validTo')} /></div>
           </div>
 
-          <div><label className="label">Số lượt tối đa (0 = không giới hạn)</label><input type="number" className="input" defaultValue={editing?.maxUses || 0} {...register('maxUses')} /></div>
+          <div><label className="label">Số lượt tối đa (0 = không giới hạn)</label><input type="number" className="input" {...register('maxUses')} /></div>
 
           <label className="flex items-center gap-2.5 text-sm cursor-pointer p-3 rounded-xl bg-gray-50 border border-gray-200">
-            <input type="checkbox" className="w-4 h-4 accent-pink-500" defaultChecked={editing?.isActive !== false} {...register('isActive')} />
+            <input type="checkbox" className="w-4 h-4 accent-pink-500" {...register('isActive')} />
             <span className="font-medium">Đang kích hoạt</span>
           </label>
 
@@ -135,7 +151,7 @@ export default function CouponManagement() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5 flex-shrink-0">
-                  <button onClick={() => setEditing(c)} className="text-xs px-3 py-1.5 bg-amber-50 text-amber-700 rounded-lg border border-amber-200 hover:bg-amber-100 transition">✏️ Sửa</button>
+                  <button onClick={() => onEdit(c)} className="text-xs px-3 py-1.5 bg-amber-50 text-amber-700 rounded-lg border border-amber-200 hover:bg-amber-100 transition">✏️ Sửa</button>
                   <button onClick={() => onDelete(c._id)} className="text-xs px-3 py-1.5 bg-red-50 text-red-600 rounded-lg border border-red-200 hover:bg-red-100 transition">🗑 Xoá</button>
                 </div>
               </div>

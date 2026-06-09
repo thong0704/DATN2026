@@ -110,7 +110,28 @@ exports.getAvailableRooms = catchAsync(async (req, res) => {
   });
   const idSet = new Set(availableIds.map(String));
   const available = rooms.filter((r) => idSet.has(String(r._id)));
-  res.json({ status: 'success', results: available.length, data: { rooms: available } });
+
+  // Calculate dynamic pricing details for display
+  const { getHolidaysForRange, calculateRoomPrice } = require('../services/availabilityService');
+  const holidays = await getHolidaysForRange(req.params.id, checkIn, checkOut);
+
+  const roomsWithPricing = available.map((room) => {
+    try {
+      const pricing = calculateRoomPrice({ room, checkIn, checkOut, holidays });
+      const rObj = room.toObject();
+      rObj.dynamicPricing = {
+        roomTotal: pricing.roomTotal,
+        nights: pricing.nights,
+        averagePrice: Math.round(pricing.roomTotal / pricing.nights),
+        perNight: pricing.perNight,
+      };
+      return rObj;
+    } catch (e) {
+      return room;
+    }
+  });
+
+  res.json({ status: 'success', results: roomsWithPricing.length, data: { rooms: roomsWithPricing } });
 });
 
 exports.getReviews = catchAsync(async (req, res) => {

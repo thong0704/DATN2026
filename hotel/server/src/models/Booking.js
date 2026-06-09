@@ -5,7 +5,13 @@ const bookingSchema = new mongoose.Schema(
     bookingCode: { type: String, unique: true, required: true, index: true },
     customer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
     hotel: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel', required: true, index: true },
-    room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true, index: true },
+    room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', index: true }, // legacy single room
+    rooms: [
+      {
+        room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true },
+        roomTotal: { type: Number, default: 0 },
+      },
+    ],
     checkIn: { type: Date, required: true, index: true },
     checkOut: { type: Date, required: true, index: true },
     nights: { type: Number, required: true, min: 1 },

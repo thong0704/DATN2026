@@ -1,4 +1,4 @@
-﻿const { GoogleGenerativeAI } = require('@google/generative-ai');
+﻿﻿const { GoogleGenerativeAI } = require('@google/generative-ai');
 const Hotel = require('../models/Hotel');
 const Room = require('../models/Room');
 const catchAsync = require('../utils/catchAsync');

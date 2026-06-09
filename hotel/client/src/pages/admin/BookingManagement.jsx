@@ -165,7 +165,9 @@ export default function BookingManagement() {
                     <td className="px-4 py-3.5 text-gray-700">{b.hotel?.name}</td>
                     <td className="px-4 py-3.5">
                       <span className="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded-md">
-                        {b.room?.roomNumber}
+                        {b.rooms && b.rooms.length > 0
+                          ? b.rooms.map((r) => r.room?.roomNumber || b.room?.roomNumber).join(', ')
+                          : b.room?.roomNumber}
                       </span>
                     </td>
                     <td className="px-4 py-3.5 text-gray-600 whitespace-nowrap">

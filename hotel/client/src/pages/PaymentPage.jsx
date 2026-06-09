@@ -192,7 +192,7 @@ export default function PaymentPage() {
   const isMockIntent = intentId.startsWith('pi_mock_') || intentId.startsWith('pi_cash_') || IS_MOCK_KEY;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="max-w-2xl mx-auto px-4 py-8 animate-fade-in-up">
       <h1 className="text-2xl font-bold mb-6">Thanh toán</h1>
       <div className="card p-6 mb-4">
         <p className="text-sm text-gray-500">Mã đặt phòng</p>
@@ -208,8 +208,8 @@ export default function PaymentPage() {
             {METHODS.map((m) => (
               <label
                 key={m.id}
-                className={`flex items-center gap-3 p-3 rounded-lg border-2 cursor-pointer transition ${
-                  selectedMethod === m.id ? 'border-brand-600 bg-brand-50' : 'border-gray-200 hover:border-gray-300'
+                className={`flex items-center gap-3 p-3 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] ${
+                  selectedMethod === m.id ? 'border-brand-600 bg-brand-50/70 shadow-sm' : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
                 <input
@@ -223,7 +223,7 @@ export default function PaymentPage() {
                 {m.icon && <span className="text-2xl">{m.icon}</span>}
                 {m.img && <img src={m.img} alt="" className="w-8 h-8 rounded object-contain" />}
                 <span className="font-medium">{m.label}</span>
-                {selectedMethod === m.id && <span className="ml-auto text-brand-600">✓</span>}
+                {selectedMethod === m.id && <span className="ml-auto text-brand-600 font-bold">✓</span>}
               </label>
             ))}
           </div>

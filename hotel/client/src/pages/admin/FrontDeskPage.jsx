@@ -67,7 +67,11 @@ export default function FrontDeskPage() {
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-lime-400 to-green-600 flex items-center justify-center text-2xl flex-shrink-0">🏨</div>
             <div>
               <p className="font-bold text-gray-900 text-lg">{booking.hotel?.name}</p>
-              <p className="text-sm text-gray-500">Phòng {booking.room?.roomNumber}</p>
+              <p className="text-sm text-gray-500">
+                {booking.rooms && booking.rooms.length > 0
+                  ? booking.rooms.map((r) => `Phòng ${r.room?.roomNumber || booking.room?.roomNumber}`).join(', ')
+                  : `Phòng ${booking.room?.roomNumber}`}
+              </p>
             </div>
             <div className="ml-auto">
               {(() => { const m = STATUS_META[booking.status] || STATUS_META.pending; return (

@@ -15,6 +15,7 @@ exports.create = catchAsync(async (req, res) => {
 });
 
 exports.update = catchAsync(async (req, res) => {
+  if (req.body.code) req.body.code = String(req.body.code).toUpperCase();
   const coupon = await Coupon.findOneAndUpdate(
     { _id: req.params.id, ownerId: req.user._id },
     req.body,

@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { useGetBookingQuery } from '../features/bookings/bookingsApi';
 import Spinner from '../components/Spinner';
 import { formatCurrency, formatDate, statusColor, tStatus, tRoomType } from '../utils/format';
@@ -9,21 +9,26 @@ export default function BookingConfirmationPage() {
   const booking = data?.data?.booking;
   if (isLoading) return <Spinner className="py-16" />;
   if (!booking) return <div className="p-8 text-center">Không tìm thấy đặt phòng.</div>;
+  if (booking.status === 'pending') {
+    return <Navigate to={`/payment/${booking._id}`} replace />;
+  }
 
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(booking.bookingCode)}`;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
+    <div className="max-w-3xl mx-auto px-4 py-10 animate-fade-in-up">
       <div className="card p-8 text-center">
-        <div className="text-5xl mb-2">🎉</div>
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-50 to-teal-50 flex items-center justify-center text-3xl shadow-glow border border-emerald-150 animate-bounce-gentle">
+          🎉
+        </div>
         <h1 className="text-2xl font-bold mb-1">Đặt phòng thành công!</h1>
         <p className="text-gray-600 mb-4">Vui lòng lưu lại mã đặt phòng để check-in nhanh chóng.</p>
         <div className="bg-brand-50 inline-block px-6 py-3 rounded-lg">
           <p className="text-xs text-gray-500">Mã đặt phòng</p>
           <p className="text-3xl font-mono font-bold text-brand-700">{booking.bookingCode}</p>
         </div>
-        <div className="mt-6 flex justify-center">
-          <img src={qrSrc} alt="QR" className="rounded-lg border" />
+        <div className="mt-6 flex justify-center hover:scale-[1.03] transition-transform duration-300">
+          <img src={qrSrc} alt="QR" className="rounded-lg border shadow-sm" />
         </div>
       </div>
 
@@ -34,7 +39,17 @@ export default function BookingConfirmationPage() {
         </div>
         <div>
           <p className="text-gray-500">Phòng</p>
-          <p className="font-semibold">{tRoomType(booking.room?.type)} · {booking.room?.roomNumber}</p>
+          {booking.rooms && booking.rooms.length > 0 ? (
+            <div className="font-semibold space-y-1">
+              {booking.rooms.map((r, i) => (
+                <span key={i} className="block">
+                  {tRoomType(r.room?.type || booking.room?.type)} · {r.room?.roomNumber || booking.room?.roomNumber}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="font-semibold">{tRoomType(booking.room?.type)} · {booking.room?.roomNumber}</p>
+          )}
         </div>
         <div>
           <p className="text-gray-500">Check-in</p>

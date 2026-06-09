@@ -19,7 +19,7 @@ export default function ArticleDetailPage() {
   }
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-10">
+    <article className="max-w-3xl mx-auto px-4 py-10 animate-fade-in-up">
       <Link to="/articles" className="text-sm text-brand-700">← Tất cả bài viết</Link>
       <h1 className="text-3xl md:text-4xl font-bold mt-3">{a.title}</h1>
       <p className="text-sm text-gray-500 mt-2">{formatDate(a.createdAt)} · {a.views || 0} lượt xem</p>

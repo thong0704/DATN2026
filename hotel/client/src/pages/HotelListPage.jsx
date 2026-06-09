@@ -3,12 +3,7 @@ import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { useListHotelsQuery } from '../features/hotels/hotelsApi';
 import Spinner from '../components/Spinner';
-import { formatCurrency } from '../utils/format';
-
-const AMENITY_LABELS = {
-  wifi: 'WiFi', pool: 'Hồ bơi', gym: 'Gym', spa: 'Spa',
-  parking: 'Bãi đỗ xe', restaurant: 'Nhà hàng', bar: 'Bar', airport_shuttle: 'Đưa đón sân bay',
-};
+import { formatCurrency, tAmenity } from '../utils/format';
 
 export default function HotelListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -60,14 +55,14 @@ export default function HotelListPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8 animate-fade-in-up">
       <div className="grid lg:grid-cols-4 gap-6">
         {/* Sidebar Search Panel */}
         <aside className="lg:col-span-1">
           <form onSubmit={onSearch} className="card p-5 space-y-5 lg:sticky lg:top-20">
             <h2 className="font-bold text-lg flex items-center gap-2">
               <svg className="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-              Tìm Kiếm Phòng Hoàn Hảo
+              Tìm Khách Sạn Hoàn Hảo
             </h2>
 
             {/* Destination */}
@@ -117,7 +112,7 @@ export default function HotelListPage() {
             {/* Submit */}
             <button type="submit" className="btn-primary w-full py-3">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-              Tìm Kiếm Phòng
+              Tìm Khách Sạn
             </button>
           </form>
         </aside>
@@ -128,7 +123,7 @@ export default function HotelListPage() {
           <div className="flex flex-wrap items-center justify-between mb-4 gap-3">
             <div>
               <h1 className="text-xl font-bold">
-                Phòng Có Sẵn {meta ? `(${meta.total})` : ''}
+                Khách Sạn Có Sẵn {meta ? `(${meta.total})` : ''}
               </h1>
               <p className="text-sm text-gray-500 mt-1">
                 Từ {dayjs(checkIn).format('DD/MM/YYYY')} đến {dayjs(checkOut).format('DD/MM/YYYY')} • {adults} người lớn{children > 0 ? `, ${children} trẻ em` : ''}
@@ -151,7 +146,7 @@ export default function HotelListPage() {
           {isLoading ? (
             <Spinner className="py-16" />
           ) : hotels.length === 0 ? (
-            <div className="card p-12 text-center text-gray-500">Không tìm thấy phòng nào phù hợp.</div>
+            <div className="card p-12 text-center text-gray-500">Không tìm thấy khách sạn nào phù hợp.</div>
           ) : (
             <>
               <div className="space-y-4">
@@ -191,7 +186,7 @@ export default function HotelListPage() {
                               <p className="text-xs text-gray-500 mb-1">Dịch vụ đặc biệt:</p>
                               <div className="flex flex-wrap gap-1.5">
                                 {hotel.amenities.slice(0, 6).map((a) => (
-                                  <span key={a} className="badge bg-blue-50 text-blue-700 border border-blue-200">{AMENITY_LABELS[a] || a}</span>
+                                  <span key={a} className="badge bg-blue-50 text-blue-700 border border-blue-200">{tAmenity(a)}</span>
                                 ))}
                                 {hotel.amenities.length > 6 && (
                                   <span className="badge bg-gray-100 text-gray-600">+{hotel.amenities.length - 6}</span>

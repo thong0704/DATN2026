@@ -6,7 +6,20 @@ const paymentService = require('../services/paymentService');
 const vnpayService = require('../services/vnpayService');
 const momoService = require('../services/momoService');
 const { notify } = require('../services/notificationService');
+const { sendBookingConfirmation } = require('../services/emailService');
 const logger = require('../utils/logger');
+
+// Helper: format date to VNPay format yyyyMMddHHmmss (UTC+7)
+function formatVnDate(date) {
+  const d = new Date(date.getTime() + 7 * 60 * 60 * 1000);
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  const h = String(d.getUTCHours()).padStart(2, '0');
+  const min = String(d.getUTCMinutes()).padStart(2, '0');
+  const s = String(d.getUTCSeconds()).padStart(2, '0');
+  return `${y}${m}${day}${h}${min}${s}`;
+}
 
 exports.createIntent = catchAsync(async (req, res) => {
   const { bookingId, method = 'credit_card' } = req.body;
@@ -149,6 +162,14 @@ exports.confirm = catchAsync(async (req, res) => {
       data: { bookingId: booking._id },
     }).catch(() => {});
 
+    // Send confirmation email only after actual payment (not for cash - pay later)
+    if (!intentId.startsWith('pi_cash_')) {
+      const User = require('../models/User');
+      User.findById(payment.user).then(u => {
+        if (u?.email) sendBookingConfirmation(u.email, booking).catch(() => {});
+      }).catch(() => {});
+    }
+
     return res.json({ status: 'success', data: { booking, payment } });
   }
 
@@ -175,6 +196,12 @@ exports.confirm = catchAsync(async (req, res) => {
     title: 'Payment successful',
     message: `Booking ${booking.bookingCode} has been paid`,
     data: { bookingId: booking._id },
+  }).catch(() => {});
+
+  // Send confirmation email after Stripe payment succeeds
+  const User = require('../models/User');
+  User.findById(payment.user).then(u => {
+    if (u?.email) sendBookingConfirmation(u.email, booking).catch(() => {});
   }).catch(() => {});
 
   res.json({ status: 'success', data: { booking, payment } });
@@ -223,21 +250,66 @@ exports.refund = catchAsync(async (req, res) => {
   if (!booking) throw new AppError('Không tìm thấy đơn đặt phòng', 404);
   const payment = await Payment.findOne({ booking: booking._id, status: 'succeeded' });
   if (!payment) throw new AppError('Không tìm thấy giao dịch đã thanh toán để hoàn tiền', 400);
-  const refund = await paymentService.refund({
-    paymentIntentId: payment.stripePaymentIntentId,
-    amount: req.body.amount,
-    reason: req.body.reason,
-  });
+
+  const refundAmount = req.body.amount || payment.amount;
+  const reason = req.body.reason || 'Hoàn tiền theo yêu cầu';
+  let refundResult;
+
+  const ipAddr = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';
+
+  switch (payment.method) {
+    case 'vnpay':
+    case 'bank_transfer': {
+      refundResult = await vnpayService.refund({
+        txnRef: payment.stripePaymentIntentId,
+        amount: refundAmount,
+        transactionDate: payment.paidAt ? formatVnDate(payment.paidAt) : undefined,
+        transactionId: payment.transactionId || '',
+        reason,
+        ipAddr,
+      });
+      break;
+    }
+    case 'momo': {
+      if (!payment.transactionId) throw new AppError('Thiếu mã giao dịch MoMo (transId) để hoàn tiền', 400);
+      refundResult = await momoService.refund({
+        orderId: payment.stripePaymentIntentId,
+        amount: refundAmount,
+        transId: payment.transactionId,
+        description: reason,
+      });
+      break;
+    }
+    case 'credit_card': {
+      const stripeRefund = await paymentService.refund({
+        paymentIntentId: payment.stripePaymentIntentId,
+        amount: refundAmount,
+        reason,
+      });
+      refundResult = { success: true, refundId: stripeRefund.id, data: stripeRefund };
+      break;
+    }
+    case 'cash': {
+      // Cash payments don't need gateway refund — just mark as refunded
+      refundResult = { success: true, refundId: `cash_refund_${Date.now()}` };
+      break;
+    }
+    default:
+      throw new AppError(`Phương thức thanh toán "${payment.method}" không hỗ trợ hoàn tiền tự động`, 400);
+  }
+
   payment.status = 'refunded';
-  payment.refundAmount = req.body.amount || payment.amount;
-  payment.refundReason = req.body.reason;
+  payment.refundAmount = refundAmount;
+  payment.refundReason = reason;
   await payment.save();
 
   booking.status = 'refunded';
   booking.paymentStatus = 'refunded';
   await booking.save();
 
-  res.json({ status: 'success', data: { refundId: refund.id, payment, booking } });
+  logger.info(`Refund success: booking=${booking.bookingCode}, method=${payment.method}, amount=${refundAmount}`);
+
+  res.json({ status: 'success', data: { refundId: refundResult.refundId, payment, booking } });
 });
 
 exports.getByBooking = catchAsync(async (req, res) => {
@@ -256,6 +328,7 @@ exports.vnpayReturn = catchAsync(async (req, res) => {
   if (responseCode === '00') {
     payment.status = 'succeeded';
     payment.paidAt = new Date();
+    payment.transactionId = req.query['vnp_TransactionNo'] || '';
     await payment.save();
     await Booking.findByIdAndUpdate(payment.booking, {
       status: 'paid',
@@ -268,6 +341,13 @@ exports.vnpayReturn = catchAsync(async (req, res) => {
       title: 'Payment successful',
       message: `Booking has been paid via VNPay`,
       data: { bookingId: payment.booking },
+    }).catch(() => {});
+
+    // Send confirmation email
+    const User = require('../models/User');
+    const bk = await Booking.findById(payment.booking);
+    User.findById(payment.user).then(u => {
+      if (u?.email && bk) sendBookingConfirmation(u.email, bk).catch(() => {});
     }).catch(() => {});
   } else {
     payment.status = 'failed';
@@ -289,6 +369,7 @@ exports.vnpayIpn = catchAsync(async (req, res) => {
   if (responseCode === '00') {
     payment.status = 'succeeded';
     payment.paidAt = new Date();
+    payment.transactionId = req.query['vnp_TransactionNo'] || '';
     await payment.save();
     await Booking.findByIdAndUpdate(payment.booking, {
       status: 'paid',
@@ -304,13 +385,14 @@ exports.vnpayIpn = catchAsync(async (req, res) => {
 
 // MoMo IPN callback (POST from MoMo server)
 exports.momoIpn = catchAsync(async (req, res) => {
-  const { isValid, resultCode, orderId, extraData } = momoService.verifyIpn(req.body);
+  const { isValid, resultCode, orderId, extraData, transId } = momoService.verifyIpn(req.body);
   if (!isValid) return res.status(400).json({ message: 'Invalid signature' });
 
   const payment = await Payment.findOne({ stripePaymentIntentId: orderId });
   if (!payment) return res.status(404).json({ message: 'Không tìm thấy giao dịch' });
 
   if (resultCode === 0 || resultCode === '0') {
+    payment.transactionId = transId || '';
     payment.status = 'succeeded';
     payment.paidAt = new Date();
     await payment.save();
@@ -326,6 +408,13 @@ exports.momoIpn = catchAsync(async (req, res) => {
       message: `Booking has been paid via MoMo`,
       data: { bookingId: payment.booking },
     }).catch(() => {});
+
+    // Send confirmation email
+    const User = require('../models/User');
+    const bk = await Booking.findById(payment.booking);
+    User.findById(payment.user).then(u => {
+      if (u?.email && bk) sendBookingConfirmation(u.email, bk).catch(() => {});
+    }).catch(() => {});
   } else {
     payment.status = 'failed';
     await payment.save();
@@ -335,7 +424,7 @@ exports.momoIpn = catchAsync(async (req, res) => {
 
 // MoMo return URL handler (GET - user redirected back)
 exports.momoReturn = catchAsync(async (req, res) => {
-  const { orderId, resultCode } = req.query;
+  const { orderId, resultCode, transId } = req.query;
   const payment = await Payment.findOne({ stripePaymentIntentId: orderId });
   if (!payment) throw new AppError('Không tìm thấy giao dịch thanh toán', 404);
 
@@ -343,6 +432,7 @@ exports.momoReturn = catchAsync(async (req, res) => {
   if (payment.status !== 'succeeded' && (resultCode === '0' || resultCode === 0)) {
     payment.status = 'succeeded';
     payment.paidAt = new Date();
+    if (transId) payment.transactionId = transId;
     await payment.save();
     await Booking.findByIdAndUpdate(payment.booking, {
       status: 'paid',
@@ -466,6 +556,13 @@ exports.markPaid = catchAsync(async (req, res) => {
     title: 'Payment confirmed',
     message: `Invoice ${payment._id} has been marked as paid`,
     data: { paymentId: payment._id },
+  }).catch(() => {});
+
+  // Send confirmation email when admin marks cash as paid
+  const User = require('../models/User');
+  const bk = await Booking.findById(payment.booking);
+  User.findById(payment.user).then(u => {
+    if (u?.email && bk) sendBookingConfirmation(u.email, bk).catch(() => {});
   }).catch(() => {});
 
   res.json({ status: 'success', data: { payment } });

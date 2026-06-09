@@ -13,6 +13,7 @@ const paymentSchema = new mongoose.Schema(
     },
     stripePaymentIntentId: { type: String, index: true },
     stripeChargeId: String,
+    transactionId: { type: String },
     status: {
       type: String,
       enum: ['pending', 'succeeded', 'failed', 'refunded'],

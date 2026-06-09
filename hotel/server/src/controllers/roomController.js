@@ -2,7 +2,7 @@ const Room = require('../models/Room');
 const Hotel = require('../models/Hotel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
-const { filterAvailableRooms } = require('../services/availabilityService');
+const { filterAvailableRooms, calculateRoomPrice, computeMultiRoomPricing, getHolidaysForRange } = require('../services/availabilityService');
 const { emitToHotel } = require('../services/notificationService');
 const cloudinary = require('../config/cloudinary');
 
@@ -23,7 +23,28 @@ exports.getAvailable = catchAsync(async (req, res) => {
   });
   const set = new Set(availableIds.map(String));
   const result = rooms.filter((r) => set.has(String(r._id)));
-  res.json({ status: 'success', results: result.length, data: { rooms: result } });
+
+  // Calculate dynamic pricing details for display
+  const resultWithPricing = await Promise.all(
+    result.map(async (room) => {
+      try {
+        const holidays = await getHolidaysForRange(room.hotel?._id || room.hotel, checkIn, checkOut);
+        const pricing = calculateRoomPrice({ room, checkIn, checkOut, holidays });
+        const rObj = room.toObject();
+        rObj.dynamicPricing = {
+          roomTotal: pricing.roomTotal,
+          nights: pricing.nights,
+          averagePrice: Math.round(pricing.roomTotal / pricing.nights),
+          perNight: pricing.perNight,
+        };
+        return rObj;
+      } catch (e) {
+        return room;
+      }
+    })
+  );
+
+  res.json({ status: 'success', results: resultWithPricing.length, data: { rooms: resultWithPricing } });
 });
 
 exports.getById = catchAsync(async (req, res) => {
@@ -43,11 +64,53 @@ exports.create = catchAsync(async (req, res) => {
   const room = await Room.create(req.body);
 
   // Update hotel.basePrice if needed
-  if (!hotel.basePrice || room.pricePerNight < hotel.basePrice) {
-    hotel.basePrice = room.pricePerNight;
+  if (!hotel.basePrice || room.basePrice < hotel.basePrice) {
+    hotel.basePrice = room.basePrice;
     await hotel.save();
   }
   res.status(201).json({ status: 'success', data: { room } });
+});
+
+// API tính giá dự kiến cho khách (Dynamic Pricing)
+exports.getQuote = catchAsync(async (req, res) => {
+  const { roomId, checkIn, checkOut } = req.query;
+  
+  const room = await Room.findById(roomId);
+  if (!room) throw new AppError('Phòng không tồn tại', 404);
+
+  const holidays = await getHolidaysForRange(room.hotel, checkIn, checkOut);
+  const pricing = calculateRoomPrice({ room, checkIn, checkOut, holidays });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      ...pricing,
+      roomNumber: room.roomNumber,
+    },
+  });
+});
+
+// API tính giá cho nhiều phòng cùng lúc
+exports.getMultiQuote = catchAsync(async (req, res) => {
+  const { roomIds, checkIn, checkOut } = req.body;
+  if (!roomIds?.length || !checkIn || !checkOut) {
+    throw new AppError('Vui lòng cung cấp roomIds, checkIn và checkOut', 400);
+  }
+
+  const roomDocs = await Room.find({ _id: { $in: roomIds } });
+  if (!roomDocs.length) throw new AppError('Không tìm thấy phòng', 404);
+
+  const hotelId = roomDocs[0].hotel;
+  const holidays = await getHolidaysForRange(hotelId, checkIn, checkOut);
+
+  const result = await computeMultiRoomPricing({
+    roomDocs,
+    checkIn,
+    checkOut,
+    holidays,
+  });
+
+  res.json({ status: 'success', data: result });
 });
 
 exports.update = catchAsync(async (req, res) => {

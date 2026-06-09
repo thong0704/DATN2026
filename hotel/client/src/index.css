@@ -120,3 +120,51 @@
     opacity: 0;
   }
 }
+
+/* Custom premium micro-animations */
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-bounce-gentle {
+  animation: bounceGentle 2s infinite ease-in-out;
+}
+
+.shadow-glow {
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.35);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bounceGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes kenBurns {
+  0% { transform: scale(1.02); }
+  100% { transform: scale(1.1); }
+}
+
+.animate-ken-burns {
+  animation: kenBurns 25s infinite alternate ease-in-out;
+}
+
+.delay-150 {
+  animation-delay: 150ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-450 {
+  animation-delay: 450ms;
+}
+.delay-600 {
+  animation-delay: 600ms;
+}
+.animation-fill-both {
+  animation-fill-mode: both;
+}

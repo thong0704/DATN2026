@@ -17,6 +17,9 @@ exports.createPaymentUrl = async ({ amount, bookingCode, bookingId }) => {
   const requestType = 'payWithMethod';
   const extraData = Buffer.from(JSON.stringify({ bookingId })).toString('base64');
 
+  // MoMo requires amount to be integer (VND)
+  amount = Math.round(Number(amount));
+
   // Create signature
   const rawSignature = `accessKey=${MOMO_ACCESS_KEY}&amount=${amount}&extraData=${extraData}&ipnUrl=${ipnUrl}&orderId=${orderId}&orderInfo=${orderInfo}&partnerCode=${MOMO_PARTNER_CODE}&redirectUrl=${redirectUrl}&requestId=${requestId}&requestType=${requestType}`;
   const signature = crypto.createHmac('sha256', MOMO_SECRET_KEY).update(rawSignature).digest('hex');
@@ -62,5 +65,47 @@ exports.verifyIpn = (body) => {
   if (expectedSig !== signature) {
     return { isValid: false };
   }
-  return { isValid: true, resultCode, orderId, extraData };
+  return { isValid: true, resultCode, orderId, extraData, transId };
+};
+
+const MOMO_REFUND_ENDPOINT = process.env.MOMO_REFUND_ENDPOINT || 'https://test-payment.momo.vn/v2/gateway/api/refund';
+
+/**
+ * MoMo Refund API
+ * @param {Object} params
+ * @param {string} params.orderId - Original MoMo orderId
+ * @param {number} params.amount - Refund amount
+ * @param {string} params.transId - MoMo transId from IPN
+ * @param {string} params.description - Refund reason
+ */
+exports.refund = async ({ orderId, amount, transId, description }) => {
+  // MoMo requires amount to be integer (VND)
+  amount = Math.round(Number(amount));
+  const refundRequestId = `${MOMO_PARTNER_CODE}RF${Date.now()}`;
+  const refundOrderId = `${MOMO_PARTNER_CODE}RF${Date.now()}`;
+
+  const rawSignature = `accessKey=${MOMO_ACCESS_KEY}&amount=${amount}&description=${description || 'Hoan tien'}&orderId=${refundOrderId}&partnerCode=${MOMO_PARTNER_CODE}&requestId=${refundRequestId}&transId=${transId}`;
+  const signature = crypto.createHmac('sha256', MOMO_SECRET_KEY).update(rawSignature).digest('hex');
+
+  const requestBody = {
+    partnerCode: MOMO_PARTNER_CODE,
+    orderId: refundOrderId,
+    requestId: refundRequestId,
+    amount,
+    transId,
+    lang: 'vi',
+    description: description || 'Hoan tien',
+    signature,
+  };
+
+  try {
+    const { data } = await axios.post(MOMO_REFUND_ENDPOINT, requestBody);
+    if (data.resultCode === 0) {
+      return { success: true, refundId: data.transId || refundRequestId, data };
+    }
+    throw new Error(data.message || `MoMo refund failed: code ${data.resultCode}`);
+  } catch (err) {
+    if (err.response) throw new Error(`MoMo refund error: ${err.response.data?.message || err.message}`);
+    throw err;
+  }
 };

@@ -7,6 +7,8 @@ const router = express.Router();
 const upload = makeUploader('hotel/rooms');
 
 router.get('/available', ctrl.getAvailable);
+router.get('/quote', ctrl.getQuote);
+router.post('/multi-quote', ctrl.getMultiQuote);
 router.get('/hotel/:hotelId', ctrl.getByHotel);
 router.get('/:id', ctrl.getById);
 

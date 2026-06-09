@@ -42,6 +42,7 @@ const RoomManagement = lazy(() => import('./pages/admin/RoomManagement'));
 const UserManagement = lazy(() => import('./pages/admin/UserManagement'));
 const FrontDeskPage = lazy(() => import('./pages/admin/FrontDeskPage'));
 const CouponManagement = lazy(() => import('./pages/admin/CouponManagement'));
+const DynamicPricingManagement = lazy(() => import('./pages/admin/DynamicPricingManagement'));
 const ArticleManagement = lazy(() => import('./pages/admin/ArticleManagement'));
 const ContactInbox = lazy(() => import('./pages/admin/ContactInbox'));
 const BannerManagement = lazy(() => import('./pages/admin/BannerManagement'));
@@ -115,6 +116,7 @@ export default function App() {
             <Route path="users" element={<UserManagement />} />
             <Route path="front-desk" element={<FrontDeskPage />} />
             <Route path="coupons" element={<CouponManagement />} />
+            <Route path="dynamic-pricing" element={<DynamicPricingManagement />} />
             <Route path="banners" element={<BannerManagement />} />
             <Route path="articles" element={<ArticleManagement />} />
             <Route path="contacts" element={<ContactInbox />} />

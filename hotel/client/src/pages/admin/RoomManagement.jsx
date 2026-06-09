@@ -9,6 +9,7 @@ import {
   useUpdateRoomStatusMutation,
   useUploadRoomImagesMutation,
 } from '../../features/rooms/roomsApi';
+import { useListHolidayPricingQuery } from '../../features/holidayPricing/holidayPricingApi';
 import { useForm } from 'react-hook-form';
 import { formatCurrency, statusColor, tStatus, tRoomType } from '../../utils/format';
 import Spinner from '../../components/Spinner';
@@ -18,9 +19,37 @@ const ROOM_TYPES = ['basic', 'standard', 'vip'];
 const STATUSES = ['available', 'occupied', 'cleaning', 'maintenance'];
 const BED_TYPES = ['Single', 'Twin', 'Double', 'Queen', 'King'];
 const AMENITIES_OPTIONS = [
-  'WiFi', 'Điều hòa', 'TV', 'Tủ lạnh', 'Két sắt', 'Máy sấy tóc',
-  'Bồn tắm', 'Ban công', 'Bếp nhỏ', 'Máy giặt', 'Bàn làm việc', 'Minibar',
+  { key: 'wifi', label: 'WiFi' },
+  { key: 'air_conditioning', label: 'Điều hòa' },
+  { key: 'tv', label: 'TV' },
+  { key: 'fridge', label: 'Tủ lạnh' },
+  { key: 'safe', label: 'Két sắt' },
+  { key: 'hair_dryer', label: 'Máy sấy tóc' },
+  { key: 'bathtub', label: 'Bồn tắm' },
+  { key: 'balcony', label: 'Ban công' },
+  { key: 'kitchenette', label: 'Bếp nhỏ' },
+  { key: 'washing_machine', label: 'Máy giặt' },
+  { key: 'desk', label: 'Bàn làm việc' },
+  { key: 'minibar', label: 'Minibar' },
 ];
+
+const mapToKey = (a) => {
+  if (!a) return '';
+  const val = a.toLowerCase().trim();
+  if (val === 'wifi') return 'wifi';
+  if (val === 'điều hòa' || val === 'dieu hoa' || val === 'air_conditioning') return 'air_conditioning';
+  if (val === 'tv') return 'tv';
+  if (val === 'tủ lạnh' || val === 'tu lanh' || val === 'fridge' || val === 'refrigerator') return 'fridge';
+  if (val === 'két sắt' || val === 'ket sat' || val === 'safe') return 'safe';
+  if (val === 'máy sấy tóc' || val === 'may say toc' || val === 'hair_dryer') return 'hair_dryer';
+  if (val === 'bồn tắm' || val === 'bon tam' || val === 'bathtub') return 'bathtub';
+  if (val === 'ban công' || val === 'ban cong' || val === 'balcony') return 'balcony';
+  if (val === 'bếp nhỏ' || val === 'bep nho' || val === 'kitchenette') return 'kitchenette';
+  if (val === 'máy giặt' || val === 'may giat' || val === 'washing_machine') return 'washing_machine';
+  if (val === 'bàn làm việc' || val === 'ban lam viec' || val === 'desk') return 'desk';
+  if (val === 'minibar') return 'minibar';
+  return val;
+};
 
 export default function RoomManagement() {
   const { isAdmin, isManager } = useAuth();
@@ -35,6 +64,8 @@ export default function RoomManagement() {
   const [del] = useDeleteRoomMutation();
   const [updateStatus] = useUpdateRoomStatusMutation();
   const [uploadImages] = useUploadRoomImagesMutation();
+  const { data: holidayData } = useListHolidayPricingQuery({ hotel: hotelId }, { skip: !hotelId });
+  const activeHolidays = (holidayData?.data?.holidays || []).filter((h) => h.isActive);
   const [editing, setEditing] = useState(null);
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
@@ -60,6 +91,7 @@ export default function RoomManagement() {
       roomNumber: form.roomNumber,
       type: form.type,
       pricePerNight: Number(form.pricePerNight),
+      weekendPrice: Number(form.weekendPrice || 0),
       capacity: { adults: Number(form.adults), children: Number(form.children || 0) },
       bedType: form.bedType,
       size: Number(form.size || 25),
@@ -132,7 +164,10 @@ export default function RoomManagement() {
                 {ROOM_TYPES.map((t) => <option key={t} value={t}>{tRoomType(t)}</option>)}
               </select>
             </div>
-            <div><label className="label">Giá / đêm (VND)</label><input type="number" className="input" defaultValue={editing?.pricePerNight} {...register('pricePerNight', { required: true })} /></div>
+            <div className="grid grid-cols-2 gap-2">
+              <div><label className="label">Giá thường (VND)</label><input type="number" className="input" defaultValue={editing?.pricePerNight} {...register('pricePerNight', { required: true })} /></div>
+              <div><label className="label">Giá cuối tuần (VND)</label><input type="number" className="input" defaultValue={editing?.weekendPrice} {...register('weekendPrice')} /></div>
+            </div>
             <div className="grid grid-cols-2 gap-2">
               <div><label className="label">Người lớn</label><input type="number" className="input" defaultValue={editing?.capacity?.adults ?? 2} min={1} {...register('adults')} /></div>
               <div><label className="label">Trẻ em</label><input type="number" className="input" defaultValue={editing?.capacity?.children ?? 0} min={0} {...register('children')} /></div>
@@ -147,11 +182,11 @@ export default function RoomManagement() {
             <div>
               <label className="label">Tiện ích</label>
               <div className="grid grid-cols-2 gap-1 border border-gray-200 rounded-xl p-3 bg-gray-50/50">
-                {AMENITIES_OPTIONS.map((a) => (
-                  <label key={a} className="flex items-center gap-1.5 text-xs cursor-pointer py-0.5">
-                    <input type="checkbox" className="rounded" checked={amenities.includes(a)}
-                      onChange={(e) => { if (e.target.checked) setAmenities([...amenities, a]); else setAmenities(amenities.filter((x) => x !== a)); }} />
-                    {a}
+                {AMENITIES_OPTIONS.map((opt) => (
+                  <label key={opt.key} className="flex items-center gap-1.5 text-xs cursor-pointer py-0.5">
+                    <input type="checkbox" className="rounded" checked={amenities.includes(opt.key)}
+                      onChange={(e) => { if (e.target.checked) setAmenities([...amenities, opt.key]); else setAmenities(amenities.filter((x) => x !== opt.key)); }} />
+                    {opt.label}
                   </label>
                 ))}
               </div>
@@ -205,6 +240,20 @@ export default function RoomManagement() {
                       </div>
                       <p className="text-sm text-gray-500">{r.bedType} · {r.size}m² · {r.images?.length || 0} ảnh</p>
                       <p className="font-bold text-violet-700 mt-1 text-base">{formatCurrency(r.pricePerNight)}<span className="text-xs font-normal text-gray-400">/đêm</span></p>
+                      {(r.weekendPrice > 0 || activeHolidays.length > 0) && (
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {r.weekendPrice > 0 && (
+                            <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">
+                              📅 T6-T7: {formatCurrency(r.weekendPrice)}
+                            </span>
+                          )}
+                          {activeHolidays.map((h) => (
+                            <span key={h._id} className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200">
+                              🎉 {h.name} ({h.multiplier}x)
+                            </span>
+                          ))}
+                        </div>
+                      )}
                       <div className="flex flex-wrap gap-1.5 mt-3">
                         <select className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-white focus:border-violet-400 focus:ring-1 focus:ring-violet-100 focus:outline-none flex-1 min-w-[100px]"
                           value={r.status}
@@ -217,7 +266,20 @@ export default function RoomManagement() {
                           </label>
                         )}
                         {isManager && (
-                          <button onClick={() => { setEditing(r); setAmenities(r.amenities || []); }} className="text-xs px-2.5 py-1.5 bg-amber-50 text-amber-700 rounded-lg border border-amber-200 hover:bg-amber-100 transition">Sửa</button>
+                          <button onClick={() => {
+                            setEditing(r);
+                            setAmenities((r.amenities || []).map(mapToKey));
+                            reset({
+                              roomNumber: r.roomNumber,
+                              type: r.type,
+                              pricePerNight: r.pricePerNight,
+                              weekendPrice: r.weekendPrice || 0,
+                              adults: r.capacity?.adults ?? 2,
+                              children: r.capacity?.children ?? 0,
+                              bedType: r.bedType,
+                              size: r.size || 25,
+                            });
+                          }} className="text-xs px-2.5 py-1.5 bg-amber-50 text-amber-700 rounded-lg border border-amber-200 hover:bg-amber-100 transition">Sửa</button>
                         )}
                         {isAdmin && (
                           <button onClick={() => confirm('Xoá?') && del(r._id).unwrap().then(refetch)} className="text-xs px-2.5 py-1.5 bg-red-50 text-red-600 rounded-lg border border-red-200 hover:bg-red-100 transition">Xoá</button>

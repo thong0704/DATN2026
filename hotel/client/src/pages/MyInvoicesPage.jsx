@@ -57,7 +57,11 @@ function InvoiceModal({ id, onClose }) {
 
             <div className="bg-slate-50 rounded-xl p-4 mb-6 text-sm grid grid-cols-2 gap-3">
               <div><span className="text-gray-500">Mã booking:</span> <span className="font-mono font-semibold">{inv.booking?.bookingCode}</span></div>
-              <div><span className="text-gray-500">Phòng:</span> <span className="font-semibold">{inv.booking?.room?.roomNumber}</span></div>
+              <div><span className="text-gray-500">Phòng:</span> <span className="font-semibold">
+                {inv.booking?.rooms && inv.booking?.rooms.length > 0
+                  ? inv.booking.rooms.map(r => r.room?.roomNumber || inv.booking.room?.roomNumber).join(', ')
+                  : inv.booking?.room?.roomNumber}
+              </span></div>
               <div><span className="text-gray-500">Check-in:</span> {formatDate(inv.booking?.checkIn)}</div>
               <div><span className="text-gray-500">Check-out:</span> {formatDate(inv.booking?.checkOut)}</div>
               <div><span className="text-gray-500">Số đêm:</span> {inv.booking?.nights}</div>
@@ -114,7 +118,7 @@ export default function MyInvoicesPage() {
   const [detailId, setDetailId] = useState(null);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-5xl mx-auto px-4 py-8 animate-fade-in-up">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">🧾 Hóa đơn của tôi</h1>
         <Link to="/my-bookings" className="btn-outline text-sm">← Đặt phòng</Link>

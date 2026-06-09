@@ -17,7 +17,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10">
+    <div className="max-w-5xl mx-auto px-4 py-10 animate-fade-in-up">
       <h1 className="text-3xl font-bold mb-2">Liên hệ với chúng tôi</h1>
       <p className="text-gray-600 mb-8">Có câu hỏi hoặc cần hỗ trợ? Hãy gửi tin nhắn — chúng tôi sẽ phản hồi sớm nhất.</p>
 

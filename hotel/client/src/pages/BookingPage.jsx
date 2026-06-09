@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
-import { useGetRoomQuery } from '../features/rooms/roomsApi';
+import { useGetRoomQuery, useRoomsByHotelQuery, useGetMultiRoomQuoteQuery } from '../features/rooms/roomsApi';
 import { useCreateBookingMutation } from '../features/bookings/bookingsApi';
 import { useValidateCouponMutation } from '../features/coupons/couponsApi';
 import Spinner from '../components/Spinner';
@@ -14,13 +14,30 @@ export default function BookingPage() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const roomId = params.get('roomId');
+  const roomIdsStr = params.get('roomIds') || '';
+  const roomId = params.get('roomId') || '';
+  const roomIds = roomIdsStr ? roomIdsStr.split(',') : roomId ? [roomId] : [];
+  const hotelId = params.get('hotelId') || '';
   const checkIn = params.get('checkIn') || dayjs().format('YYYY-MM-DD');
   const checkOut = params.get('checkOut') || dayjs().add(1, 'day').format('YYYY-MM-DD');
   const adults = Number(params.get('adults') || 2);
 
-  const { data, isLoading } = useGetRoomQuery(roomId, { skip: !roomId });
-  const room = data?.data?.room;
+  const { data: hotelRoomsData, isLoading: roomsLoading } = useRoomsByHotelQuery(hotelId, { skip: !hotelId });
+  const allRooms = hotelRoomsData?.data?.rooms || [];
+  const selectedRooms = allRooms.filter(r => roomIds.includes(r._id));
+
+  const { data: singleRoomData, isLoading: singleRoomLoading } = useGetRoomQuery(roomId, { skip: !!hotelId || !roomId });
+  const fallbackRoom = singleRoomData?.data?.room;
+
+  const finalRooms = hotelId ? selectedRooms : fallbackRoom ? [fallbackRoom] : [];
+  const loading = roomsLoading || singleRoomLoading;
+
+  const { data: quoteData, isLoading: quoteLoading } = useGetMultiRoomQuoteQuery(
+    { roomIds, checkIn, checkOut },
+    { skip: !roomIds.length || !checkIn || !checkOut }
+  );
+  const quote = quoteData?.data;
+
   const [step, setStep] = useState(1);
   const [createBooking, { isLoading: creating }] = useCreateBookingMutation();
   const [validateCoupon, { isLoading: validating }] = useValidateCouponMutation();
@@ -33,12 +50,12 @@ export default function BookingPage() {
     },
   });
 
-  if (isLoading) return <Spinner className="py-16" />;
-  if (!room) return <div className="p-8 text-center">Phòng không tồn tại.</div>;
+  if (loading || quoteLoading) return <Spinner className="py-16" />;
+  if (finalRooms.length === 0) return <div className="p-8 text-center">Phòng không tồn tại.</div>;
 
-  const nights = nightsBetween(checkIn, checkOut);
-  const roomTotal = (room.pricePerNight || 0) * nights;
-  const tax = Math.round(roomTotal * 0.08);
+  const nights = quote ? quote.nights : nightsBetween(checkIn, checkOut);
+  const roomTotal = quote ? (quote.pricing?.roomTotal || 0) : finalRooms.reduce((sum, r) => sum + (r.pricePerNight || 0), 0) * nights;
+  const tax = quote ? (quote.pricing?.tax || 0) : Math.round(roomTotal * 0.08);
   const subtotal = roomTotal + tax;
   const discount = coupon?.discount || 0;
   const total = Math.max(0, subtotal - discount);
@@ -46,7 +63,7 @@ export default function BookingPage() {
   const onApplyCoupon = async () => {
     if (!couponInput.trim()) return;
     try {
-      const res = await validateCoupon({ code: couponInput.trim(), amount: subtotal, roomId }).unwrap();
+      const res = await validateCoupon({ code: couponInput.trim(), amount: subtotal, roomId: roomIds[0] }).unwrap();
       setCoupon(res.data);
       toast.success(`Áp dụng mã ${res.data.code} - giảm ${res.data.discount.toLocaleString('vi-VN')}đ`);
     } catch (e) {
@@ -58,7 +75,8 @@ export default function BookingPage() {
   const onSubmit = async (guestInfo) => {
     try {
       const res = await createBooking({
-        roomId,
+        roomId: roomIds[0],
+        roomIds,
         checkIn,
         checkOut,
         guests: { adults, children: 0 },
@@ -66,7 +84,7 @@ export default function BookingPage() {
         specialRequests: guestInfo.specialRequests,
         couponCode: coupon?.code,
       }).unwrap();
-      toast.success('Đặt phòng thành công, vui lòng thanh toán!');
+      toast.info('Đang chuyển đến trang thanh toán...');
       navigate(`/payment/${res.data.booking._id}`);
     } catch (e) {
       toast.error(e?.data?.message || 'Đặt phòng thất bại');
@@ -74,30 +92,36 @@ export default function BookingPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in-up">
       {/* Stepper */}
-      <ol className="flex items-center justify-center gap-4 mb-8 text-sm">
+      <div className="relative flex items-center justify-center gap-4 mb-10 text-sm max-w-xl mx-auto">
+        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 -translate-y-1/2 -z-10" />
+        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-brand-600 -translate-y-1/2 -z-10 transition-all duration-500" style={{ width: step === 1 ? '0%' : step === 2 ? '50%' : '100%' }} />
         {['Chọn phòng', 'Thông tin khách', 'Thanh toán'].map((s, i) => (
-          <li key={s} className={`flex items-center gap-2 ${i + 1 <= step ? 'text-brand-700 font-medium' : 'text-gray-400'}`}>
-            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs ${i + 1 <= step ? 'bg-brand-600 text-white' : 'bg-gray-200'}`}>{i + 1}</span>
-            {s}
-          </li>
+          <div key={s} className="flex items-center bg-slate-50 px-4 py-1.5 rounded-full z-10 border border-gray-100 shadow-sm gap-2">
+            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${i + 1 <= step ? 'bg-brand-600 text-white shadow-md' : 'bg-gray-200 text-gray-500'}`}>{i + 1}</span>
+            <span className={`font-semibold ${i + 1 <= step ? 'text-brand-700' : 'text-gray-400'}`}>{s}</span>
+          </div>
         ))}
-      </ol>
+      </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Form */}
         <div className="lg:col-span-2 card p-6">
           {step === 1 && (
             <>
-              <h2 className="text-lg font-semibold mb-4">Xác nhận phòng đã chọn</h2>
-              <div className="flex gap-4 items-start mb-4">
-                <img src={room.images?.[0]?.url} alt="" className="w-32 h-24 object-cover rounded-lg" />
-                <div>
-                  <p className="font-semibold capitalize">{room.type} · Phòng {room.roomNumber}</p>
-                  <p className="text-sm text-gray-500">{room.bedType} · {room.size}m²</p>
-                  <p className="text-sm">Sức chứa: {room.capacity.adults} người lớn</p>
-                </div>
+              <h2 className="text-lg font-semibold mb-4">Xác nhận các phòng đã chọn</h2>
+              <div className="space-y-4 mb-6">
+                {finalRooms.map((r) => (
+                  <div key={r._id} className="flex gap-4 items-start pb-4 border-b border-gray-100 last:border-0 last:pb-0">
+                    <img src={r.images?.[0]?.url || 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=400&fit=crop'} alt="" className="w-32 h-24 object-cover rounded-lg" />
+                    <div>
+                      <p className="font-semibold capitalize">{r.type} · Phòng {r.roomNumber}</p>
+                      <p className="text-sm text-gray-500">{r.bedType} · {r.size}m²</p>
+                      <p className="text-sm">Sức chứa: {r.capacity?.adults} người lớn</p>
+                    </div>
+                  </div>
+                ))}
               </div>
               <button onClick={() => setStep(2)} className="btn-primary w-full">Tiếp tục →</button>
             </>
@@ -149,6 +173,38 @@ export default function BookingPage() {
           </div>
           <div className="border-t pt-3 space-y-2 text-sm">
             <div className="flex justify-between"><span>Phòng × {nights} đêm</span><span>{formatCurrency(roomTotal)}</span></div>
+
+            {quote?.roomBreakdowns?.map((breakdown, roomIdx) => (
+              <div key={breakdown.room || roomIdx} className="mb-4">
+                <p className="font-semibold text-gray-700 text-xs mb-1">
+                  Phòng {breakdown.roomNumber} ({breakdown.type}):
+                </p>
+                <div className="bg-gray-50 rounded-xl p-2.5 text-xs space-y-1.5 text-gray-500 max-h-36 overflow-y-auto border border-gray-100">
+                  {breakdown.perNight?.map((day, idx) => (
+                    <div key={idx} className="flex justify-between items-center">
+                      <span className="flex items-center gap-1.5">
+                        <span>Đêm {idx + 1} ({dayjs(day.date).format('DD/MM')})</span>
+                        {day.label && (
+                          <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold uppercase leading-none border ${
+                            day.label === 'Cuối tuần' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' :
+                            day.label === 'Mùa cao điểm' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                            'bg-teal-50 text-teal-700 border-teal-200'
+                          }`}>
+                            {day.label}
+                          </span>
+                        )}
+                      </span>
+                      <span className="font-medium text-gray-700">{formatCurrency(day.price)}</span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between border-t pt-1 font-semibold text-gray-700 mt-1">
+                    <span>Tổng phòng {breakdown.roomNumber}</span>
+                    <span>{formatCurrency(breakdown.roomTotal)}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+
             <div className="flex justify-between text-gray-600"><span>Thuế & phí (8%)</span><span>{formatCurrency(tax)}</span></div>
             {discount > 0 && (
               <div className="flex justify-between text-emerald-700">

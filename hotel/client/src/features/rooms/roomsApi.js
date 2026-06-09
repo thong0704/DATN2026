@@ -35,6 +35,12 @@ export const roomsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Room'],
     }),
+    getRoomQuote: b.query({
+      query: (params) => ({ url: '/rooms/quote', params }),
+    }),
+    getMultiRoomQuote: b.query({
+      query: (body) => ({ url: '/rooms/multi-quote', method: 'POST', body }),
+    }),
   }),
 });
 
@@ -47,4 +53,6 @@ export const {
   useDeleteRoomMutation,
   useUpdateRoomStatusMutation,
   useUploadRoomImagesMutation,
+  useGetRoomQuoteQuery,
+  useGetMultiRoomQuoteQuery,
 } = roomsApi;

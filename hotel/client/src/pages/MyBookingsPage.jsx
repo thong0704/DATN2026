@@ -36,7 +36,11 @@ function ReviewModal({ booking, onClose, onDone }) {
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4" onClick={onClose}>
       <div className="bg-white rounded-2xl p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-xl font-bold mb-1">Đánh giá kỳ nghỉ</h2>
-        <p className="text-sm text-gray-500 mb-4">{booking.hotel?.name} · Phòng {booking.room?.roomNumber}</p>
+        <p className="text-sm text-gray-500 mb-4">
+          {booking.hotel?.name} · {booking.rooms && booking.rooms.length > 0
+            ? booking.rooms.map(r => `Phòng ${r.room?.roomNumber || booking.room?.roomNumber}`).join(', ')
+            : `Phòng ${booking.room?.roomNumber}`}
+        </p>
 
         <div className="flex items-center gap-1 mb-4">
           {[1, 2, 3, 4, 5].map((n) => (
@@ -97,17 +101,19 @@ export default function MyBookingsPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-5xl mx-auto px-4 py-8 animate-fade-in-up">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">Đặt phòng của tôi</h1>
         <Link to="/my-invoices" className="btn-outline text-sm">🧾 Hóa đơn của tôi</Link>
       </div>
 
-      <div className="flex gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-4">
         {['', 'pending', 'confirmed', 'paid', 'checked_in', 'checked_out', 'cancelled'].map((s) => (
           <button key={s || 'all'}
             onClick={() => setStatus(s)}
-            className={`badge cursor-pointer ${status === s ? 'bg-brand-600 text-white' : 'bg-gray-100 text-gray-700'}`}>
+            className={`badge cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 ${
+              status === s ? 'bg-brand-600 text-white shadow-md shadow-brand-500/20' : 'bg-gray-150/70 text-gray-700 hover:bg-gray-200'
+            }`}>
             {s ? tStatus(s) : 'Tất cả'}
           </button>
         ))}
@@ -123,7 +129,11 @@ export default function MyBookingsPage() {
                 <img src={b.hotel?.images?.[0]?.url} alt="" className="w-24 h-20 rounded-lg object-cover" />
                 <div className="flex-1 min-w-[200px]">
                   <p className="font-semibold">{b.hotel?.name}</p>
-                  <p className="text-sm text-gray-500">{tRoomType(b.room?.type)} · Phòng {b.room?.roomNumber}</p>
+                  <p className="text-sm text-gray-500">
+                    {b.rooms && b.rooms.length > 0
+                      ? `${tRoomType(b.rooms[0].room?.type || b.room?.type)} · ${b.rooms.map(r => `Phòng ${r.room?.roomNumber || b.room?.roomNumber}`).join(', ')}`
+                      : `${tRoomType(b.room?.type)} · Phòng ${b.room?.roomNumber}`}
+                  </p>
                   <p className="text-xs text-gray-500">{formatDate(b.checkIn)} → {formatDate(b.checkOut)} · {b.nights} đêm</p>
                 </div>
                 <div className="text-right">

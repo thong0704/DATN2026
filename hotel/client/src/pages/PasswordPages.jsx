@@ -12,7 +12,7 @@ export function ForgotPasswordPage() {
     try { await doForgot(data).unwrap(); setSent(true); } catch (e) { toast.error(e?.data?.message); }
   };
   return (
-    <div className="max-w-md mx-auto px-4 py-12">
+    <div className="max-w-md mx-auto px-4 py-12 animate-fade-in-up">
       <div className="card p-6">
         <h1 className="text-xl font-bold mb-2">Quên mật khẩu</h1>
         {sent ? (
@@ -42,7 +42,7 @@ export function ResetPasswordPage() {
     } catch (e) { toast.error(e?.data?.message); }
   };
   return (
-    <div className="max-w-md mx-auto px-4 py-12">
+    <div className="max-w-md mx-auto px-4 py-12 animate-fade-in-up">
       <div className="card p-6">
         <h1 className="text-xl font-bold mb-2">Đặt lại mật khẩu</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">

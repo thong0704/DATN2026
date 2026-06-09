@@ -8,7 +8,7 @@ export default function ArticlesPage() {
   const articles = data?.data?.articles || [];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="max-w-6xl mx-auto px-4 py-10 animate-fade-in-up">
       <h1 className="text-3xl font-bold mb-2">Khuyến mãi & Bài viết</h1>
       <p className="text-gray-600 mb-8">Cập nhật ưu đãi mới nhất, mẹo du lịch và mã giảm giá hấp dẫn.</p>
 
@@ -17,9 +17,9 @@ export default function ArticlesPage() {
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {articles.map((a) => (
-            <Link key={a._id} to={`/articles/${a.slug}`} className="card overflow-hidden hover:shadow-lg transition">
+            <Link key={a._id} to={`/articles/${a.slug}`} className="card overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
               {a.coverImage ? (
-                <img src={a.coverImage} alt={a.title} className="w-full h-44 object-cover" />
+                <img src={a.coverImage} alt={a.title} className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500" />
               ) : (
                 <div className="w-full h-44 bg-gradient-to-br from-brand-100 to-brand-200" />
               )}

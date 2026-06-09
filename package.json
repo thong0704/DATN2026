@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "build": "npm run build --prefix hotel/client",
+    "dev:client": "npm run dev --prefix hotel/client",
+    "dev:server": "npm run dev --prefix hotel/server",
+    "install:all": "npm install --prefix hotel/client && npm install --prefix hotel/server"
+  },
   "devDependencies": {
     "docx": "^9.7.1",
     "html-docx-js": "^0.3.1",

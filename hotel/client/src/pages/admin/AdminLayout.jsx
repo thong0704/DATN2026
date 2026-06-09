@@ -12,6 +12,7 @@ const NAV = [
   { to: '/admin/hotels', label: 'Quản lý khách sạn', icon: '🏨' },
   { to: '/admin/rooms', label: 'Quản lý phòng', icon: '🛏️' },
   { to: '/admin/coupons', label: 'Mã giảm giá', icon: '🎟️' },
+  { to: '/admin/dynamic-pricing', label: 'Giá động', icon: '⚡' },
   { to: '/admin/banners', label: 'Banner & Điểm đến', icon: '🖼️' },
   { to: '/admin/articles', label: 'Bài viết', icon: '📝' },
   { to: '/admin/contacts', label: 'Liên hệ', icon: '📬' },

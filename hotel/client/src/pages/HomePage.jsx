@@ -41,45 +41,52 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section
-        className="relative flex min-h-[640px] items-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-900/45 to-cyan-900/55" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_50%,rgba(0,0,0,0.4))]" />
+      <section className="relative flex min-h-[640px] items-center overflow-hidden">
+        {/* Background Image with Ken Burns Effect */}
+        <div
+          className="absolute inset-0 bg-cover bg-center animate-ken-burns"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/80 via-slate-900/45 to-cyan-950/55" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_40%,rgba(0,0,0,0.5))]" />
         <div className="relative mx-auto w-full max-w-7xl px-4 pb-32 pt-16 text-center text-white md:pb-44 md:pt-24">
-          <div className="animate-fade-in-up">
-            <span className="mb-6 inline-block rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-semibold backdrop-blur-md">
+          <div className="flex flex-col items-center">
+            <span className="mb-6 inline-block rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-semibold backdrop-blur-md animate-fade-in-up animation-fill-both">
               ✨ Trải nghiệm nghỉ dưỡng đẳng cấp
             </span>
-            <h1 className="mb-4 text-4xl font-extrabold leading-tight md:text-6xl">
+            <h1 className="mb-4 text-4xl font-extrabold leading-tight md:text-6xl animate-fade-in-up delay-150 animation-fill-both">
               {heroTitle}
             </h1>
-            <p className="mx-auto mb-7 max-w-2xl text-lg text-slate-200 md:text-xl">
+            <p className="mx-auto mb-7 max-w-2xl text-lg text-slate-205 md:text-xl animate-fade-in-up delay-300 animation-fill-both">
               {heroSubtitle}
             </p>
-            <div className="flex justify-center gap-1 text-2xl text-amber-300">
+            <div className="flex justify-center gap-1 text-2xl text-amber-300 animate-fade-in-up delay-450 animation-fill-both">
               {'★★★★★'}
             </div>
           </div>
         </div>
 
         {/* Search bar overlapping hero bottom */}
-        <div className="absolute -bottom-16 left-1/2 w-full max-w-5xl -translate-x-1/2 px-4">
-          <form onSubmit={onSearch} className="surface p-6 md:p-8">
-            <h2 className="mb-5 flex items-center gap-2 text-lg font-bold text-gray-800">
-              <span className="w-8 h-8 rounded-lg bg-brand-100 flex items-center justify-center">
-                <svg className="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-              </span>
-              Tìm phòng khách sạn
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
-              <div className="md:col-span-2">
-                <label className="label flex items-center gap-1">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                  Địa Điểm
+        <div className="absolute -bottom-20 left-1/2 w-full max-w-5xl -translate-x-1/2 px-4">
+          <form onSubmit={onSearch} className="rounded-3xl bg-white/95 shadow-2xl shadow-black/10 backdrop-blur-xl border border-white/60 p-5 md:p-7 transition-all duration-300 hover:shadow-2xl hover:shadow-brand-500/10">
+            {/* Row 1: All fields */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 md:gap-4 items-end">
+              {/* Địa điểm */}
+              <div className="lg:col-span-4 group">
+                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-md bg-brand-50 text-brand-500">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  </span>
+                  Địa điểm
                 </label>
-                <input type="text" className="input" placeholder="Hà Nội, Đà Nẵng, Nha Trang..." value={city} onChange={(e) => setCity(e.target.value)} list="city-suggestions" />
+                <input
+                  type="text"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50/80 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none transition-all duration-200 focus:border-brand-400 focus:bg-white focus:ring-2 focus:ring-brand-100"
+                  placeholder="Nhập thành phố, điểm đến..."
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  list="city-suggestions"
+                />
                 <datalist id="city-suggestions">
                   <option value="Hà Nội" />
                   <option value="Đà Nẵng" />
@@ -91,51 +98,102 @@ export default function HomePage() {
                   <option value="Vũng Tàu" />
                 </datalist>
               </div>
-              <div>
-                <label className="label flex items-center gap-1">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                  Ngày Nhận Phòng
+
+              {/* Ngày nhận phòng */}
+              <div className="lg:col-span-2">
+                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-md bg-emerald-50 text-emerald-500">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                  </span>
+                  Nhận phòng
                 </label>
-                <input type="date" className="input" value={checkIn} min={today} onChange={(e) => setCheckIn(e.target.value)} />
+                <input
+                  type="date"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50/80 px-4 py-3 text-sm text-gray-800 outline-none transition-all duration-200 focus:border-brand-400 focus:bg-white focus:ring-2 focus:ring-brand-100"
+                  value={checkIn}
+                  min={today}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                />
               </div>
-              <div>
-                <label className="label flex items-center gap-1">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                  Ngày Trả Phòng
+
+              {/* Ngày trả phòng */}
+              <div className="lg:col-span-2">
+                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-md bg-orange-50 text-orange-500">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                  </span>
+                  Trả phòng
                 </label>
-                <input type="date" className="input" value={checkOut} min={checkIn} onChange={(e) => setCheckOut(e.target.value)} />
+                <input
+                  type="date"
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50/80 px-4 py-3 text-sm text-gray-800 outline-none transition-all duration-200 focus:border-brand-400 focus:bg-white focus:ring-2 focus:ring-brand-100"
+                  value={checkOut}
+                  min={checkIn}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                />
               </div>
-              <div>
-                <label className="label flex items-center gap-1">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                  Người Lớn
+
+              {/* Người lớn */}
+              <div className="lg:col-span-2">
+                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-md bg-blue-50 text-blue-500">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                  </span>
+                  Khách
                 </label>
-                <select className="input" value={adults} onChange={(e) => setAdults(Number(e.target.value))}>
-                  {[1,2,3,4,5,6,7,8,9,10].map((n) => <option key={n} value={n}>{n} người</option>)}
-                </select>
+                <div className="flex gap-2">
+                  <select
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50/80 px-3 py-3 text-sm text-gray-800 outline-none transition-all duration-200 focus:border-brand-400 focus:bg-white focus:ring-2 focus:ring-brand-100"
+                    value={adults}
+                    onChange={(e) => setAdults(Number(e.target.value))}
+                  >
+                    {[1,2,3,4,5,6,7,8,9,10].map((n) => <option key={n} value={n}>{n} lớn</option>)}
+                  </select>
+                  <select
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50/80 px-3 py-3 text-sm text-gray-800 outline-none transition-all duration-200 focus:border-brand-400 focus:bg-white focus:ring-2 focus:ring-brand-100"
+                    value={children}
+                    onChange={(e) => setChildren(Number(e.target.value))}
+                  >
+                    {[0,1,2,3,4,5].map((n) => <option key={n} value={n}>{n} nhỏ</option>)}
+                  </select>
+                </div>
               </div>
-              <div>
-                <label className="label flex items-center gap-1">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                  Trẻ Em
-                </label>
-                <select className="input" value={children} onChange={(e) => setChildren(Number(e.target.value))}>
-                  {[0,1,2,3,4,5].map((n) => <option key={n} value={n}>{n} trẻ em</option>)}
-                </select>
-              </div>
-              <div>
-                <button type="submit" className="btn-primary w-full !py-3 text-base">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                  Tìm Phòng
+
+              {/* Button */}
+              <div className="lg:col-span-2">
+                <button
+                  type="submit"
+                  className="group/btn relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-brand-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/30 hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <span className="absolute inset-0 bg-gradient-to-r from-brand-500 to-brand-400 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
+                  <span className="relative flex items-center justify-center gap-2">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    Tìm phòng
+                  </span>
                 </button>
               </div>
+            </div>
+
+            {/* Quick tags */}
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="text-xs text-gray-400">Phổ biến:</span>
+              {['Đà Nẵng', 'Nha Trang', 'Phú Quốc', 'Đà Lạt'].map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => setCity(tag)}
+                  className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-medium text-gray-600 transition-all duration-200 hover:border-brand-300 hover:bg-brand-50 hover:text-brand-600"
+                >
+                  {tag}
+                </button>
+              ))}
             </div>
           </form>
         </div>
       </section>
 
       {/* Room list */}
-      <section className="mx-auto max-w-7xl px-4 pb-12 pt-24">
+      <section className="mx-auto max-w-7xl px-4 pb-12 pt-28">
         <div className="text-center mb-10">
           <span className="inline-block px-3 py-1 rounded-full bg-brand-50 text-brand-600 text-xs font-semibold uppercase tracking-wider mb-3">Khách sạn nổi bật</span>
           <h2 className="text-3xl font-extrabold text-gray-900 md:text-4xl">Danh sách khách sạn nổi bật</h2>

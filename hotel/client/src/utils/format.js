@@ -77,3 +77,38 @@ export const tStatus = (s) => STATUS_LABELS[s] || s || '';
 export const tPaymentStatus = (s) => PAYMENT_STATUS_LABELS[s] || s || '';
 export const tRole = (r) => ROLE_LABELS[r] || r || '';
 export const tRoomType = (t) => ROOM_TYPE_LABELS[t] || t || '';
+
+const AMENITY_LABELS = {
+  // Hotel amenities
+  wifi: 'WiFi',
+  pool: 'Hồ bơi',
+  gym: 'Gym',
+  spa: 'Spa',
+  parking: 'Bãi đỗ xe',
+  restaurant: 'Nhà hàng',
+  bar: 'Bar',
+  airport_shuttle: 'Đưa đón sân bay',
+  laundry: 'Giặt ủi',
+  concierge: 'Hỗ trợ khách hàng',
+
+  // Room amenities
+  air_conditioning: 'Điều hòa',
+  tv: 'TV',
+  fridge: 'Tủ lạnh',
+  refrigerator: 'Tủ lạnh',
+  safe: 'Két sắt',
+  hair_dryer: 'Máy sấy tóc',
+  bathtub: 'Bồn tắm',
+  balcony: 'Ban công',
+  kitchenette: 'Bếp nhỏ',
+  washing_machine: 'Máy giặt',
+  desk: 'Bàn làm việc',
+  minibar: 'Minibar',
+};
+
+export const tAmenity = (a) => {
+  if (!a) return '';
+  const key = a.toLowerCase().trim().replace(/\s+/g, '_');
+  return AMENITY_LABELS[key] || a;
+};
+
