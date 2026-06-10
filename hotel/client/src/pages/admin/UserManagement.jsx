@@ -70,26 +70,25 @@ export default function UserManagement() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="rounded-2xl overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-600 px-6 py-5">
-          <h1 className="text-2xl font-bold text-white">👥 Quản lý người dùng</h1>
-          <p className="text-rose-100/80 text-sm mt-1">{users.length} người dùng trong hệ thống</p>
+      {/* Header */}
+      <div className="bg-white rounded-xl border border-border p-6 shadow-sm flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý người dùng</h1>
+          <p className="text-slate-400 text-xs mt-1 font-light">{users.length} người dùng trong hệ thống</p>
         </div>
-        <div className="bg-white border-x border-b border-gray-200 px-6 py-3 flex items-center justify-between gap-3 flex-wrap">
-          <input className="input max-w-xs" placeholder="🔍 Tìm tên / email..." value={q} onChange={(e) => setQ(e.target.value)} />
-          <button onClick={openCreate} className="btn-primary text-sm px-4 py-2 flex items-center gap-1.5">
-            <span className="text-base">+</span> Tạo người dùng
+        <div className="flex items-center gap-3 flex-wrap">
+          <input className="input max-w-xs" placeholder="Tìm tên / email..." value={q} onChange={(e) => setQ(e.target.value)} />
+          <button onClick={openCreate} className="btn-accent text-xs px-5 py-2.5 rounded-lg flex items-center gap-1.5">
+            + Tạo người dùng
           </button>
         </div>
       </div>
 
       {/* Create / Edit Form */}
       {(showCreateForm || editingUser) && (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
-          <h2 className="font-bold text-base mb-4 flex items-center gap-2">
-            <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-white text-sm ${editingUser ? 'bg-gradient-to-br from-amber-400 to-orange-500' : 'bg-gradient-to-br from-rose-400 to-pink-600'}`}>
-              {editingUser ? '✏' : '+'}
-            </span>
+        <div className="bg-white rounded-xl border border-border shadow-sm p-6">
+          <h2 className="font-serif-display font-medium text-lg text-primary mb-4 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-accent rounded-full" />
             {editingUser ? 'Sửa người dùng' : 'Tạo người dùng mới'}
           </h2>
           <form onSubmit={editingUser ? onSaveEdit : onSaveCreate} className="grid sm:grid-cols-2 gap-4 max-w-2xl">
@@ -116,25 +115,25 @@ export default function UserManagement() {
 
       {/* Table */}
       {isLoading ? <Spinner className="py-12" /> : (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gradient-to-r from-slate-700 to-slate-800 text-white">
-                  <th className="p-3 text-left font-semibold">Người dùng</th>
-                  <th className="p-3 text-left font-semibold">Email</th>
-                  <th className="p-3 text-left font-semibold">Vai trò</th>
-                  <th className="p-3 text-left font-semibold">Trạng thái</th>
-                  <th className="p-3 text-left font-semibold">Điểm</th>
-                  <th className="p-3 text-center font-semibold">Hành động</th>
+                <tr className="bg-[#FAF9F6] border-b border-border text-primary">
+                  <th className="p-3.5 text-left font-bold text-xs uppercase tracking-wider">Người dùng</th>
+                  <th className="p-3.5 text-left font-bold text-xs uppercase tracking-wider">Email</th>
+                  <th className="p-3.5 text-left font-bold text-xs uppercase tracking-wider">Vai trò</th>
+                  <th className="p-3.5 text-left font-bold text-xs uppercase tracking-wider">Trạng thái</th>
+                  <th className="p-3.5 text-left font-bold text-xs uppercase tracking-wider">Điểm</th>
+                  <th className="p-3.5 text-center font-bold text-xs uppercase tracking-wider">Hành động</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((u, i) => (
-                  <tr key={u._id} className={`border-b border-gray-100 hover:bg-indigo-50/30 transition-colors ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/40'}`}>
+                  <tr key={u._id} className={`border-b border-border hover:bg-[#FAF9F6]/40 transition-colors ${i % 2 === 0 ? 'bg-white' : 'bg-[#FAF9F6]/20'}`}>
                     <td className="p-3">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 bg-indigo-500">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 bg-accent">
                           {u.name?.charAt(0)?.toUpperCase()}
                         </div>
                         <span className="font-medium text-gray-900">{u.name}</span>
@@ -142,14 +141,14 @@ export default function UserManagement() {
                     </td>
                     <td className="p-3 text-gray-600">{u.email}</td>
                     <td className="p-3">
-                      <select className="text-xs border border-gray-200 rounded-lg px-2 py-1 bg-white focus:outline-none focus:border-rose-400" value={u.role}
+                      <select className="text-xs border border-border rounded-lg px-2.5 py-1.5 bg-white focus:outline-none focus:border-accent" value={u.role}
                         onChange={(e) => onChangeRole(u._id, e.target.value)}>
                         {ROLES.map((r) => <option key={r} value={r}>{tRole(r)}</option>)}
                       </select>
                     </td>
                     <td className="p-3">
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${u.isBlocked ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
-                        {u.isBlocked ? '🚫 Bị chặn' : '✅ Hoạt động'}
+                        {u.isBlocked ? 'Bị chặn' : 'Hoạt động'}
                       </span>
                     </td>
                     <td className="p-3">

@@ -27,24 +27,32 @@ export default function Navbar() {
   };
 
   const linkCls = ({ isActive }) =>
-    `px-3 py-2 text-sm font-semibold rounded-xl transition-all duration-200 ${
-      isActive ? 'text-brand-700 bg-brand-50 shadow-sm' : 'text-slate-600 hover:text-brand-700 hover:bg-slate-50'
+    `relative py-2 text-xs font-semibold uppercase tracking-widest transition-all duration-300 flex items-center ${
+      isActive 
+        ? 'text-accent font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-accent' 
+        : 'text-slate-600 hover:text-primary after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full hover:after:left-0 after:transition-all after:duration-300'
     }`;
 
   const mobileLinkCls = ({ isActive }) =>
-    `block rounded-xl px-3 py-2 text-sm font-semibold ${
-      isActive ? 'bg-brand-50 text-brand-700' : 'text-slate-700 hover:bg-slate-50'
+    `block rounded-xl px-4 py-2.5 text-sm font-semibold tracking-wide transition-all ${
+      isActive ? 'bg-brand-50 text-accent font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-primary'
     }`;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/70 bg-white/75 backdrop-blur-2xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        <Link to="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-600 to-cyan-500 text-sm font-black text-white shadow-lg">2T</span>
-          <span className="text-xl font-extrabold tracking-tight text-slate-900">Hotel</span>
+    <header className="sticky top-0 z-40 border-b border-border/30 bg-white/80 backdrop-blur-md anim-load-nav">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2.5 group" onClick={() => setMobileOpen(false)}>
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-xs font-semibold text-accent border border-accent/20 shadow-md group-hover:bg-accent group-hover:text-white group-hover:border-accent transition-all duration-500">
+            II
+          </span>
+          <span className="text-xl font-medium tracking-widest text-primary font-serif-display group-hover:text-accent transition-colors duration-500">
+            2T HOTEL
+          </span>
         </Link>
 
-        <div className="hidden items-center gap-1 md:flex">
+        {/* Navigation Links */}
+        <div className="hidden items-center gap-8 md:flex">
           <NavLink to="/" end className={linkCls}>Trang chủ</NavLink>
           <NavLink to="/hotels" className={linkCls}>Khách sạn</NavLink>
           <NavLink to="/articles" className={linkCls}>Bài viết</NavLink>
@@ -52,16 +60,27 @@ export default function Navbar() {
           <NavLink to="/contact" className={linkCls}>Liên hệ</NavLink>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* User Menu / CTA */}
+        <div className="flex items-center gap-4">
           {!isAuthenticated ? (
             <>
-              <Link to="/login" className="hidden text-sm font-semibold text-slate-600 transition hover:text-brand-700 sm:block">Đăng nhập</Link>
-              <Link to="/register" className="rounded-xl bg-gradient-to-r from-brand-600 to-cyan-600 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:from-brand-700 hover:to-cyan-700">Đăng ký</Link>
+              <Link 
+                to="/login" 
+                className="hidden text-xs font-semibold uppercase tracking-widest text-slate-600 hover:text-primary transition-colors duration-300 sm:block"
+              >
+                Đăng nhập
+              </Link>
+              <Link 
+                to="/register" 
+                className="rounded-full bg-accent text-white hover:bg-primary border border-accent hover:border-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+              >
+                Đăng ký
+              </Link>
             </>
           ) : (
             <Menu as="div" className="relative">
-              <Menu.Button className="flex items-center gap-2 rounded-full border border-slate-100 bg-white px-2 py-1.5 text-sm font-medium transition hover:shadow-md">
-                <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-brand-500 to-cyan-600 text-xs font-bold text-white ring-2 ring-white">
+              <Menu.Button className="flex items-center gap-2.5 rounded-full border border-border bg-white px-2.5 py-1.5 text-sm font-medium transition hover:shadow-md hover:border-accent/30">
+                <span className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary text-xs font-semibold text-accent ring-1 ring-border">
                   {avatarUrl && !avatarLoadFailed ? (
                     <img
                       src={avatarUrl}
@@ -73,43 +92,47 @@ export default function Navbar() {
                     user?.name?.[0]?.toUpperCase() || 'U'
                   )}
                 </span>
-                <span className="hidden text-slate-700 sm:block">{user?.name}</span>
+                <span className="hidden text-xs font-semibold uppercase tracking-wider text-slate-700 sm:block">{user?.name}</span>
               </Menu.Button>
-              <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="transition ease-in duration-75" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
-                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right rounded-2xl border border-slate-100 bg-white p-2 shadow-xl focus:outline-none">
-                  <Menu.Item>{({ active }) => <Link to="/profile" className={`block rounded-xl px-3 py-2 text-sm ${active ? 'bg-slate-50' : ''}`}>Hồ sơ</Link>}</Menu.Item>
-                  <Menu.Item>{({ active }) => <Link to="/my-bookings" className={`block rounded-xl px-3 py-2 text-sm ${active ? 'bg-slate-50' : ''}`}>Đặt phòng của tôi</Link>}</Menu.Item>
+              <Transition 
+                as={Fragment} 
+                enter="transition ease-out duration-100" 
+                enterFrom="opacity-0 scale-95" 
+                enterTo="opacity-100 scale-100" 
+                leave="transition ease-in duration-75" 
+                leaveFrom="opacity-100 scale-100" 
+                leaveTo="opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 mt-2.5 w-56 origin-top-right rounded-2xl border border-border bg-white p-2 shadow-xl focus:outline-none z-50">
+                  <Menu.Item>{({ active }) => <Link to="/profile" className={`block rounded-xl px-4 py-2.5 text-xs font-medium uppercase tracking-wider ${active ? 'bg-slate-50 text-accent' : 'text-slate-700'}`}>Hồ sơ</Link>}</Menu.Item>
+                  <Menu.Item>{({ active }) => <Link to="/my-bookings" className={`block rounded-xl px-4 py-2.5 text-xs font-medium uppercase tracking-wider ${active ? 'bg-slate-50 text-accent' : 'text-slate-700'}`}>Đặt phòng của tôi</Link>}</Menu.Item>
                   {isStaff && (
-                    <Menu.Item>{({ active }) => <Link to="/admin" className={`block rounded-xl px-3 py-2 text-sm ${active ? 'bg-slate-50' : ''}`}>Trang quản trị</Link>}</Menu.Item>
+                    <Menu.Item>{({ active }) => <Link to="/admin" className={`block rounded-xl px-4 py-2.5 text-xs font-medium uppercase tracking-wider ${active ? 'bg-slate-50 text-accent' : 'text-slate-700'}`}>Trang quản trị</Link>}</Menu.Item>
                   )}
-                  <div className="my-1 border-t border-slate-100" />
-                  <Menu.Item>{({ active }) => <button onClick={onLogout} className={`w-full rounded-xl px-3 py-2 text-left text-sm text-red-600 ${active ? 'bg-red-50' : ''}`}>Đăng xuất</button>}</Menu.Item>
+                  <div className="my-1 border-t border-border" />
+                  <Menu.Item>{({ active }) => <button onClick={onLogout} className={`w-full rounded-xl px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-red-600 ${active ? 'bg-red-50' : ''}`}>Đăng xuất</button>}</Menu.Item>
                 </Menu.Items>
               </Transition>
             </Menu>
           )}
 
+          {/* Mobile Menu Toggle (Morphing Hamburger) */}
           <button
             type="button"
             onClick={() => setMobileOpen((v) => !v)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-700 md:hidden"
+            className="flex flex-col h-9 w-9 items-center justify-center gap-1 rounded-lg border border-border text-slate-700 hover:border-accent hover:text-accent transition-colors duration-300 md:hidden relative focus:outline-none"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? (
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
+            <span className={`h-[1.5px] w-4.5 bg-current rounded-full transition-transform duration-300 ${mobileOpen ? 'rotate-45 translate-y-[5px]' : ''}`} />
+            <span className={`h-[1.5px] w-4.5 bg-current rounded-full transition-opacity duration-300 ${mobileOpen ? 'opacity-0' : 'opacity-100'}`} />
+            <span className={`h-[1.5px] w-4.5 bg-current rounded-full transition-transform duration-300 ${mobileOpen ? '-rotate-45 -translate-y-[5px]' : ''}`} />
           </button>
         </div>
       </nav>
 
+      {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="border-t border-slate-100 bg-white px-4 pb-4 pt-3 md:hidden">
+        <div className="border-t border-border/50 bg-white/95 px-6 pb-6 pt-4 md:hidden animate-fade-in">
           <div className="space-y-1">
             <NavLink to="/" end className={mobileLinkCls} onClick={() => setMobileOpen(false)}>Trang chủ</NavLink>
             <NavLink to="/hotels" className={mobileLinkCls} onClick={() => setMobileOpen(false)}>Khách sạn</NavLink>
@@ -118,8 +141,15 @@ export default function Navbar() {
             <NavLink to="/contact" className={mobileLinkCls} onClick={() => setMobileOpen(false)}>Liên hệ</NavLink>
             {!isAuthenticated && (
               <>
+                <div className="my-2 border-t border-border" />
                 <NavLink to="/login" className={mobileLinkCls} onClick={() => setMobileOpen(false)}>Đăng nhập</NavLink>
-                <Link to="/register" className="mt-2 block rounded-xl bg-gradient-to-r from-brand-600 to-cyan-600 px-3 py-2 text-center text-sm font-semibold text-white" onClick={() => setMobileOpen(false)}>Đăng ký</Link>
+                <Link 
+                  to="/register" 
+                  className="mt-2 block rounded-xl bg-accent px-4 py-2.5 text-center text-sm font-semibold uppercase tracking-wider text-white shadow-md"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Đăng ký
+                </Link>
               </>
             )}
           </div>

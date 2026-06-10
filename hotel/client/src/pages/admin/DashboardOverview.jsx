@@ -24,25 +24,47 @@ const PERIODS = [
 ];
 
 const ROOM_TYPE_COLORS = {
-  basic: '#94a3b8',
-  standard: '#8b5cf6',
-  vip: '#ef4444',
+  basic: '#A89E92',     // Clay muted
+  standard: '#10B981',  // Bright emerald green
+  vip: '#F59E0B',       // Bright amber gold
 };
 
-const StatCard = ({ title, value, icon, subtitle, color = 'text-teal-600 bg-teal-50' }) => (
-  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
-    <div className="flex items-center justify-between">
-      <div>
-        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">{title}</p>
-        <p className="text-2xl font-bold text-gray-900">{value}</p>
+const THEMES = {
+  emerald: {
+    border: 'hover:border-emerald-500/40 hover:bg-emerald-50/10',
+    icon: 'text-emerald-600 bg-emerald-50 group-hover:bg-emerald-600 group-hover:text-white'
+  },
+  amber: {
+    border: 'hover:border-amber-500/40 hover:bg-amber-50/10',
+    icon: 'text-amber-600 bg-amber-50 group-hover:bg-amber-600 group-hover:text-white'
+  },
+  sky: {
+    border: 'hover:border-sky-500/40 hover:bg-sky-50/10',
+    icon: 'text-sky-600 bg-sky-50 group-hover:bg-sky-600 group-hover:text-white'
+  },
+  indigo: {
+    border: 'hover:border-indigo-500/40 hover:bg-indigo-50/10',
+    icon: 'text-indigo-600 bg-indigo-50 group-hover:bg-indigo-600 group-hover:text-white'
+  }
+};
+
+const StatCard = ({ title, value, icon, subtitle, theme = 'amber' }) => {
+  const styles = THEMES[theme] || THEMES.amber;
+  return (
+    <div className={`bg-surface rounded-xl border border-border p-6 transition-all duration-300 group shadow-sm ${styles.border}`}>
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-[10px] text-slate-400 uppercase tracking-[0.08em] font-bold mb-1">{title}</p>
+          <p className="text-3xl font-serif-display font-medium text-primary">{value}</p>
+        </div>
+        <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-350 ${styles.icon}`}>
+          {icon}
+        </div>
       </div>
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${color}`}>
-        {icon}
-      </div>
+      {subtitle && <p className="text-xs text-slate-400 mt-4 border-t border-border pt-3 font-light">{subtitle}</p>}
     </div>
-    {subtitle && <p className="text-xs text-gray-400 mt-3 border-t border-gray-100 pt-2">{subtitle}</p>}
-  </div>
-);
+  );
+};
 
 export default function DashboardOverview() {
   const [period, setPeriod] = useState('month');
@@ -103,7 +125,6 @@ export default function DashboardOverview() {
   const totalReviews = reviewStats.total || 0;
   const maxReviewCount = Math.max(1, ...Object.values(reviewStats.breakdown));
 
-  // Smart Y-axis formatter: auto K/M/B based on value
   const moneyTick = (v) => {
     if (!v) return '0';
     if (v >= 1_000_000_000) return (v / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'B';
@@ -138,41 +159,61 @@ export default function DashboardOverview() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="rounded-2xl overflow-hidden shadow-sm">
-        <div className="px-6 py-5" style={{ background: 'linear-gradient(135deg, #1a8a7d, #1b6b6b)' }}>
-          <h1 className="text-2xl font-bold text-white">📊 Dashboard Quản Lý</h1>
-          <p className="text-white/70 text-sm mt-1">Tổng quan hoạt động khách sạn và thống kê chi tiết</p>
+    <div className="space-y-8">
+      {/* Header Banner */}
+      <div className="rounded-xl overflow-hidden border border-border bg-surface shadow-sm">
+        <div className="px-6 py-6 border-b border-border bg-surface text-left">
+          <h1 className="text-2xl font-medium text-primary font-serif-display">
+            Dashboard <span className="font-serif-display italic text-accent font-normal">Quản Lý</span>
+          </h1>
+          <p className="text-slate-500 text-xs mt-1 font-light">Thống kê dữ liệu hoạt động chuỗi khách sạn 2T Hotel</p>
         </div>
-        <div className="bg-white border-x border-b border-gray-200 px-6 py-3 flex flex-wrap items-center justify-between gap-2">
+        <div className="bg-surface px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+          {/* Period Filter Tabs */}
           <div className="flex flex-wrap items-center gap-2">
             {PERIODS.map((p) => (
-              <button key={p.value} onClick={() => setPeriod(p.value)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${period === p.value ? 'text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-                style={period === p.value ? { background: 'linear-gradient(135deg, #1a8a7d, #1b6b6b)' } : {}}>
+              <button 
+                key={p.value} 
+                onClick={() => setPeriod(p.value)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${
+                  period === p.value 
+                    ? 'bg-accent text-white border-accent shadow-sm' 
+                    : 'bg-transparent text-slate-650 border-border hover:bg-[#FDF6E2] hover:text-accent'
+                }`}
+              >
                 {p.label}
               </button>
             ))}
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Custom Date Pickers & Actions */}
+          <div className="flex flex-wrap items-center gap-3">
             {(period === 'day' || period === 'week') && (
-              <input type="date" className="input !py-1.5 !w-auto" value={pickDate} onChange={(e) => setPickDate(e.target.value)} />
+              <input type="date" className="input !py-1.5 !px-3 !w-auto bg-surface" value={pickDate} onChange={(e) => setPickDate(e.target.value)} />
             )}
             {period === 'month' && (
-              <input type="month" className="input !py-1.5 !w-auto" value={pickMonth} onChange={(e) => setPickMonth(e.target.value)} />
+              <input type="month" className="input !py-1.5 !px-3 !w-auto bg-surface" value={pickMonth} onChange={(e) => setPickMonth(e.target.value)} />
             )}
             {period === 'year' && (
-              <input type="number" min="2000" max="2100" className="input !py-1.5 !w-24" value={pickYear} onChange={(e) => setPickYear(e.target.value)} />
+              <input type="number" min="2000" max="2100" className="input !py-1.5 !px-3 !w-20 bg-surface" value={pickYear} onChange={(e) => setPickYear(e.target.value)} />
             )}
-            <select value={hotelId} onChange={(e) => setHotelId(e.target.value)} className="input !py-1.5 !w-auto">
+            
+            <select value={hotelId} onChange={(e) => setHotelId(e.target.value)} className="input !py-1.5 !px-3 !w-auto bg-surface cursor-pointer">
               <option value="">Tất cả khách sạn</option>
               {hotels.map((h) => <option key={h._id} value={h._id}>{h.name}</option>)}
             </select>
-            <button onClick={() => refetch()} className="btn-outline text-sm flex items-center gap-1" disabled={isFetching}>
+            
+            <button 
+              onClick={() => refetch()} 
+              className="px-4 py-2 border border-border hover:bg-slate-50 hover:text-primary text-slate-800 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors flex items-center gap-1.5"
+              disabled={isFetching}
+            >
               <span className={isFetching ? 'animate-spin' : ''}>↻</span> Làm mới
             </button>
-            <button onClick={exportCSV} className="text-sm flex items-center gap-1.5 px-3 py-1.5 bg-teal-50 text-teal-700 rounded-lg border border-teal-200 hover:bg-teal-100 transition font-semibold">
+            
+            <button 
+              onClick={exportCSV} 
+              className="px-4 py-2 border border-border bg-transparent text-slate-800 hover:bg-slate-50 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors flex items-center gap-1.5"
+            >
               ⬇ Xuất CSV
             </button>
           </div>
@@ -181,108 +222,121 @@ export default function DashboardOverview() {
 
       {isLoading ? <Spinner className="py-16" /> : (
         <>
-          {/* Summary cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <StatCard
+          {/* Summary Cards */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+             <StatCard
               title="Doanh Thu"
               value={formatCurrency(summary.periodRevenue || 0)}
-              icon="💰"
+              icon={
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              }
               subtitle="So với kỳ trước"
-              color="text-teal-600 bg-teal-50"
+              theme="emerald"
             />
             <StatCard
               title="Đặt Phòng"
               value={summary.periodBookings || 0}
-              icon="🛒"
+              icon={
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+              }
               subtitle="Đơn đặt phòng mới"
-              color="text-blue-600 bg-blue-50"
+              theme="amber"
             />
             <StatCard
               title="Khách Hàng"
               value={summary.newCustomersInRange || 0}
-              icon="👥"
-              subtitle="Khách hàng mới"
-              color="text-purple-600 bg-purple-50"
+              icon={
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.97 5.97 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                </svg>
+              }
+              subtitle="Khách hàng mới tuyển"
+              theme="sky"
             />
             <StatCard
               title="Tỷ Lệ Lấp Đầy"
               value={`${summary.occupancyPercent || 0} %`}
-              icon="🏠"
-              subtitle={`${roomStats.occupied}/${roomStats.total} phòng đang dùng`}
-              color="text-amber-600 bg-amber-50"
+              icon={
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+              }
+              subtitle={`${roomStats.occupied}/${roomStats.total} phòng hoạt động`}
+              theme="indigo"
             />
           </div>
 
           {/* Recent Activity Table */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">Hoạt động gần đây</h2>
+          <div className="bg-surface rounded-xl border border-border p-6 text-left shadow-sm">
+            <h2 className="text-lg font-serif-display font-medium text-primary mb-4">Hoạt động gần đây</h2>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs">
                 <thead>
-                  <tr className="border-b border-gray-100">
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">Khách hàng</th>
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">Mã số</th>
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">Khách sạn</th>
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">Thời gian</th>
+                  <tr className="border-b border-border bg-slate-50">
+                    <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-405 uppercase tracking-[0.08em]">Khách hàng</th>
+                    <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-405 uppercase tracking-[0.08em]">Mã số</th>
+                    <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-405 uppercase tracking-[0.08em]">Khách sạn</th>
+                    <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-405 uppercase tracking-[0.08em]">Thời gian</th>
                   </tr>
                 </thead>
                 <tbody>
                   {(Array.isArray(recentBookings) ? recentBookings : []).slice(0, 5).map((booking) => {
                     const customerName = booking.user?.name || booking.contactInfo?.name || 'Khách';
                     const nameInitials = customerName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-                    const colors = ['#1a8a7d', '#2563eb', '#7c3aed', '#dc2626', '#ea580c'];
-                    const colorIdx = (customerName.charCodeAt(0) || 0) % colors.length;
                     return (
-                      <tr key={booking._id} className="border-b border-gray-50 hover:bg-gray-50/50 transition">
-                        <td className="py-3 px-2">
+                      <tr key={booking._id} className="border-b border-border hover:bg-slate-50/80 transition duration-200 h-[52px]">
+                        <td className="py-2 px-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
-                              style={{ background: colors[colorIdx] }}>
+                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 bg-accent">
                               {nameInitials}
                             </div>
-                            <span className="font-medium text-gray-900">{customerName}</span>
+                            <span className="font-semibold text-primary">{customerName}</span>
                           </div>
                         </td>
-                        <td className="py-3 px-2 text-gray-600">{booking.bookingCode || booking._id?.slice(-6).toUpperCase()}</td>
-                        <td className="py-3 px-2 text-gray-600">{booking.hotel?.name || '—'}</td>
-                        <td className="py-3 px-2 text-gray-500">{booking.createdAt ? new Date(booking.createdAt).toLocaleString('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}</td>
+                        <td className="py-2 px-4 text-slate-600 font-mono text-[13px]">{booking.bookingCode || booking._id?.slice(-6).toUpperCase()}</td>
+                        <td className="py-2 px-4 text-primary font-medium text-[13px]">{booking.hotel?.name || '—'}</td>
+                        <td className="py-2 px-4 text-slate-500">{booking.createdAt ? new Date(booking.createdAt).toLocaleString('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}</td>
                       </tr>
                     );
                   })}
                   {(!Array.isArray(recentBookings) || recentBookings.length === 0) && (
-                    <tr><td colSpan={4} className="py-8 text-center text-gray-400">Chưa có hoạt động</td></tr>
+                    <tr><td colSpan={4} className="py-8 text-center text-slate-400">Chưa có hoạt động</td></tr>
                   )}
                 </tbody>
               </table>
             </div>
           </div>
 
-          {/* Main combined chart */}
-          <div className="card p-5">
-            <h2 className="font-semibold mb-4 flex items-center gap-2">📈 Biểu Đồ Doanh Thu &amp; Đặt Phòng</h2>
+          {/* Main Chart */}
+          <div className="bg-surface rounded-xl border border-border p-6 text-left shadow-sm">
+            <h2 className="text-lg font-serif-display font-medium text-primary mb-5">📈 Biểu Đồ Doanh Thu &amp; Đặt Phòng</h2>
             <div style={{ width: '100%', height: 340 }}>
               <ResponsiveContainer>
                 <ComposedChart data={trend}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                  <XAxis dataKey="label" />
-                  <YAxis yAxisId="left" orientation="left" tickFormatter={moneyTick} />
-                  <YAxis yAxisId="right" orientation="right" allowDecimals={false} />
-                  <Tooltip formatter={(v, name) => name === 'Doanh thu' ? formatCurrency(v) : v} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" opacity={0.6} />
+                  <XAxis dataKey="label" tick={{ fill: '#5E6672', fontSize: 11 }} />
+                  <YAxis yAxisId="left" orientation="left" tickFormatter={moneyTick} tick={{ fill: '#5E6672', fontSize: 11 }} />
+                  <YAxis yAxisId="right" orientation="right" allowDecimals={false} tick={{ fill: '#5E6672', fontSize: 11 }} />
+                  <Tooltip formatter={(v, name) => name === 'Doanh thu' ? formatCurrency(v) : v} contentStyle={{ background: '#FFFFFF', borderColor: '#E5E7EB', borderRadius: 8 }} />
                   <Legend />
-                  <Bar yAxisId="left" dataKey="revenue" name="Doanh thu" fill="#0d9488" radius={[6, 6, 0, 0]} maxBarSize={60} />
-                  <Line yAxisId="right" type="monotone" dataKey="bookings" name="Đặt phòng" stroke="#f59e0b" strokeWidth={3} dot={{ r: 4 }} />
+                  <Bar yAxisId="left" dataKey="revenue" name="Doanh thu" fill="#10B981" radius={[4, 4, 0, 0]} maxBarSize={50} />
+                  <Line yAxisId="right" type="monotone" dataKey="bookings" name="Đặt phòng" stroke="#F59E0B" strokeWidth={2.5} dot={{ r: 4, fill: '#F59E0B' }} />
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
           </div>
 
-          {/* Three small panels: room type / occupancy / room stats */}
-          <div className="grid lg:grid-cols-3 gap-4">
-            {/* Room type distribution */}
-            <div className="card p-5">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">🏨 Phân Bổ Loại Phòng</h3>
+          {/* Secondary Stats Grid */}
+          <div className="grid lg:grid-cols-3 gap-6 text-left">
+            {/* Room Type */}
+            <div className="bg-surface rounded-xl border border-border p-6 shadow-sm">
+              <h3 className="text-md font-serif-display font-medium text-primary mb-4">🏨 Phân Bổ Loại Phòng</h3>
               {roomTypeDist.length === 0 ? (
-                <p className="text-sm text-gray-500 text-center py-8">Chưa có dữ liệu</p>
+                <p className="text-sm text-slate-400 text-center py-8">Chưa có dữ liệu</p>
               ) : (
                 <div style={{ width: '100%', height: 220 }}>
                   <ResponsiveContainer>
@@ -293,99 +347,109 @@ export default function DashboardOverview() {
                         nameKey="name"
                         outerRadius={80}
                         label={(entry) => `${entry.name} ${(entry.percent * 100).toFixed(0)}%`}
+                        labelLine={false}
                       >
                         {roomTypeDist.map((e, i) => (
-                          <Cell key={i} fill={ROOM_TYPE_COLORS[e.type] || '#94a3b8'} />
+                          <Cell key={i} fill={ROOM_TYPE_COLORS[e.type] || '#9CA3AF'} />
                         ))}
                       </Pie>
-                      <Tooltip />
+                      <Tooltip contentStyle={{ background: '#FFFFFF', borderColor: '#E5E7EB' }} />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
               )}
             </div>
 
-            {/* Occupancy trend (uses bookings count from trend as proxy) */}
-            <div className="card p-5">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">📊 Tỷ Lệ Lấp Đầy Theo Thời Gian</h3>
+            {/* Occupancy Trend */}
+            <div className="bg-surface rounded-xl border border-border p-6 shadow-sm">
+              <h3 className="text-md font-serif-display font-medium text-primary mb-4">📊 Tỷ Lệ Lấp Đầy Theo Thời Gian</h3>
               <div style={{ width: '100%', height: 220 }}>
                 <ResponsiveContainer>
                   <AreaChart data={trend}>
                     <defs>
                       <linearGradient id="occ" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#f97316" stopOpacity={0.6} />
-                        <stop offset="100%" stopColor="#f97316" stopOpacity={0.05} />
+                        <stop offset="0%" stopColor="#10B981" stopOpacity={0.4} />
+                        <stop offset="100%" stopColor="#10B981" stopOpacity={0.02} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                    <XAxis dataKey="label" />
-                    <YAxis />
-                    <Tooltip />
-                    <Area type="monotone" dataKey="bookings" stroke="#f97316" fill="url(#occ)" strokeWidth={2} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" opacity={0.5} />
+                    <XAxis dataKey="label" tick={{ fill: '#5E6672', fontSize: 11 }} />
+                    <YAxis tick={{ fill: '#5E6672', fontSize: 11 }} />
+                    <Tooltip contentStyle={{ background: '#FFFFFF', borderColor: '#E5E7EB' }} />
+                    <Area type="monotone" dataKey="bookings" stroke="#10B981" fill="url(#occ)" strokeWidth={2} />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
-            {/* Room stats */}
-            <div className="card p-5">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">🛏️ Thống Kê Phòng</h3>
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-brand-600">{roomStats.total}</p>
-                  <p className="text-xs text-gray-500">Tổng phòng</p>
+            {/* Room Stats breakdown */}
+            <div className="bg-surface rounded-xl border border-border p-6 shadow-sm">
+              <h3 className="text-md font-serif-display font-medium text-primary mb-4">🛏️ Thống Kê Phòng</h3>
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="text-center bg-slate-50 py-3 rounded-lg border border-border">
+                  <p className="text-3xl font-serif-display font-medium text-primary">{roomStats.total}</p>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mt-0.5">Tổng phòng</p>
                 </div>
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-orange-500">{roomStats.occupied}</p>
-                  <p className="text-xs text-gray-500">Đang sử dụng</p>
+                <div className="text-center bg-[#FDF6E2]/40 py-3 rounded-lg border border-border/60">
+                  <p className="text-3xl font-serif-display font-medium text-accent">{roomStats.occupied}</p>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mt-0.5">Đang dùng</p>
                 </div>
               </div>
-              <div className="space-y-2 text-sm border-t pt-3">
-                <div className="flex justify-between"><span>Phòng trống</span><span className="badge bg-emerald-100 text-emerald-700">{roomStats.available}</span></div>
-                <div className="flex justify-between"><span>Đang dọn</span><span className="badge bg-blue-100 text-blue-700">{roomStats.cleaning}</span></div>
-                <div className="flex justify-between"><span>Bảo trì</span><span className="badge bg-gray-200 text-gray-700">{roomStats.maintenance}</span></div>
+              <div className="space-y-3 text-xs border-t border-border pt-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-600">Phòng trống</span>
+                  <span className="badge bg-[#FDF6E2] text-accent border border-border">{roomStats.available}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-600">Đang dọn dẹp</span>
+                  <span className="badge bg-slate-100 text-slate-600 border border-border">{roomStats.cleaning}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-600">Đang bảo trì</span>
+                  <span className="badge bg-red-50 text-red-700 border border-border">{roomStats.maintenance}</span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Reviews + top hotels */}
-          <div className="grid lg:grid-cols-2 gap-4">
-            <div className="card p-5">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">⭐ Đánh Giá Khách Hàng</h3>
-              <div className="text-center mb-4">
-                <p className="text-3xl font-bold flex items-center justify-center gap-2">
-                  ☆ <span className="text-amber-500">{reviewStats.avg}</span>
-                  <span className="text-gray-400 text-lg">/5</span>
+          {/* Reviews & Top Performance hotels */}
+          <div className="grid lg:grid-cols-2 gap-6 text-left">
+            <div className="bg-surface rounded-xl border border-border p-6 shadow-sm">
+              <h3 className="text-md font-serif-display font-medium text-primary mb-4">⭐ Đánh Giá Khách Hàng</h3>
+              <div className="text-center mb-6">
+                <p className="text-4xl font-serif-display font-medium flex items-center justify-center gap-1.5 text-primary">
+                  <span className="text-accent">★</span> {reviewStats.avg}
+                  <span className="text-[#9CA3AF] text-sm font-sans font-light">/5</span>
                 </p>
-                <p className="text-xs text-gray-500 mt-1">Từ {totalReviews} đánh giá</p>
+                <p className="text-xs text-slate-500 mt-1 font-light">Dựa trên {totalReviews} lượt phản hồi</p>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {[5, 4, 3, 2, 1].map((star) => {
                   const cnt = reviewStats.breakdown[star] || 0;
                   const pct = totalReviews ? (cnt / maxReviewCount) * 100 : 0;
                   return (
-                    <div key={star} className="flex items-center gap-2 text-sm">
-                      <span className="w-6 text-gray-600">{star} ☆</span>
-                      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-amber-400 rounded-full" style={{ width: `${pct}%` }} />
+                    <div key={star} className="flex items-center gap-3 text-xs">
+                      <span className="w-8 text-slate-605 font-semibold">{star} ★</span>
+                      <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-accent" style={{ width: `${pct}%` }} />
                       </div>
-                      <span className="w-8 text-right text-gray-500">{cnt}</span>
+                      <span className="w-8 text-right text-slate-400 font-mono">{cnt}</span>
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            <div className="card p-5">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">📈 Xu Hướng Doanh Thu</h3>
+            <div className="bg-surface rounded-xl border border-border p-6 shadow-sm">
+              <h3 className="text-md font-serif-display font-medium text-primary mb-5">Xu hướng doanh thu</h3>
               <div style={{ width: '100%', height: 320 }}>
                 <ResponsiveContainer>
                   <BarChart data={topData} margin={{ left: 10, right: 10, bottom: 30 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                    <XAxis dataKey="name" angle={-15} textAnchor="end" interval={0} height={60} tick={{ fontSize: 11 }} />
-                    <YAxis tickFormatter={moneyTick} />
-                    <Tooltip formatter={(v) => formatCurrency(v)} />
-                    <Bar dataKey="revenue" fill="#0d9488" radius={[6, 6, 0, 0]} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" opacity={0.6} />
+                    <XAxis dataKey="name" angle={-15} textAnchor="end" interval={0} height={60} tick={{ fontSize: 10, fill: '#5E6672' }} />
+                    <YAxis tickFormatter={moneyTick} tick={{ fill: '#5E6672', fontSize: 10 }} />
+                    <Tooltip formatter={(v) => formatCurrency(v)} contentStyle={{ background: '#FFFFFF', borderColor: '#E5E7EB' }} />
+                    <Bar dataKey="revenue" fill="#10B981" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

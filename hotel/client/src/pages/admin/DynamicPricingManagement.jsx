@@ -143,59 +143,55 @@ export default function DynamicPricingManagement() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-2xl overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 px-6 py-6 text-white">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-bold flex items-center gap-2">⚡ Quản lý giá động</h1>
-              <p className="text-teal-500-100/80 text-sm mt-1">
-                Thiết lập hệ số giá ngày lễ, tết và điều chỉnh giá phòng cuối tuần để tối ưu doanh thu.
-              </p>
-            </div>
-            {/* Hotel Selector */}
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/20">
-              <span className="text-sm font-semibold whitespace-nowrap">🏨 Khách sạn:</span>
-              <select
-                value={selectedHotelId}
-                onChange={(e) => {
-                  setSelectedHotelId(e.target.value);
-                  setEditingHoliday(null);
-                  reset(formDefaults);
-                }}
-                className="bg-transparent font-medium border-none focus:ring-0 text-white text-sm cursor-pointer outline-none min-w-[180px] max-w-[280px]"
-              >
-                {hotels.map((h) => (
-                  <option key={h._id} value={h._id} className="text-gray-900 bg-white">
-                    {h.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+      <div className="bg-white rounded-xl border border-border p-6 shadow-sm flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý giá</h1>
+          <p className="text-slate-400 text-xs mt-1 font-light">
+            Thiết lập hệ số giá ngày lễ, tết và điều chỉnh giá phòng cuối tuần để tối ưu doanh thu.
+          </p>
+        </div>
+        {/* Hotel Selector */}
+        <div className="flex items-center gap-2 bg-[#FAF9F6] rounded-xl p-2 border border-border">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1">Khách sạn:</span>
+          <select
+            value={selectedHotelId}
+            onChange={(e) => {
+              setSelectedHotelId(e.target.value);
+              setEditingHoliday(null);
+              reset(formDefaults);
+            }}
+            className="bg-transparent font-bold border-none focus:ring-0 text-primary text-sm cursor-pointer outline-none min-w-[180px] max-w-[280px]"
+          >
+            {hotels.map((h) => (
+              <option key={h._id} value={h._id} className="text-gray-900 bg-white">
+                {h.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200">
+      <div className="flex gap-2 border-b border-border">
         <button
           onClick={() => setActiveTab('holiday')}
           className={`px-5 py-3 font-semibold text-sm transition-all relative ${
             activeTab === 'holiday'
-              ? 'text-teal-600 border-b-2 border-teal-600'
-              : 'text-gray-500 hover:text-gray-800'
+              ? 'text-accent border-b-2 border-accent'
+              : 'text-slate-500 hover:text-slate-800'
           }`}
         >
-          🎉 Giá Ngày Lễ (Multiplier)
+          Giá Ngày Lễ (Multiplier)
         </button>
         <button
           onClick={() => setActiveTab('weekend')}
           className={`px-5 py-3 font-semibold text-sm transition-all relative ${
             activeTab === 'weekend'
-              ? 'text-teal-600 border-b-2 border-teal-600'
-              : 'text-gray-500 hover:text-gray-800'
+              ? 'text-accent border-b-2 border-accent'
+              : 'text-slate-500 hover:text-slate-800'
           }`}
         >
-          📅 Giá Cuối Tuần (Weekend Price)
+          Giá Cuối Tuần (Weekend Price)
         </button>
       </div>
 
@@ -205,16 +201,10 @@ export default function DynamicPricingManagement() {
           {/* Form */}
           <form
             onSubmit={handleSubmit(handleSaveHoliday)}
-            className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 space-y-4 h-fit"
+            className="bg-white rounded-xl border border-border shadow-sm p-6 space-y-4 h-fit"
           >
-            <h2 className="font-bold text-base flex items-center gap-2 pb-2 border-b border-gray-100">
-              <span
-                className={`w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs bg-gradient-to-br ${
-                  editingHoliday ? 'from-amber-400 to-orange-500' : 'from-teal-400 to-emerald-600'
-                }`}
-              >
-                {editingHoliday ? '✏' : '+'}
-              </span>
+            <h2 className="font-serif-display font-medium text-lg text-primary flex items-center gap-2 pb-2 border-b border-border">
+              <span className="w-1.5 h-6 bg-accent rounded-full" />
               {editingHoliday ? 'Sửa' : 'Thêm'} giá ngày lễ
             </h2>
 
@@ -256,32 +246,32 @@ export default function DynamicPricingManagement() {
               <p className="text-[11px] text-gray-400 mt-1">Ví dụ: 1.5 tức là tăng 50% so với giá gốc.</p>
             </div>
 
-            <label className="flex items-center gap-2.5 text-sm cursor-pointer p-3 rounded-xl bg-gray-50 border border-gray-100">
-              <input type="checkbox" className="w-4 h-4 accent-teal-600" {...register('isActive')} />
-              <span className="font-semibold text-gray-700">Kích hoạt áp dụng</span>
+            <label className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-slate-500 cursor-pointer p-3.5 rounded-xl bg-[#FAF9F6] border border-border">
+              <input type="checkbox" className="w-4 h-4 accent-accent" {...register('isActive')} />
+              <span>Kích hoạt áp dụng</span>
             </label>
 
             {/* Apply All Toggle */}
             {!editingHoliday && (
               <label
-                className={`flex items-center gap-2.5 text-sm cursor-pointer p-3 rounded-xl border transition-all ${
+                className={`flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-slate-500 cursor-pointer p-3.5 rounded-xl border transition-all ${
                   isApplyAll
-                    ? 'bg-gradient-to-r from-violet-50 to-purple-50 border-violet-300 ring-1 ring-violet-200'
-                    : 'bg-gray-50 border-gray-100'
+                    ? 'bg-[#FDF6E2] border-accent/30 ring-1 ring-accent/10'
+                    : 'bg-[#FAF9F6] border-border'
                 }`}
               >
                 <input
                   type="checkbox"
-                  className="w-4 h-4 accent-violet-600"
+                  className="w-4 h-4 accent-accent"
                   checked={isApplyAll}
                   onChange={(e) => setIsApplyAll(e.target.checked)}
                 />
                 <div>
-                  <span className={`font-semibold ${isApplyAll ? 'text-violet-700' : 'text-gray-700'}`}>
-                    🏨 Áp dụng cho TẤT CẢ khách sạn
+                  <span className={isApplyAll ? 'text-accent' : 'text-slate-500'}>
+                    Áp dụng cho TẤT CẢ khách sạn
                   </span>
                   {isApplyAll && (
-                    <p className="text-[11px] text-violet-500 mt-0.5">Sẽ tạo ngày lễ cho tất cả {hotels.length} khách sạn cùng lúc</p>
+                    <p className="text-[10px] text-accent font-light mt-0.5 lowercase">Sẽ tạo ngày lễ cho tất cả {hotels.length} khách sạn cùng lúc</p>
                   )}
                 </div>
               </label>
@@ -289,10 +279,10 @@ export default function DynamicPricingManagement() {
 
             <button className={`w-full py-2.5 rounded-xl font-bold border-none transition-all ${
               isApplyAll
-                ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white'
-                : 'btn-primary bg-teal-600 hover:bg-teal-700'
+                ? 'bg-accent hover:bg-accent-dark text-white'
+                : 'btn-primary bg-accent hover:bg-accent-dark'
             }`}>
-              {editingHoliday ? '💾 Lưu thay đổi' : isApplyAll ? '🏨 Áp dụng cho tất cả KS' : '✚ Thêm mới'}
+              {editingHoliday ? 'Lưu thay đổi' : isApplyAll ? 'Áp dụng cho tất cả KS' : 'Thêm mới'}
             </button>
 
             {editingHoliday && (
@@ -314,16 +304,15 @@ export default function DynamicPricingManagement() {
             {holidayLoading ? (
               <Spinner className="py-12" />
             ) : holidays.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-gray-200 p-16 text-center shadow-sm">
-                <p className="text-4xl mb-3">🎉</p>
-                <p className="text-gray-500 font-semibold text-sm">Chưa cấu hình ngày lễ nào cho khách sạn này</p>
-                <p className="text-xs text-gray-400 mt-1">Cấu hình ngày lễ để tự động nhân giá khi khách book phòng.</p>
+              <div className="bg-white rounded-xl border border-border p-16 text-center shadow-sm">
+                <p className="text-slate-400 font-semibold text-sm">Chưa cấu hình ngày lễ nào cho khách sạn này</p>
+                <p className="text-xs text-slate-400 mt-1 font-light">Cấu hình ngày lễ để tự động nhân giá khi khách book phòng.</p>
               </div>
             ) : (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+              <div className="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
                 <table className="w-full text-left border-collapse text-sm">
                   <thead>
-                    <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 font-semibold text-xs uppercase">
+                    <tr className="bg-[#FAF9F6] border-b border-border text-primary font-bold text-xs uppercase">
                       <th className="px-5 py-4">Tên ngày lễ</th>
                       <th className="px-5 py-4">Thời gian</th>
                       <th className="px-5 py-4 text-center">Hệ số</th>
@@ -331,7 +320,7 @@ export default function DynamicPricingManagement() {
                       <th className="px-5 py-4 text-right">Thao tác</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100">
+                  <tbody className="divide-y divide-border">
                     {holidays.map((h) => (
                       <tr key={h._id} className="hover:bg-gray-50/55 transition-colors">
                         <td className="px-5 py-4">
@@ -340,15 +329,15 @@ export default function DynamicPricingManagement() {
                         <td className="px-5 py-4 text-gray-600 font-mono text-xs">
                           {formatDate(h.from)} → {formatDate(h.to)}
                         </td>
-                        <td className="px-5 py-4 text-center font-extrabold text-teal-600 text-base">
+                        <td className="px-5 py-4 text-center font-extrabold text-accent text-base">
                           {h.multiplier}x
                         </td>
                         <td className="px-5 py-4 text-center">
                           <span
-                            className={`inline-block px-2 py-0.5 rounded-full text-xs font-bold border ${
+                            className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-bold border ${
                               h.isActive
                                 ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                                : 'bg-gray-100 text-gray-400 border-gray-200'
+                                : 'bg-slate-100 text-slate-400 border-slate-200'
                             }`}
                           >
                             {h.isActive ? 'Bật' : 'Tắt'}
@@ -380,17 +369,17 @@ export default function DynamicPricingManagement() {
         </div>
       ) : (
         /* Tab 2: Weekend Pricing */
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+        <div className="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="px-5 py-4 border-b border-border bg-[#FAF9F6] flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-gray-800">Giá phòng cuối tuần (Thứ 6 & Thứ 7)</h3>
-              <p className="text-gray-500 text-xs mt-0.5">Đặt giá riêng cho 2 ngày cuối tuần nếu muốn tự động tăng giá.</p>
+              <h3 className="font-bold text-primary">Giá phòng cuối tuần (Thứ 6 & Thứ 7)</h3>
+              <p className="text-slate-400 text-xs mt-0.5 font-light">Đặt giá riêng cho 2 ngày cuối tuần nếu muốn tự động tăng giá.</p>
             </div>
             <button
               onClick={refetchRooms}
-              className="text-xs text-teal-600 hover:text-teal-800 font-semibold"
+              className="text-xs text-accent hover:text-accent-dark font-semibold uppercase tracking-wider"
             >
-              🔄 Tải lại danh sách
+              Tải lại danh sách
             </button>
           </div>
 
@@ -398,14 +387,13 @@ export default function DynamicPricingManagement() {
             <Spinner className="py-12" />
           ) : rooms.length === 0 ? (
             <div className="p-16 text-center">
-              <p className="text-4xl mb-3">🛏️</p>
-              <p className="text-gray-500 font-semibold text-sm">Chưa có phòng nào được tạo cho khách sạn này</p>
-              <p className="text-xs text-gray-400 mt-1">Vui lòng sang trang "Quản lý phòng" để tạo phòng trước.</p>
+              <p className="text-slate-400 font-semibold text-sm">Chưa có phòng nào được tạo cho khách sạn này</p>
+              <p className="text-xs text-slate-400 mt-1 font-light">Vui lòng sang trang "Quản lý phòng" để tạo phòng trước.</p>
             </div>
           ) : (
             <table className="w-full text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 font-semibold text-xs uppercase">
+                <tr className="bg-[#FAF9F6] border-b border-border text-primary font-bold text-xs uppercase">
                   <th className="px-5 py-4">Số phòng</th>
                   <th className="px-5 py-4">Loại phòng</th>
                   <th className="px-5 py-4">Giá gốc (Ngày thường)</th>
@@ -413,16 +401,16 @@ export default function DynamicPricingManagement() {
                   <th className="px-5 py-4 text-right">Điều chỉnh</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-border">
                 {rooms.map((r) => (
-                  <tr key={r._id} className="hover:bg-gray-50/55 transition-colors">
-                    <td className="px-5 py-4 font-bold text-gray-800">Phòng {r.roomNumber}</td>
+                  <tr key={r._id} className="hover:bg-[#FAF9F6]/40 transition-colors">
+                    <td className="px-5 py-4 font-bold text-primary">Phòng {r.roomNumber}</td>
                     <td className="px-5 py-4">
-                      <span className="capitalize px-2 py-0.5 bg-gray-100 text-gray-700 text-xs rounded-full font-semibold">
+                      <span className="capitalize px-2.5 py-0.5 bg-[#FAF9F6] text-slate-500 text-xs rounded-full border border-border font-semibold">
                         {r.type}
                       </span>
                     </td>
-                    <td className="px-5 py-4 font-semibold text-gray-700">
+                    <td className="px-5 py-4 font-semibold text-slate-700">
                       {formatCurrency(r.pricePerNight)}
                     </td>
                     <td className="px-5 py-4">
@@ -444,7 +432,7 @@ export default function DynamicPricingManagement() {
                           </span>
                         </p>
                       ) : (
-                        <span className="text-gray-400 italic text-xs">Áp dụng giá ngày thường</span>
+                        <span className="text-slate-400 italic text-xs font-light">Áp dụng giá ngày thường</span>
                       )}
                     </td>
                     <td className="px-5 py-4 text-right">
@@ -452,13 +440,13 @@ export default function DynamicPricingManagement() {
                         <div className="flex justify-end gap-1.5">
                           <button
                             onClick={() => saveRoomWeekendPrice(r)}
-                            className="px-2.5 py-1 bg-teal-600 text-white rounded-md text-xs font-semibold hover:bg-teal-700 transition"
+                            className="px-2.5 py-1 bg-accent hover:bg-accent-dark text-white rounded-md text-xs font-semibold transition"
                           >
                             Lưu
                           </button>
                           <button
                             onClick={() => setEditingRoomId(null)}
-                            className="px-2.5 py-1 bg-gray-100 text-gray-700 rounded-md text-xs hover:bg-gray-200 transition"
+                            className="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-md text-xs hover:bg-slate-200 transition"
                           >
                             Hủy
                           </button>
@@ -466,7 +454,7 @@ export default function DynamicPricingManagement() {
                       ) : (
                         <button
                           onClick={() => startEditRoomWeekend(r)}
-                          className="text-xs px-2.5 py-1.5 bg-teal-50 text-teal-700 rounded-lg border border-teal-200 hover:bg-teal-100 transition font-medium"
+                          className="text-xs px-2.5 py-1.5 bg-[#FDF6E2] text-accent rounded-lg border border-accent/25 hover:bg-accent hover:text-white transition font-medium"
                         >
                           Thay đổi
                         </button>

@@ -3,41 +3,59 @@ import { formatCurrency } from '../utils/format';
 
 export default function HotelCard({ hotel }) {
   const img = hotel.images?.[0]?.url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop';
+  
   return (
     <Link
       to={`/hotels/${hotel.slug}`}
-      className="group overflow-hidden rounded-3xl border border-white/70 bg-white/90 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+      className="card group flex flex-col h-full bg-white border border-border"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+      {/* Media Window */}
+      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 flex-shrink-0">
         <img
           src={img}
           alt={hotel.name}
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        {/* Rating Badge */}
         {hotel.avgRating > 0 && (
-          <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-bold text-brand-700 shadow-md backdrop-blur-sm">
+          <span className="absolute right-3.5 top-3.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold font-mono text-primary shadow-sm backdrop-blur-sm border border-border/40">
             ★ {hotel.avgRating.toFixed(1)}
           </span>
         )}
       </div>
-      <div className="p-5">
-        <div className="flex items-center justify-between">
-          <h3 className="font-bold text-gray-900 line-clamp-1">{hotel.name}</h3>
-          <span className="ml-2 flex-shrink-0 text-xs text-amber-500">{'★'.repeat(hotel.stars || 0)}</span>
-        </div>
-        <p className="text-sm text-gray-500 mt-1.5 line-clamp-1 flex items-center gap-1">
-          <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-          {hotel.address?.city}, {hotel.address?.country}
-        </p>
-        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-          <div>
-            <span className="text-xs text-gray-400 uppercase tracking-wide">Từ</span>
-            <p className="font-bold text-lg text-brand-600">{formatCurrency(hotel.basePrice || 0)}</p>
+
+      {/* Info Content */}
+      <div className="p-6 flex flex-col flex-1 justify-between">
+        <div>
+          {/* Stars & Location Row */}
+          <div className="flex items-center justify-between gap-2 mb-2">
+            <span className="text-[10px] text-accent tracking-widest font-mono uppercase">
+              {'★'.repeat(hotel.stars || 0)}
+            </span>
+            <p className="text-[11px] text-slate-400 font-light flex items-center gap-1">
+              📍 {hotel.address?.city}
+            </p>
           </div>
-          <span className="rounded-lg bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-700 transition group-hover:bg-cyan-100">
-            Xem phòng →
+
+          {/* Heading */}
+          <h3 className="font-serif-display font-medium text-lg text-primary group-hover:text-accent transition-colors duration-300 line-clamp-1">
+            {hotel.name}
+          </h3>
+        </div>
+
+        {/* Price & Action Row */}
+        <div className="mt-6 flex items-end justify-between border-t border-border/40 pt-4">
+          <div>
+            <span className="text-[9px] text-slate-400 uppercase tracking-widest font-bold block mb-0.5">Giá từ</span>
+            <p className="font-mono font-semibold text-base text-primary">
+              {formatCurrency(hotel.basePrice || 0)}
+            </p>
+          </div>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-accent border-b border-transparent group-hover:border-accent transition-all duration-300">
+            Khám phá →
           </span>
         </div>
       </div>

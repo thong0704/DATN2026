@@ -75,20 +75,16 @@ export default function ArticleManagement() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="rounded-2xl overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 px-6 py-5">
-          <h1 className="text-2xl font-bold text-white">📝 Quản lý bài viết</h1>
-          <p className="text-orange-100/80 text-sm mt-1">{articles.length} bài viết · {articles.filter((a) => a.isPublished).length} đã đăng</p>
-        </div>
+      <div className="bg-white rounded-xl border border-border p-6 shadow-sm">
+        <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý bài viết</h1>
+        <p className="text-slate-400 text-xs mt-1 font-light">{articles.length} bài viết · {articles.filter((a) => a.isPublished).length} đã đăng</p>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Form */}
-        <form onSubmit={handleSubmit(onSave)} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 space-y-3 h-fit">
-          <h2 className="font-bold text-base flex items-center gap-2">
-            <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs bg-gradient-to-br ${editing ? 'from-amber-400 to-orange-500' : 'from-orange-400 to-yellow-500'}`}>
-              {editing ? '✏' : '+'}
-            </span>
+        <form onSubmit={handleSubmit(onSave)} className="bg-white rounded-xl border border-border shadow-sm p-6 space-y-4 h-fit">
+          <h2 className="font-serif-display font-medium text-lg text-primary flex items-center gap-2 mb-2">
+            <span className="w-1.5 h-6 bg-accent rounded-full" />
             {editing ? 'Sửa' : 'Tạo'} bài viết
           </h2>
 
@@ -98,16 +94,16 @@ export default function ArticleManagement() {
 
           <div>
             <label className="label">Ảnh bìa</label>
-            {coverUrl && <img src={coverUrl} alt="" className="w-full h-32 object-cover rounded-xl mb-2 border border-gray-200" />}
-            <div className="border-2 border-dashed border-gray-200 rounded-xl p-3 text-center hover:border-orange-400 transition">
-              <input type="file" accept="image/*" onChange={onPickCover} disabled={uploading} className="text-sm text-gray-500 w-full" />
-              {uploading && <p className="text-xs text-orange-500 mt-1">Đang tải...</p>}
+            {coverUrl && <img src={coverUrl} alt="" className="w-full h-32 object-cover rounded-xl mb-2 border border-border" />}
+            <div className="border-2 border-dashed border-border rounded-xl p-4 text-center hover:border-accent transition">
+              <input type="file" accept="image/*" onChange={onPickCover} disabled={uploading} className="text-xs text-slate-500 w-full" />
+              {uploading && <p className="text-xs text-accent mt-1">Đang tải...</p>}
             </div>
           </div>
 
-          <label className="flex items-center gap-2.5 text-sm cursor-pointer p-3 rounded-xl bg-gray-50 border border-gray-200">
-            <input type="checkbox" className="w-4 h-4 accent-orange-500" defaultChecked={editing?.isPublished !== false} {...register('isPublished')} />
-            <span className="font-medium">Đăng công khai</span>
+          <label className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-slate-500 cursor-pointer p-3.5 rounded-xl bg-[#FAF9F6] border border-border">
+            <input type="checkbox" className="w-4 h-4 accent-accent" defaultChecked={editing?.isPublished !== false} {...register('isPublished')} />
+            <span>Đăng công khai</span>
           </label>
 
           <button className="btn-primary w-full">{editing ? '💾 Cập nhật' : '✚ Tạo mới'}</button>
@@ -117,31 +113,30 @@ export default function ArticleManagement() {
         {/* Article list */}
         <div className="lg:col-span-2 space-y-3">
           {isLoading ? <Spinner className="py-12" /> : articles.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-gray-200 p-16 text-center">
-              <p className="text-4xl mb-2">📰</p>
-              <p className="text-gray-500 font-medium">Chưa có bài viết nào</p>
+            <div className="bg-white rounded-xl border border-border p-16 text-center shadow-sm">
+              <p className="text-slate-400 font-medium">Chưa có bài viết nào</p>
             </div>
           ) : articles.map((a) => (
-            <div key={a._id} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div key={a._id} className="bg-white rounded-xl border border-border shadow-sm p-5 flex items-center gap-5 hover:shadow-md transition-shadow">
               {a.coverImage ? (
-                <img src={a.coverImage} alt="" className="w-24 h-20 object-cover rounded-xl flex-shrink-0" />
+                <img src={a.coverImage} alt="" className="w-24 h-20 object-cover rounded-lg flex-shrink-0" />
               ) : (
-                <div className="w-24 h-20 bg-orange-50 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">📄</div>
+                <div className="w-24 h-20 bg-[#FAF9F6] border border-border rounded-lg flex items-center justify-center text-xs text-slate-400 font-bold flex-shrink-0 uppercase">Không có ảnh</div>
               )}
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-gray-900 truncate">{a.title}</p>
-                <p className="text-sm text-gray-500 line-clamp-1 mt-0.5">{a.summary}</p>
-                <div className="flex items-center gap-2 mt-1.5">
-                  <span className="text-xs text-gray-400">{formatDate(a.createdAt)}</span>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">👁 {a.views || 0}</span>
+                <p className="font-bold text-primary text-base truncate">{a.title}</p>
+                <p className="text-sm text-slate-500 font-light line-clamp-1 mt-1">{a.summary}</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="text-xs text-slate-400 font-light">{formatDate(a.createdAt)}</span>
+                  <span className="text-xs bg-[#FAF9F6] text-slate-500 px-2 py-0.5 rounded border border-border">Lượt xem: {a.views || 0}</span>
                 </div>
               </div>
               <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${a.isPublished ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-gray-100 text-gray-500 border-gray-200'}`}>
-                  {a.isPublished ? '🌍 Công khai' : '🔒 Ẩn'}
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${a.isPublished ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
+                  {a.isPublished ? 'Công khai' : 'Ẩn'}
                 </span>
-                <button onClick={() => startEdit(a)} className="text-xs px-3 py-1.5 bg-amber-50 text-amber-700 rounded-lg border border-amber-200 hover:bg-amber-100 transition">✏️ Sửa</button>
-                <button onClick={() => onDelete(a._id)} className="text-xs px-3 py-1.5 bg-red-50 text-red-600 rounded-lg border border-red-200 hover:bg-red-100 transition">🗑 Xoá</button>
+                <button onClick={() => startEdit(a)} className="text-xs px-3 py-1.5 bg-amber-50 text-amber-700 rounded-lg border border-amber-200 hover:bg-amber-100 transition">Sửa</button>
+                <button onClick={() => onDelete(a._id)} className="text-xs px-3 py-1.5 bg-red-50 text-red-600 rounded-lg border border-red-200 hover:bg-red-100 transition">Xoá</button>
               </div>
             </div>
           ))}

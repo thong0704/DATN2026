@@ -42,32 +42,30 @@ export default function FrontDeskPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="rounded-2xl overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-lime-500 via-green-500 to-emerald-600 px-6 py-5">
-          <h1 className="text-2xl font-bold text-white">🏨 Lễ tân</h1>
-          <p className="text-lime-100/80 text-sm mt-1">Tra cứu và xử lý check-in / check-out</p>
-        </div>
+      <div className="bg-white rounded-xl border border-border p-6 shadow-sm">
+        <h1 className="text-2xl font-serif-display font-medium text-primary">Lễ tân</h1>
+        <p className="text-slate-400 text-xs mt-1 font-light">Tra cứu và xử lý check-in / check-out</p>
       </div>
 
       {/* Search */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 max-w-xl">
-        <label className="label text-base font-semibold">🔍 Tìm booking theo mã đặt phòng</label>
+      <div className="bg-white rounded-xl border border-border shadow-sm p-6 max-w-xl">
+        <label className="label text-sm font-bold uppercase tracking-wider text-slate-500">Tìm booking theo mã đặt phòng</label>
         <div className="flex gap-2 mt-2">
           <input className="input flex-1 font-mono uppercase tracking-widest text-base" value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="BK-XXXXXX" />
           <button onClick={() => trigger(code)} disabled={!code || isFetching}
-            className="btn-primary px-6 font-semibold">{isFetching ? '...' : 'Tìm'}</button>
+            className="btn-accent px-6 text-xs font-semibold">{isFetching ? '...' : 'Tìm'}</button>
         </div>
       </div>
 
       {booking && (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 max-w-xl space-y-5">
+        <div className="bg-white rounded-xl border border-border shadow-sm p-6 max-w-xl space-y-5">
           {/* Hotel & Room */}
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-lime-400 to-green-600 flex items-center justify-center text-2xl flex-shrink-0">🏨</div>
+            <div className="w-12 h-12 rounded-lg bg-[#FAF9F6] border border-border flex items-center justify-center text-accent font-bold text-sm flex-shrink-0">2T</div>
             <div>
-              <p className="font-bold text-gray-900 text-lg">{booking.hotel?.name}</p>
-              <p className="text-sm text-gray-500">
+              <p className="font-bold text-primary text-base">{booking.hotel?.name}</p>
+              <p className="text-xs text-slate-400 font-light mt-0.5">
                 {booking.rooms && booking.rooms.length > 0
                   ? booking.rooms.map((r) => `Phòng ${r.room?.roomNumber || booking.room?.roomNumber}`).join(', ')
                   : `Phòng ${booking.room?.roomNumber}`}
@@ -75,8 +73,8 @@ export default function FrontDeskPage() {
             </div>
             <div className="ml-auto">
               {(() => { const m = STATUS_META[booking.status] || STATUS_META.pending; return (
-                <span className={`text-sm font-semibold px-3 py-1 rounded-full border flex items-center gap-1.5 ${m.bg}`}>
-                  <span className={`w-2 h-2 rounded-full ${m.dot}`} />
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border flex items-center gap-1.5 ${m.bg}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${m.dot}`} />
                   {tStatus(booking.status)}
                 </span>
               ); })()}
@@ -84,26 +82,26 @@ export default function FrontDeskPage() {
           </div>
 
           {/* Guest info */}
-          <div className="grid grid-cols-2 gap-3 bg-gray-50 rounded-xl p-4">
+          <div className="grid grid-cols-2 gap-3 bg-[#FAF9F6] rounded-xl p-5 border border-border">
             <div>
-              <p className="text-xs text-gray-400 uppercase tracking-wide font-semibold">Khách hàng</p>
-              <p className="font-semibold text-gray-900 mt-0.5">{booking.guestInfo?.name}</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide font-bold">Khách hàng</p>
+              <p className="font-semibold text-primary mt-0.5">{booking.guestInfo?.name}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400 uppercase tracking-wide font-semibold">Điện thoại</p>
-              <p className="font-medium text-gray-900 mt-0.5">{booking.guestInfo?.phone || '—'}</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide font-bold">Điện thoại</p>
+              <p className="font-medium text-primary mt-0.5">{booking.guestInfo?.phone || '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400 uppercase tracking-wide font-semibold">Check-in</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide font-bold">Check-in</p>
               <p className="font-semibold text-emerald-700 mt-0.5">{formatDate(booking.checkIn)}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400 uppercase tracking-wide font-semibold">Check-out</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide font-bold">Check-out</p>
               <p className="font-semibold text-rose-600 mt-0.5">{formatDate(booking.checkOut)}</p>
             </div>
-            <div className="col-span-2">
-              <p className="text-xs text-gray-400 uppercase tracking-wide font-semibold">Tổng thanh toán</p>
-              <p className="font-bold text-indigo-700 text-lg mt-0.5">{formatCurrency(booking.pricing?.total)}</p>
+            <div className="col-span-2 border-t border-border pt-3.5 mt-1">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide font-bold">Tổng thanh toán</p>
+              <p className="font-bold text-accent text-lg mt-0.5">{formatCurrency(booking.pricing?.total)}</p>
             </div>
           </div>
 
@@ -111,19 +109,19 @@ export default function FrontDeskPage() {
           <div className="flex flex-wrap gap-2">
             {booking.status === 'paid' && (
               <button onClick={() => action('checked_in')} disabled={updating}
-                className="flex-1 py-2.5 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-xl hover:opacity-90 transition">
-                ✅ Check-in
+                className="flex-1 py-2.5 bg-accent hover:bg-accent-dark text-white font-bold text-xs uppercase tracking-wider rounded-xl transition">
+                Check-in
               </button>
             )}
             {booking.status === 'checked_in' && (
               <button onClick={() => action('checked_out')} disabled={updating}
-                className="flex-1 py-2.5 bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-bold rounded-xl hover:opacity-90 transition">
-                🚪 Check-out
+                className="flex-1 py-2.5 bg-accent hover:bg-accent-dark text-white font-bold text-xs uppercase tracking-wider rounded-xl transition">
+                Check-out
               </button>
             )}
             {!['cancelled', 'checked_out', 'no_show'].includes(booking.status) && (
               <button onClick={() => confirm('Huỷ booking này?') && action('cancelled')} disabled={updating}
-                className="px-4 py-2.5 bg-red-50 text-red-600 border border-red-200 font-semibold rounded-xl hover:bg-red-100 transition">
+                className="px-5 py-2.5 bg-red-50 text-red-650 border border-red-200 font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-red-100 transition">
                 Huỷ đặt phòng
               </button>
             )}

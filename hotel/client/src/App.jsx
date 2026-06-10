@@ -50,12 +50,36 @@ const InvoiceManagement = lazy(() => import('./pages/admin/InvoiceManagement'));
 const MyInvoicesPage = lazy(() => import('./pages/MyInvoicesPage'));
 
 function PublicShell({ children }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    const elements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .line-draw');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+    };
+  }, [location.pathname, children]);
+
   return (
-    <div className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.08),transparent_36%)]" />
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.07),transparent_34%)]" />
+    <div className="relative overflow-hidden min-h-screen flex flex-col justify-between">
+      {/* Ambient floating shape portals */}
+      <div className="ambient-shape ambient-shape-1 top-20 -left-24" />
+      <div className="ambient-shape ambient-shape-2 top-[35%] -right-32" />
+      
       <Navbar />
-      <main className="min-h-[62vh]">{children}</main>
+      <main className="flex-1 min-h-[62vh]">{children}</main>
       <Footer />
     </div>
   );

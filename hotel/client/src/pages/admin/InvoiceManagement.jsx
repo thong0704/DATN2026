@@ -155,7 +155,7 @@ function InvoiceDetailModal({ id, onClose }) {
 
             <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-gray-200 print:hidden">
               <button onClick={onClose} className="btn-outline">Đóng</button>
-              <button onClick={handlePrint} className="btn-primary">🖨️ In hóa đơn</button>
+              <button onClick={handlePrint} className="btn-primary">In hóa đơn</button>
             </div>
           </div>
         )}
@@ -217,89 +217,84 @@ export default function InvoiceManagement() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="rounded-2xl overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-brand-700 px-6 py-5">
-          <div>
-            <h1 className="text-2xl font-bold text-white flex items-center gap-2">🧾 Quản lý hóa đơn</h1>
-            <p className="text-emerald-100/80 text-sm mt-1">
-              {total > 0 ? `${total} hóa đơn` : 'Theo dõi và quản lý toàn bộ hóa đơn thanh toán'}
-            </p>
-          </div>
-        </div>
+      <div className="bg-white rounded-xl border border-border p-6 shadow-sm">
+        <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý hóa đơn</h1>
+        <p className="text-slate-400 text-xs mt-1 font-light">
+          {total > 0 ? `${total} hóa đơn` : 'Theo dõi và quản lý toàn bộ hóa đơn thanh toán'}
+        </p>
+      </div>
 
-        {/* Stats */}
-        <div className="bg-white border-x border-gray-200 px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-slate-50 rounded-xl p-4">
-            <p className="text-xs text-gray-500 uppercase font-semibold">Tổng hóa đơn</p>
-            <p className="text-xl font-bold text-gray-900 mt-1">{stats.count}</p>
-          </div>
-          <div className="bg-blue-50 rounded-xl p-4">
-            <p className="text-xs text-blue-700 uppercase font-semibold">Tổng giá trị</p>
-            <p className="text-xl font-bold text-blue-900 mt-1">{formatCurrency(stats.totalAmount)}</p>
-          </div>
-          <div className="bg-emerald-50 rounded-xl p-4">
-            <p className="text-xs text-emerald-700 uppercase font-semibold">Đã thu</p>
-            <p className="text-xl font-bold text-emerald-900 mt-1">{formatCurrency(stats.succeededAmount)}</p>
-          </div>
-          <div className="bg-purple-50 rounded-xl p-4">
-            <p className="text-xs text-purple-700 uppercase font-semibold">Đã hoàn</p>
-            <p className="text-xl font-bold text-purple-900 mt-1">{formatCurrency(stats.refundedAmount)}</p>
-          </div>
+      {/* Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-white border border-border rounded-xl p-5 shadow-sm">
+          <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Tổng hóa đơn</p>
+          <p className="text-xl font-bold text-primary mt-1">{stats.count}</p>
         </div>
+        <div className="bg-white border border-border rounded-xl p-5 shadow-sm">
+          <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Tổng giá trị</p>
+          <p className="text-xl font-bold text-accent mt-1">{formatCurrency(stats.totalAmount)}</p>
+        </div>
+        <div className="bg-white border border-border rounded-xl p-5 shadow-sm">
+          <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Đã thu</p>
+          <p className="text-xl font-bold text-emerald-700 mt-1">{formatCurrency(stats.succeededAmount)}</p>
+        </div>
+        <div className="bg-white border border-border rounded-xl p-5 shadow-sm">
+          <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Đã hoàn</p>
+          <p className="text-xl font-bold text-purple-700 mt-1">{formatCurrency(stats.refundedAmount)}</p>
+        </div>
+      </div>
 
-        {/* Filters */}
-        <div className="bg-white border-x border-b border-gray-200 px-6 py-4 flex flex-wrap gap-3 items-center">
-          <div className="relative flex-1 min-w-[200px] max-w-sm">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</span>
-            <input
-              className="input pl-9"
-              placeholder="Mã booking / tên / email khách..."
-              value={q}
-              onChange={(e) => { setQ(e.target.value); setPage(1); }}
-            />
-          </div>
-          <select className="input max-w-[180px]" value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }}>
-            <option value="">Tất cả trạng thái</option>
-            {STATUSES.map((s) => <option key={s} value={s}>{STATUS_META[s]?.label || s}</option>)}
-          </select>
-          <select className="input max-w-[180px]" value={method} onChange={(e) => { setMethod(e.target.value); setPage(1); }}>
-            <option value="">Tất cả phương thức</option>
-            {METHODS.map((m) => <option key={m} value={m}>{METHOD_LABELS[m]}</option>)}
-          </select>
-          <input type="date" className="input max-w-[160px]" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setPage(1); }} />
-          <input type="date" className="input max-w-[160px]" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(1); }} />
-          <button onClick={() => refetch()} className="btn-outline text-sm px-4 py-2">↻ Làm mới</button>
+      {/* Filters */}
+      <div className="bg-white rounded-xl border border-border p-4 flex flex-wrap gap-3 items-center shadow-sm">
+        <div className="relative flex-1 min-w-[200px] max-w-sm">
+          <input
+            className="input"
+            placeholder="Mã booking / tên / email khách..."
+            value={q}
+            onChange={(e) => { setQ(e.target.value); setPage(1); }}
+          />
         </div>
+        <select className="input max-w-[180px]" value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }}>
+          <option value="">Tất cả trạng thái</option>
+          {STATUSES.map((s) => <option key={s} value={s}>{STATUS_META[s]?.label || s}</option>)}
+        </select>
+        <select className="input max-w-[180px]" value={method} onChange={(e) => { setMethod(e.target.value); setPage(1); }}>
+          <option value="">Tất cả phương thức</option>
+          {METHODS.map((m) => <option key={m} value={m}>{METHOD_LABELS[m]}</option>)}
+        </select>
+        <input type="date" className="input max-w-[160px]" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setPage(1); }} />
+        <input type="date" className="input max-w-[160px]" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(1); }} />
+        <button onClick={() => refetch()} className="btn-outline text-xs px-4 py-2.5 rounded-lg">Làm mới</button>
       </div>
 
       {/* Table */}
       {isLoading ? (
         <Spinner className="py-16" />
       ) : (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gradient-to-r from-slate-700 to-slate-800 text-white">
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Mã HĐ</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Booking</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Khách</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Khách sạn</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Phương thức</th>
-                  <th className="px-4 py-3.5 text-right text-xs font-semibold tracking-wide uppercase">Số tiền</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Trạng thái</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Ngày tạo</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Thao tác</th>
+                <tr className="bg-[#FAF9F6] border-b border-border text-primary">
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Mã HĐ</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Booking</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Khách</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Khách sạn</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Phương thức</th>
+                  <th className="px-4 py-3.5 text-right text-xs font-bold uppercase tracking-wider">Số tiền</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Trạng thái</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Ngày tạo</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Thao tác</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-border">
                 {invoices.map((inv, i) => (
-                  <tr key={inv._id} className={`transition-colors hover:bg-emerald-50/40 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
+                  <tr key={inv._id} className={`transition-colors hover:bg-[#FAF9F6]/40 ${i % 2 === 0 ? 'bg-white' : 'bg-[#FAF9F6]/20'}`}>
                     <td className="px-4 py-3.5">
                       <span className="font-mono text-[11px] text-gray-700">{String(inv._id).slice(-8).toUpperCase()}</span>
                     </td>
                     <td className="px-4 py-3.5">
-                      <span className="font-mono text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded-lg border border-indigo-100 font-semibold">
+                      <span className="font-mono text-xs bg-[#FAF9F6] text-primary px-2 py-1 rounded border border-border font-semibold">
                         {inv.booking?.bookingCode || '—'}
                       </span>
                     </td>
@@ -354,10 +349,9 @@ export default function InvoiceManagement() {
                 {invoices.length === 0 && (
                   <tr>
                     <td colSpan={9} className="py-16 text-center">
-                      <div className="flex flex-col items-center gap-2 text-gray-400">
-                        <span className="text-4xl">🧾</span>
-                        <p className="font-medium text-gray-500">Không có hóa đơn nào</p>
-                        <p className="text-sm">Thử thay đổi bộ lọc</p>
+                      <div className="flex flex-col items-center gap-2 text-slate-400">
+                        <p className="font-medium">Không có hóa đơn nào</p>
+                        <p className="text-xs font-light">Thử thay đổi bộ lọc</p>
                       </div>
                     </td>
                   </tr>

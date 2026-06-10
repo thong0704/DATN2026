@@ -66,7 +66,7 @@ function MockCheckoutForm({ booking, intentId, onSuccess, method }) {
     try {
       await confirmPayment({ intentId }).unwrap();
       if (method === 'cash') {
-        toast.success('Đặt phòng đã được xử lý! Thanh toán khi nhận phòng.');
+        toast.success('Đặt phòng đang chờ xử lý! Thanh toán khi nhận phòng.');
       } else {
         toast.success('Thanh toán thành công!');
       }

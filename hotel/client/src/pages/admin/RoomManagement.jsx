@@ -128,12 +128,13 @@ export default function RoomManagement() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="rounded-2xl overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 px-6 py-5">
-          <h1 className="text-2xl font-bold text-white">🛏️ Quản lý phòng</h1>
-          <p className="text-violet-100/80 text-sm mt-1">Quản lý phòng theo khách sạn</p>
+      {/* Header */}
+      <div className="bg-white rounded-xl border border-border p-6 shadow-sm flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý phòng</h1>
+          <p className="text-slate-400 text-xs mt-1 font-light">Quản lý phòng theo khách sạn</p>
         </div>
-        <div className="bg-white border-x border-b border-gray-200 px-6 py-4">
+        <div className="flex items-center gap-3 flex-wrap">
           <select
             className="input max-w-md"
             value={hotelId}
@@ -149,11 +150,9 @@ export default function RoomManagement() {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Form */}
           {isManager && (
-          <form onSubmit={handleSubmit(onSave)} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 space-y-3 h-fit">
-            <h2 className="font-bold text-base flex items-center gap-2">
-              <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs bg-gradient-to-br ${editing ? 'from-violet-400 to-purple-600' : 'from-emerald-400 to-teal-500'}`}>
-                {editing ? '✏' : '+'}
-              </span>
+          <form onSubmit={handleSubmit(onSave)} className="bg-white rounded-xl border border-border shadow-sm p-6 space-y-3 h-fit">
+            <h2 className="font-serif-display font-medium text-lg text-primary flex items-center gap-2 mb-2">
+              <span className="w-1.5 h-6 bg-accent rounded-full" />
               {editing ? 'Sửa' : 'Tạo'} phòng
             </h2>
 
@@ -193,10 +192,10 @@ export default function RoomManagement() {
             </div>
             <div>
               <label className="label">Hình ảnh phòng</label>
-              <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 text-center hover:border-violet-400 transition cursor-pointer bg-gray-50/50">
+              <div className="border-2 border-dashed border-border rounded-xl p-4 text-center hover:border-accent transition cursor-pointer bg-gray-50/50">
                 <input type="file" multiple accept="image/*" id="room-images" hidden onChange={onFilesChange} />
-                <label htmlFor="room-images" className="cursor-pointer text-sm text-gray-500">
-                  {files.length ? `Đã chọn ${files.length} ảnh` : '📷 Bấm để chọn ảnh'}
+                <label htmlFor="room-images" className="cursor-pointer text-xs uppercase tracking-wider font-bold text-slate-500">
+                  {files.length ? `Đã chọn ${files.length} ảnh` : 'Bấm để chọn ảnh'}
                 </label>
               </div>
               {previews.length > 0 && (
@@ -223,11 +222,11 @@ export default function RoomManagement() {
             {isLoading ? <Spinner className="py-12" /> : (
               <div className="grid sm:grid-cols-2 gap-4">
                 {rooms.map((r) => (
-                  <div key={r._id} className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                  <div key={r._id} className="bg-white rounded-xl border border-border shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                     {r.images?.[0]?.url ? (
                       <img src={r.images[0].url} alt="" className="w-full h-36 object-cover" />
                     ) : (
-                      <div className="w-full h-36 bg-gradient-to-br from-violet-50 to-purple-100 flex items-center justify-center text-4xl">🛏️</div>
+                      <div className="w-full h-36 bg-[#FAF9F6] flex items-center justify-center text-xs uppercase tracking-wider text-slate-400 font-bold">Không có hình ảnh</div>
                     )}
                     <div className="p-4">
                       <div className="flex items-center justify-between mb-1">
@@ -239,17 +238,17 @@ export default function RoomManagement() {
                         }`}>{tStatus(r.status)}</span>
                       </div>
                       <p className="text-sm text-gray-500">{r.bedType} · {r.size}m² · {r.images?.length || 0} ảnh</p>
-                      <p className="font-bold text-violet-700 mt-1 text-base">{formatCurrency(r.pricePerNight)}<span className="text-xs font-normal text-gray-400">/đêm</span></p>
+                      <p className="font-bold text-accent mt-1 text-base">{formatCurrency(r.pricePerNight)}<span className="text-xs font-normal text-slate-400">/đêm</span></p>
                       {(r.weekendPrice > 0 || activeHolidays.length > 0) && (
                         <div className="flex flex-wrap gap-1 mt-1">
                           {r.weekendPrice > 0 && (
-                            <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">
-                              📅 T6-T7: {formatCurrency(r.weekendPrice)}
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#FDF6E2] text-accent border border-accent/25">
+                              T6-T7: {formatCurrency(r.weekendPrice)}
                             </span>
                           )}
                           {activeHolidays.map((h) => (
-                            <span key={h._id} className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200">
-                              🎉 {h.name} ({h.multiplier}x)
+                            <span key={h._id} className="text-[10px] font-semibold px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200">
+                              {h.name} ({h.multiplier}x)
                             </span>
                           ))}
                         </div>
@@ -288,10 +287,9 @@ export default function RoomManagement() {
                     </div>
                   </div>
                 ))}
-                {rooms.length === 0 && (
-                  <div className="sm:col-span-2 py-16 text-center bg-white rounded-2xl border border-gray-200">
-                    <p className="text-4xl mb-2">🛏️</p>
-                    <p className="text-gray-500 font-medium">Chưa có phòng nào</p>
+                 {rooms.length === 0 && (
+                  <div className="sm:col-span-2 py-16 text-center bg-white rounded-xl border border-slate-200 shadow-sm">
+                    <p className="text-slate-400 font-medium">Chưa có phòng nào</p>
                   </div>
                 )}
               </div>

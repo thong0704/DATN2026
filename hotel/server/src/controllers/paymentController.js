@@ -145,7 +145,7 @@ exports.confirm = catchAsync(async (req, res) => {
     );
     if (!payment) throw new AppError('Không tìm thấy bản ghi thanh toán', 404);
 
-    const newStatus = intentId.startsWith('pi_cash_') ? 'confirmed' : 'paid';
+    const newStatus = intentId.startsWith('pi_cash_') ? 'pending' : 'paid';
     const paymentStatus = intentId.startsWith('pi_cash_') ? 'pending' : 'paid';
 
     const booking = await Booking.findByIdAndUpdate(
@@ -157,8 +157,8 @@ exports.confirm = catchAsync(async (req, res) => {
     notify({
       user: payment.user,
       type: 'booking_paid',
-      title: intentId.startsWith('pi_cash_') ? 'Booking confirmed' : 'Payment successful',
-      message: `Booking ${booking.bookingCode} ${intentId.startsWith('pi_cash_') ? 'confirmed - pay at check-in' : 'has been paid'}`,
+      title: intentId.startsWith('pi_cash_') ? 'Booking pending' : 'Payment successful',
+      message: `Booking ${booking.bookingCode} ${intentId.startsWith('pi_cash_') ? 'pending - pay at check-in' : 'has been paid'}`,
       data: { bookingId: booking._id },
     }).catch(() => {});
 

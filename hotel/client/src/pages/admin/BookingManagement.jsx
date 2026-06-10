@@ -77,86 +77,81 @@ export default function BookingManagement() {
   return (
     <div className="space-y-6">
       {/* Page header */}
-      <div className="rounded-2xl overflow-hidden shadow-sm">
-        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-brand-700 px-6 py-5">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div>
-              <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-                📅 Quản lý đặt phòng
-              </h1>
-              <p className="text-blue-100/80 text-sm mt-1">
-                {total > 0 ? `${total} đặt phòng` : 'Quản lý toàn bộ đặt phòng của hệ thống'}
-              </p>
-            </div>
-            <button
-              onClick={handleExportExcel}
-              disabled={exporting}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 hover:bg-white/25 text-white text-sm font-medium rounded-xl border border-white/20 transition-all duration-200 backdrop-blur-sm disabled:opacity-60"
-            >
-              {exporting ? '⏳ Đang xuất...' : '⬇ Export Excel'}
-            </button>
-          </div>
+      <div className="bg-white rounded-xl border border-border p-6 shadow-sm flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý đặt phòng</h1>
+          <p className="text-slate-400 text-xs mt-1 font-light">
+            {total > 0 ? `${total} đặt phòng` : 'Quản lý toàn bộ đặt phòng của hệ thống'}
+          </p>
         </div>
-
-        {/* Filter bar */}
-        <div className="bg-white border-x border-b border-gray-200 px-6 py-4 flex flex-wrap gap-3 items-center">
-          <div className="relative flex-1 min-w-[200px] max-w-sm">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</span>
-            <input
-              className="input pl-9"
-              placeholder="Tìm theo mã / tên khách..."
-              value={q}
-              onChange={(e) => { setQ(e.target.value); setPage(1); }}
-            />
-          </div>
-          <select
-            className="input max-w-[200px]"
-            value={status}
-            onChange={(e) => { setStatus(e.target.value); setPage(1); }}
-          >
-            <option value="">Tất cả trạng thái</option>
-            {STATUSES.map((s) => <option key={s} value={s}>{tStatus(s)}</option>)}
-          </select>
+        <div className="flex items-center gap-3">
           <button
-            onClick={() => refetch()}
-            className="btn-outline text-sm px-4 py-2"
+            onClick={handleExportExcel}
+            disabled={exporting}
+            className="btn-accent text-xs px-5 py-2.5 rounded-lg flex items-center gap-1.5 disabled:opacity-60"
           >
-            ↻ Làm mới
+            {exporting ? '⏳ Đang xuất...' : 'Export Excel'}
           </button>
         </div>
+      </div>
+
+      {/* Filter bar */}
+      <div className="bg-white rounded-xl border border-border p-4 flex flex-wrap gap-3 items-center shadow-sm">
+        <div className="relative flex-1 min-w-[200px] max-w-sm">
+          <input
+            className="input"
+            placeholder="Tìm theo mã / tên khách..."
+            value={q}
+            onChange={(e) => { setQ(e.target.value); setPage(1); }}
+          />
+        </div>
+        <select
+          className="input max-w-[200px]"
+          value={status}
+          onChange={(e) => { setStatus(e.target.value); setPage(1); }}
+        >
+          <option value="">Tất cả trạng thái</option>
+          {STATUSES.map((s) => <option key={s} value={s}>{tStatus(s)}</option>)}
+        </select>
+        <button
+          onClick={() => refetch()}
+          className="btn-outline text-xs px-4 py-2.5 rounded-lg"
+        >
+          Làm mới
+        </button>
       </div>
 
       {/* Table */}
       {isLoading ? (
         <Spinner className="py-16" />
       ) : (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gradient-to-r from-slate-700 to-slate-800 text-white">
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Mã đặt phòng</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Khách</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Khách sạn</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Phòng</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Check-in</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Check-out</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Tổng tiền</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Trạng thái</th>
-                  <th className="px-4 py-3.5 text-left text-xs font-semibold tracking-wide uppercase">Cập nhật</th>
+                <tr className="bg-[#FAF9F6] border-b border-border text-primary">
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Mã đặt phòng</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Khách</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Khách sạn</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Phòng</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Check-in</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Check-out</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Tổng tiền</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Trạng thái</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-bold uppercase tracking-wider">Cập nhật</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-border">
                 {bookings.map((b, i) => (
-                  <tr key={b._id} className={`transition-colors hover:bg-blue-50/40 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
+                  <tr key={b._id} className={`transition-colors hover:bg-[#FAF9F6]/40 ${i % 2 === 0 ? 'bg-white' : 'bg-[#FAF9F6]/20'}`}>
                     <td className="px-4 py-3.5">
-                      <span className="font-mono text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded-lg border border-indigo-100 font-semibold">
+                      <span className="font-mono text-xs bg-[#FAF9F6] text-primary px-2 py-1 rounded border border-border font-semibold">
                         {b.bookingCode}
                       </span>
                     </td>
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white text-[10px] font-bold shrink-0">
+                        <div className="w-7 h-7 rounded-full bg-accent flex items-center justify-center text-white text-[10px] font-bold shrink-0">
                           {b.customer?.name?.charAt(0)?.toUpperCase() || '?'}
                         </div>
                         <span className="font-medium text-gray-800 text-sm">{b.customer?.name}</span>
@@ -184,7 +179,7 @@ export default function BookingManagement() {
                     </td>
                     <td className="px-4 py-3.5">
                       <select
-                        className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-white text-gray-700 focus:border-brand-400 focus:ring-1 focus:ring-brand-100 focus:outline-none cursor-pointer"
+                        className="text-xs border border-border rounded-lg px-2.5 py-1.5 bg-white text-primary focus:border-accent focus:outline-none cursor-pointer"
                         value={b.status}
                         onChange={(e) => onUpdateStatus(b._id, e.target.value)}
                       >
@@ -196,10 +191,9 @@ export default function BookingManagement() {
                 {bookings.length === 0 && (
                   <tr>
                     <td colSpan={9} className="py-16 text-center">
-                      <div className="flex flex-col items-center gap-2 text-gray-400">
-                        <span className="text-4xl">📋</span>
-                        <p className="font-medium text-gray-500">Không có đặt phòng nào</p>
-                        <p className="text-sm">Thử thay đổi bộ lọc hoặc tìm kiếm khác</p>
+                      <div className="flex flex-col items-center gap-2 text-slate-400">
+                        <p className="font-medium">Không có đặt phòng nào</p>
+                        <p className="text-xs font-light">Thử thay đổi bộ lọc hoặc tìm kiếm khác</p>
                       </div>
                     </td>
                   </tr>
