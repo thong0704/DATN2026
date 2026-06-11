@@ -1,22 +1,189 @@
-﻿﻿const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const Hotel = require('../models/Hotel');
 const Room = require('../models/Room');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
+const { filterAvailableRooms } = require('../services/availabilityService');
 
 // ─── Gemini AI Setup ───
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-const SYSTEM_PROMPT = `Bạn là trợ lý ảo của hệ thống đặt phòng khách sạn "2T Hotel". Nhiệm vụ:
-- Hỗ trợ khách tìm khách sạn theo địa điểm, ngân sách, hạng sao, tiện ích.
-- Trả lời câu hỏi về chính sách check-in/check-out, thanh toán, khuyến mãi.
-- Nói chuyện thân thiện, ngắn gọn bằng tiếng Việt.
-- Khi có dữ liệu khách sạn được cung cấp, hãy tóm tắt gợi ý dựa trên dữ liệu đó.
-- Không bịa đặt thông tin khách sạn nếu không có dữ liệu.
-- Chính sách mặc định: check-in từ 14:00, check-out trước 12:00.
-- Thanh toán hỗ trợ: VNPay, MoMo, thanh toán tại quầy.`;
+const SYSTEM_PROMPT = `Bạn là trợ lý Concierge chuyên nghiệp và sang trọng của chuỗi khách sạn boutique "2T Hotel".
+Nhiệm vụ và hướng dẫn ứng xử:
+1. LUÔN THÂN THIỆN, LỊCH SỰ, CHUYÊN NGHIỆP: Xưng hô lễ phép, chu đáo (ví dụ: "Dạ, 2T Hotel xin chào anh/chị...", "Em có thể giúp gì thêm cho anh/chị ạ?").
+2. TRẢ LỜI CHÍNH XÁC DỰA TRÊN DỮ LIỆU: Chỉ tư vấn các khách sạn, địa chỉ, tiện ích và giá cả dựa trên DANH SÁCH KHÁCH SẠN HỆ THỐNG được cung cấp bên dưới. Không được tự ý bịa đặt thông tin khách sạn hoặc dịch vụ không tồn tại.
+3. TƯ VẤN ĐẶT PHÒNG THÔNG MINH:
+   - Nếu khách tìm phòng, hãy tham khảo DỮ LIỆU PHÒNG TRỐNG HIỆN TẠI để báo loại phòng và giá chính xác nhất.
+   - Nếu không tìm thấy phòng trống đúng yêu cầu (ví dụ: hết phòng ở mức giá đó hoặc ở thành phố đó), hãy lịch sự thông báo và chủ động gợi ý khách chọn hạng phòng khác, ngày khác, hoặc giới thiệu khách sạn khác cùng chuỗi.
+4. THÔNG TIN CHUNG:
+   - Thời gian nhận phòng (Check-in): từ 14:00 | Trả phòng (Check-out): trước 12:00 (nếu khách sạn cụ thể có chính sách riêng, ưu tiên báo theo khách sạn đó).
+   - Hỗ trợ thanh toán: VNPay, Ví MoMo, Thẻ quốc tế, hoặc Thanh toán trực tiếp khi nhận phòng (đơn hàng sẽ ở trạng thái Chờ xử lý cho đến khi thanh toán).
+5. TRÌNH BÀY ĐẸP MẮT: Sử dụng Markdown (in đậm, danh sách), phân tách rõ ràng và chèn thêm các biểu tượng cảm xúc (emoji) phù hợp để câu trả lời thêm sinh động, dễ đọc.`;
+
+async function getHotelsDirectory() {
+  try {
+    const hotels = await Hotel.find({ isActive: true })
+      .select('name stars address amenities checkInTime checkOutTime policies description avgRating basePrice')
+      .lean();
+    if (!hotels || hotels.length === 0) return '';
+    return hotels.map((h) => {
+      const addr = `${h.address?.street || ''}, ${h.address?.city || ''}`;
+      const amenities = h.amenities?.length ? h.amenities.join(', ') : 'Không có';
+      return `### KHÁCH SẠN: ${h.name}
+- Hạng sao: ${h.stars}⭐
+- Đánh giá: ${h.avgRating ? `${h.avgRating.toFixed(1)}/5` : 'Chưa có đánh giá'}
+- Địa chỉ: ${addr}
+- Giờ check-in: ${h.checkInTime || '14:00'} | Giờ check-out: ${h.checkOutTime || '12:00'}
+- Tiện ích nổi bật: ${amenities}
+- Giá phòng tham khảo chỉ từ: ${h.basePrice ? formatVnd(h.basePrice) : 'Liên hệ'}/đêm
+- Mô tả: ${h.description || 'Không có mô tả'}
+- Chính sách riêng: ${h.policies || 'Theo chính sách chung của hệ thống'}`;
+    }).join('\n---\n');
+  } catch (err) {
+    return '';
+  }
+}
 
 // ─── Helpers ───
+function extractDates(message) {
+  const normalized = normalizeText(message);
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth(); // 0-indexed
+  const currentDate = now.getDate();
+
+  let checkIn = null;
+  let checkOut = null;
+
+  // Helper to construct a Date object for a day of a month
+  const getDateObj = (day, month = null, year = null) => {
+    let y = year || currentYear;
+    let m = month !== null ? month - 1 : currentMonth; // month is 1-indexed in input
+    let d = day;
+
+    let date = new Date(y, m, d, 14, 0, 0, 0); // Check-in at 14:00
+    if (month === null && year === null) {
+      // If only day is provided, and it has already passed, assume next month
+      if (date < now) {
+        date.setMonth(date.getMonth() + 1);
+      }
+    }
+    return date;
+  };
+
+  // 1. Check relative dates
+  if (normalized.includes('hom nay')) {
+    checkIn = new Date(currentYear, currentMonth, currentDate, 14, 0, 0, 0);
+    checkOut = new Date(currentYear, currentMonth, currentDate + 1, 12, 0, 0, 0);
+    return { checkIn, checkOut };
+  }
+  if (normalized.includes('hom mai') || normalized.includes('ngay mai')) {
+    checkIn = new Date(currentYear, currentMonth, currentDate + 1, 14, 0, 0, 0);
+    checkOut = new Date(currentYear, currentMonth, currentDate + 2, 12, 0, 0, 0);
+    return { checkIn, checkOut };
+  }
+  if (normalized.includes('ngay kia') || normalized.includes('ngay mot')) {
+    checkIn = new Date(currentYear, currentMonth, currentDate + 2, 14, 0, 0, 0);
+    checkOut = new Date(currentYear, currentMonth, currentDate + 3, 12, 0, 0, 0);
+    return { checkIn, checkOut };
+  }
+
+  // 2. Patterns
+  // Pattern 2.1: "tu ngày D1/M1 den ngày D2/M2" or "từ D1/M1 đến D2/M2"
+  const rangeSlashRegex = /(?:tu\s+)?(?:ngay\s+)?(\d{1,2})[\/\-](\d{1,2})(?:\s+[dđ]en\s+|\s*(?:-|va)\s+)(?:ngay\s+)?(\d{1,2})[\/\-](\d{1,2})/;
+  const matchSlash = normalized.match(rangeSlashRegex);
+  if (matchSlash) {
+    const d1 = parseInt(matchSlash[1], 10);
+    const m1 = parseInt(matchSlash[2], 10);
+    const d2 = parseInt(matchSlash[3], 10);
+    const m2 = parseInt(matchSlash[4], 10);
+    checkIn = getDateObj(d1, m1);
+    checkOut = getDateObj(d2, m2);
+    checkOut.setHours(12, 0, 0, 0);
+    return { checkIn, checkOut };
+  }
+
+  // Pattern 2.2: "tu ngày D1 den ngày D2 thang M" or "từ D1 đến D2 tháng M"
+  const rangeMonthRegex = /(?:tu\s+)?(?:ngay\s+)?(\d{1,2})\s*(?:[dđ]en|va|-)\s*(?:ngay\s+)?(\d{1,2})\s+(?:thang|thg|\/)\s*(\d{1,2})/;
+  const matchRangeMonth = normalized.match(rangeMonthRegex);
+  if (matchRangeMonth) {
+    const d1 = parseInt(matchRangeMonth[1], 10);
+    const d2 = parseInt(matchRangeMonth[2], 10);
+    const m = parseInt(matchRangeMonth[3], 10);
+    checkIn = getDateObj(d1, m);
+    checkOut = getDateObj(d2, m);
+    checkOut.setHours(12, 0, 0, 0);
+    return { checkIn, checkOut };
+  }
+
+  // Pattern 2.3: "tu ngay D1 den ngay D2" / "tu D1 den D2" / "ngay D1 den D2"
+  const rangePlainRegex = /(?:tu\s+)?(?:ngay\s+)?(\d{1,2})\s+[dđ]en\s+(?:ngay\s+)?(\d{1,2})/;
+  const matchRangePlain = normalized.match(rangePlainRegex);
+  if (matchRangePlain) {
+    const d1 = parseInt(matchRangePlain[1], 10);
+    const d2 = parseInt(matchRangePlain[2], 10);
+    checkIn = getDateObj(d1);
+    checkOut = getDateObj(d2);
+    if (checkOut < checkIn) {
+      checkOut.setMonth(checkOut.getMonth() + 1);
+    }
+    checkOut.setHours(12, 0, 0, 0);
+    return { checkIn, checkOut };
+  }
+
+  // Pattern 2.4: "ngay D1 va D2" / "ngay D1, D2" (Stays on day D1 and day D2, checking out on D2 + 1)
+  const checkInAndOutRegex = /(?:ngay\s+)?(\d{1,2})\s*(?:va|,|-)\s*(\d{1,2})/;
+  const matchAnd = normalized.match(checkInAndOutRegex);
+  if (matchAnd) {
+    const d1 = parseInt(matchAnd[1], 10);
+    const d2 = parseInt(matchAnd[2], 10);
+    if (d2 > d1 && d2 - d1 <= 5) {
+      checkIn = getDateObj(d1);
+      checkOut = getDateObj(d2 + 1);
+      if (checkOut < checkIn) {
+        checkOut.setMonth(checkOut.getMonth() + 1);
+      }
+      checkOut.setHours(12, 0, 0, 0);
+      return { checkIn, checkOut };
+    } else if (d2 > d1) {
+      checkIn = getDateObj(d1);
+      checkOut = getDateObj(d2);
+      if (checkOut < checkIn) {
+        checkOut.setMonth(checkOut.getMonth() + 1);
+      }
+      checkOut.setHours(12, 0, 0, 0);
+      return { checkIn, checkOut };
+    }
+  }
+
+  // Pattern 2.5: single day "ngay D/M" or "ngày D tháng M"
+  const singleDayMonthRegex = /(?:ngay\s+)?(\d{1,2})[\/\-](?:\s*)(\d{1,2})|(?:ngay\s+)?(\d{1,2})\s+thang\s+(\d{1,2})/;
+  const matchSingleMonth = normalized.match(singleDayMonthRegex);
+  if (matchSingleMonth) {
+    const d = parseInt(matchSingleMonth[1] || matchSingleMonth[3], 10);
+    const m = parseInt(matchSingleMonth[2] || matchSingleMonth[4], 10);
+    checkIn = getDateObj(d, m);
+    checkOut = new Date(checkIn);
+    checkOut.setDate(checkOut.getDate() + 1);
+    checkOut.setHours(12, 0, 0, 0);
+    return { checkIn, checkOut };
+  }
+
+  // Pattern 2.6: single day "ngay D"
+  const singleDayRegex = /(?:ngay\s+)(\d{1,2})/;
+  const matchSingle = normalized.match(singleDayRegex);
+  if (matchSingle) {
+    const d = parseInt(matchSingle[1], 10);
+    checkIn = getDateObj(d);
+    checkOut = new Date(checkIn);
+    checkOut.setDate(checkOut.getDate() + 1);
+    checkOut.setHours(12, 0, 0, 0);
+    return { checkIn, checkOut };
+  }
+
+  return { checkIn: null, checkOut: null };
+}
+
 const CITY_ALIASES = {
   hanoi: ['ha noi', 'hn'],
   'ho chi minh': ['ho chi minh', 'sai gon', 'hcm', 'hcmc', 'tp hcm', 'tphcm'],
@@ -147,24 +314,52 @@ function computeAmenityScore(hotelAmenities = [], requested = []) {
 function buildHotelLine(item) {
   const city = item.hotel.address?.city || 'N/A';
   const stars = item.hotel.stars || 0;
-  const rating = item.hotel.avgRating ? ` | danh gia ${item.hotel.avgRating.toFixed(1)}/5` : '';
+  const rating = item.hotel.avgRating ? ` | Đánh giá ${item.hotel.avgRating.toFixed(1)}/5` : '';
   const roomTypes = [...item.roomTypes].join(', ');
-  return `- ${item.hotel.name} (${city}) | ${stars} sao | tu ${formatVnd(item.minPrice)}/dem | ${item.availableRooms} phong trong | loai: ${roomTypes}${rating}`;
+  return `🏢 **${item.hotel.name}** (${city})\n   - Hạng: ${stars} sao ⭐\n   - Giá chỉ từ: **${formatVnd(item.minPrice)}**/đêm\n   - Số phòng trống: ${item.availableRooms} phòng\n   - Loại phòng: ${roomTypes}${rating}`;
 }
 
 function buildSearchSummary(criteria, budgetRelaxed) {
   const parts = [];
-  if (criteria.city) parts.push(`dia diem ${criteria.city}`);
-  if (criteria.budget) parts.push(`ngan sach ~${formatVnd(criteria.budget)}/dem`);
-  if (criteria.exactStars) parts.push(`${criteria.exactStars} sao`);
-  if (criteria.minStars) parts.push(`tu ${criteria.minStars} sao`);
-  if (criteria.roomType) parts.push(`phong ${criteria.roomType}`);
-  if (criteria.guests?.adults) parts.push(`${criteria.guests.adults} nguoi lon`);
-  if (criteria.guests?.children) parts.push(`${criteria.guests.children} tre em`);
-  if (criteria.amenityKeywords?.length) parts.push(`tien ich: ${criteria.amenityKeywords.join(', ')}`);
-  const firstLine = parts.length ? `Tieu chi: ${parts.join(' | ')}.` : 'Tieu chi: tim theo du lieu hien co.';
+  if (criteria.city) parts.push(`Địa điểm: **${criteria.city}**`);
+  if (criteria.checkIn && criteria.checkOut) {
+    const formatDate = (date) => {
+      const d = new Date(date);
+      return `${d.getDate()}/${d.getMonth() + 1}`;
+    };
+    parts.push(`Ngày: **${formatDate(criteria.checkIn)} - ${formatDate(criteria.checkOut)}**`);
+  }
+  if (criteria.budget) parts.push(`Ngân sách: ~**${formatVnd(criteria.budget)}**/đêm`);
+  if (criteria.exactStars) parts.push(`Hạng sao: **${criteria.exactStars}⭐**`);
+  if (criteria.minStars) parts.push(`Hạng sao từ: **${criteria.minStars}⭐**`);
+  if (criteria.roomType) parts.push(`Hạng phòng: **${criteria.roomType.toUpperCase()}**`);
+  
+  const guestParts = [];
+  if (criteria.guests?.adults) guestParts.push(`${criteria.guests.adults} người lớn`);
+  if (criteria.guests?.children) guestParts.push(`${criteria.guests.children} trẻ em`);
+  if (guestParts.length) parts.push(`Số khách: **${guestParts.join(', ')}**`);
+
+  if (criteria.amenityKeywords?.length) parts.push(`Tiện ích: **${criteria.amenityKeywords.join(', ')}**`);
+  
+  const firstLine = parts.length ? `🔍 **Tiêu chí tìm kiếm:** ${parts.join(' | ')}.` : '🔍 **Tiêu chí:** Tìm kiếm phòng trống hiện có.';
   if (!budgetRelaxed) return firstLine;
-  return `${firstLine} Hien khong co phong trong dung ngan sach, minh da mo rong de goi y muc gan nhat.`;
+  return `${firstLine}\n⚠️ *Hiện không có phòng đúng ngân sách, hệ thống đã đề xuất mức giá gần nhất.*`;
+}
+
+function suggestNextStep(criteria) {
+  const hasDates = criteria.checkIn && criteria.checkOut;
+  const hasGuests = criteria.guests?.adults;
+  
+  if (!hasDates && !hasGuests) {
+    return '💡 Bạn có thể gửi thêm **ngày nhận/trả phòng** và **số khách** (ví dụ: "ngày 11 và 12, 2 người") để mình lọc chính xác hơn nhé.';
+  }
+  if (!hasDates) {
+    return '💡 Bạn có thể gửi thêm **ngày nhận/trả phòng** (ví dụ: "từ ngày 11 đến ngày 13") để mình lọc chính xác hơn nhé.';
+  }
+  if (!hasGuests) {
+    return '💡 Bạn có thể gửi thêm **số khách** (ví dụ: "cho 2 người lớn và 1 trẻ em") để mình kiểm tra tình trạng phòng trống nhé.';
+  }
+  return '✨ Tất cả tiêu chí đã đầy đủ! Bạn có thể chọn phòng phù hợp phía trên và click vào liên kết khách sạn để tiến hành đặt phòng nhanh chóng nhé. 😊';
 }
 
 async function searchHotelsReply(message, history = []) {
@@ -181,8 +376,9 @@ async function searchHotelsReply(message, history = []) {
   const city = await extractCityFromMessage(analysisText);
   const { minStars, exactStars } = extractStars(analysisText);
   const guests = extractGuests(analysisText);
+  const { checkIn, checkOut } = extractDates(analysisText);
 
-  const criteria = { budget, roomType, amenityKeywords, city, minStars, exactStars, guests };
+  const criteria = { budget, roomType, amenityKeywords, city, minStars, exactStars, guests, checkIn, checkOut };
 
   const hotelQuery = { isActive: true };
   if (city) hotelQuery['address.city'] = city;
@@ -195,7 +391,7 @@ async function searchHotelsReply(message, history = []) {
     .lean();
 
   if (!hotels.length) {
-    return 'Hien chua tim thay khach san phu hop khu vuc ban tim. Ban thu doi dia diem hoac muc sao nhe.';
+    return 'Hiện chưa tìm thấy khách sạn phù hợp khu vực bạn tìm. Bạn thử đổi địa điểm hoặc mức sao nhé.';
   }
 
   const roomQuery = {
@@ -211,6 +407,17 @@ async function searchHotelsReply(message, history = []) {
   let rooms = await Room.find(roomQuery)
     .select('hotel type pricePerNight status')
     .lean();
+
+  if (checkIn && checkOut && rooms.length > 0) {
+    const availableIds = await filterAvailableRooms({
+      roomIds: rooms.map((r) => r._id),
+      checkIn,
+      checkOut,
+    });
+    const idSet = new Set(availableIds.map(String));
+    rooms = rooms.filter((r) => idSet.has(String(r._id)));
+  }
+
   let budgetRelaxed = false;
 
   if (!rooms.length && budget) {
@@ -219,11 +426,20 @@ async function searchHotelsReply(message, history = []) {
     rooms = await Room.find(relaxedQuery)
       .select('hotel type pricePerNight status')
       .lean();
+    if (checkIn && checkOut && rooms.length > 0) {
+      const availableIds = await filterAvailableRooms({
+        roomIds: rooms.map((r) => r._id),
+        checkIn,
+        checkOut,
+      });
+      const idSet = new Set(availableIds.map(String));
+      rooms = rooms.filter((r) => idSet.has(String(r._id)));
+    }
     budgetRelaxed = rooms.length > 0;
   }
 
   if (!rooms.length) {
-    return 'Hien khong co phong trong dung bo loc ban vua chon. Ban thu tang ngan sach hoac bo dieu kien loai phong de minh tim lai nhe.';
+    return 'Hiện không có phòng trống đúng bộ lọc bạn vừa chọn. Bạn thử tăng ngân sách hoặc bỏ điều kiện loại phòng để mình tìm lại nhé.';
   }
 
   const hotelMap = new Map(hotels.map((hotel) => [String(hotel._id), hotel]));
@@ -277,12 +493,12 @@ async function searchHotelsReply(message, history = []) {
 
   const lines = ranked.map(buildHotelLine).join('\n');
   const summary = [
-    city ? `Goi y khach san tai ${city}:` : 'Goi y khach san phu hop:',
+    city ? `🏢 **Gợi ý khách sạn tại ${city}:**` : '🏢 **Gợi ý khách sạn phù hợp:**',
     buildSearchSummary(criteria, budgetRelaxed),
     '',
     lines,
     '',
-    'Ban co the gui them ngay nhan/tra phong va so nguoi de minh loc sat hon.',
+    suggestNextStep(criteria)
   ];
 
   return summary.join('\n');
@@ -291,7 +507,10 @@ async function searchHotelsReply(message, history = []) {
 async function generateReply(message, history = []) {
   const intent = detectIntent(message);
 
-  // Gather DB context for search-related queries
+  // 1. Get static hotel directory
+  const directoryContext = await getHotelsDirectory();
+
+  // 2. Get live vacant rooms context if the intent is search
   let dbContext = '';
   if (intent === 'search') {
     try {
@@ -303,7 +522,17 @@ async function generateReply(message, history = []) {
 
   // Build Gemini conversation
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const systemPromptWithContext = `${SYSTEM_PROMPT}
+
+DANH SÁCH KHÁCH SẠN HỆ THỐNG (DỮ LIỆU CHÍNH THỨC):
+${directoryContext || 'Chưa có thông tin khách sạn nào được đăng ký.'}
+
+${dbContext ? `DỮ LIỆU PHÒNG TRỐNG HIỆN TẠI (Dành cho việc đặt phòng): \n${dbContext}\n` : ''}`;
+
+    const model = genAI.getGenerativeModel({ 
+      model: 'gemini-2.0-flash',
+      systemInstruction: systemPromptWithContext
+    });
 
     const chatHistory = history
       .filter((m) => m.role && m.content)
@@ -313,12 +542,8 @@ async function generateReply(message, history = []) {
         parts: [{ text: m.content }],
       }));
 
-    const userPrompt = dbContext
-      ? `${SYSTEM_PROMPT}\n\nDữ liệu khách sạn tìm được từ hệ thống:\n${dbContext}\n\nTin nhắn khách hàng: ${message}\n\nHãy trả lời dựa trên dữ liệu trên, trình bày gọn đẹp bằng tiếng Việt.`
-      : `${SYSTEM_PROMPT}\n\nTin nhắn khách hàng: ${message}\n\nHãy trả lời bằng tiếng Việt, thân thiện và ngắn gọn.`;
-
     const chat = model.startChat({ history: chatHistory });
-    const result = await chat.sendMessage(userPrompt);
+    const result = await chat.sendMessage(message);
     const response = result.response;
     const text = response.text();
 

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import HotelCard from '../components/HotelCard';
 import Spinner from '../components/Spinner';
@@ -77,17 +77,19 @@ export default function HomePage() {
     }
   ];
 
-  const slides = heroBanners.length > 0 
-    ? heroBanners.map(b => ({ image: b.image, title: b.subtitle || '2T Hotel', subtitle: b.title || 'Elite Retreats' }))
-    : fallbackSlides;
+  const slides = useMemo(() => {
+    return heroBanners.length > 0 
+      ? heroBanners.map(b => ({ image: b.image, title: b.subtitle || '2T Hotel', subtitle: b.title || 'Elite Retreats' }))
+      : fallbackSlides;
+  }, [heroBanners]);
 
   useEffect(() => {
     if (slides.length <= 1) return;
     const interval = setInterval(() => {
       setActiveHeroIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 4000);
     return () => clearInterval(interval);
-  }, [slides.length]);
+  }, [slides]);
 
   const today = dayjs().format('YYYY-MM-DD');
   const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
@@ -172,7 +174,7 @@ export default function HomePage() {
                   {slides.map((slide, idx) => (
                     <div
                       key={idx}
-                      className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
+                      className={`absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out ${
                         idx === activeHeroIndex ? 'opacity-100 scale-105 animate-ken-burns' : 'opacity-0 scale-100'
                       }`}
                       style={{ backgroundImage: `url(${slide.image})` }}
