@@ -18,7 +18,7 @@ export default function CouponManagement() {
   const [del] = useDeleteCouponMutation();
   const coupons = data?.data?.coupons || [];
   const [editing, setEditing] = useState(null);
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   const onEdit = (c) => {
     setEditing(c);
@@ -81,7 +81,11 @@ export default function CouponManagement() {
             {editing ? 'Sửa' : 'Tạo'} mã giảm giá
           </h2>
 
-          <div><label className="label">Mã *</label><input className="input uppercase font-mono" {...register('code', { required: true })} /></div>
+          <div>
+            <label className="label">Mã *</label>
+            <input className="input uppercase font-mono" {...register('code', { required: 'Vui lòng nhập mã giảm giá' })} />
+            {errors.code && <p className="text-red-600 text-xs mt-1">{errors.code.message}</p>}
+          </div>
           <div><label className="label">Mô tả</label><input className="input" {...register('description')} /></div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -92,7 +96,11 @@ export default function CouponManagement() {
                 <option value="fixed">Số tiền cố định</option>
               </select>
             </div>
-            <div><label className="label">Giá trị *</label><input type="number" className="input" {...register('discountValue', { required: true })} /></div>
+            <div>
+              <label className="label">Giá trị *</label>
+              <input type="number" className="input" {...register('discountValue', { required: 'Vui lòng nhập giá trị giảm giá' })} />
+              {errors.discountValue && <p className="text-red-600 text-xs mt-1">{errors.discountValue.message}</p>}
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">

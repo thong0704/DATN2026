@@ -23,7 +23,7 @@ export default function HotelManagement() {
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const hotels = data?.data?.hotels || [];
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   const onFilesChange = (e) => {
     const selected = Array.from(e.target.files || []);
@@ -80,13 +80,17 @@ export default function HotelManagement() {
         <p className="text-slate-400 text-xs mt-1 font-light">{hotels.length} khách sạn trong hệ thống</p>
       </div>
       <div className="grid lg:grid-cols-3 gap-6">
-        {isManager && (
+        {(isAdmin || editing) && (
         <form onSubmit={handleSubmit(onSave)} className="bg-white rounded-xl border border-border shadow-sm p-6 space-y-4 h-fit">
           <h2 className="font-serif-display font-medium text-lg text-primary flex items-center gap-2 mb-2">
             <span className="w-1.5 h-6 bg-accent rounded-full" />
             {editing ? 'Sửa' : 'Tạo'} khách sạn
           </h2>
-          <div><label className="label">Tên khách sạn *</label><input className="input" defaultValue={editing?.name} {...register('name', { required: true })} /></div>
+          <div>
+            <label className="label">Tên khách sạn *</label>
+            <input className="input" defaultValue={editing?.name} {...register('name', { required: 'Vui lòng nhập tên khách sạn' })} />
+            {errors.name && <p className="text-red-600 text-xs mt-1">{errors.name.message}</p>}
+          </div>
           <div><label className="label">Mô tả</label><textarea className="input" rows={3} defaultValue={editing?.description} {...register('description')} /></div>
           <div><label className="label">Số sao</label>
             <select className="input" defaultValue={editing?.stars || 3} {...register('stars')}>
@@ -94,7 +98,11 @@ export default function HotelManagement() {
             </select>
           </div>
           <div><label className="label">Giá cơ bản (VND/đêm)</label><input type="number" className="input" defaultValue={editing?.basePrice} {...register('basePrice')} /></div>
-          <div><label className="label">Thành phố *</label><input className="input" defaultValue={editing?.address?.city} {...register('city', { required: true })} /></div>
+          <div>
+            <label className="label">Thành phố *</label>
+            <input className="input" defaultValue={editing?.address?.city} {...register('city', { required: 'Vui lòng nhập tên thành phố' })} />
+            {errors.city && <p className="text-red-600 text-xs mt-1">{errors.city.message}</p>}
+          </div>
           <div><label className="label">Địa chỉ</label><input className="input" defaultValue={editing?.address?.street} {...register('street')} /></div>
           <div>
             <label className="label">Hình ảnh khách sạn</label>
@@ -116,9 +124,7 @@ export default function HotelManagement() {
               </div>
             )}
           </div>
-          {(isAdmin || editing) && (
-            <button className="btn-primary w-full" disabled={creating}>{editing ? 'Cập nhật' : 'Tạo mới'}</button>
-          )}
+          <button className="btn-primary w-full" disabled={creating}>{editing ? 'Cập nhật' : 'Tạo mới'}</button>
           {editing && <button type="button" onClick={() => { setEditing(null); reset(); setFiles([]); setPreviews([]); }} className="btn-outline w-full">Huỷ</button>}
         </form>
         )}

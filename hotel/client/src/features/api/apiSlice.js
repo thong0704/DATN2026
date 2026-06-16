@@ -13,6 +13,27 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
+const normalizeUrls = (obj) => {
+  if (!obj) return obj;
+  if (typeof obj === 'string') {
+    if (obj.startsWith('http') && obj.includes('/uploads/')) {
+      return '/uploads/' + obj.split('/uploads/').pop();
+    }
+    return obj;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(normalizeUrls);
+  }
+  if (typeof obj === 'object') {
+    const newObj = {};
+    for (const key in obj) {
+      newObj[key] = normalizeUrls(obj[key]);
+    }
+    return newObj;
+  }
+  return obj;
+};
+
 // Refresh-token wrapper — if 401, try /auth/refresh-token once, then retry.
 const baseQueryWithRefresh = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
@@ -24,6 +45,9 @@ const baseQueryWithRefresh = async (args, api, extraOptions) => {
     } else {
       api.dispatch(logout());
     }
+  }
+  if (result?.data) {
+    result.data = normalizeUrls(result.data);
   }
   return result;
 };

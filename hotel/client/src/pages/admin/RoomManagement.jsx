@@ -70,7 +70,7 @@ export default function RoomManagement() {
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [amenities, setAmenities] = useState([]);
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   const onFilesChange = (e) => {
     const selected = Array.from(e.target.files || []);
@@ -156,7 +156,11 @@ export default function RoomManagement() {
               {editing ? 'Sửa' : 'Tạo'} phòng
             </h2>
 
-            <div><label className="label">Số phòng</label><input className="input" defaultValue={editing?.roomNumber} {...register('roomNumber', { required: true })} /></div>
+            <div>
+              <label className="label">Số phòng *</label>
+              <input className="input" defaultValue={editing?.roomNumber} {...register('roomNumber', { required: 'Vui lòng nhập số phòng' })} />
+              {errors.roomNumber && <p className="text-red-600 text-xs mt-1">{errors.roomNumber.message}</p>}
+            </div>
             <div>
               <label className="label">Loại phòng</label>
               <select className="input" defaultValue={editing?.type || 'standard'} {...register('type')}>
@@ -164,7 +168,11 @@ export default function RoomManagement() {
               </select>
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <div><label className="label">Giá thường (VND)</label><input type="number" className="input" defaultValue={editing?.pricePerNight} {...register('pricePerNight', { required: true })} /></div>
+              <div>
+                <label className="label">Giá thường * (VND)</label>
+                <input type="number" className="input" defaultValue={editing?.pricePerNight} {...register('pricePerNight', { required: 'Vui lòng nhập giá thường' })} />
+                {errors.pricePerNight && <p className="text-red-600 text-xs mt-1">{errors.pricePerNight.message}</p>}
+              </div>
               <div><label className="label">Giá cuối tuần (VND)</label><input type="number" className="input" defaultValue={editing?.weekendPrice} {...register('weekendPrice')} /></div>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -210,9 +218,7 @@ export default function RoomManagement() {
                 </div>
               )}
             </div>
-            {(isAdmin || editing) && (
-              <button className="btn-primary w-full">{editing ? '💾 Cập nhật' : '✚ Tạo mới'}</button>
-            )}
+            <button className="btn-primary w-full">{editing ? '💾 Cập nhật' : '✚ Tạo mới'}</button>
             {editing && <button type="button" onClick={() => { setEditing(null); reset(); setFiles([]); setPreviews([]); setAmenities([]); }} className="btn-outline w-full">Huỷ</button>}
           </form>
           )}

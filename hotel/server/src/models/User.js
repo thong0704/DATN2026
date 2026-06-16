@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
       match: [/^\S+@\S+\.\S+$/, 'Invalid email'],
     },
     password: { type: String, required: true, minlength: 6, select: false },
-    phone: { type: String, trim: true },
+    phone: { type: String, required: [true, 'Số điện thoại là bắt buộc'], trim: true },
     avatar: { url: String, public_id: String },
     role: {
       type: String,

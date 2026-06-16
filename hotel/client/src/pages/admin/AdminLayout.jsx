@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
@@ -6,18 +6,18 @@ import { useLogoutMutation } from '../../features/auth/authApi';
 import { logout } from '../../features/auth/authSlice';
 
 const NAV = [
-  { to: '/admin', label: 'Dashboard', end: true },
-  { to: '/admin/bookings', label: 'Quản lý đặt phòng' },
-  { to: '/admin/invoices', label: 'Quản lý hóa đơn' },
-  { to: '/admin/hotels', label: 'Quản lý khách sạn' },
-  { to: '/admin/rooms', label: 'Quản lý phòng' },
-  { to: '/admin/coupons', label: 'Mã giảm giá' },
-  { to: '/admin/dynamic-pricing', label: 'Quản lý giá' },
-  { to: '/admin/banners', label: 'Banner & Điểm đến' },
-  { to: '/admin/articles', label: 'Bài viết' },
-  { to: '/admin/contacts', label: 'Liên hệ' },
-  { to: '/admin/users', label: 'Người dùng', adminOnly: true },
-  { to: '/admin/front-desk', label: 'Lễ tân' },
+  { to: '/admin', label: 'Dashboard', end: true, roles: ['admin', 'manager'] },
+  { to: '/admin/bookings', label: 'Quản lý đặt phòng', roles: ['admin', 'manager', 'staff'] },
+  { to: '/admin/invoices', label: 'Quản lý hóa đơn', roles: ['admin', 'manager', 'staff'] },
+  { to: '/admin/hotels', label: 'Quản lý khách sạn', roles: ['admin', 'manager'] },
+  { to: '/admin/rooms', label: 'Quản lý phòng', roles: ['admin', 'manager'] },
+  { to: '/admin/coupons', label: 'Mã giảm giá', roles: ['admin', 'manager'] },
+  { to: '/admin/dynamic-pricing', label: 'Quản lý giá', roles: ['admin', 'manager'] },
+  { to: '/admin/banners', label: 'Banner & Điểm đến', roles: ['admin', 'manager'] },
+  { to: '/admin/articles', label: 'Bài viết', roles: ['admin', 'manager'] },
+  { to: '/admin/contacts', label: 'Liên hệ', roles: ['admin', 'manager'] },
+  { to: '/admin/users', label: 'Người dùng', roles: ['admin'] },
+  { to: '/admin/front-desk', label: 'Lễ tân', roles: ['admin', 'manager', 'staff'] },
 ];
 
 const getIcon = (to, isActive) => {
@@ -124,7 +124,16 @@ export default function AdminLayout() {
   const [logoutApi] = useLogoutMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const items = NAV.filter((n) => !n.adminOnly || isAdmin);
+  const location = useLocation();
+
+  const items = NAV.filter((n) => n.roles.includes(user?.role));
+
+  useEffect(() => {
+    if (user?.role === 'staff' && (location.pathname === '/admin' || location.pathname === '/admin/')) {
+      navigate('/admin/front-desk', { replace: true });
+    }
+  }, [user, location.pathname, navigate]);
+
   const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
   const avatarUrl = typeof user?.avatar === 'string' ? user.avatar : user?.avatar?.url;
 

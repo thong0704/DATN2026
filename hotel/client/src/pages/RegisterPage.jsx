@@ -182,13 +182,14 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="label">Số điện thoại <span className="text-gray-400 font-normal">(tuỳ chọn)</span></label>
+              <label className="label">Số điện thoại <span className="text-red-500 font-bold">*</span></label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><PhoneIcon /></span>
                 <input
                   className="input pl-10"
                   placeholder="0901 234 567"
                   {...register('phone', {
+                    required: 'Vui lòng nhập số điện thoại',
                     pattern: { value: /^[0-9+\-\s]{8,15}$/, message: 'Số điện thoại không hợp lệ' },
                   })}
                 />

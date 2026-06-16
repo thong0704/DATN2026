@@ -20,8 +20,8 @@ router.get('/booking/:bookingId', ctrl.getByBooking);
 
 // Invoice management
 router.get('/my', ctrl.myInvoices);
-router.get('/admin/list', restrictTo('admin', 'manager'), ctrl.adminList);
-router.patch('/admin/:id/mark-paid', restrictTo('admin', 'manager'), ctrl.markPaid);
+router.get('/admin/list', restrictTo('admin', 'manager', 'staff'), ctrl.adminList);
+router.patch('/admin/:id/mark-paid', restrictTo('admin', 'manager', 'staff'), ctrl.markPaid);
 router.get('/invoice/:id', ctrl.getInvoice);
 
 router.post('/refund/:bookingId', restrictTo('admin'), ctrl.refund);

@@ -43,9 +43,19 @@ exports.register = catchAsync(async (req, res) => {
     await User.findByIdAndDelete(exists._id);
   }
 
-  if (phone) {
-    const phoneExists = await User.findOne({ phone, isEmailVerified: true });
-    if (phoneExists) throw new AppError('Số điện thoại đã được sử dụng', 400);
+  if (!phone) throw new AppError('Số điện thoại là bắt buộc', 400);
+
+  const phoneExists = await User.findOne({ phone });
+  if (phoneExists) {
+    if (phoneExists.isEmailVerified) {
+      throw new AppError('Số điện thoại đã được sử dụng', 400);
+    } else {
+      // Delete old unverified record with this phone to allow re-registration
+      const stillExists = await User.findById(phoneExists._id);
+      if (stillExists) {
+        await User.findByIdAndDelete(phoneExists._id);
+      }
+    }
   }
 
   const code = generateVerificationCode();
