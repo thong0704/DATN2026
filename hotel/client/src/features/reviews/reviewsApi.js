@@ -30,6 +30,13 @@ export const reviewsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Review'],
     }),
+    uploadReviewImages: b.mutation({
+      query: (formData) => ({
+        url: '/reviews/upload',
+        method: 'POST',
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -40,4 +47,5 @@ export const {
   useDeleteReviewMutation,
   useRespondReviewMutation,
   useApproveReviewMutation,
+  useUploadReviewImagesMutation,
 } = reviewsApi;

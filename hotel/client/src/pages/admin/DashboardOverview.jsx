@@ -98,8 +98,53 @@ export default function DashboardOverview() {
     return { start: new Date(y, 0, 1).toISOString(), end: new Date(y + 1, 0, 1).toISOString() };
   })();
 
+  const [isComparing, setIsComparing] = useState(false);
+  const [compareTab, setCompareTab] = useState('revenue');
+  const [compareDate, setCompareDate] = useState(() => {
+    const d = new Date(today);
+    d.setDate(d.getDate() - 1);
+    return d.toISOString().slice(0, 10);
+  });
+  const [compareMonth, setCompareMonth] = useState(() => {
+    const d = new Date(today);
+    d.setMonth(d.getMonth() - 1);
+    return d.toISOString().slice(0, 7);
+  });
+  const [compareYear, setCompareYear] = useState(() => today.getFullYear() - 1);
+
+  const compareRange = (() => {
+    if (period === 'day') {
+      const s = new Date(compareDate + 'T00:00:00');
+      const e = new Date(s); e.setDate(e.getDate() + 1);
+      return { start: s.toISOString(), end: e.toISOString() };
+    }
+    if (period === 'week') {
+      const s = new Date(compareDate + 'T00:00:00');
+      const day = s.getDay();
+      const diff = day === 0 ? -6 : 1 - day;
+      s.setDate(s.getDate() + diff);
+      const e = new Date(s); e.setDate(e.getDate() + 7);
+      return { start: s.toISOString(), end: e.toISOString() };
+    }
+    if (period === 'month') {
+      const [y, m] = compareMonth.split('-').map(Number);
+      const s = new Date(y, m - 1, 1);
+      const e = new Date(y, m, 1);
+      return { start: s.toISOString(), end: e.toISOString() };
+    }
+    const y = Number(compareYear);
+    return { start: new Date(y, 0, 1).toISOString(), end: new Date(y + 1, 0, 1).toISOString() };
+  })();
+
   const queryParams = { period, ...range, ...(hotelId ? { hotelId } : {}) };
   const { data, isLoading, refetch, isFetching } = useDashboardRichQuery(queryParams);
+
+  const compareQueryParams = { period, ...compareRange, ...(hotelId ? { hotelId } : {}) };
+  const { data: compareData, isLoading: isCompareLoading } = useDashboardRichQuery(
+    compareQueryParams,
+    { skip: !isComparing }
+  );
+
   const { data: top } = useTopHotelsQuery();
   const { data: hotelsData } = useListHotelsQuery({ limit: 100, mine: true });
   const { data: recentBookingsData } = useAllBookingsQuery({ limit: 5, sort: '-createdAt' });
@@ -110,6 +155,97 @@ export default function DashboardOverview() {
   const summary = d?.summary || {};
   const roomStats = d?.roomStats || { total: 0, available: 0, occupied: 0, maintenance: 0, cleaning: 0 };
   const trend = d?.trend || [];
+
+  const getDiffPercent = (curr, prev) => {
+    if (!prev) return curr ? '+100%' : '0%';
+    const pct = ((curr - prev) / prev) * 100;
+    const sign = pct >= 0 ? '+' : '';
+    return `${sign}${pct.toFixed(1)}%`;
+  };
+
+  const formatPeriodLabel = (pVal, dateStr, monthStr, yearVal) => {
+    if (pVal === 'year') return String(yearVal);
+    if (pVal === 'month') {
+      const [y, m] = monthStr.split('-');
+      return `${m}/${y}`;
+    }
+    if (pVal === 'day') {
+      const [y, m, d] = dateStr.split('-');
+      return `${d}/${m}`;
+    }
+    if (pVal === 'week') {
+      const [y, m, d] = dateStr.split('-');
+      return `Tuần ${d}/${m}`;
+    }
+    return '';
+  };
+
+  const mainLabel = formatPeriodLabel(period, pickDate, pickMonth, pickYear);
+  const compareLabel = formatPeriodLabel(period, compareDate, compareMonth, compareYear);
+
+  const getComparisonData = () => {
+    if (!isComparing || !compareData?.data?.trend) return [];
+    
+    const mainTrend = trend;
+    const compTrend = compareData.data.trend;
+    
+    const getRelativeKeyAndName = (item) => {
+      if (period === 'year') {
+        const parts = item.label.split('/');
+        const m = parseInt(parts[0]);
+        return { key: m, displayLabel: `Thg ${m}` };
+      }
+      if (period === 'month' || period === 'week') {
+        const parts = item.label.split('/');
+        const d = parseInt(parts[0]);
+        return { key: d, displayLabel: `Ngày ${d}` };
+      }
+      if (period === 'day') {
+        const h = parseInt(item.label.replace('h', ''));
+        return { key: h, displayLabel: `${h}h` };
+      }
+      return { key: item.label, displayLabel: item.label };
+    };
+
+    const mergedMap = new Map();
+
+    mainTrend.forEach((item) => {
+      const { key, displayLabel } = getRelativeKeyAndName(item);
+      mergedMap.set(key, {
+        key,
+        label: displayLabel,
+        revenueMain: item.revenue || 0,
+        bookingsMain: item.bookings || 0,
+        revenueCompare: 0,
+        bookingsCompare: 0,
+      });
+    });
+
+    compTrend.forEach((item) => {
+      const { key, displayLabel } = getRelativeKeyAndName(item);
+      if (mergedMap.has(key)) {
+        const existing = mergedMap.get(key);
+        existing.revenueCompare = item.revenue || 0;
+        existing.bookingsCompare = item.bookings || 0;
+      } else {
+        mergedMap.set(key, {
+          key,
+          label: displayLabel,
+          revenueMain: 0,
+          bookingsMain: 0,
+          revenueCompare: item.revenue || 0,
+          bookingsCompare: item.bookings || 0,
+        });
+      }
+    });
+
+    return Array.from(mergedMap.values()).sort((a, b) => {
+      if (typeof a.key === 'number' && typeof b.key === 'number') {
+        return a.key - b.key;
+      }
+      return String(a.key).localeCompare(String(b.key));
+    });
+  };
   const reviewStats = d?.reviewStats || { avg: 0, total: 0, breakdown: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } };
   const roomTypeDist = (d?.roomTypeDist || []).map((r) => ({
     name: tRoomType(r.type),
@@ -218,6 +354,50 @@ export default function DashboardOverview() {
             </button>
           </div>
         </div>
+
+        <div className="bg-[#F8FAFC] px-6 py-3 border-t border-border flex flex-wrap items-center gap-4 text-xs">
+          <label className="flex items-center gap-2 font-semibold text-slate-700 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={isComparing}
+              onChange={(e) => setIsComparing(e.target.checked)}
+              className="rounded border-gray-300 text-accent focus:ring-accent w-4 h-4 cursor-pointer"
+            />
+            So sánh với kỳ khác
+          </label>
+
+          {isComparing && (
+            <div className="flex items-center gap-2 animate-fadeIn">
+              <span className="text-slate-400 font-light">Kỳ so sánh:</span>
+              {(period === 'day' || period === 'week') && (
+                <input
+                  type="date"
+                  className="input !py-1 !px-2 !w-auto bg-surface text-xs"
+                  value={compareDate}
+                  onChange={(e) => setCompareDate(e.target.value)}
+                />
+              )}
+              {period === 'month' && (
+                <input
+                  type="month"
+                  className="input !py-1 !px-2 !w-auto bg-surface text-xs"
+                  value={compareMonth}
+                  onChange={(e) => setCompareMonth(e.target.value)}
+                />
+              )}
+              {period === 'year' && (
+                <input
+                  type="number"
+                  min="2000"
+                  max="2100"
+                  className="input !py-1 !px-2 !w-16 bg-surface text-xs"
+                  value={compareYear}
+                  onChange={(e) => setCompareYear(e.target.value)}
+                />
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {isLoading ? <Spinner className="py-16" /> : (
@@ -232,7 +412,18 @@ export default function DashboardOverview() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               }
-              subtitle="So với kỳ trước"
+              subtitle={
+                isComparing ? (
+                  <span className="flex flex-wrap items-center gap-x-1">
+                    Kỳ so sánh: <span className="font-semibold">{formatCurrency(compareData?.data?.summary?.periodRevenue || 0)}</span> 
+                    <span className={`font-bold ${(summary.periodRevenue || 0) >= (compareData?.data?.summary?.periodRevenue || 0) ? 'text-emerald-600' : 'text-red-500'}`}>
+                      ({getDiffPercent(summary.periodRevenue || 0, compareData?.data?.summary?.periodRevenue || 0)})
+                    </span>
+                  </span>
+                ) : (
+                  "So với kỳ trước"
+                )
+              }
               theme="emerald"
             />
             <StatCard
@@ -243,7 +434,18 @@ export default function DashboardOverview() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                 </svg>
               }
-              subtitle="Đơn đặt phòng mới"
+              subtitle={
+                isComparing ? (
+                  <span className="flex flex-wrap items-center gap-x-1">
+                    Kỳ so sánh: <span className="font-semibold">{compareData?.data?.summary?.periodBookings || 0}</span> 
+                    <span className={`font-bold ${(summary.periodBookings || 0) >= (compareData?.data?.summary?.periodBookings || 0) ? 'text-emerald-600' : 'text-red-500'}`}>
+                      ({getDiffPercent(summary.periodBookings || 0, compareData?.data?.summary?.periodBookings || 0)})
+                    </span>
+                  </span>
+                ) : (
+                  "Đơn đặt phòng mới"
+                )
+              }
               theme="amber"
             />
             <StatCard
@@ -254,7 +456,18 @@ export default function DashboardOverview() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.97 5.97 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                 </svg>
               }
-              subtitle="Khách hàng mới tuyển"
+              subtitle={
+                isComparing ? (
+                  <span className="flex flex-wrap items-center gap-x-1">
+                    Kỳ so sánh: <span className="font-semibold">{compareData?.data?.summary?.newCustomersInRange || 0}</span> 
+                    <span className={`font-bold ${(summary.newCustomersInRange || 0) >= (compareData?.data?.summary?.newCustomersInRange || 0) ? 'text-emerald-600' : 'text-red-500'}`}>
+                      ({getDiffPercent(summary.newCustomersInRange || 0, compareData?.data?.summary?.newCustomersInRange || 0)})
+                    </span>
+                  </span>
+                ) : (
+                  "Khách hàng mới tuyển"
+                )
+              }
               theme="sky"
             />
             <StatCard
@@ -265,7 +478,18 @@ export default function DashboardOverview() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                 </svg>
               }
-              subtitle={`${roomStats.occupied}/${roomStats.total} phòng hoạt động`}
+              subtitle={
+                isComparing ? (
+                  <span className="flex flex-wrap items-center gap-x-1">
+                    Kỳ so sánh: <span className="font-semibold">{compareData?.data?.summary?.occupancyPercent || 0}%</span> 
+                    <span className={`font-bold ${(summary.occupancyPercent || 0) >= (compareData?.data?.summary?.occupancyPercent || 0) ? 'text-emerald-600' : 'text-red-500'}`}>
+                      ({getDiffPercent(summary.occupancyPercent || 0, compareData?.data?.summary?.occupancyPercent || 0)})
+                    </span>
+                  </span>
+                ) : (
+                  `${roomStats.occupied}/${roomStats.total} phòng hoạt động`
+                )
+              }
               theme="indigo"
             />
           </div>
@@ -313,19 +537,72 @@ export default function DashboardOverview() {
 
           {/* Main Chart */}
           <div className="bg-surface rounded-xl border border-border p-6 text-left shadow-sm">
-            <h2 className="text-lg font-serif-display font-medium text-primary mb-5">📈 Biểu Đồ Doanh Thu &amp; Đặt Phòng</h2>
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
+              <h2 className="text-lg font-serif-display font-medium text-primary">
+                📈 {isComparing ? 'Biểu Đồ So Sánh Doanh Thu & Đặt Phòng' : 'Biểu Đồ Doanh Thu & Đặt Phòng'}
+              </h2>
+              {isComparing && (
+                <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg text-xs font-semibold">
+                  <button
+                    onClick={() => setCompareTab('revenue')}
+                    className={`px-3 py-1 rounded-md transition-colors ${
+                      compareTab === 'revenue'
+                        ? 'bg-white text-emerald-600 shadow-sm'
+                        : 'text-slate-600 hover:text-primary'
+                    }`}
+                  >
+                    Doanh thu
+                  </button>
+                  <button
+                    onClick={() => setCompareTab('bookings')}
+                    className={`px-3 py-1 rounded-md transition-colors ${
+                      compareTab === 'bookings'
+                        ? 'bg-white text-amber-500 shadow-sm'
+                        : 'text-slate-600 hover:text-primary'
+                    }`}
+                  >
+                    Đặt phòng
+                  </button>
+                </div>
+              )}
+            </div>
+
             <div style={{ width: '100%', height: 340 }}>
               <ResponsiveContainer>
-                <ComposedChart data={trend}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" opacity={0.6} />
-                  <XAxis dataKey="label" tick={{ fill: '#5E6672', fontSize: 11 }} />
-                  <YAxis yAxisId="left" orientation="left" tickFormatter={moneyTick} tick={{ fill: '#5E6672', fontSize: 11 }} />
-                  <YAxis yAxisId="right" orientation="right" allowDecimals={false} tick={{ fill: '#5E6672', fontSize: 11 }} />
-                  <Tooltip formatter={(v, name) => name === 'Doanh thu' ? formatCurrency(v) : v} contentStyle={{ background: '#FFFFFF', borderColor: '#E5E7EB', borderRadius: 8 }} />
-                  <Legend />
-                  <Bar yAxisId="left" dataKey="revenue" name="Doanh thu" fill="#10B981" radius={[4, 4, 0, 0]} maxBarSize={50} />
-                  <Line yAxisId="right" type="monotone" dataKey="bookings" name="Đặt phòng" stroke="#F59E0B" strokeWidth={2.5} dot={{ r: 4, fill: '#F59E0B' }} />
-                </ComposedChart>
+                {isComparing ? (
+                  <ComposedChart data={getComparisonData()}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" opacity={0.6} />
+                    <XAxis dataKey="label" tick={{ fill: '#5E6672', fontSize: 11 }} />
+                    {compareTab === 'revenue' ? (
+                      <>
+                        <YAxis tickFormatter={moneyTick} tick={{ fill: '#5E6672', fontSize: 11 }} />
+                        <Tooltip formatter={(v) => formatCurrency(v)} contentStyle={{ background: '#FFFFFF', borderColor: '#E5E7EB', borderRadius: 8 }} />
+                        <Legend />
+                        <Line type="monotone" dataKey="revenueMain" name={`Doanh thu (${mainLabel})`} stroke="#10B981" strokeWidth={3} dot={{ r: 4, fill: '#10B981' }} activeDot={{ r: 6 }} />
+                        <Line type="monotone" dataKey="revenueCompare" name={`Doanh thu (${compareLabel})`} stroke="#94A3B8" strokeWidth={2.5} strokeDasharray="5 5" dot={{ r: 3, fill: '#94A3B8' }} />
+                      </>
+                    ) : (
+                      <>
+                        <YAxis allowDecimals={false} tick={{ fill: '#5E6672', fontSize: 11 }} />
+                        <Tooltip contentStyle={{ background: '#FFFFFF', borderColor: '#E5E7EB', borderRadius: 8 }} />
+                        <Legend />
+                        <Line type="monotone" dataKey="bookingsMain" name={`Đặt phòng (${mainLabel})`} stroke="#F59E0B" strokeWidth={3} dot={{ r: 4, fill: '#F59E0B' }} activeDot={{ r: 6 }} />
+                        <Line type="monotone" dataKey="bookingsCompare" name={`Đặt phòng (${compareLabel})`} stroke="#94A3B8" strokeWidth={2.5} strokeDasharray="5 5" dot={{ r: 3, fill: '#94A3B8' }} />
+                      </>
+                    )}
+                  </ComposedChart>
+                ) : (
+                  <ComposedChart data={trend}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" opacity={0.6} />
+                    <XAxis dataKey="label" tick={{ fill: '#5E6672', fontSize: 11 }} />
+                    <YAxis yAxisId="left" orientation="left" tickFormatter={moneyTick} tick={{ fill: '#5E6672', fontSize: 11 }} />
+                    <YAxis yAxisId="right" orientation="right" allowDecimals={false} tick={{ fill: '#5E6672', fontSize: 11 }} />
+                    <Tooltip formatter={(v, name) => name === 'Doanh thu' ? formatCurrency(v) : v} contentStyle={{ background: '#FFFFFF', borderColor: '#E5E7EB', borderRadius: 8 }} />
+                    <Legend />
+                    <Line yAxisId="left" type="monotone" dataKey="revenue" name="Doanh thu" stroke="#10B981" strokeWidth={3} dot={{ r: 4, fill: '#10B981' }} activeDot={{ r: 6 }} />
+                    <Line yAxisId="right" type="monotone" dataKey="bookings" name="Đặt phòng" stroke="#F59E0B" strokeWidth={2.5} dot={{ r: 4, fill: '#F59E0B' }} />
+                  </ComposedChart>
+                )}
               </ResponsiveContainer>
             </div>
           </div>

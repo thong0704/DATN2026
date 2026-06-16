@@ -36,7 +36,7 @@ exports.restrictTo =
     next();
   };
 
-// Soft auth: attach user if token present but don't fail otherwise
+// Soft auth: attach user if token present but don't fail otherwise (unless token is invalid/expired)
 exports.softAuth = catchAsync(async (req, res, next) => {
   let token;
   if (req.headers.authorization?.startsWith('Bearer ')) {
@@ -47,9 +47,13 @@ exports.softAuth = catchAsync(async (req, res, next) => {
   if (!token) return next();
   try {
     const decoded = verifyAccess(token);
-    req.user = await User.findById(decoded.id);
+    const user = await User.findById(decoded.id);
+    if (!user) throw new AppError('User no longer exists', 401);
+    if (user.isBlocked) throw new AppError('Account is blocked', 403);
+    req.user = user;
   } catch (e) {
-    /* ignore */
+    if (e.statusCode === 403) throw e;
+    throw new AppError('Invalid or expired token', 401);
   }
   next();
 });

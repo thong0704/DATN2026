@@ -38,6 +38,15 @@ export default function ContactPage() {
             <p className="font-semibold mt-2">Địa chỉ</p>
             <p className="text-gray-600">123 Nguyễn Huệ, Quận 1, TP.HCM</p>
           </div>
+          <div 
+            onClick={() => window.dispatchEvent(new CustomEvent('open_chat_widget'))}
+            className="card p-5 cursor-pointer border border-accent/20 bg-accent/5 hover:bg-accent/10 transition-all duration-300 group"
+          >
+            <div className="text-2xl group-hover:scale-110 transition-transform duration-300">💬</div>
+            <p className="font-semibold mt-2 text-accent">Chat trực tiếp</p>
+            <p className="text-gray-650 text-xs mt-1">Trò chuyện trực tiếp với lễ tân 24/7</p>
+            <span className="text-accent text-[11px] font-bold mt-3 inline-block group-hover:translate-x-1 transition-transform">Bắt đầu chat →</span>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit(onSend)} className="card p-6 md:col-span-2 space-y-4">

@@ -6,7 +6,7 @@ const paymentService = require('../services/paymentService');
 const vnpayService = require('../services/vnpayService');
 const momoService = require('../services/momoService');
 const { notify } = require('../services/notificationService');
-const { sendBookingConfirmation } = require('../services/emailService');
+const { sendBookingConfirmationWithInvoice } = require('../services/emailService');
 const logger = require('../utils/logger');
 
 // Helper: format date to VNPay format yyyyMMddHHmmss (UTC+7)
@@ -166,7 +166,7 @@ exports.confirm = catchAsync(async (req, res) => {
     if (!intentId.startsWith('pi_cash_')) {
       const User = require('../models/User');
       User.findById(payment.user).then(u => {
-        if (u?.email) sendBookingConfirmation(u.email, booking).catch(() => {});
+        if (u?.email) sendBookingConfirmationWithInvoice(u.email, booking).catch(() => {});
       }).catch(() => {});
     }
 
@@ -201,7 +201,7 @@ exports.confirm = catchAsync(async (req, res) => {
   // Send confirmation email after Stripe payment succeeds
   const User = require('../models/User');
   User.findById(payment.user).then(u => {
-    if (u?.email) sendBookingConfirmation(u.email, booking).catch(() => {});
+    if (u?.email) sendBookingConfirmationWithInvoice(u.email, booking).catch(() => {});
   }).catch(() => {});
 
   res.json({ status: 'success', data: { booking, payment } });
@@ -343,11 +343,10 @@ exports.vnpayReturn = catchAsync(async (req, res) => {
       data: { bookingId: payment.booking },
     }).catch(() => {});
 
-    // Send confirmation email
     const User = require('../models/User');
     const bk = await Booking.findById(payment.booking);
     User.findById(payment.user).then(u => {
-      if (u?.email && bk) sendBookingConfirmation(u.email, bk).catch(() => {});
+      if (u?.email && bk) sendBookingConfirmationWithInvoice(u.email, bk).catch(() => {});
     }).catch(() => {});
   } else {
     payment.status = 'failed';
@@ -409,11 +408,10 @@ exports.momoIpn = catchAsync(async (req, res) => {
       data: { bookingId: payment.booking },
     }).catch(() => {});
 
-    // Send confirmation email
     const User = require('../models/User');
     const bk = await Booking.findById(payment.booking);
     User.findById(payment.user).then(u => {
-      if (u?.email && bk) sendBookingConfirmation(u.email, bk).catch(() => {});
+      if (u?.email && bk) sendBookingConfirmationWithInvoice(u.email, bk).catch(() => {});
     }).catch(() => {});
   } else {
     payment.status = 'failed';
@@ -562,7 +560,7 @@ exports.markPaid = catchAsync(async (req, res) => {
   const User = require('../models/User');
   const bk = await Booking.findById(payment.booking);
   User.findById(payment.user).then(u => {
-    if (u?.email && bk) sendBookingConfirmation(u.email, bk).catch(() => {});
+    if (u?.email && bk) sendBookingConfirmationWithInvoice(u.email, bk).catch(() => {});
   }).catch(() => {});
 
   res.json({ status: 'success', data: { payment } });

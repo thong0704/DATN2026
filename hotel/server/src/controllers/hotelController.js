@@ -206,3 +206,87 @@ exports.uploadImages = catchAsync(async (req, res) => {
   await hotel.save();
   res.json({ status: 'success', data: { images: hotel.images } });
 });
+
+exports.getSimilarHotels = catchAsync(async (req, res) => {
+  const hotel = await Hotel.findById(req.params.id);
+  if (!hotel) throw new AppError('Không tìm thấy khách sạn', 404);
+
+  let query = {
+    _id: { $ne: hotel._id },
+    isActive: true,
+    'address.city': hotel.address.city,
+    basePrice: { $gte: hotel.basePrice * 0.7, $lte: hotel.basePrice * 1.3 },
+    stars: { $gte: Math.max(1, hotel.stars - 1), $lte: Math.min(5, hotel.stars + 1) },
+  };
+
+  let similar = await Hotel.find(query).limit(4);
+
+  if (similar.length < 4) {
+    const idsToExclude = [hotel._id, ...similar.map((h) => h._id)];
+    const extra = await Hotel.find({
+      _id: { $nin: idsToExclude },
+      isActive: true,
+      'address.city': hotel.address.city,
+    }).limit(4 - similar.length);
+    similar = [...similar, ...extra];
+  }
+
+  if (similar.length < 4) {
+    const idsToExclude = [hotel._id, ...similar.map((h) => h._id)];
+    const extra = await Hotel.find({
+      _id: { $nin: idsToExclude },
+      isActive: true,
+    }).limit(4 - similar.length);
+    similar = [...similar, ...extra];
+  }
+
+  res.json({ status: 'success', data: { hotels: similar } });
+});
+
+exports.getPersonalizedRecommendations = catchAsync(async (req, res) => {
+  let cities = [];
+
+  if (req.user) {
+    const Booking = require('../models/Booking');
+    const User = require('../models/User');
+
+    // Fetch bookings (with hotel populated) and user wishlist in parallel, selecting only needed fields
+    const [bookings, userWithWishlist] = await Promise.all([
+      Booking.find({ customer: req.user._id, status: { $ne: 'cancelled' } })
+        .select('hotel')
+        .populate('hotel', 'address.city'),
+      User.findById(req.user._id)
+        .select('wishlist')
+        .populate({ path: 'wishlist', select: 'address.city' })
+    ]);
+
+    const bookingCities = bookings.map((b) => b.hotel?.address?.city).filter(Boolean);
+    const wishlistCities = userWithWishlist?.wishlist?.map((h) => h.address?.city).filter(Boolean) || [];
+
+    cities = [...new Set([...bookingCities, ...wishlistCities])];
+  }
+
+  let recommended = [];
+  if (cities.length > 0) {
+    recommended = await Hotel.find({
+      isActive: true,
+      'address.city': { $in: cities },
+    })
+      .sort('-avgRating')
+      .limit(8);
+  }
+
+  if (recommended.length < 4) {
+    const excludeIds = recommended.map((h) => h._id);
+    const topRated = await Hotel.find({
+      isActive: true,
+      _id: { $nin: excludeIds },
+    })
+      .sort('-avgRating')
+      .limit(8 - recommended.length);
+
+    recommended = [...recommended, ...topRated];
+  }
+
+  res.json({ status: 'success', data: { hotels: recommended } });
+});

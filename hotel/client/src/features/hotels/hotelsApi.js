@@ -26,6 +26,13 @@ export const hotelsApi = api.injectEndpoints({
       query: (id) => `/hotels/${id}/reviews`,
       providesTags: ['Review'],
     }),
+    getSimilarHotels: b.query({
+      query: (id) => `/hotels/recommendations/similar/${id}`,
+    }),
+    getPersonalizedRecommendations: b.query({
+      query: () => '/hotels/recommendations/personalized',
+      providesTags: ['Hotel'],
+    }),
     createHotel: b.mutation({
       query: (body) => ({ url: '/hotels', method: 'POST', body }),
       invalidatesTags: ['Hotel'],
@@ -56,6 +63,8 @@ export const {
   useGetHotelByIdQuery,
   useGetAvailableRoomsAtQuery,
   useGetHotelReviewsQuery,
+  useGetSimilarHotelsQuery,
+  useGetPersonalizedRecommendationsQuery,
   useCreateHotelMutation,
   useUpdateHotelMutation,
   useDeleteHotelMutation,

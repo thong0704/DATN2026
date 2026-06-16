@@ -106,6 +106,7 @@ export default function Navbar() {
                 <Menu.Items className="absolute right-0 mt-2.5 w-56 origin-top-right rounded-2xl border border-border bg-white p-2 shadow-xl focus:outline-none z-50">
                   <Menu.Item>{({ active }) => <Link to="/profile" className={`block rounded-xl px-4 py-2.5 text-xs font-medium uppercase tracking-wider ${active ? 'bg-slate-50 text-accent' : 'text-slate-700'}`}>Hồ sơ</Link>}</Menu.Item>
                   <Menu.Item>{({ active }) => <Link to="/my-bookings" className={`block rounded-xl px-4 py-2.5 text-xs font-medium uppercase tracking-wider ${active ? 'bg-slate-50 text-accent' : 'text-slate-700'}`}>Đặt phòng của tôi</Link>}</Menu.Item>
+                  <Menu.Item>{({ active }) => <Link to="/wishlist" className={`block rounded-xl px-4 py-2.5 text-xs font-medium uppercase tracking-wider ${active ? 'bg-slate-50 text-accent' : 'text-slate-700'}`}>Danh sách yêu thích</Link>}</Menu.Item>
                   {isStaff && (
                     <Menu.Item>{({ active }) => <Link to="/admin" className={`block rounded-xl px-4 py-2.5 text-xs font-medium uppercase tracking-wider ${active ? 'bg-slate-50 text-accent' : 'text-slate-700'}`}>Trang quản trị</Link>}</Menu.Item>
                   )}
@@ -139,6 +140,9 @@ export default function Navbar() {
             <NavLink to="/articles" className={mobileLinkCls} onClick={() => setMobileOpen(false)}>Bài viết</NavLink>
             <NavLink to="/booking-lookup" className={mobileLinkCls} onClick={() => setMobileOpen(false)}>Tra cứu đặt phòng</NavLink>
             <NavLink to="/contact" className={mobileLinkCls} onClick={() => setMobileOpen(false)}>Liên hệ</NavLink>
+            {isAuthenticated && (
+              <NavLink to="/wishlist" className={mobileLinkCls} onClick={() => setMobileOpen(false)}>Khách sạn yêu thích</NavLink>
+            )}
             {!isAuthenticated && (
               <>
                 <div className="my-2 border-t border-border" />

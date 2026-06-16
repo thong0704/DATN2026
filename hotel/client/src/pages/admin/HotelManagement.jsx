@@ -23,7 +23,41 @@ export default function HotelManagement() {
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const hotels = data?.data?.hotels || [];
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, setValue, getValues, formState: { errors } } = useForm();
+
+  const [geocoding, setGeocoding] = useState(false);
+
+  const handleGetCoordinates = async () => {
+    const street = getValues('street');
+    const city = getValues('city');
+    if (!street || !city) {
+      return toast.warn('Vui lòng điền Thành phố và Địa chỉ trước khi tìm tọa độ');
+    }
+
+    setGeocoding(true);
+    try {
+      const query = `${street}, ${city}, Vietnam`;
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`, {
+        headers: {
+          'Accept-Language': 'vi,en'
+        }
+      });
+      const data = await res.json();
+      if (data && data.length > 0) {
+        const item = data[0];
+        setValue('latitude', parseFloat(item.lat));
+        setValue('longitude', parseFloat(item.lon));
+        toast.success(`Đã tự động lấy tọa độ: ${item.lat}, ${item.lon}`);
+      } else {
+        toast.warn('Không tìm thấy tọa độ cho địa chỉ này. Bạn có thể tự điền thủ công.');
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error('Lỗi định vị tự động');
+    } finally {
+      setGeocoding(false);
+    }
+  };
 
   const onFilesChange = (e) => {
     const selected = Array.from(e.target.files || []);
@@ -44,8 +78,13 @@ export default function HotelManagement() {
       stars: Number(form.stars),
       basePrice: Number(form.basePrice || 0),
       address: { city: form.city, street: form.street, country: 'Vietnam' },
+      location: {
+        type: 'Point',
+        coordinates: [Number(form.longitude || 0), Number(form.latitude || 0)]
+      }
     };
     delete payload.city; delete payload.street;
+    delete payload.longitude; delete payload.latitude;
     try {
       let hotelId;
       if (editing) {
@@ -81,7 +120,7 @@ export default function HotelManagement() {
       </div>
       <div className="grid lg:grid-cols-3 gap-6">
         {(isAdmin || editing) && (
-        <form onSubmit={handleSubmit(onSave)} className="bg-white rounded-xl border border-border shadow-sm p-6 space-y-4 h-fit">
+        <form key={editing?._id || 'new'} onSubmit={handleSubmit(onSave)} className="bg-white rounded-xl border border-border shadow-sm p-6 space-y-4 h-fit">
           <h2 className="font-serif-display font-medium text-lg text-primary flex items-center gap-2 mb-2">
             <span className="w-1.5 h-6 bg-accent rounded-full" />
             {editing ? 'Sửa' : 'Tạo'} khách sạn
@@ -104,6 +143,25 @@ export default function HotelManagement() {
             {errors.city && <p className="text-red-600 text-xs mt-1">{errors.city.message}</p>}
           </div>
           <div><label className="label">Địa chỉ</label><input className="input" defaultValue={editing?.address?.street} {...register('street')} /></div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="label">Vĩ độ (Latitude)</label>
+              <input type="number" step="any" className="input" defaultValue={editing?.location?.coordinates?.[1] ?? ''} {...register('latitude')} placeholder="VD: 21.0245" />
+            </div>
+            <div>
+              <label className="label">Kinh độ (Longitude)</label>
+              <input type="number" step="any" className="input" defaultValue={editing?.location?.coordinates?.[0] ?? ''} {...register('longitude')} placeholder="VD: 105.8412" />
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handleGetCoordinates}
+            disabled={geocoding}
+            className="text-xs px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg border border-indigo-200 transition w-full font-semibold active:scale-[0.98]"
+          >
+            {geocoding ? '🔄 Đang tìm tọa độ...' : '🔍 Định vị tọa độ tự động từ địa chỉ'}
+          </button>
+
           <div>
             <label className="label">Hình ảnh khách sạn</label>
             <div className="border-2 border-dashed border-border rounded-xl p-4 text-center hover:border-accent transition cursor-pointer bg-gray-50/50">

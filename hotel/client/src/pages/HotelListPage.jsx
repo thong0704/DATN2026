@@ -4,8 +4,24 @@ import dayjs from 'dayjs';
 import { useListHotelsQuery } from '../features/hotels/hotelsApi';
 import Spinner from '../components/Spinner';
 import { formatCurrency, tAmenity } from '../utils/format';
+import { useAuth } from '../hooks/useAuth';
+import { useToggleWishlistMutation } from '../features/wishlist/wishlistApi';
+import { toast } from 'react-toastify';
 
 export default function HotelListPage() {
+  const { user, isAuthenticated } = useAuth();
+  const [toggleWishlist] = useToggleWishlistMutation();
+
+  const handleFavoriteClick = async (hotelId) => {
+    if (!isAuthenticated) {
+      return toast.info('Vui lòng đăng nhập để lưu khách sạn yêu thích');
+    }
+    try {
+      await toggleWishlist(hotelId).unwrap();
+    } catch (err) {
+      toast.error(err?.data?.message || 'Lỗi thao tác');
+    }
+  };
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const today = dayjs().format('YYYY-MM-DD');
@@ -157,6 +173,29 @@ export default function HotelListPage() {
                       {/* Image */}
                       <div className="relative md:w-72 h-48 md:h-auto flex-shrink-0 overflow-hidden">
                         <img src={img} alt={hotel.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        
+                        {/* Heart Favorite Button */}
+                        <button
+                          type="button"
+                          onClick={() => handleFavoriteClick(hotel._id)}
+                          className="absolute right-2.5 top-2.5 z-10 p-2 rounded-full bg-white/95 text-slate-500 hover:text-red-500 shadow-md backdrop-blur-sm border border-border/20 transition-all hover:scale-110 active:scale-95"
+                          title={user?.wishlist?.includes(hotel._id) ? 'Xóa khỏi danh sách yêu thích' : 'Thêm vào danh sách yêu thích'}
+                        >
+                          <svg
+                            className={`w-3.5 h-3.5 transition-colors ${user?.wishlist?.includes(hotel._id) ? 'fill-red-500 text-red-500' : 'text-slate-650'}`}
+                            fill={user?.wishlist?.includes(hotel._id) ? 'currentColor' : 'none'}
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2.5}
+                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                            />
+                          </svg>
+                        </button>
+
                         {hotel.images?.length > 1 && (
                           <span className="absolute bottom-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
                             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" /></svg>
@@ -169,6 +208,7 @@ export default function HotelListPage() {
                           </span>
                         )}
                       </div>
+
 
                       {/* Details */}
                       <div className="flex-1 p-5 flex flex-col justify-between">

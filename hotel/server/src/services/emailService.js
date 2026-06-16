@@ -18,7 +18,7 @@ function getTransporter() {
   return transporter;
 }
 
-async function sendMail({ to, subject, html, text }) {
+async function sendMail({ to, subject, html, text, attachments }) {
   const t = getTransporter();
   if (!t) {
     logger.info(`[EMAIL stub] to=${to} subject=${subject}`);
@@ -30,6 +30,7 @@ async function sendMail({ to, subject, html, text }) {
     subject,
     html,
     text,
+    attachments,
   });
   logger.info(`Email sent: ${info.messageId} -> ${to}`);
   return info;
@@ -103,7 +104,7 @@ exports.sendResetPasswordCode = (to, code) =>
     ),
   });
 
-exports.sendBookingConfirmation = (to, booking) =>
+exports.sendBookingConfirmation = (to, booking, attachments) =>
   sendMail({
     to,
     subject: `Booking confirmed - ${booking.bookingCode}`,
@@ -118,6 +119,7 @@ exports.sendBookingConfirmation = (to, booking) =>
          <tr><td><b>Total:</b></td><td>${booking.pricing?.total?.toLocaleString()} VND</td></tr>
        </table>`
     ),
+    attachments,
   });
 
 exports.sendBookingCancelled = (to, booking) =>
@@ -130,3 +132,44 @@ exports.sendBookingCancelled = (to, booking) =>
        <p>Reason: ${booking.cancelReason || 'N/A'}</p>`
     ),
   });
+
+exports.sendBookingConfirmationWithInvoice = async (to, bookingIdOrObj) => {
+  try {
+    const Booking = require('../models/Booking');
+    const { generateInvoicePdfBuffer } = require('./invoiceService');
+
+    let bookingId = bookingIdOrObj;
+    if (bookingIdOrObj && typeof bookingIdOrObj === 'object') {
+      bookingId = bookingIdOrObj._id;
+    }
+
+    const populatedBooking = await Booking.findById(bookingId)
+      .populate('hotel')
+      .populate('room')
+      .populate('rooms.room')
+      .populate('customer');
+
+    if (!populatedBooking) {
+      logger.error(`Booking not found for PDF invoice generation: ${bookingId}`);
+      return;
+    }
+
+    const hotel = populatedBooking.hotel;
+    const room = populatedBooking.room || (populatedBooking.rooms && populatedBooking.rooms[0]?.room);
+    const user = populatedBooking.customer;
+
+    // Generate the PDF invoice buffer
+    const pdfBuffer = await generateInvoicePdfBuffer({ booking: populatedBooking, hotel, room, user });
+
+    // Send the email with the PDF attached
+    await exports.sendBookingConfirmation(to, populatedBooking, [
+      {
+        filename: `invoice-${populatedBooking.bookingCode}.pdf`,
+        content: pdfBuffer,
+        contentType: 'application/pdf',
+      }
+    ]);
+  } catch (err) {
+    logger.error(`Failed to send booking confirmation with invoice: ${err.stack || err.message}`);
+  }
+};

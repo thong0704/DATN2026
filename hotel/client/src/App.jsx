@@ -11,6 +11,7 @@ import { useSocket } from './hooks/useSocket';
 import { useMeQuery } from './features/auth/authApi';
 import { setUser } from './features/auth/authSlice';
 import Chatbot from './components/Chatbot';
+import ChatWidget from './components/ChatWidget';
 import { toast } from 'react-toastify';
 
 // Lazy-loaded pages for code splitting
@@ -31,6 +32,7 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const VNPayReturnPage = lazy(() => import('./pages/VNPayReturnPage'));
 const MoMoReturnPage = lazy(() => import('./pages/MoMoReturnPage'));
+const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 import { ForgotPasswordPage, ResetPasswordPage } from './pages/PasswordPages';
 
 // Admin
@@ -48,6 +50,7 @@ const ArticleManagement = lazy(() => import('./pages/admin/ArticleManagement'));
 const ContactInbox = lazy(() => import('./pages/admin/ContactInbox'));
 const BannerManagement = lazy(() => import('./pages/admin/BannerManagement'));
 const InvoiceManagement = lazy(() => import('./pages/admin/InvoiceManagement'));
+const SupportChat = lazy(() => import('./pages/admin/SupportChat'));
 const MyInvoicesPage = lazy(() => import('./pages/MyInvoicesPage'));
 
 function PublicShell({ children }) {
@@ -148,6 +151,7 @@ export default function App() {
           <Route path="/my-bookings" element={<ProtectedRoute><PublicShell><MyBookingsPage /></PublicShell></ProtectedRoute>} />
           <Route path="/my-invoices" element={<ProtectedRoute><PublicShell><MyInvoicesPage /></PublicShell></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><PublicShell><ProfilePage /></PublicShell></ProtectedRoute>} />
+          <Route path="/wishlist" element={<ProtectedRoute><PublicShell><WishlistPage /></PublicShell></ProtectedRoute>} />
 
           {/* Admin / Staff */}
           <Route path="/admin/login" element={<AdminLoginPage />} />
@@ -168,12 +172,18 @@ export default function App() {
             <Route path="banners" element={<BannerManagement />} />
             <Route path="articles" element={<ArticleManagement />} />
             <Route path="contacts" element={<ContactInbox />} />
+            <Route path="chat" element={<SupportChat />} />
           </Route>
 
           <Route path="*" element={<PublicShell><NotFoundPage /></PublicShell>} />
         </Routes>
       </Suspense>
-      {!isAdminPage && <Chatbot />}
+      {!isAdminPage && (
+        <>
+          <Chatbot />
+          <ChatWidget />
+        </>
+      )}
     </ErrorBoundary>
   );
 }

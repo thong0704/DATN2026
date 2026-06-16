@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema(
     isBlocked: { type: Boolean, default: false },
     loyaltyPoints: { type: Number, default: 0 },
     bookingHistory: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }],
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }],
   },
   { timestamps: true }
 );

@@ -12,7 +12,7 @@ const {
   computeMultiRoomPricing,
   getHolidaysForRange,
 } = require('../services/availabilityService');
-const { sendBookingConfirmation, sendBookingCancelled } = require('../services/emailService');
+const { sendBookingConfirmationWithInvoice, sendBookingCancelled } = require('../services/emailService');
 const { notify, emitToHotel } = require('../services/notificationService');
 const { streamInvoicePdf } = require('../services/invoiceService');
 
@@ -325,7 +325,7 @@ exports.updateStatus = catchAsync(async (req, res) => {
       const User = require('../models/User');
       const customerUser = await User.findById(booking.customer);
       if (customerUser?.email) {
-        sendBookingConfirmation(customerUser.email, booking).catch(err => {
+        sendBookingConfirmationWithInvoice(customerUser.email, booking).catch(err => {
           console.error(`Error sending booking confirmation email: ${err.message}`);
         });
       }

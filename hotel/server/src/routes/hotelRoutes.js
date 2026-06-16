@@ -1,12 +1,14 @@
 const express = require('express');
 const ctrl = require('../controllers/hotelController');
-const { protect, restrictTo } = require('../middlewares/authMiddleware');
+const { protect, restrictTo, softAuth } = require('../middlewares/authMiddleware');
 const { makeUploader } = require('../middlewares/upload');
 
 const router = express.Router();
 const upload = makeUploader('hotel/hotels');
 
 router.get('/search', ctrl.search);
+router.get('/recommendations/personalized', softAuth, ctrl.getPersonalizedRecommendations);
+router.get('/recommendations/similar/:id', ctrl.getSimilarHotels);
 router.get('/', ctrl.list);
 router.get('/:slug', ctrl.getBySlug);
 router.get('/id/:id', ctrl.getById);

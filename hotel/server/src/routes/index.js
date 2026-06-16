@@ -12,6 +12,8 @@ router.use('/notifications', require('./notificationRoutes'));
 router.use('/coupons', require('./couponRoutes'));
 router.use('/chatbot', require('./chatbotRoutes'));
 router.use('/holiday-pricing', require('./holidayPricingRoutes'));
+router.use('/wishlist', require('./wishlistRoutes'));
+router.use('/chat', require('./chatRoutes'));
 router.use('/', require('./contentRoutes'));
 
 module.exports = router;

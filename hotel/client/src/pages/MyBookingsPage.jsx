@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useMyBookingsQuery, useCancelBookingMutation } from '../features/bookings/bookingsApi';
-import { useCreateReviewMutation } from '../features/reviews/reviewsApi';
+import { useCreateReviewMutation, useUploadReviewImagesMutation } from '../features/reviews/reviewsApi';
 import Spinner from '../components/Spinner';
 import { formatCurrency, formatDate, statusColor, tStatus, tRoomType } from '../utils/format';
 
@@ -12,9 +12,46 @@ function ReviewModal({ booking, onClose, onDone }) {
   const [title, setTitle] = useState('');
   const [comment, setComment] = useState('');
   const [createReview, { isLoading }] = useCreateReviewMutation();
+  const [uploadImages, { isLoading: isUploading }] = useUploadReviewImagesMutation();
+  const [files, setFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
+
+  const onFilesChange = (e) => {
+    const selected = Array.from(e.target.files || []);
+    if (files.length + selected.length > 3) {
+      toast.warn('Chỉ được chọn tối đa 3 ảnh');
+    }
+    const newFiles = selected.slice(0, 3 - files.length);
+    if (newFiles.length === 0) return;
+
+    const newPreviews = newFiles.map((f) => URL.createObjectURL(f));
+    setFiles((prev) => [...prev, ...newFiles]);
+    setPreviews((prev) => [...prev, ...newPreviews]);
+  };
+
+  const removeFile = (index) => {
+    if (previews[index]) {
+      URL.revokeObjectURL(previews[index]);
+    }
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+    setPreviews((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const submit = async () => {
     if (!comment.trim()) return toast.warn('Vui lòng viết nhận xét');
+    
+    let imageUrls = [];
+    if (files.length > 0) {
+      try {
+        const formData = new FormData();
+        files.forEach((f) => formData.append('images', f));
+        const uploadRes = await uploadImages(formData).unwrap();
+        imageUrls = uploadRes.urls || [];
+      } catch (err) {
+        return toast.error('Tải hình ảnh đánh giá thất bại');
+      }
+    }
+
     try {
       await createReview({
         hotel: booking.hotel?._id,
@@ -23,6 +60,7 @@ function ReviewModal({ booking, onClose, onDone }) {
         rating,
         title,
         comment,
+        images: imageUrls,
       }).unwrap();
       toast.success('Cảm ơn bạn đã đánh giá!');
       onDone();
@@ -34,7 +72,7 @@ function ReviewModal({ booking, onClose, onDone }) {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white rounded-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-xl font-bold mb-1">Đánh giá kỳ nghỉ</h2>
         <p className="text-sm text-gray-500 mb-4">
           {booking.hotel?.name} · {booking.rooms && booking.rooms.length > 0
@@ -67,10 +105,46 @@ function ReviewModal({ booking, onClose, onDone }) {
           <textarea rows={4} className="input" value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Chia sẻ cảm nhận của bạn..." />
         </div>
 
+        <div className="mb-4">
+          <label className="label font-semibold">Hình ảnh thực tế (Tối đa 3 ảnh)</label>
+          <div className="border border-dashed border-gray-300 rounded-2xl p-4 text-center bg-slate-50/50 hover:border-brand-500 transition cursor-pointer">
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              id="modal-review-images"
+              className="hidden"
+              onChange={onFilesChange}
+              disabled={isLoading || isUploading}
+            />
+            <label htmlFor="modal-review-images" className="cursor-pointer block">
+              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">
+                {files.length > 0 ? `Đã chọn ${files.length} ảnh (Nhấp để chọn lại)` : 'Chọn ảnh thực tế từ thiết bị'}
+              </p>
+            </label>
+          </div>
+          {previews.length > 0 && (
+            <div className="grid grid-cols-3 gap-2 mt-3">
+              {previews.map((src, i) => (
+                <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-gray-150">
+                  <img src={src} alt="" className="w-full h-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => removeFile(i)}
+                    className="absolute top-1 right-1 bg-red-500/80 hover:bg-red-500 text-white w-5 h-5 rounded-full text-xs flex items-center justify-center transition-colors shadow-sm"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
         <div className="flex justify-end gap-2">
           <button onClick={onClose} className="btn-outline">Huỷ</button>
-          <button onClick={submit} disabled={isLoading} className="btn-primary">
-            {isLoading ? 'Đang gửi...' : 'Gửi đánh giá'}
+          <button onClick={submit} disabled={isLoading || isUploading} className="btn-primary">
+            {isLoading || isUploading ? 'Đang gửi...' : 'Gửi đánh giá'}
           </button>
         </div>
       </div>

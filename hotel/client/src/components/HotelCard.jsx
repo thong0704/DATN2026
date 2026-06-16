@@ -1,8 +1,27 @@
 import { Link } from 'react-router-dom';
 import { formatCurrency } from '../utils/format';
+import { useAuth } from '../hooks/useAuth';
+import { useToggleWishlistMutation } from '../features/wishlist/wishlistApi';
+import { toast } from 'react-toastify';
 
 export default function HotelCard({ hotel }) {
   const img = hotel.images?.[0]?.url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop';
+  const { user, isAuthenticated } = useAuth();
+  const [toggleWishlist] = useToggleWishlistMutation();
+
+  const isFavorite = user?.wishlist?.includes(hotel._id);
+
+  const handleFavoriteClick = async (e) => {
+    e.preventDefault(); // Ngăn chặn nhảy trang chi tiết
+    if (!isAuthenticated) {
+      return toast.info('Vui lòng đăng nhập để lưu khách sạn yêu thích');
+    }
+    try {
+      await toggleWishlist(hotel._id).unwrap();
+    } catch (err) {
+      toast.error(err?.data?.message || 'Lỗi thao tác');
+    }
+  };
   
   return (
     <Link
@@ -19,6 +38,28 @@ export default function HotelCard({ hotel }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
+        {/* Heart Favorite Button */}
+        <button
+          type="button"
+          onClick={handleFavoriteClick}
+          className="absolute left-3.5 top-3.5 z-10 p-2 rounded-full bg-white/95 text-slate-500 hover:text-red-500 shadow-md backdrop-blur-sm border border-border/20 transition-all hover:scale-110 active:scale-95"
+          title={isFavorite ? 'Xóa khỏi danh sách yêu thích' : 'Thêm vào danh sách yêu thích'}
+        >
+          <svg
+            className={`w-3.5 h-3.5 transition-colors ${isFavorite ? 'fill-red-500 text-red-500' : 'text-slate-600'}`}
+            fill={isFavorite ? 'currentColor' : 'none'}
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.5}
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            />
+          </svg>
+        </button>
+
         {/* Rating Badge */}
         {hotel.avgRating > 0 && (
           <span className="absolute right-3.5 top-3.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold font-mono text-primary shadow-sm backdrop-blur-sm border border-border/40">

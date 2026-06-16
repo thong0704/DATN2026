@@ -200,25 +200,25 @@ exports.dashboardRich = catchAsync(async (req, res) => {
   // ===== Trend grouping =====
   const groupId =
     period === 'year'
-      ? { y: { $year: '$paidAt' } }
-      : period === 'week'
-      ? { y: { $isoWeekYear: '$paidAt' }, w: { $isoWeek: '$paidAt' } }
-      : period === 'day'
+      ? { y: { $year: '$paidAt' }, m: { $month: '$paidAt' } }
+      : period === 'month' || period === 'week'
       ? { y: { $year: '$paidAt' }, m: { $month: '$paidAt' }, d: { $dayOfMonth: '$paidAt' } }
+      : period === 'day'
+      ? { y: { $year: '$paidAt' }, m: { $month: '$paidAt' }, d: { $dayOfMonth: '$paidAt' }, h: { $hour: '$paidAt' } }
       : { y: { $year: '$paidAt' }, m: { $month: '$paidAt' } };
 
   const bookingGroupId =
     period === 'year'
-      ? { y: { $year: '$createdAt' } }
-      : period === 'week'
-      ? { y: { $isoWeekYear: '$createdAt' }, w: { $isoWeek: '$createdAt' } }
-      : period === 'day'
+      ? { y: { $year: '$createdAt' }, m: { $month: '$createdAt' } }
+      : period === 'month' || period === 'week'
       ? { y: { $year: '$createdAt' }, m: { $month: '$createdAt' }, d: { $dayOfMonth: '$createdAt' } }
+      : period === 'day'
+      ? { y: { $year: '$createdAt' }, m: { $month: '$createdAt' }, d: { $dayOfMonth: '$createdAt' }, h: { $hour: '$createdAt' } }
       : { y: { $year: '$createdAt' }, m: { $month: '$createdAt' } };
 
   const [
     periodRevenueAgg,
-    periodBookings,
+    periodBookingsAgg,
     newCustomersInRange,
     totalCustomers,
     totalHotels,
@@ -233,7 +233,23 @@ exports.dashboardRich = catchAsync(async (req, res) => {
       { $match: paymentMatch },
       { $group: { _id: null, total: { $sum: '$amount' } } },
     ]),
-    Booking.countDocuments(bookingMatch),
+    Booking.aggregate([
+      { $match: bookingMatch },
+      {
+        $group: {
+          _id: null,
+          total: {
+            $sum: {
+              $cond: {
+                if: { $and: [ { $isArray: '$rooms' }, { $gt: [{ $size: '$rooms' }, 0] } ] },
+                then: { $size: '$rooms' },
+                else: 1
+              }
+            }
+          }
+        }
+      }
+    ]),
     User.countDocuments({ role: 'customer', createdAt: { $gte: start, $lt: end } }),
     User.countDocuments({ role: 'customer' }),
     Hotel.countDocuments(hotelId ? { _id: hotelId, isActive: true } : { isActive: true }),
@@ -262,12 +278,25 @@ exports.dashboardRich = catchAsync(async (req, res) => {
     Payment.aggregate([
       { $match: paymentMatch },
       { $group: { _id: groupId, total: { $sum: '$amount' } } },
-      { $sort: { '_id.y': 1, '_id.m': 1, '_id.d': 1, '_id.w': 1 } },
+      { $sort: { '_id.y': 1, '_id.m': 1, '_id.d': 1, '_id.h': 1 } },
     ]),
     Booking.aggregate([
       { $match: bookingMatch },
-      { $group: { _id: bookingGroupId, count: { $sum: 1 } } },
-      { $sort: { '_id.y': 1, '_id.m': 1, '_id.d': 1, '_id.w': 1 } },
+      {
+        $group: {
+          _id: bookingGroupId,
+          count: {
+            $sum: {
+              $cond: {
+                if: { $and: [ { $isArray: '$rooms' }, { $gt: [{ $size: '$rooms' }, 0] } ] },
+                then: { $size: '$rooms' },
+                else: 1
+              }
+            }
+          }
+        }
+      },
+      { $sort: { '_id.y': 1, '_id.m': 1, '_id.d': 1, '_id.h': 1 } },
     ]),
     Review.aggregate([
       { $match: hotelId ? { hotel: hotelId, isApproved: true } : { isApproved: true } },
@@ -279,6 +308,8 @@ exports.dashboardRich = catchAsync(async (req, res) => {
     ]),
   ]);
 
+  const periodBookings = periodBookingsAgg[0]?.total || 0;
+
   // Build room status map
   const roomStatusMap = { available: 0, occupied: 0, maintenance: 0, cleaning: 0 };
   roomsByStatus.forEach((r) => { roomStatusMap[r._id] = r.count; });
@@ -286,15 +317,19 @@ exports.dashboardRich = catchAsync(async (req, res) => {
 
   // Merge revenue + booking trends by label
   const keyOf = (id) => {
-    if (period === 'year') return `${id.y}`;
-    if (period === 'week') return `${id.y}-W${id.w}`;
-    if (period === 'day') return `${id.y}-${id.m}-${id.d}`;
-    return `${id.y}-${id.m}`;
+    const y = id.y;
+    const m = String(id.m || '').padStart(2, '0');
+    const d = String(id.d || '').padStart(2, '0');
+    const h = String(id.h || '').padStart(2, '0');
+    if (period === 'year') return `${y}-${m}`;
+    if (period === 'month' || period === 'week') return `${y}-${m}-${d}`;
+    if (period === 'day') return `${y}-${m}-${d}-${h}`;
+    return `${y}-${m}`;
   };
   const labelOf = (id) => {
-    if (period === 'year') return `${id.y}`;
-    if (period === 'week') return `T${id.w}/${id.y}`;
-    if (period === 'day') return `${id.d}/${id.m}`;
+    if (period === 'year') return `${id.m}/${id.y}`;
+    if (period === 'month' || period === 'week') return `${id.d}/${id.m}`;
+    if (period === 'day') return `${id.h}h`;
     return `${id.m}/${id.y}`;
   };
   const trendMap = new Map();
@@ -306,7 +341,9 @@ exports.dashboardRich = catchAsync(async (req, res) => {
     if (trendMap.has(k)) trendMap.get(k).bookings = b.count;
     else trendMap.set(k, { label: labelOf(b._id), revenue: 0, bookings: b.count });
   });
-  const trend = Array.from(trendMap.values());
+  const trend = Array.from(trendMap.entries())
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map((entry) => entry[1]);
 
   // Review breakdown 1..5
   const breakdown = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };

@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import HotelCard from '../components/HotelCard';
 import Spinner from '../components/Spinner';
-import { useListHotelsQuery } from '../features/hotels/hotelsApi';
+import { useListHotelsQuery, useGetPersonalizedRecommendationsQuery } from '../features/hotels/hotelsApi';
 import { useListPublicBannersQuery } from '../features/content/contentApi';
 
 // Micro-interaction: Word Swapper for Hero headline
@@ -38,6 +38,8 @@ export default function HomePage() {
   const hotels = data?.data?.hotels || [];
   const { data: bannerData } = useListPublicBannersQuery();
   const allBanners = bannerData?.data?.banners || [];
+  const { data: recsData, isLoading: recsLoading } = useGetPersonalizedRecommendationsQuery();
+  const recsHotels = recsData?.data?.hotels || [];
   const heroBanners = allBanners.filter((b) => b.type === 'hero');
   const destinations = allBanners.filter((b) => b.type === 'destination');
 
@@ -365,6 +367,34 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* Recommended Hotels Section */}
+      {(recsLoading || recsHotels.length > 0) && (
+        <section id="recommended" className="mx-auto max-w-7xl px-6 pt-12 md:pt-16 pb-12 md:pb-16 border-t border-border/40 reveal">
+          <div className="text-center mb-16">
+            <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Dành riêng cho bạn</span>
+            <h2 className="text-4xl md:text-5xl font-light text-primary font-serif-display line-draw">Gợi ý dành riêng cho bạn</h2>
+            <p className="mx-auto mt-6 max-w-lg text-sm text-slate-400 font-light">Những lựa chọn được cá nhân hóa dựa trên lịch sử xem và đặt phòng của bạn</p>
+          </div>
+          
+          {recsLoading ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[1, 2, 3, 4].map((n) => (
+                <div key={n} className="animate-pulse bg-white rounded-2xl border border-border/40 p-4 space-y-4">
+                  <div className="aspect-[4/3] bg-slate-200 rounded-xl w-full" />
+                  <div className="h-4 bg-slate-200 rounded w-1/4" />
+                  <div className="h-6 bg-slate-200 rounded w-3/4" />
+                  <div className="h-4 bg-slate-200 rounded w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 reveal-stagger">
+              {recsHotels.map((h) => <HotelCard key={h._id} hotel={h} />)}
+            </div>
+          )}
+        </section>
+      )}
 
       {/* Popular Destinations Section */}
       <section className="mx-auto max-w-7xl px-6 pt-12 md:pt-16 pb-12 md:pb-16 border-t border-border/40 reveal">
