@@ -1,0 +1,2210 @@
+BỘ GIÁO DỤC VÀ ĐÀO TẠO TRƯỜNG ĐẠI HỌC TÂY ĐÔ KHOA KỸ THUẬT – CÔNG NGHỆ
+Trí tuệ - Sáng tạo - Năng động – Đổi mới
+TIỂU LUẬN TỐT NGHIỆP
+NGHIÊN CỨU VÀ XÂY DỰNG WEBSITE QUẢN LÝ CHUỖI KHÁCH SẠN TÍCH HỢP TRÍ TUỆ NHÂN TẠO
+Chuyên Ngành: Công nghệ thông tin
+        Giảng viên hướng dẫn:      Sinh viên thực hiện:
+         ThS. Trần Minh Tấn          Trương Thành Thống
+                                       Lớp: Công nghệ thông tin 17B
+                                       MSSV: 227060144
+Cần Thơ, tháng 08 năm 2026
+BỘ GIÁO DỤC VÀ ĐÀO TẠO TRƯỜNG ĐẠI HỌC TÂY ĐÔ KHOA KỸ THUẬT – CÔNG NGHỆ
+Trí tuệ - Sáng tạo - Năng động – Đổi mới
+TIỂU LUẬN TỐT NGHIỆP
+NGHIÊN CỨU VÀ XÂY DỰNG WEBSITE QUẢN LÝ CHUỖI KHÁCH SẠN TÍCH HỢP TRÍ TUỆ NHÂN TẠO
+Chuyên Ngành: Công nghệ thông tin
+         Giảng viên hướng dẫn:      Sinh viên thực hiện:
+         ThS. Trần Minh Tấn          Trương Thành Thống
+                                       Lớp: Công nghệ thông tin 17B
+                                       MSSV: 227060144
+Cần Thơ, tháng 08 năm 2026
+          TRƯỜNG ĐẠI HỌC TÂY ĐÔ            Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam
+KHOA KỸ THUẬT CÔNG NGHỆ                         Độc lập - Tự do - Hạnh phúc
+KHUNG ĐÁNH GIÁ BÁO CÁO ĐỒ ÁN TỐT NGHIỆP
+STT
+HỌ VÀ TÊN
+MSSV
+THƯỞNG
+ĐIỂM
+KÝ TÊN
+1
+Trương Thành Thống
+227060144
+I. HÌNH THỨC (Tối đa 1.0 điểm)
+Nhận Xét
+Điểm
+Bìa (0.5 điểm)
+Bố cục (0.5 điểm)
+II. NỘI DUNG (Tối đa 4.5 điểm)
+Giới thiệu (0.5 điểm)
+Lý thuyết (1 điểm)
+Ứng dụng (2.5 điểm)
+Kết luận (0.5 điểm)
+III. CHƯƠNG TRÌNH DEMO (Tối đa 3.5 điểm)
+Giao diện (1 điểm)
+Thao tác (2.5 điểm)
+IV. THƯỞNG (Tối đa 1.0 điểm)
+TỔNG CỘNG: ………………………………
+Cần Thơ, ngày……tháng 08 năm 2025
+                                                                                               ThS. Trần Minh Tấn
+LỜI CẢM ƠN
+Trong suốt quá trình thực hiện tiểu luận tốt nghiệp, em đã nhận được rất nhiều sự giúp đỡ và hỗ trợ từ quý thầy cô, gia đình và bạn bè. Em xin gửi lời cảm ơn chân thành đến:
+Đầu tiên, em xin chân thành cảm ơn Ban Giám hiệu Trường Đại học Tây Đô, Khoa Kỹ thuật – Công nghệ đã tạo điều kiện thuận lợi cho em trong suốt quá trình học tập và nghiên cứu tại trường.
+Em xin bày tỏ lòng biết ơn sâu sắc đến giảng viên hướng dẫn – ThS. Trần Minh Tấn – người đã tận tình chỉ dẫn, góp ý và định hướng cho em trong suốt quá trình thực hiện đề tài. Những lời khuyên và sự hướng dẫn tận tâm của thầy đã giúp em hoàn thành tiểu luận một cách tốt nhất.
+Em cũng xin gửi lời cảm ơn đến toàn thể quý thầy cô trong Khoa Kỹ thuật – Công nghệ đã truyền đạt cho em những kiến thức nền tảng quý báu trong suốt bốn năm học tập tại trường. Những kiến thức đó chính là nền tảng vững chắc giúp em hoàn thành được đề tài này.
+Cuối cùng, em xin gửi lời cảm ơn đến gia đình, bạn bè đã luôn động viên, khích lệ và hỗ trợ em trong suốt quá trình học tập cũng như thực hiện tiểu luận.
+Mặc dù đã cố gắng hết sức nhưng tiểu luận không thể tránh khỏi những thiếu sót. Em rất mong nhận được sự góp ý của quý thầy cô và bạn đọc để em có thể hoàn thiện hơn.
+LỜI CAM ĐOAN
+Tôi xin cam đoan rằng Tiểu Luận này là do chính tôi thực hiện, không sao chép dưới bất kỳ hình thức nào hay thuê hoặc nhờ người khác thực hiện.
+Dữ liệu và kết quả phân tích trong Tiểu luận đảm bảo tính chính xác, khách quan và trung thực, không có bất kỳ sự ngụy tạo và điều chỉnh kết quả nghiên cứu bằng sự chủ quan của tác giả.
+Cần Thơ, ngày…..tháng……năm 20…
+Tác giả
+(Ký tên và ghi rõ họ và tên)
+MỤC LỤC
+LỜI CẢM ƠNii
+LỜI CAM ĐOANiii
+MỤC LỤCiv
+MỤC HÌNHix
+DANH MỤC BẢNGxi
+LỜI MỞ ĐẦU1
+CHƯƠNG 12
+1.1 Đặt vấn đề2
+1.1.1 Bối cảnh hiện tại2
+1.1.2 Lịch sử giải quyết vấn đề2
+1.1.3 Các hạn chế hiện có3
+1.1.4 Sự cần thiết của đề tài4
+1.2 Phạm vi đề tài4
+1.2.1 Phạm vi chức năng4
+1.2.1.1 Nhóm chức năng dành cho khách hàng4
+1.2.1.2 Nhóm chức năng dành cho nhân viên khách sạn (Staff)5
+1.2.1.3 Nhóm chức năng dành cho quản lý khách sạn (Manager)5
+1.2.1.4 Nhóm chức năng dành cho quản trị viên hệ thống (Admin)5
+1.2.1.5 Nhóm chức năng phi chức năng (cross-cutting)5
+1.2.2 Phạm vi công nghệ6
+1.2.2.1 Nhóm công nghệ nền tảng6
+1.2.2.2 Nhóm dịch vụ tích hợp và thư viện bổ trợ6
+1.3 Đối tượng nghiên cứu7
+1.3.1 Đối tượng về người dùng7
+1.3.2 Đối tượng về dữ liệu và nghiệp vụ7
+1.4 Mục đích nghiên cứu8
+1.5 Phương pháp nghiên cứu8
+1.6 Bố cục Tiểu luận9
+1.7 Ý nghĩa khoa học và thực tiễn9
+1.7.1 Ý nghĩa khoa học9
+1.7.2 Ý nghĩa thực tiễn10
+CHƯƠNG 211
+2.1 Visual Studio Code (VS Code)11
+2.1.1 Giới thiệu11
+2.1.2 Tính năng nổi bật11
+2.2 Ngôn ngữ lập trình JavaScript12
+2.2.1 Giới thiệu12
+2.2.2 Tính năng nổi bật12
+2.3 Runtime Node.js13
+2.3.1 Giới thiệu13
+2.3.2 Tính năng nổi bật13
+2.4 Framework Express.js14
+2.4.1 Giới thiệu14
+2.4.2 Tính năng nổi bật14
+2.5 Thư viện React.js14
+2.5.1 Giới thiệu14
+2.5.2 Tính năng nổi bật15
+2.6 Framework TailwindCSS15
+2.6.1 Giới thiệu15
+2.6.2 Tính năng nổi bật15
+2.7 Hệ quản trị cơ sở dữ liệu MongoDB16
+2.7.1 Giới thiệu16
+2.7.2 Tính năng nổi bật16
+2.8 Google Gemini AI API17
+2.8.1 Giới thiệu17
+2.8.2 Kiến trúc và tính năng nổi bật17
+2.8.3 Quy trình hoạt động18
+2.9 GitHub18
+2.9.1 Giới thiệu18
+2.10 Công cụ Vite19
+2.10.1 Giới thiệu19
+2.10.2 Tính năng nổi bật19
+2.11 Thư viện Mongoose20
+2.11.1 Giới thiệu20
+2.11.2 Tính năng nổi bật20
+2.12 Thư viện Redux Toolkit &amp; RTK Query21
+2.12.1 Giới thiệu21
+2.12.2 Tính năng nổi bật21
+2.13 Thư viện React Router DOM21
+2.13.1 Giới thiệu21
+2.13.2 Tính năng nổi bật22
+2.14 Xác thực và bảo mật người dùng (JWT &amp; Bcrypt)22
+2.14.1 Giới thiệu22
+2.14.2 Tính năng nổi bật23
+2.15 Thư viện Socket.io23
+2.15.1 Giới thiệu23
+2.15.2 Tính năng nổi bật23
+2.16 Cổng thanh toán Stripe, MoMo và VNPay24
+2.16.1 Giới thiệu24
+2.16.2 Tính năng nổi bật25
+2.17 Dịch vụ lưu trữ ảnh Cloudinary25
+2.17.1 Giới thiệu25
+2.17.2 Tính năng nổi bật25
+2.18 Thư viện gửi email Nodemailer26
+2.18.1 Giới thiệu26
+2.18.2 Tính năng nổi bật26
+2.19 Thư viện PDFKit26
+2.19.1 Giới thiệu26
+2.19.2 Tính năng nổi bật27
+2.20 Thư viện SheetJS (XLSX)27
+2.20.1 Giới thiệu27
+2.20.2 Tính năng nổi bật27
+2.21 Bảo mật ứng dụng Web28
+2.21.1 Giới thiệu28
+2.21.2 Các thư viện bảo mật được sử dụng28
+2.22 Thư viện ghi log Winston28
+2.22.1 Giới thiệu28
+2.22.2 Tính năng nổi bật29
+2.23 Thư viện Recharts29
+2.23.1 Giới thiệu29
+2.23.2 Tính năng nổi bật29
+2.24 Thư viện bản đồ Leaflet30
+2.24.1 Giới thiệu30
+2.24.2 Tính năng nổi bật30
+2.25 Kiến trúc RESTful API và mô hình phân lớp30
+2.25.1 Giới thiệu30
+2.25.2 Mô hình phân lớp của hệ thống31
+2.25.3 Đặc điểm nổi bật31
+CHƯƠNG 332
+3.1 Nghiên cứu bài toán32
+3.1.1 Mô tả đề tài32
+3.1.2 Phạm vi dự án ứng dụng32
+3.1.3 Đối tượng sử dụng33
+3.1.4 Mục đích sử dụng33
+3.2 Đặc tả Usecase34
+3.2.1 Mô hình Usecase34
+3.2.2. Đặc tả Use Case35
+3.2.2.1. Chức năng đăng ký tài khoản35
+3.2.2.2. Chức năng đăng nhập36
+3.2.2.3. Chức năng tìm kiếm khách sạn36
+3.2.2.4. Chức năng đặt phòng37
+3.2.2.5. Chức năng thanh toán trực tuyến37
+3.2.2.6. Chức năng hủy đặt phòng38
+3.2.2.7 Chức năng tải hóa đơn PDF39
+3.2.2.8 Chức năng viết đánh giá39
+3.2.2.9 Chức năng tương tác Chatbot AI40
+3.2.2.10 Chức năng quản lý thông tin cá nhân40
+3.2.2.11 Chức năng đổi mật khẩu41
+3.2.2.12 Chức năng quản lý khách sạn và phòng41
+3.2.2.13 Chức năng cập nhật trạng thái đặt phòng42
+3.2.2.14 Chức năng quản lý người dùng và phân quyền42
+3.2.2.15 Chức năng xem dashboard và xuất báo cáo43
+3.2.2.16 Chức năng quản lý mã giảm giá43
+3.2.2.17 Chức năng hoàn tiền44
+3.2.2.18 Chức năng phản hồi đánh giá45
+3.2.2.19 Chức năng tra cứu đơn theo mã45
+CHƯƠNG 446
+4.1 Sơ đồ quan hệ thực thể mức vật lý (Physical ERD)46
+4.1.1 Hình ảnh sơ đồ dữ liệu hệ thống47
+4.1.2 Các thực thể (Collection) trong sơ đồ48
+4.2 Chiến lược thiết kế Schema trên MongoDB (Mô hình Logic)48
+4.2.1 Giải pháp Nhúng dữ liệu (Embedding)48
+4.2.2 Giải pháp Tham chiếu dữ liệu (Referencing)48
+4.3 Chi tiết cấu trúc các Collection (Mô hình Vật lý)49
+4.3.1 Collection Users49
+4.3.2 Collection Hotels49
+4.3.3 Collection Rooms50
+4.3.4 Collection Bookings51
+4.3.5 Collection Payments52
+4.3.6 Collection Reviews52
+4.3.7 Collection Coupons53
+4.3.8 Collection Notifications54
+4.3.9 Collection Articles55
+4.3.10 Collection Site_Banner55
+4.3.11 Collection Contact_Message56
+4.3.12 Tổng hợp Index tối ưu hóa truy vấn56
+4.4 Kết luận chương57
+CHƯƠNG 558
+5.1 Cài đặt hệ thống58
+5.1.1 Chuẩn bị môi trường phát triển58
+5.1.2 Cài đặt MongoDB và cấu hình cơ sở dữ liệu58
+5.1.3 Cài đặt Node.js và cấu hình phân hệ Backend59
+5.1.4 Cài đặt React và cấu hình phân hệ Frontend60
+5.1.5 Tích hợp Tailwind CSS60
+5.1.6 Tích hợp Chatbot AI Gemini61
+5.1.7 Tích hợp các cổng thanh toán (VNPay, MoMo, Stripe)61
+5.1.8 Khởi chạy toàn bộ dự án62
+5.2 Kết quả thực hiện và mô tả giao diện62
+5.2.1 Phân hệ chức năng dành cho khách hàng (Frontend Client)62
+5.2.1.1 Giao diện trang chủ62
+5.2.1.2 Giao diện tìm kiếm khách sạn64
+5.2.1.3 Giao diện chi tiết khách sạn64
+5.2.1.4 Giao diện tiến trình đặt phòng (Booking Flow)65
+5.2.1.5 Giao diện thanh toán và phản hồi kết quả66
+5.2.1.6 Giao diện quản lý lịch sử đặt phòng cá nhân67
+5.2.1.7 Giao diện Chatbot AI trợ giúp trực tuyến68
+5.2.1.8 Giao diện xác thực tài khoản người dùng69
+5.2.2 Phân hệ chức năng dành cho Quản trị viên và Nhân viên (Admin &amp; Staff Dashboard)70
+5.2.2.1 Giao diện Dashboard quản trị tổng quan70
+5.2.2.2 Giao diện quản lý cơ sở khách sạn70
+5.2.2.3 Giao diện cấu hình và quản lý phòng trống71
+5.2.2.4 Giao diện điều phối đặt phòng và Phân hệ FrontDesk (Lễ tân)72
+5.2.2.5 Giao diện quản lý người dùng và phân quyền hệ thống72
+5.2.2.6 Giao diện quản lý chiến dịch Coupon và Khuyến mãi73
+5.2.2.7 Giao diện quản lý nội dung (CMS Module)74
+5.2.2.8 Giao diện quản lý hóa đơn74
+5.2.2.9 Giao diện quản lý bài viết75
+5.2.2.10 Giao diện quản lý liên hệ76
+5.2.2.11 Giao diện thông báo Real-time tích hợp76
+KẾT LUẬN77
+1. Tổng kết77
+2. Kết quả thu được77
+3. Khó khăn gặp phải78
+4. Hạn chế của đề tài79
+5. Hướng phát triển trong tương lai79
+TÀI LIỆU THAM KHẢO81
+MỤC HÌNH
+Hình 2.1 Ảnh logo Javascript12
+Hình 2.2 Ảnh logo Nodejs13
+Hình 2.3 logo Express.js14
+Hình 2.4 Ảnh logo Reactjs14
+Hình 2.5 Ảnh logo TailwindCSS15
+Hình 2.6 Ảnh logo MongoDB16
+Hình 2.7 Ảnh logo Google Gemini AI17
+Hình 2.8 Ảnh logo GitHub18
+Hình 2.9 Ảnh logo Vite19
+Hình 2.10 Ảnh logo Mongoose20
+Hình 2.11 Ảnh logo Redux Toolkit21
+Hình 2.12 Ảnh logo React Router21
+Hình 2.13 Ảnh logo JWT22
+Hình 2.14 Ảnh logo Socket.io23
+Hình 2.15 Ảnh logo Stripe – MoMo – VNPay24
+Hình 2.16 Ảnh logo Cloudinary25
+Hình 2.17 Ảnh logo Nodemailer26
+Hình 2.18 Ảnh logo PDFKit26
+Hình 2.19 Ảnh logo SheetJS27
+Hình 2.20 Ảnh logo Winston28
+Hình 2.21 Ảnh logo Recharts29
+Hình 2.22 Ảnh logo Leaflet30
+Hình 3.1 Mô hình use case tổng quát34
+Hình 4.1: Sơ đồ quan hệ thực thể mức vật lý (Physical ERD) của hệ thống47
+Hình 5.1: Giao diện trang chủ hệ thống 2T Hotel63
+Hình 5.2: Giao diện tìm kiếm khách sạn.64
+Hình 5.3: Giao diện chi tiết khách sạn và danh sách phòng.65
+Hình 5.4: Giao diện đặt phòng66
+Hình 5.5: Giao diện trang thanh toán67
+Hình 5.6: Giao diện quản lý đặt phòng của khách hàng68
+Hình 5.7: Giao diện Chatbot AI68
+Hình 5.8: Giao diện đăng nhập và đăng ký69
+Hình 5.9: Giao diện Dashboard tổng quan.70
+Hình 5.10: Giao diện quản lý khách sạn.71
+Hình 5.11: Giao diện quản lý phòng71
+Hình 5.12: Giao diện quản lý đặt phòng và FrontDesk72
+Hình 5.13: Giao diện quản lý người dùng73
+Hình 5.14: Giao diện quản lý coupon73
+Hình 5.15: Giao diện quản lý nội dung và banner74
+Hình 5.16: Giao diện quản lý hóa đơn75
+Hình 5.17: Giao diện quản lý bài viết75
+Hình 5.18: Giao diện quản lý liên hệ76
+Hình 5.19: Giao diện thông báo real-time.76
+DANH MỤC BẢNG
+Bảng 3.1 Bảng mô tả Use Case đăng ký tài khoản35
+Bảng 3.2 Bảng mô tả Use Case đăng nhập hệ thống36
+Bảng 3.3 Bảng mô tả Use Case tìm kiếm khách sạn36
+Bảng 3.4 Bảng mô tả Use Case đặt phòng37
+Bảng 3.5 Bảng mô tả Use Case thanh toán trực tuyến37
+Bảng 3.6 Bảng mô tả Use Case hủy đặt phòng38
+Bảng 3.7 Bảng mô tả Use Case tải hóa đơn PDF39
+Bảng 3.8 Bảng mô tả Use Case viết đánh giá39
+Bảng 3.9 Bảng mô tả Use Case tương tác Chatbot AI40
+Bảng 3.10 Bảng mô tả Use Case quản lý thông tin cá nhân40
+Bảng 3.11 Bảng mô tả Use Case đổi mật khẩu41
+Bảng 3.12 Bảng mô tả Use Case quản lý khách sạn và phòng41
+Bảng 3.13 Bảng mô tả Use Case cập nhật trạng thái đặt phòng42
+Bảng 3.14 Bảng mô tả Use Case quản lý người dùng và phân quyền42
+Bảng 3.15 Bảng mô tả Use Case xem dashboard và xuất báo cáo43
+Bảng 3.16 Bảng mô tả Use Case quản lý mã giảm giá.43
+Bảng 3.17 Bảng mô tả Use Case hoàn tiền44
+Bảng 3.18 Bảng mô tả Use Case phản hồi đánh giá45
+Bảng 3.19 Bảng mô tả Use Case tra cứu đơn theo mã45
+Bảng 4.1 – Cấu trúc collection Users49
+Bảng 4.2 – Cấu trúc collection Hotels49
+Bảng 4.3 – Cấu trúc collection Rooms50
+Bảng 4.4 – Cấu trúc collection Bookings51
+Bảng 4.5 – Cấu trúc collection Payments52
+Bảng 4.6 – Cấu trúc collection Reviews52
+Bảng 4.7 – Cấu trúc collection Coupons53
+Bảng 4.8 – Cấu trúc collection Notifications54
+Bảng 4.9 – Cấu trúc collection Articles55
+Bảng 4.10 – Cấu trúc collection Site_Banner55
+Bảng 4.11 – Cấu trúc collection Contact_Message56
+Bảng 4.12 – Tổng hợp các Index thiết lập trong hệ thống56
+LỜI MỞ ĐẦU
+          Trong bối cảnh chuyển đổi số đang diễn ra mạnh mẽ trên toàn cầu, công nghệ thông tin ngày càng khẳng định vai trò quan trọng trong việc nâng cao hiệu quả quản lý và vận hành của các doanh nghiệp. Ngành dịch vụ lưu trú, đặc biệt là lĩnh vực kinh doanh khách sạn, cũng không nằm ngoài xu hướng đó. Việc quản lý khách sạn bằng các phương pháp thủ công hoặc các công cụ đơn lẻ thường gặp nhiều hạn chế như khó khăn trong việc quản lý phòng, khách hàng, đặt phòng, hóa đơn và theo dõi doanh thu. Điều này đặt ra yêu cầu cần có một hệ thống quản lý hiện đại, đồng bộ và dễ dàng mở rộng để đáp ứng nhu cầu thực tiễn.
+          Xuất phát từ thực tế đó, em lựa chọn và thực hiện đề tài tiểu luận: “Xây dựng hệ thống quản lý chuỗi khách sạn trên nền tảng Web”. Đề tài được phát triển dựa trên các công nghệ hiện đại như Node.js và Express.js trong việc xây dựng API và xử lý nghiệp vụ phía máy chủ, React.js để phát triển giao diện người dùng hiện đại, trực quan và thân thiện, cùng với MongoDB làm hệ quản trị cơ sở dữ liệu NoSQL giúp lưu trữ và quản lý dữ liệu linh hoạt. Sự kết hợp của các công nghệ này tạo nên một hệ thống có hiệu năng cao, khả năng mở rộng tốt và phù hợp với các mô hình quản lý khách sạn hiện nay.
+          Mục tiêu của đề tài là xây dựng một hệ thống quản lý chuỗi khách sạn trực tuyến, hỗ trợ quản lý nhiều khách sạn trong cùng một hệ thống. Hệ thống cho phép quản lý thông tin khách sạn, phòng nghỉ, khách hàng, đặt phòng, thanh toán và thống kê doanh thu một cách hiệu quả. Đồng thời, hệ thống hướng đến việc tối ưu hóa quy trình quản lý, giảm thiểu sai sót trong quá trình vận hành và nâng cao trải nghiệm của người dùng.
+          Thông qua quá trình thực hiện đề tài, em có cơ hội vận dụng các kiến thức đã được học về lập trình web, thiết kế và quản lý cơ sở dữ liệu, phát triển giao diện người dùng, xây dựng hệ thống phân tán và bảo mật ứng dụng. Bên cạnh đó, đề tài còn giúp em rèn luyện kỹ năng nghiên cứu, phân tích yêu cầu, thiết kế hệ thống và giải quyết các vấn đề phát sinh trong quá trình phát triển phần mềm.
+          Em rất mong nhận được sự quan tâm, đánh giá và những ý kiến đóng góp quý báu từ Quý Thầy, Cô để em có thể hoàn thiện đề tài một cách tốt nhất. Đây sẽ là nguồn động lực và kinh nghiệm quý giá giúp em tiếp tục phát triển bản thân trong học tập cũng như công việc sau này.
+Em xin chân thành cảm ơn!
+CHƯƠNG 1
+TỔNG QUAN
+1.1 Đặt vấn đề
+1.1.1 Bối cảnh hiện tại
+          Trong bối cảnh ngành du lịch và dịch vụ lưu trú tại Việt Nam đang phát triển mạnh mẽ, nhu cầu quản lý chuỗi khách sạn ngày càng trở nên cấp thiết, đặc biệt đối với các doanh nghiệp vận hành nhiều cơ sở tại nhiều địa điểm khác nhau. Các chuỗi khách sạn tập trung chủ yếu tại Hà Nội, TP. Hồ Chí Minh, Đà Nẵng, Phú Quốc và các trung tâm du lịch lớn đang chứng kiến sự gia tăng nhanh về số lượng cơ sở và quy mô hoạt động. Điều này hình thành một mạng lưới dịch vụ lưu trú đa dạng, từ khách sạn boutique quy mô nhỏ đến chuỗi tiêu chuẩn quốc tế với hàng chục chi nhánh trải rộng trên cả nước.
+          Các khu vực có mật độ du khách cao như khu nghỉ dưỡng ven biển và các đô thị lớn chứng kiến sự gia tăng nhanh chóng nhu cầu đặt phòng, gây áp lực lên hệ thống quản lý hiện hữu. Việc quản lý các cơ sở trong một chuỗi khách sạn không chỉ liên quan đến việc cung cấp dịch vụ phòng ốc đơn thuần mà còn đòi hỏi sự phối hợp chặt chẽ giữa bộ phận lễ tân, buồng phòng, nhà hàng, kỹ thuật, kế toán và ban giám đốc. Mục tiêu là đảm bảo trải nghiệm khách hàng nhất quán, tối ưu công suất phòng và nâng cao hiệu quả kinh doanh trên toàn chuỗi.
+          Tuy nhiên, sự phát triển nhanh chóng này cũng đặt ra nhiều thách thức trong bối cảnh chuyển đổi số quốc gia đang được thúc đẩy mạnh mẽ. Các địa phương đã triển khai các nền tảng số hóa để hỗ trợ đặt phòng trực tuyến, cập nhật tình trạng phòng và quản lý thông tin khách hàng. Chuyển đổi số không chỉ dừng lại ở việc số hóa dữ liệu mà còn hướng tới tích hợp các công nghệ tiên tiến như trí tuệ nhân tạo (AI) để tối ưu hóa vận hành và nâng cao trải nghiệm khách lưu trú.
+          Từ thực tiễn đó, có thể thấy rằng ngành quản lý chuỗi khách sạn đang chuyển mình từ mô hình truyền thống sang định hướng số hóa toàn diện. Các ứng dụng quản lý vận hành trực tuyến bắt đầu xuất hiện phổ biến, cho phép chủ sở hữu theo dõi tình trạng từng chi nhánh, quản lý đặt phòng, kiểm soát doanh thu và phân tích hành vi khách hàng theo thời gian thực.
+          Đồng thời, khách hàng ngày càng mong muốn các dịch vụ tiện lợi hơn, như tìm kiếm và đặt phòng qua ứng dụng di động, check-in/check-out trực tuyến, thanh toán không tiền mặt và tư vấn tức thì. Bối cảnh này phản ánh sự hội tụ giữa nhu cầu nâng cao trải nghiệm lưu trú và tiến bộ công nghệ, trong đó hệ thống thông tin đóng vai trò then chốt giải quyết các vấn đề từ đảm bảo an toàn dữ liệu đến thúc đẩy tăng trưởng doanh thu bền vững.
+1.1.2 Lịch sử giải quyết vấn đề
+          Lịch sử phát triển các giải pháp quản lý chuỗi khách sạn tại Việt Nam có thể được truy vết từ những phương pháp thủ công ban đầu, dần chuyển sang các công cụ số hóa hiện đại.
+          Vào những thập niên trước, khi ngành du lịch còn ở giai đoạn sơ khai, việc quản lý khách sạn chủ yếu dựa vào sổ đặt phòng giấy tờ và bảng kiểm soát thủ công. Nhân viên lễ tân sử dụng các cuốn sổ ghi chép thông tin khách hàng, lịch đặt phòng và các khoản thu chi. Cách thức này đơn giản nhưng dễ bị ảnh hưởng bởi yếu tố con người như sai sót trong ghi chép, xung đột đặt phòng hoặc thất thoát dữ liệu doanh thu. Phương pháp này phù hợp với quy mô nhỏ, nhưng khi số lượng phòng và lượng khách gia tăng, bộ máy quản lý dần trở nên kém hiệu quả và thiếu khả năng mở rộng.
+          Sang giai đoạn những năm 2000, sự phổ biến của máy tính cá nhân và phần mềm văn phòng như Microsoft Excel đã đánh dấu bước chuyển mình đầu tiên. Nhiều khách sạn bắt đầu sử dụng bảng tính điện tử để lưu trữ dữ liệu đặt phòng và quản lý hóa đơn. Tuy nhiên, các công cụ này vẫn mang tính cục bộ, thiếu khả năng đồng bộ dữ liệu giữa các chi nhánh và không hỗ trợ tương tác trực tuyến với khách hàng hay tích hợp với các kênh đặt phòng quốc tế.
+          Đến khoảng những năm 2010, với sự bùng nổ của internet và điện thoại thông minh, các hệ thống quản lý khách sạn trực tuyến bắt đầu hình thành. Các phần mềm quản lý khách sạn chuyên dụng (Property Management System – PMS) như Opera, Cloudbeds hay eZee Absolute ra đời, tiên phong trong việc kết nối lễ tân, buồng phòng và khách hàng qua một nền tảng thống nhất. Giai đoạn gần đây, từ sau năm 2020, chuyển đổi số được đẩy mạnh bởi các chính sách quốc gia và áp lực cạnh tranh từ các nền tảng đặt phòng toàn cầu như Booking.com, Agoda và Airbnb.
+          Điều này dần dẫn đến sự ra đời của nhiều phần mềm chuyên dụng trong nước, tuy nhiên các giải pháp này vẫn còn hạn chế về khả năng tích hợp AI và tính năng tự động hóa thông minh. Đặc biệt, sự phát triển của trí tuệ nhân tạo đã mở ra hướng tiếp cận mới với các chatbot hỗ trợ tư vấn, gợi ý phòng và dự đoán nhu cầu khách hàng. Lịch sử này phản ánh sự tiến bộ từ số hóa sang thông minh hóa, đặt ra nhu cầu cấp thiết cho một giải pháp toàn diện hơn để đáp ứng bối cảnh quản lý chuỗi khách sạn đa địa điểm — chính là hướng nghiên cứu mà đề tài này tập trung phát triển.
+1.1.3 Các hạn chế hiện có
+          Mặc dù các phương pháp quản lý chuỗi khách sạn tại Việt Nam đã có những bước tiến đáng kể, từ thủ công đến bán thủ công và số hóa, nhưng vẫn tồn tại nhiều hạn chế ảnh hưởng đến chất lượng vận hành và trải nghiệm người dùng. Dưới đây là các hạn chế chính được xác định, phản ánh thực trạng quản lý chuỗi khách sạn hiện nay:
+Thiếu đồng bộ dữ liệu đa chi nhánh: Việc sử dụng phần mềm rời rạc hoặc ghi chép thủ công dẫn đến tình trạng dữ liệu tình trạng phòng, doanh thu và thông tin khách hàng không được cập nhật nhất quán giữa các chi nhánh trong cùng chuỗi. Điều này làm tăng nguy cơ sai sót và ảnh hưởng đến độ chính xác của các báo cáo tài chính tổng hợp.
+Hạn chế về bảo mật và quản lý phân quyền: Trong bối cảnh chuỗi khách sạn vận hành nhiều cơ sở, việc quản lý quyền truy cập cho từng vai trò (lễ tân, quản lý chi nhánh, quản lý chuỗi) còn thiếu chặt chẽ. Điều này dẫn đến các rủi ro về an ninh thông tin và khó khăn trong việc xử lý các tranh chấp nội bộ hoặc khiếu nại từ khách hàng.
+Bất tiện cho khách hàng trong quá trình đặt phòng: Khách hàng thường gặp khó khăn khi phải liên hệ trực tiếp qua điện thoại hoặc đến tận nơi để xem phòng, đặt chỗ và thanh toán. Quy trình này thiếu tính minh bạch và tiện lợi, đặc biệt khi so sánh với các dịch vụ số hóa hiện đại, khiến trải nghiệm người dùng giảm sút và hiệu quả kinh doanh bị ảnh hưởng.
+Chi phí vận hành cao và hạn chế mở rộng quy mô: Các phương pháp quản lý thủ công hoặc bán tự động đòi hỏi nhiều thời gian và nhân lực, đặc biệt khi chuỗi khách sạn phát triển thêm chi nhánh mới. Việc thiếu công cụ công nghệ hỗ trợ khiến chi phí vận hành tăng cao và năng lực cạnh tranh bị hạn chế so với các chuỗi khách sạn lớn hơn đã đầu tư vào hệ thống quản lý hiện đại.
+Thiếu tích hợp trí tuệ nhân tạo trong tư vấn và hỗ trợ khách hàng: Hầu hết các hệ thống hiện tại chưa tích hợp AI để hỗ trợ khách hàng tìm kiếm phòng, gợi ý dịch vụ phù hợp hay trả lời các câu hỏi thường gặp một cách tự động. Điều này làm tăng tải công việc cho nhân viên và giảm khả năng phục vụ khách hàng 24/7, ảnh hưởng trực tiếp đến sự hài lòng và mức độ quay lại của khách.
+Rủi ro đặt trùng phòng (race condition): Trong các hệ thống đặt phòng đa người dùng đồng thời, nếu không có cơ chế giao dịch (transaction) an toàn ở tầng cơ sở dữ liệu, hai khách có thể đặt cùng một phòng trong cùng khoảng thời gian, gây ra sự cố nghiêm trọng khi check-in.
+Thiếu kênh thông báo thời gian thực: Khi trạng thái đặt phòng hoặc thanh toán thay đổi, khách hàng và nhân viên thường phải làm mới trang để cập nhật, làm chậm quy trình xử lý và giảm chất lượng dịch vụ.
+1.1.4 Sự cần thiết của đề tài
+          Sự cần thiết của đề tài "Nghiên cứu và xây dựng hệ thống quản lý chuỗi khách sạn 2T Hotel tích hợp trí tuệ nhân tạo" xuất phát từ nhu cầu cấp thiết trong việc khắc phục các hạn chế hiện tại và thúc đẩy chuyển đổi số trong lĩnh vực lưu trú và khách sạn.
+          Trong bối cảnh Việt Nam đang hướng đến nền kinh tế số, việc áp dụng công nghệ vào quản lý chuỗi khách sạn không chỉ giúp tối ưu hóa quy trình nội bộ mà còn nâng cao tính cạnh tranh cho các doanh nghiệp vừa và nhỏ trong ngành lưu trú. Đề tài này đáp ứng trực tiếp các sáng kiến địa phương về chuyển đổi số, theo mô hình "Khách sạn thông minh" tại các đô thị. Nó cung cấp một nền tảng toàn diện hỗ trợ quản lý đa địa điểm, thanh toán đa cổng, thông báo thời gian thực và tương tác người dùng thông qua công nghệ hiện đại.
+          Hơn nữa, sự tích hợp của Chatbot AI, đặc biệt là chatbot dựa trên mô hình ngôn ngữ lớn (LLM) Google Gemini, mang lại giá trị lớn trong việc hỗ trợ khách hàng tìm kiếm phòng và ra quyết định nhanh chóng. Đồng thời, nó giúp giảm gánh nặng quản lý hành chính, cải thiện trải nghiệm người dùng và góp phần vào sự phát triển bền vững của ngành.
+          Đề tài còn có ý nghĩa học thuật, mở ra hướng nghiên cứu ứng dụng AI và kiến trúc fullstack hiện đại (MERN + Realtime) trong lĩnh vực quản lý khách sạn tại Việt Nam.
+1.2 Phạm vi đề tài
+1.2.1 Phạm vi chức năng
+          Hệ thống quản lý chuỗi khách sạn 2T Hotel tích hợp trí tuệ nhân tạo trên nền tảng web được xây dựng để hỗ trợ quản lý hiệu quả và nâng cao trải nghiệm người dùng. Phạm vi chức năng tập trung vào bốn nhóm chính, tương ứng với bốn vai trò người dùng đã được phân quyền trong hệ thống:
+1.2.1.1 Nhóm chức năng dành cho khách hàng
+Đăng ký, đăng nhập (JWT), xác minh email, đổi mật khẩu, quản lý hồ sơ và ảnh đại diện.
+Tìm kiếm và lọc khách sạn theo địa điểm, ngày nhận/trả phòng, loại phòng, mức giá, tiện ích.
+Xem chi tiết khách sạn và phòng kèm hình ảnh, vị trí trên bản đồ, đánh giá từ khách hàng khác.
+Đặt phòng trực tuyến với cơ chế kiểm tra trùng lịch an toàn theo giao dịch (MongoDB transaction).
+Áp dụng mã giảm giá (coupon) khi đặt phòng.
+Thanh toán đa cổng: Stripe (thẻ quốc tế), MoMo (ví điện tử), VNPay (nội địa).
+Tải hóa đơn điện tử dạng PDF; tra cứu nhanh đơn đặt phòng theo mã.
+Viết đánh giá sau khi lưu trú; tra cứu lịch sử đặt phòng và hóa đơn.
+Tương tác với Chatbot AI tích hợp Google Gemini để gợi ý phòng và giải đáp thắc mắc 24/7.
+Nhận thông báo thời gian thực qua Socket.io khi trạng thái đặt phòng/thanh toán thay đổi.
+1.2.1.2 Nhóm chức năng dành cho nhân viên khách sạn (Staff)
+Tiếp nhận và xác nhận đặt phòng được phân công.
+Thực hiện thủ tục check-in / check-out cho khách.
+Cập nhật tình trạng phòng (đang dọn, sẵn sàng, đang sử dụng, bảo trì).
+Nhận thông báo realtime khi có biến động đặt phòng tại khách sạn được phân công.
+1.2.1.3 Nhóm chức năng dành cho quản lý khách sạn (Manager)
+Quản lý danh mục khách sạn, phòng và loại phòng (thêm, sửa, xóa, cập nhật).
+Cấu hình giá phòng động: giá ngày thường, giá cuối tuần, giá theo mùa.
+Quản lý dịch vụ và tiện ích kèm theo phòng.
+Phản hồi công khai các đánh giá của khách hàng.
+Xem dashboard doanh thu, công suất phòng và báo cáo hiệu suất theo từng khách sạn được phân quyền.
+1.2.1.4 Nhóm chức năng dành cho quản trị viên hệ thống (Admin)
+Quản lý người dùng và phân quyền (Customer, Staff, Manager, Admin).
+Quản lý mã giảm giá: tạo, áp dụng điều kiện và thời hạn.
+Quản lý nội dung: bài viết – tin tức – banner trang chủ – tin nhắn liên hệ.
+Dashboard tổng hợp toàn chuỗi với biểu đồ doanh thu, công suất, top khách sạn theo doanh thu.
+Xuất báo cáo Excel (định dạng XLSX) theo kỳ phục vụ phân tích kinh doanh.
+Xử lý hoàn tiền (refund) qua API của Stripe / MoMo / VNPay khi có khiếu nại hoặc hủy đơn đặc biệt.
+1.2.1.5 Nhóm chức năng phi chức năng (cross-cutting)
+Bảo mật theo OWASP Top 10: Helmet, HPP, XSS-Clean, Mongo-Sanitize, rate-limit, Bcrypt 12 rounds.
+Xác thực Access Token + Refresh Token (HttpOnly Cookie).
+Thông báo realtime đa kênh qua Socket.io (room user:&lt;id&gt;, staff_room, admin_room, hotel:&lt;id&gt;).
+Giao diện responsive trên cả desktop và thiết bị di động.
+1.2.2 Phạm vi công nghệ
+Hệ thống được xây dựng dựa trên các công nghệ mã nguồn mở, hiện đại, đảm bảo tính ổn định, hiệu suất cao và khả năng mở rộng. Các công nghệ được chia thành hai nhóm:
+1.2.2.1 Nhóm công nghệ nền tảng
+Node.js: Môi trường thực thi JavaScript phía server, cho phép xử lý đồng thời nhiều yêu cầu với hiệu suất cao nhờ mô hình non-blocking I/O. Node.js phù hợp với các hệ thống cần xử lý nhiều kết nối đồng thời như quản lý đặt phòng và thông báo thời gian thực.
+Express.js: Framework web tối giản và linh hoạt trên nền Node.js, được sử dụng để xây dựng RESTful API cho toàn bộ hệ thống backend với tiền tố phiên bản /api/v1.
+MongoDB &amp; Mongoose: Hệ quản trị cơ sở dữ liệu NoSQL dạng document, sử dụng để lưu trữ linh hoạt thông tin khách sạn, phòng, hợp đồng, hóa đơn, đánh giá và dữ liệu khách hàng. Mongoose ODM cung cấp lớp định nghĩa Schema, middleware và MongoDB Transaction (trên Replica Set) phục vụ đặt phòng an toàn, chống race condition.
+React 18: Thư viện JavaScript mạnh mẽ để xây dựng giao diện người dùng (UI) hiện đại theo mô hình component-based, hỗ trợ Hooks, Suspense và lazy loading.
+Vite: Công cụ build và development server thế hệ mới, khởi động cực nhanh nhờ ES Modules gốc, thay thế cho Create React App.
+Tailwind CSS: Framework CSS theo cách tiếp cận utility-first, giúp xây dựng giao diện responsive và hiện đại trên nền React.
+Redux Toolkit &amp; RTK Query: Trục quản lý trạng thái và giao tiếp API ở frontend, tự động hóa cache, refetch và tag-based invalidation cho mọi tương tác với backend.
+Google Gemini API: API trí tuệ nhân tạo của Google, được tích hợp để triển khai Chatbot thông minh hỗ trợ khách hàng tìm kiếm phòng và giải đáp thắc mắc theo thời gian thực. Hệ thống sử dụng mô hình Gemini 2.0 Flash, nhúng dữ liệu ngữ cảnh (DB context) trực tiếp vào prompt để đảm bảo phản hồi chính xác dựa trên dữ liệu thực tế của chuỗi khách sạn.
+1.2.2.2 Nhóm dịch vụ tích hợp và thư viện bổ trợ
+JWT &amp; Bcrypt: Xác thực người dùng theo cơ chế Access Token + Refresh Token; mật khẩu được băm bằng Bcrypt với cost factor 12.
+Socket.io: Hỗ trợ giao tiếp hai chiều thời gian thực giữa client và server, phục vụ thông báo đặt phòng, thanh toán, đánh giá theo từng đối tượng người dùng.
+Stripe, MoMo, VNPay: Ba cổng thanh toán tích hợp đồng thời, hỗ trợ thẻ quốc tế, ví điện tử và thanh toán nội địa, với cơ chế webhook/IPN xác thực giao dịch và API hoàn tiền.
+Cloudinary: Dịch vụ lưu trữ và phân phối ảnh trên CDN toàn cầu, dùng cho ảnh khách sạn, phòng, banner, avatar người dùng và ảnh bài viết.
+Nodemailer: Thư viện gửi email qua SMTP, sử dụng để gửi email xác minh tài khoản, đặt lại mật khẩu, xác nhận đặt phòng và thông báo hủy đơn.
+PDFKit: Thư viện sinh hóa đơn điện tử dạng PDF, stream trực tiếp về trình duyệt cho người dùng tải xuống.
+SheetJS (XLSX): Thư viện xuất báo cáo Excel cho dashboard quản trị (doanh thu, công suất, top khách sạn).
+Recharts: Thư viện vẽ biểu đồ dựa trên SVG, dùng trong dashboard quản trị.
+Leaflet: Thư viện bản đồ tương tác mã nguồn mở, hiển thị vị trí khách sạn trên trang chi tiết.
+Winston: Thư viện ghi log đa cấp (info, warn, error) ra console và file, phục vụ giám sát và truy vết sự cố production.
+Helmet, HPP, XSS-Clean, express-mongo-sanitize, express-rate-limit, CORS: Các middleware bảo mật theo khuyến nghị OWASP Top 10, phòng chống XSS, NoSQL Injection, brute-force và HTTP Parameter Pollution.
+1.3 Đối tượng nghiên cứu
+          Đối tượng nghiên cứu của đề tài là hệ thống quản lý chuỗi khách sạn 2T Hotel tích hợp trí tuệ nhân tạo, tập trung vào hai khía cạnh:
+1.3.1 Đối tượng về người dùng
+          Hệ thống phục vụ bốn nhóm vai trò được phân quyền rõ ràng trong cơ sở dữ liệu thông qua cơ chế Role-Based Access Control (RBAC):
+Khách hàng (Customer): Người dùng cuối có nhu cầu tìm kiếm và đặt phòng. Họ sử dụng hệ thống để tra cứu thông tin, so sánh giá, đặt phòng – thanh toán trực tuyến, nhận hóa đơn điện tử, viết đánh giá và được chatbot AI hỗ trợ trong suốt hành trình trải nghiệm.
+Nhân viên khách sạn (Staff): Phụ trách vận hành nghiệp vụ hằng ngày tại một khách sạn cụ thể, bao gồm xác nhận đặt phòng, làm thủ tục check-in / check-out, cập nhật tình trạng phòng và xử lý các yêu cầu của khách.
+Quản lý khách sạn (Manager): Được phân quyền quản lý một hoặc nhiều khách sạn trong chuỗi; chịu trách nhiệm cấu hình phòng, giá phòng động, khuyến mãi, theo dõi báo cáo doanh thu và phản hồi đánh giá khách hàng.
+Quản trị viên hệ thống (Admin): Có toàn quyền trên hệ thống, quản lý toàn bộ chuỗi khách sạn, người dùng, nội dung, mã giảm giá và xem báo cáo tổng hợp toàn hệ thống.
+1.3.2 Đối tượng về dữ liệu và nghiệp vụ
+          Hệ thống nghiên cứu quản lý các nhóm dữ liệu cốt lõi của một chuỗi khách sạn đa địa điểm:
+Thông tin khách sạn (vị trí, mô tả, ảnh, đánh giá trung bình), phòng và loại phòng (sức chứa, tiện ích, giá động).
+Dữ liệu đặt phòng (booking code, khoảng thời gian lưu trú, trạng thái, mã giảm giá áp dụng).
+Dữ liệu thanh toán (cổng thanh toán, trạng thái, lịch sử webhook), hóa đơn điện tử.
+Dữ liệu đánh giá và phản hồi đánh giá.
+Dữ liệu người dùng và lịch sử tương tác với chatbot AI.
+Dữ liệu nội dung (bài viết, banner, tin nhắn liên hệ) và mã giảm giá.
+          Hệ thống nhấn mạnh vào việc tích hợp Chatbot AI để hỗ trợ khách hàng tìm kiếm và gợi ý phòng theo nhu cầu trên toàn bộ chuỗi, đồng thời cung cấp công cụ vận hành tập trung cho chủ khách sạn và nhà quản lý trong quá trình điều phối đa cơ sở.
+1.4 Mục đích nghiên cứu
+          Mục đích của đề tài là phát triển một hệ thống quản lý chuỗi khách sạn hiện đại, an toàn và toàn diện, tận dụng trí tuệ nhân tạo để nâng cao hiệu quả quản lý và trải nghiệm người dùng. Cụ thể, các mục tiêu hướng tới bao gồm:
+Đồng bộ hóa quản lý đa địa điểm: Tạo ra một nền tảng duy nhất để theo dõi tình trạng phòng, đặt phòng và doanh thu của toàn bộ chuỗi khách sạn theo thời gian thực, giảm thiểu sai sót thủ công và tiết kiệm thời gian cho đội ngũ quản lý.
+Tối ưu trải nghiệm khách hàng: Cung cấp công cụ tìm kiếm, đặt phòng và thanh toán trực tuyến nhanh chóng, minh bạch, tiện lợi với thanh toán đa cổng (Stripe / MoMo / VNPay) và hóa đơn điện tử tức thì.
+Tích hợp trí tuệ nhân tạo: Triển khai Chatbot AI dựa trên Google Gemini nhằm hỗ trợ khách hàng tìm kiếm phòng theo nhu cầu, cung cấp thông tin và giải đáp các câu hỏi thường gặp 24/7.
+Đảm bảo an toàn dữ liệu và giao dịch: Áp dụng các giải pháp bảo mật theo OWASP, cơ chế MongoDB Transaction chống đặt trùng phòng, và xác thực JWT đa cấp.
+Cung cấp công cụ ra quyết định cho quản trị: Dashboard trực quan với biểu đồ doanh thu, công suất phòng, top khách sạn và chức năng xuất báo cáo Excel hỗ trợ phân tích kinh doanh.
+Xây dựng mô hình tham khảo: Tạo ra một mô hình mẫu cho việc xây dựng các hệ thống quản lý khách sạn quy mô nhỏ và vừa tại Việt Nam, có khả năng mở rộng trong tương lai với các tính năng nâng cao như dự báo nhu cầu lưu trú, gợi ý giá phòng theo mùa và tích hợp với các kênh OTA quốc tế.
+1.5 Phương pháp nghiên cứu
+          Để đạt được các mục tiêu đề ra, đề tài được thực hiện theo quy trình khoa học, kết hợp giữa nghiên cứu lý thuyết và thực nghiệm, bao gồm các bước sau:
+Khảo sát và phân tích yêu cầu: Nghiên cứu thực trạng quản lý chuỗi khách sạn hiện tại, xác định nhu cầu và trải nghiệm của cả phía quản lý lẫn khách hàng. Phân tích các hệ thống PMS hiện có (Opera, Cloudbeds, eZee Absolute) và các nền tảng OTA (Booking.com, Agoda) để xác định khoảng trống cần giải quyết.
+Nghiên cứu công nghệ: Tìm hiểu và đánh giá các công nghệ phù hợp với mục tiêu đề tài, bao gồm kiến trúc MERN (MongoDB, Express, React, Node.js), Google Gemini AI, các cổng thanh toán Stripe / MoMo / VNPay và giao thức WebSocket cho thông báo thời gian thực.
+Thiết kế hệ thống: Xây dựng mô hình dữ liệu và thiết kế cơ sở dữ liệu trên MongoDB. Thiết kế kiến trúc hệ thống theo mô hình Client-Server với RESTful API (/api/v1), vẽ sơ đồ use case, mô hình ERD (Sơ đồ quan hệ thực thể mức vật lý), thiết kế Collection và Document MongoDB.
+Phát triển hệ thống: Lập trình backend bằng Node.js và Express.js theo mô hình phân lớp (Routes – Middlewares – Controllers – Services – Models). Xây dựng giao diện người dùng với React 18 và Tailwind CSS, sử dụng Redux Toolkit &amp; RTK Query cho quản lý trạng thái. Tích hợp Socket.io, Google Gemini AI, ba cổng thanh toán, Cloudinary, Nodemailer, PDFKit và SheetJS.
+Kiểm thử hệ thống: Thực hiện kiểm thử chức năng (functional), kiểm thử bảo mật (OWASP), kiểm thử hiệu năng và kiểm thử tải đồng thời (concurrent booking) nhằm đảm bảo tính ổn định, an toàn và độ tin cậy của toàn hệ thống trong các điều kiện vận hành thực tế.
+Triển khai và đánh giá: Đưa hệ thống vào môi trường thử nghiệm, thu thập phản hồi từ người dùng để hiệu chỉnh và nâng cao chất lượng trước khi triển khai chính thức. Đánh giá kết quả đạt được so với các mục tiêu đã đề ra.
+1.6 Bố cục Tiểu luận
+          Tiểu luận được trình bày trong năm chương, được tổ chức theo trình tự logic từ tổng quan đến chi tiết triển khai:
+Chương 1 — Tổng quan: Trình bày bối cảnh, đặt vấn đề, các hạn chế hiện có, sự cần thiết của đề tài, phạm vi chức năng và công nghệ, đối tượng nghiên cứu, mục đích và phương pháp nghiên cứu.
+Chương 2 — Cơ sở lý thuyết: Giới thiệu các công cụ, ngôn ngữ lập trình, framework, thư viện và dịch vụ được sử dụng để xây dựng hệ thống 2T Hotel, bao gồm Node.js, Express.js, MongoDB, React, Tailwind CSS, Google Gemini AI, Stripe / MoMo / VNPay, Socket.io và các thư viện bảo mật.
+Chương 3 — Phân tích và thiết kế hệ thống: Mô tả chi tiết bài toán, đặc tả use case cho từng vai trò người dùng, thiết kế cơ sở dữ liệu (ERD), kiến trúc tổng thể của hệ thống và các sơ đồ tuần tự cho các luồng nghiệp vụ chính như đặt phòng, thanh toán, đánh giá và chatbot.
+Chương 4 — Triển khai và cài đặt hệ thống: Trình bày kết quả cài đặt giao diện, minh họa các chức năng tiêu biểu (đặt phòng, thanh toán đa cổng, chatbot AI, dashboard quản trị), kết quả kiểm thử và đánh giá hiệu năng.
+Chương 5 — Kết luận và hướng phát triển: Tổng kết kết quả đạt được của đề tài, đánh giá ưu điểm và hạn chế, đồng thời đề xuất các hướng mở rộng trong tương lai như dự báo nhu cầu lưu trú bằng học máy, tích hợp với các kênh OTA quốc tế và phát triển ứng dụng di động.
+1.7 Ý nghĩa khoa học và thực tiễn
+1.7.1 Ý nghĩa khoa học
+          Đề tài có ý nghĩa khoa học ở chỗ đề xuất và hiện thực hóa một hướng tích hợp mô hình ngôn ngữ lớn (LLM) cụ thể là Google Gemini vào hệ thống quản lý nghiệp vụ thực tế. Thay vì gọi LLM một cách đơn thuần, hệ thống truyền kèm dữ liệu ngữ cảnh động lấy trực tiếp từ MongoDB vào mỗi yêu cầu, từ đó giúp mô hình phản hồi chính xác theo tình trạng thực của hệ thống cách tiếp cận này tương đồng với kiến trúc Retrieval-Augmented Generation (RAG) đang được nghiên cứu rộng rãi.
+          Đề tài cũng giải quyết bài toán race condition trong đặt phòng đồng thời bằng MongoDB Transaction trên nền kiến trúc MERN một vấn đề mang tính kinh điển trong các hệ thống đa người dùng. Ngoài ra, việc tích hợp Socket.io cho giao tiếp thời gian thực và hỗ trợ đồng thời ba cổng thanh toán Stripe, MoMo, VNPay cũng là những điểm kỹ thuật có giá trị tham khảo cho các nghiên cứu và hệ thống tương tự.
+1.7.2 Ý nghĩa thực tiễn
+          Về mặt thực tiễn, hệ thống 2T Hotel được xây dựng hướng đến khả năng triển khai thực tế tại các chuỗi khách sạn vừa và nhỏ ở Việt Nam phân khúc hiện đang phải đối mặt với chi phí bản quyền cao khi tiếp cận các phần mềm quản lý khách sạn (PMS) quốc tế như Opera, Cloudbeds hay eZee Absolute. Hệ thống bao phủ đầy đủ các nghiệp vụ cốt lõi của một chuỗi khách sạn hiện đại, từ tìm kiếm và đặt phòng, xử lý thanh toán đa kênh, đến quản lý vận hành, thống kê báo cáo và chatbot tư vấn hoạt động liên tục 24/7. Với mã nguồn mở, kiến trúc rõ ràng và khả năng tùy biến linh hoạt, đề tài góp phần hỗ trợ tiến trình chuyển đổi số trong ngành du lịch và lưu trú, đồng thời tăng cường năng lực cạnh tranh cho doanh nghiệp Việt Nam trong bối cảnh hội nhập quốc tế ngày càng sâu rộng.
+CHƯƠNG 2
+CƠ SỞ LÝ THUYẾT
+2.1 Visual Studio Code (VS Code)
+2.1.1 Giới thiệu
+          Visual Studio Code (VS Code) là một môi trường phát triển tích hợp (IDE) hiện đại, được Microsoft phát triển và phát hành dưới dạng mã nguồn mở, miễn phí. VS Code hoạt động trên nhiều nền tảng hệ điều hành phổ biến như Windows, macOS và Linux, giúp lập trình viên dễ dàng triển khai trên bất kỳ môi trường làm việc nào. Nhờ giao diện trực quan, hiệu suất cao và hệ sinh thái tiện ích mở rộng phong phú, VS Code hiện là một trong những công cụ lập trình được ưa chuộng nhất thế giới.
+          Trong khuôn khổ đề tài này, VS Code đóng vai trò là môi trường phát triển chính để lập trình backend với Node.js, Express.js, frontend với React.js và quản lý toàn bộ cấu trúc dự án một cách hiệu quả.
+2.1.2 Tính năng nổi bật
+          VS Code cung cấp nhiều tính năng hỗ trợ lập trình viên trong quá trình phát triển hệ thống:
+Tích hợp Git và Source Control trực tiếp trong giao diện, hỗ trợ commit, push, pull và quản lý nhánh mã nguồn một cách thuận tiện.
+IntelliSense cung cấp gợi ý mã thông minh, tự động hoàn thành và kiểm tra cú pháp theo thời gian thực, giúp nâng cao tốc độ và chất lượng lập trình.
+Gỡ lỗi tích hợp (Debugger) cho phép đặt breakpoint, theo dõi biến và luồng thực thi trực tiếp trong trình chỉnh sửa mã nguồn.
+Extensions Marketplace cung cấp hàng nghìn tiện ích mở rộng hỗ trợ các ngôn ngữ, framework và công cụ khác nhau như ESLint, Prettier, REST Client và nhiều plugin phục vụ phát triển web hiện đại.
+Terminal tích hợp cho phép chạy lệnh Node.js, npm và các công cụ dòng lệnh khác trực tiếp mà không cần chuyển đổi ứng dụng.
+2.2 Ngôn ngữ lập trình JavaScript
+2.2.1 Giới thiệu
+Hình 2.1 Ảnh logo Javascript
+          JavaScript là ngôn ngữ lập trình bậc cao, thông dịch và đa mô hình, ban đầu được thiết kế để chạy trực tiếp trên trình duyệt web nhưng hiện nay đã mở rộng sang phía máy chủ (server-side) nhờ sự ra đời của Node.js. Với cú pháp linh hoạt, hỗ trợ lập trình hướng đối tượng, hàm (functional) và bất đồng bộ (asynchronous), JavaScript trở thành ngôn ngữ lập trình phổ biến nhất trong phát triển ứng dụng web toàn stack (full-stack).
+          Trong đề tài này, JavaScript là ngôn ngữ lập trình chủ đạo được sử dụng xuyên suốt cả backend lẫn frontend. Phía server sử dụng JavaScript thông qua Node.js và Express.js, trong khi phía client sử dụng React.js, đảm bảo tính nhất quán về ngôn ngữ trên toàn bộ hệ thống quản lý chuỗi khách sạn.
+2.2.2 Tính năng nổi bật
+          Một số đặc điểm nổi bật của JavaScript có ý nghĩa trực tiếp với việc xây dựng hệ thống bao gồm:
+Hỗ trợ lập trình bất đồng bộ (async/await, Promise) giúp xử lý các tác vụ I/O như truy vấn cơ sở dữ liệu MongoDB và gọi Google Gemini API mà không làm chặn luồng thực thi chính.
+Cú pháp ES6+ hiện đại với các tính năng như arrow function, destructuring, spread operator và module import/export giúp mã nguồn ngắn gọn, dễ đọc và bảo trì.
+Khả năng tái sử dụng mã nguồn giữa client và server nhờ dùng chung một ngôn ngữ, giảm thiểu sự không đồng nhất trong quá trình phát triển.
+Hệ sinh thái npm (Node Package Manager) khổng lồ với hàng triệu thư viện mã nguồn mở, cho phép tích hợp nhanh các tính năng như xác thực JWT, gửi email và xử lý thanh toán.
+2.3 Runtime Node.js
+2.3.1 Giới thiệu
+Hình 2.2 Ảnh logo Nodejs
+          Node.js là môi trường thực thi JavaScript phía máy chủ, được xây dựng trên nền tảng V8 JavaScript Engine của Google Chrome. Ra đời năm 2009 bởi Ryan Dahl, Node.js cho phép chạy mã JavaScript ngoài môi trường trình duyệt, mở ra khả năng phát triển ứng dụng web phía server bằng ngôn ngữ JavaScript. Mô hình xử lý sự kiện không đồng bộ (event-driven, non-blocking I/O) của Node.js giúp hệ thống xử lý hàng nghìn kết nối đồng thời với hiệu suất cao mà không tiêu tốn nhiều tài nguyên.
+          Trong khuôn khổ đề tài, Node.js đóng vai trò là runtime chính để khởi chạy toàn bộ server backend của hệ thống quản lý chuỗi khách sạn, xử lý các yêu cầu API từ giao diện React.js và phục vụ các kết nối đến cơ sở dữ liệu MongoDB.
+2.3.2 Tính năng nổi bật
+Mô hình non-blocking I/O cho phép xử lý đồng thời nhiều yêu cầu đặt phòng, truy vấn dữ liệu và giao tiếp API mà không cần tạo thread riêng cho từng kết nối.
+Hiệu suất cao nhờ V8 Engine biên dịch JavaScript thành mã máy, đảm bảo tốc độ phản hồi nhanh cho các API quản lý phòng và hóa đơn khách sạn.
+Quản lý gói phụ thuộc thông qua npm giúp cài đặt và cập nhật các thư viện như mongoose, jsonwebtoken, cors và dotenv một cách đơn giản.
+Khả năng mở rộng theo chiều ngang (horizontal scaling) phù hợp với các hệ thống chuỗi khách sạn có lượng truy cập tăng trưởng theo thời gian.
+2.4 Framework Express.js
+2.4.1 Giới thiệu
+Hình 2.3 logo Express.js
+          Express.js là một web framework tối giản và linh hoạt dành cho Node.js, cung cấp tập hợp các tính năng mạnh mẽ để xây dựng ứng dụng web và API. Ra đời năm 2010, Express.js nhanh chóng trở thành framework backend phổ biến nhất trong hệ sinh thái Node.js nhờ sự đơn giản trong cấu trúc và khả năng tùy biến cao thông qua middleware.
+          Trong đề tài này, Express.js đóng vai trò là framework chính để xây dựng toàn bộ RESTful API của hệ thống, bao gồm các endpoint quản lý phòng, đặt phòng, người dùng, hóa đơn và tích hợp Chatbot AI thông qua Google Gemini API.
+2.4.2 Tính năng nổi bật
+Routing linh hoạt cho phép định nghĩa các tuyến đường (route) theo phương thức HTTP (GET, POST, PUT, DELETE) một cách rõ ràng, phù hợp với thiết kế RESTful API của hệ thống quản lý chuỗi khách sạn.
+Middleware pipeline cho phép xử lý yêu cầu tuần tự qua các lớp như xác thực JWT, kiểm tra quyền truy cập, xử lý lỗi và ghi log trước khi đến controller chính.
+Tích hợp dễ dàng với MongoDB thông qua thư viện Mongoose, giúp xây dựng các model dữ liệu và thực hiện các thao tác CRUD một cách thuận tiện.
+Hỗ trợ xử lý CORS, giúp giao diện React.js có thể giao tiếp với backend Express.js từ các domain khác nhau trong môi trường phát triển và triển khai thực tế.
+2.5 Thư viện React.js
+2.5.1 Giới thiệu
+Hình 2.4 Ảnh logo Reactjs
+          React.js là một thư viện JavaScript mã nguồn mở do Meta (Facebook) phát triển, được thiết kế để xây dựng giao diện người dùng (UI) theo mô hình component-based. Ra mắt năm 2013, React.js hiện là một trong những thư viện frontend được sử dụng rộng rãi nhất thế giới, nhờ khả năng tái sử dụng component, cơ chế Virtual DOM giúp cập nhật       giao diện nhanh chóng và hệ sinh thái phong phú.
+          Trong đề tài này, React.js được sử dụng để xây dựng toàn bộ giao diện người dùng của hệ thống quản lý chuỗi khách sạn, bao gồm trang tìm kiếm và đặt phòng, dashboard quản lý chi nhánh, quản lý hóa đơn, hợp đồng và giao diện Chatbot AI hỗ trợ khách hàng.
+2.5.2 Tính năng nổi bật
+Component-based architecture cho phép chia giao diện thành các thành phần nhỏ, độc lập và có thể tái sử dụng, giúp việc phát triển và bảo trì hệ thống trở nên hiệu quả hơn.
+Virtual DOM giúp React.js chỉ cập nhật những phần giao diện thực sự thay đổi, tối ưu hiệu suất hiển thị ngay cả khi danh sách phòng hoặc dữ liệu hóa đơn có số lượng lớn.
+React Hooks (useState, useEffect, useContext) cung cấp cách quản lý trạng thái và vòng đời component hiện đại, không cần sử dụng class component phức tạp.
+React Router DOM hỗ trợ điều hướng phía client (client-side routing), cho phép chuyển trang mượt mà giữa các màn hình quản lý mà không cần tải lại toàn bộ ứng dụng.
+2.6 Framework TailwindCSS
+2.6.1 Giới thiệu
+Hình 2.5 Ảnh logo TailwindCSS
+          TailwindCSS là một CSS framework hiện đại theo triết lý utility-first, cung cấp hàng loạt lớp tiện ích (utility classes) sẵn có giúp xây dựng giao diện trực tiếp trong mã HTML mà không cần viết CSS tùy chỉnh. Ra đời năm 2017 bởi Adam Wathan, TailwindCSS đã nhanh chóng trở thành lựa chọn phổ biến trong cộng đồng phát triển web nhờ tính linh hoạt cao, hiệu suất tốt và khả năng tuỳ biến giao diện mạnh mẽ.
+          Trong khuôn khổ đề tài, TailwindCSS được sử dụng kết hợp với React.js để thiết kế toàn bộ giao diện hệ thống quản lý chuỗi khách sạn, đảm bảo tính trực quan, hiện đại và thân thiện với người dùng trên cả màn hình máy tính lẫn thiết bị di động.
+2.6.2 Tính năng nổi bật
+Utility-first: hàng nghìn class tiện ích sẵn có (padding, margin, flexbox, grid, color, typography...) giúp xây dựng giao diện nhanh chóng mà vẫn dễ kiểm soát từng chi tiết hiển thị.
+Tuỳ biến linh hoạt thông qua file cấu hình tailwind.config.js, cho phép định nghĩa bảng màu, kích thước, typography riêng phù hợp với thương hiệu của hệ thống khách sạn.
+Responsive tích hợp sẵn với các breakpoint (sm, md, lg, xl, 2xl) giúp giao diện tương thích tốt với mọi thiết bị từ điện thoại đến màn hình lớn.
+Tương thích tốt với React.js thông qua việc áp dụng trực tiếp className trên các component, không cần tạo file CSS riêng lẻ, giúp mã nguồn gọn và dễ bảo trì.
+Cộng đồng và hệ sinh thái mạnh mẽ: nhiều plugin, template và công cụ hỗ trợ như Headless UI và daisyUI giúp tăng tốc quá trình phát triển giao diện.
+2.7 Hệ quản trị cơ sở dữ liệu MongoDB
+2.7.1 Giới thiệu
+Hình 2.6 Ảnh logo MongoDB
+          MongoDB là hệ quản trị cơ sở dữ liệu NoSQL dạng document, lưu trữ dữ liệu dưới định dạng BSON (Binary JSON) linh hoạt thay vì các bảng quan hệ truyền thống. Ra đời năm 2009 bởi MongoDB Inc., đây là một trong những cơ sở dữ liệu NoSQL được sử dụng rộng rãi nhất thế giới nhờ tính ổn định, hiệu suất cao và khả năng mở rộng linh hoạt theo quy mô dữ liệu.
+          Trong khuôn khổ đề tài, MongoDB đóng vai trò là hệ quản trị cơ sở dữ liệu trung tâm, lưu trữ toàn bộ thông tin liên quan đến khách sạn, phòng, hóa đơn, tài khoản người dùng và lịch sử đặt phòng. Thư viện Mongoose được sử dụng để kết nối và tương tác với MongoDB từ backend Node.js, cung cấp cơ chế định nghĩa schema và thực hiện các thao tác CRUD một cách thuận tiện.
+2.7.2 Tính năng nổi bật
+Lưu trữ dạng document (BSON/JSON) cho phép biểu diễn các cấu trúc dữ liệu phức tạp và lồng nhau như thông tin phòng kèm danh sách tiện nghi, dịch vụ và ảnh mà không cần join bảng.
+Schema linh hoạt cho phép thay đổi cấu trúc dữ liệu mà không cần migration phức tạp, phù hợp với giai đoạn phát triển và mở rộng tính năng của hệ thống.
+Khả năng mở rộng theo chiều ngang (horizontal scaling) thông qua sharding và replica set, đảm bảo hệ thống chuỗi khách sạn hoạt động ổn định khi dữ liệu và lưu lượng truy cập tăng trưởng.
+Aggregation Pipeline mạnh mẽ hỗ trợ tổng hợp dữ liệu doanh thu, thống kê công suất phòng và báo cáo hoạt động kinh doanh theo từng chi nhánh trong chuỗi.
+2.8 Google Gemini AI API
+2.8.1 Giới thiệu
+Hình 2.7 Ảnh logo Google Gemini AI
+          Google Gemini AI API là nền tảng trí tuệ nhân tạo thế hệ mới do Google DeepMind phát triển, được xây dựng trên mô hình ngôn ngữ lớn (Large Language Model – LLM) đa phương thức (multimodal) với khả năng xử lý ngôn ngữ tự nhiên, hình ảnh và dữ liệu có cấu trúc JSON. API này cho phép các nhà phát triển tích hợp trí tuệ nhân tạo vào ứng dụng một cách nhanh chóng, phục vụ các tác vụ như chatbot, hệ thống trợ lý ảo, phân tích văn bản và tổng hợp thông tin.
+          Trong đề tài này, Google Gemini AI API được tích hợp vào backend Express.js để xây dựng tính năng Chatbot thông minh, hỗ trợ khách hàng tìm kiếm phòng phù hợp, giải đáp các thắc mắc thường gặp về dịch vụ, chính sách và thủ tục đặt phòng của chuỗi khách sạn theo thời gian thực.
+2.8.2 Kiến trúc và tính năng nổi bật
+          Gemini AI API được xây dựng trên hạ tầng điện toán đám mây của Google, đảm bảo độ ổn định, khả năng mở rộng và xử lý tác vụ ở quy mô lớn. Các phiên bản mô hình hiện có bao gồm Gemini 2.5 Pro (tối ưu cho suy luận phức tạp), Gemini 2.5 Flash (cân bằng tốc độ và chi phí) và Gemini 2.5 Flash-Lite (phù hợp ứng dụng nhẹ cần phản hồi nhanh). Các tính năng nổi bật bao gồm:
+Hỗ trợ hội thoại đa lượt (multi-turn chat) giúp Chatbot duy trì ngữ cảnh xuyên suốt cuộc hội thoại với khách hàng, cho phép trả lời các câu hỏi phức tạp theo chuỗi một cách tự nhiên.
+Xử lý đầu vào đa phương thức bao gồm văn bản và hình ảnh, sinh dữ liệu có cấu trúc JSON và hỗ trợ nhiều ngôn ngữ lập trình phổ biến như JavaScript, Python, Go, cho phép tích hợp linh hoạt vào hệ thống Node.js.
+Khả năng tùy chỉnh system instruction giúp định hướng Chatbot theo đúng vai trò trợ lý tư vấn phòng khách sạn, đảm bảo phản hồi chính xác, thân thiện và phù hợp với nghiệp vụ thực tế.
+Tích hợp CI/CD và tương thích với nhiều nền tảng triển khai, đảm bảo Chatbot hoạt động ổn định trong môi trường production của hệ thống quản lý chuỗi khách sạn.
+2.8.3 Quy trình hoạt động
+          Quy trình hoạt động của Google Gemini AI API trong hệ thống bắt đầu từ việc khởi tạo môi trường thông qua Google AI Studio hoặc Vertex AI. Khi khách hàng gửi câu hỏi qua giao diện Chatbot trên React.js, yêu cầu được chuyển đến backend Express.js, nơi xử lý và gọi hàm generateContent() của Gemini API kèm theo ngữ cảnh nghiệp vụ cần thiết. Gemini API xử lý yêu cầu và trả về phản hồi dạng văn bản hoặc dữ liệu có cấu trúc, sau đó được gửi lại cho frontend để hiển thị cho người dùng.
+          Đặc biệt, Firebase AI Logic cũng được xem xét để hỗ trợ quản lý hội thoại, lưu lại lịch sử hội thoại và duy trì ngữ cảnh theo từng phiên làm việc của khách hàng, giúp Chatbot phục vụ nhiều người dùng đồng thời một cách hiệu quả và ổn định.
+2.9 GitHub
+2.9.1 Giới thiệu
+Hình 2.8 Ảnh logo GitHub
+          GitHub là nền tảng quản lý mã nguồn phân tán dựa trên Git, được sử dụng rộng rãi trong phát triển phần mềm hiện đại như một công cụ trung tâm giúp lưu trữ, theo dõi và chia sẻ mã nguồn dự án. Trong đề tài này, GitHub đóng vai trò là nơi lưu trữ toàn bộ mã nguồn của hệ thống quản lý chuỗi khách sạn, hỗ trợ làm việc nhóm hiệu quả, kiểm soát phiên bản và triển khai liên tục.
+          Các chức năng nổi bật của GitHub được ứng dụng trong đề tài bao gồm: quản lý phiên bản mã nguồn qua commit và branch, phân nhánh và hợp nhất (branch &amp; merge) để phát triển tính năng song song, theo dõi lỗi và công việc qua Issues và Projects, tích hợp CI/CD để tự động hóa kiểm thử và triển khai, đồng thời tận dụng cộng đồng mã nguồn mở lớn mạnh để tham khảo và sử dụng các thư viện hỗ trợ.
+2.10 Công cụ Vite
+2.10.1 Giới thiệu
+Hình 2.9 Ảnh logo Vite
+          Vite là một công cụ build frontend thế hệ mới được phát triển bởi Evan You, tác giả của Vue.js, với mục tiêu mang lại tốc độ khởi động server phát triển cực nhanh và quá trình build tối ưu cho các ứng dụng web hiện đại. Thay vì đóng gói toàn bộ mã nguồn như Webpack, Vite tận dụng tính năng ES Modules gốc của trình duyệt để phục vụ mã nguồn trực tiếp trong quá trình phát triển, giúp thời gian khởi động gần như tức thì ngay cả với dự án lớn.
+          Trong đề tài này, Vite được sử dụng làm công cụ build và development server cho phần giao diện React.js của hệ thống quản lý chuỗi khách sạn, thay thế Create React App (CRA) nhờ hiệu suất vượt trội và cấu hình linh hoạt hơn.
+2.10.2 Tính năng nổi bật
+Khởi động server phát triển tức thì nhờ sử dụng ES Modules gốc, không cần đóng gói toàn bộ dự án trước khi chạy, giúp tiết kiệm đáng kể thời gian trong quá trình phát triển và kiểm thử hệ thống.
+Hot Module Replacement (HMR) cực nhanh cho phép cập nhật giao diện React.js ngay lập tức khi lưu thay đổi mã nguồn, mà không làm mất trạng thái hiện tại của ứng dụng.
+Build production tối ưu sử dụng Rollup để đóng gói mã nguồn, tạo ra các file bundle nhỏ gọn, hỗ trợ code-splitting và lazy loading giúp tải trang nhanh hơn.
+Hỗ trợ sẵn TypeScript, JSX, CSS Modules và TailwindCSS mà không cần cấu hình phức tạp, cho phép tập trung vào logic nghiệp vụ thay vì cấu hình công cụ.
+Tương thích hoàn toàn với hệ sinh thái React.js và các plugin phổ biến trong cộng đồng, đảm bảo khả năng mở rộng dự án trong tương lai.
+2.11 Thư viện Mongoose
+2.11.1 Giới thiệu
+Hình 2.10 Ảnh logo Mongoose
+          Mongoose là thư viện ODM (Object Data Modeling) phổ biến nhất dành cho MongoDB trên nền tảng Node.js, được phát hành lần đầu năm 2010. Mongoose cung cấp một lớp trừu tượng phía trên MongoDB Driver, cho phép định nghĩa Schema chặt chẽ cho dữ liệu vốn không có cấu trúc cố định của MongoDB, đồng thời hỗ trợ kiểm tra kiểu dữ liệu, ràng buộc, middleware (pre/post hook), populate quan hệ và nhiều tiện ích khác.
+          Trong khuôn khổ đề tài, Mongoose được sử dụng để định nghĩa toàn bộ các model dữ liệu của hệ thống quản lý chuỗi khách sạn như User,Hotel, Room, Booking, Payment, Review, Coupon, Article, Notification, ContactMessage và SiteBanner, đồng thời cung cấp các phương thức CRUD và truy vấn nâng cao phục vụ nghiệp vụ đặt phòng.
+2.11.2 Tính năng nổi bật
+Định nghĩa Schema rõ ràng cho từng collection, hỗ trợ kiểu dữ liệu, giá trị mặc định và ràng buộc (required, unique, min/max…), giúp đảm bảo tính toàn vẹn dữ liệu khách hàng và đơn đặt phòng.
+Hỗ trợ Middleware (pre/post save, find, remove) cho phép tự động hóa các thao tác như băm mật khẩu trước khi lưu, cập nhật đánh giá trung bình của khách sạn sau khi có review mới.
+Hỗ trợ populate để truy vấn các tham chiếu liên kết giữa các collection như Booking → User, Booking → Hotel, Booking → Room, thay thế cho thao tác join trong cơ sở dữ liệu quan hệ.
+Tích hợp Transaction thông qua session của MongoDB Replica Set, được sử dụng trong nghiệp vụ đặt phòng để đảm bảo không xảy ra tình trạng đặt trùng phòng (race condition).
+Cung cấp Aggregation Pipeline giúp xây dựng các báo cáo tổng hợp doanh thu, công suất phòng và thống kê theo từng khách sạn trong chuỗi.
+2.12 Thư viện Redux Toolkit &amp; RTK Query
+2.12.1 Giới thiệu
+Hình 2.11 Ảnh logo Redux Toolkit
+          Redux Toolkit là bộ công cụ chính thức do nhóm phát triển Redux khuyến nghị, ra mắt năm 2019, nhằm khắc phục các hạn chế về cấu hình phức tạp và mã nguồn dài dòng của Redux truyền thống. RTK Query là một module mạnh mẽ đi kèm Redux Toolkit, được thiết kế đặc biệt để xử lý việc gọi API, quản lý cache, tự động đồng bộ dữ liệu giữa client và server.
+          Trong đề tài này, Redux Toolkit kết hợp RTK Query đóng vai trò là trục quản lý trạng thái và giao tiếp API của toàn bộ giao diện React.js. Mọi tương tác với backend Express.js, từ danh sách khách sạn, đặt phòng, thanh toán cho đến dashboard quản trị, đều được điều phối qua RTK Query với cơ chế cache và tag-based invalidation thông minh.
+2.12.2 Tính năng nổi bật
+Cấu hình tối giản với configureStore và createSlice, loại bỏ mã boilerplate của Redux truyền thống, giúp xây dựng store nhanh chóng và dễ bảo trì.
+RTK Query tự động hóa toàn bộ vòng đời của một request: loading, success, error, cache, refetch và invalidation, giảm đáng kể mã nguồn cần viết cho mỗi API.
+Tag-based cache invalidation cho phép tự động làm mới dữ liệu liên quan khi có thao tác create/update/delete, ví dụ khi đặt phòng thành công thì danh sách "Đơn của tôi" được cập nhật tức thì.
+Optimistic update giúp giao diện phản hồi ngay lập tức trước khi server trả kết quả, mang lại trải nghiệm người dùng mượt mà khi viết đánh giá hoặc cập nhật hồ sơ.
+Tích hợp DevTools trực quan cho phép theo dõi mọi thay đổi trạng thái trong quá trình phát triển và gỡ lỗi hệ thống.
+2.13 Thư viện React Router DOM
+2.13.1 Giới thiệu
+Hình 2.12 Ảnh logo React Router
+          React Router DOM là thư viện điều hướng (routing) phổ biến nhất dành cho ứng dụng React, hiện tại sử dụng phiên bản React Router v6. Thư viện cung cấp cơ chế điều hướng phía client (Client-Side Routing) cho phép chuyển trang mượt mà mà không cần tải lại toàn bộ ứng dụng, hỗ trợ nested route, route động, lazy loading và protected route.
+          Trong đề tài, React Router DOM được sử dụng để xây dựng hệ thống điều hướng cho toàn bộ ứng dụng client, bao gồm các trang công khai (Trang chủ, Danh sách khách sạn, Chi tiết khách sạn, Bài viết), các trang yêu cầu đăng nhập (Đặt phòng, Thanh toán, Hồ sơ, Đơn của tôi, Hóa đơn) và khu vực quản trị (Admin Dashboard).
+2.13.2 Tính năng nổi bật
+Nested Route cho phép xây dựng cấu trúc trang phân cấp, đặc biệt phù hợp với khu vực Admin Dashboard có nhiều màn hình con như quản lý khách sạn, phòng, đặt phòng, người dùng, báo cáo.
+Dynamic Route với tham số động (/hotels/:slug, /bookings/:id) giúp xây dựng URL thân thiện SEO cho trang chi tiết khách sạn.
+Protected Route kết hợp với JWT để kiểm soát quyền truy cập theo vai trò (customer, staff, manager, admin), đảm bảo chỉ người dùng được phép mới truy cập được các trang nhạy cảm.
+Lazy Loading kết hợp với React.Suspense cho phép tách nhỏ bundle theo từng trang, tăng tốc độ tải lần đầu (Time To Interactive).
+useNavigate, useParams, useSearchParams cung cấp API hiện đại dựa trên Hooks, giúp lập trình điều hướng và truy xuất tham số URL một cách trực quan.
+2.14 Xác thực và bảo mật người dùng (JWT &amp; Bcrypt)
+2.14.1 Giới thiệu
+Hình 2.13 Ảnh logo JWT
+          JSON Web Token (JWT) là chuẩn mở (RFC 7519) cho phép truyền tải thông tin xác thực giữa client và server dưới dạng một chuỗi token được ký số, đảm bảo tính toàn vẹn và không thể giả mạo. Bcrypt là thuật toán băm mật khẩu hiện đại, sử dụng cơ chế salt và chi phí tính toán (cost factor) có thể điều chỉnh, giúp chống lại các cuộc tấn công brute-force và rainbow table.
+          Trong đề tài, JWT và Bcrypt là hai thành phần cốt lõi trong cơ chế xác thực và bảo mật của hệ thống quản lý chuỗi khách sạn. JWT được sử dụng để cấp phát token đăng nhập, kiểm soát phiên làm việc và phân quyền theo vai trò; Bcrypt được sử dụng để băm mật khẩu trước khi lưu vào MongoDB.
+2.14.2 Tính năng nổi bật
+Cơ chế Access Token + Refresh Token trong đó Access Token có thời gian sống ngắn (15 phút) phục vụ gọi API, còn Refresh Token có thời gian sống dài hơn được lưu trong HttpOnly Cookie giúp chống tấn công XSS.
+Phân quyền theo vai trò (Role-Based Access Control) dựa trên trường role được nhúng trong payload của JWT, kết hợp middleware protect và restrictTo để kiểm soát truy cập từng endpoint.
+Bcrypt với cost factor 12 rounds đảm bảo độ khó tính toán cao, an toàn ngay cả khi cơ sở dữ liệu bị rò rỉ.
+Xác minh email thông qua token có thời hạn được gửi qua email, đảm bảo người đăng ký là chủ sở hữu địa chỉ email hợp lệ.
+Đặt lại mật khẩu an toàn dựa trên token một lần (one-time token) có thời hạn ngắn, được gửi qua email và lưu hash trong cơ sở dữ liệu.
+2.15 Thư viện Socket.io
+2.15.1 Giới thiệu
+Hình 2.14 Ảnh logo Socket.io
+          Socket.io là thư viện JavaScript hỗ trợ giao tiếp hai chiều theo thời gian thực (real-time, bi-directional) giữa client và server thông qua giao thức WebSocket, đồng thời có cơ chế fallback sang HTTP long-polling khi WebSocket không khả dụng. Socket.io cung cấp các tính năng nâng cao như room, namespace, auto-reconnect và acknowledgement, giúp xây dựng các ứng dụng realtime ổn định.
+          Trong đề tài này, Socket.io được tích hợp vào cả backend Express.js và frontend React.js để xây dựng hệ thống thông báo thời gian thực cho người dùng, nhân viên và quản trị viên. Mọi sự kiện quan trọng như đặt phòng mới, thanh toán thành công, xác nhận check-in/check-out hay đánh giá mới đều được phát đi tức thì đến các bên liên quan mà không cần làm mới trình duyệt.
+2.15.2 Tính năng nổi bật
+Hỗ trợ Room giúp phân tách kênh thông báo theo từng đối tượng người dùng. Hệ thống sử dụng các room như user:&lt;id&gt; (thông báo riêng cho khách hàng), staff_room, admin_room và hotel:&lt;id&gt; (kênh nội bộ của từng khách sạn).
+Auto-reconnect tự động kết nối lại khi mạng gián đoạn, đảm bảo trải nghiệm liên tục cho người dùng.
+Acknowledgement xác nhận sự kiện đã được phía nhận xử lý, giúp đảm bảo độ tin cậy của thông báo quan trọng như thanh toán hoặc hủy đơn.
+Tích hợp xác thực JWT trong handshake của Socket.io, đảm bảo chỉ người dùng hợp lệ mới tham gia được vào room của mình.
+Khả năng mở rộng theo chiều ngang thông qua adapter Redis, sẵn sàng đáp ứng khi hệ thống chuỗi khách sạn mở rộng quy mô. 
+2.16 Cổng thanh toán Stripe, MoMo và VNPay
+2.16.1 Giới thiệu
+Hình 2.15 Ảnh logo Stripe – MoMo – VNPay
+          Hệ thống quản lý chuỗi khách sạn cần đáp ứng nhu cầu thanh toán đa dạng của khách hàng trong và ngoài nước. Vì vậy, đề tài tích hợp đồng thời ba cổng thanh toán: Stripe (cổng quốc tế hàng đầu, hỗ trợ thẻ Visa/MasterCard/American Express), MoMo (ví điện tử phổ biến nhất Việt Nam) và VNPay (cổng thanh toán nội địa hỗ trợ ATM, QR Code, ví điện tử).
+          Cả ba cổng đều cung cấp API và SDK rõ ràng, hỗ trợ luồng thanh toán an toàn theo chuẩn PCI DSS, đồng thời có cơ chế webhook / IPN (Instant Payment Notification) để xác nhận giao dịch một cách đáng tin cậy giữa cổng và máy chủ.
+2.16.2 Tính năng nổi bật
+Stripe cung cấp Payment Intent API kết hợp với Stripe Elements ở phía client, cho phép thu thập thông tin thẻ an toàn ngay trong giao diện hệ thống mà không lưu thẻ trên server. Hỗ trợ chế độ test bằng thẻ ảo thuận tiện cho việc kiểm thử.
+MoMo cung cấp luồng thanh toán qua QR Code và ví điện tử, hỗ trợ IPN trả về kết quả giao dịch và cơ chế kiểm tra chữ ký HMAC-SHA256 để chống giả mạo.
+VNPay hỗ trợ đa dạng phương thức thanh toán nội địa, cung cấp URL redirect và cơ chế IPN tương tự, đảm bảo tính nhất quán của trạng thái thanh toán giữa cổng và hệ thống.
+Webhook xác minh chữ ký ở cả ba cổng giúp hệ thống cập nhật trạng thái đặt phòng an toàn ngay cả khi người dùng đóng trình duyệt trước khi quay lại trang xác nhận.
+Hoàn tiền (Refund) được hỗ trợ qua API của từng cổng, phục vụ nghiệp vụ hủy đơn của bộ phận quản trị.
+2.17 Dịch vụ lưu trữ ảnh Cloudinary
+2.17.1 Giới thiệu
+Hình 2.16 Ảnh logo Cloudinary
+          Cloudinary là dịch vụ lưu trữ và xử lý đa phương tiện trên nền tảng đám mây, cung cấp giải pháp toàn diện cho việc tải lên, lưu trữ, biến đổi và phân phối hình ảnh, video qua mạng CDN toàn cầu. Cloudinary hỗ trợ tự động tối ưu kích thước, định dạng (WebP, AVIF) và chất lượng ảnh dựa trên trình duyệt và thiết bị của người dùng.
+          Trong đề tài, Cloudinary được sử dụng để lưu trữ toàn bộ hình ảnh của hệ thống quản lý chuỗi khách sạn, bao gồm ảnh khách sạn, phòng, banner trang chủ, ảnh đại diện người dùng và ảnh kèm bài viết. Trường hợp chưa cấu hình Cloudinary, hệ thống có cơ chế fallback lưu ảnh tạm vào thư mục uploads/ của server để vẫn vận hành được ở môi trường phát triển.
+2.17.2 Tính năng nổi bật
+Upload trực tiếp từ backend Node.js thông qua SDK chính thức của Cloudinary, kết hợp với middleware multer để xử lý form-data từ client.
+Tự động tối ưu kích thước và định dạng ảnh khi phân phối, giúp giảm dung lượng trang và cải thiện tốc độ tải.
+Mạng CDN toàn cầu đảm bảo tốc độ truy cập ảnh nhanh từ mọi vị trí địa lý, phù hợp với chuỗi khách sạn có khách hàng quốc tế.
+Quản lý theo folder (hotel/hotels, hotel/rooms, hotel/avatars, hotel/articles) giúp tổ chức tài nguyên rõ ràng, dễ quản lý.
+Phép biến đổi linh hoạt (resize, crop, watermark, blur…) trực tiếp qua URL, không cần xử lý ảnh ở phía server.
+2.18 Thư viện gửi email Nodemailer
+2.18.1 Giới thiệu
+Hình 2.17 Ảnh logo Nodemailer
+          Nodemailer là thư viện gửi email phổ biến nhất trên môi trường Node.js, hỗ trợ giao thức SMTP và nhiều dịch vụ email phổ biến như Gmail, Outlook, SendGrid, Mailgun. Thư viện cho phép gửi email với nội dung HTML, đính kèm file và sử dụng template động.
+          Trong đề tài, Nodemailer được tích hợp vào backend Express.js để gửi email tự động trong các nghiệp vụ quan trọng của hệ thống quản lý chuỗi khách sạn như xác minh tài khoản đăng ký, đặt lại mật khẩu, xác nhận đặt phòng và gửi hóa đơn PDF cho khách hàng sau khi thanh toán thành công.
+2.18.2 Tính năng nổi bật
+Hỗ trợ SMTP với cấu hình linh hoạt, cho phép kết nối đến bất kỳ máy chủ email nào, bao gồm cả các dịch vụ chuyên nghiệp như SendGrid và Mailgun.
+Email HTML cho phép xây dựng template email chuyên nghiệp, có logo, định dạng đẹp và thông tin đặt phòng chi tiết, nâng cao hình ảnh thương hiệu.
+Đính kèm file giúp gửi hóa đơn PDF (sinh bởi PDFKit) ngay trong email xác nhận đặt phòng cho khách hàng.
+Gửi bất đồng bộ sử dụng Promise/async-await, không làm chậm phản hồi API ngay cả khi gửi email cho hàng loạt khách hàng.
+Cơ chế fallback ghi log email ra console khi chưa cấu hình SMTP, thuận tiện cho việc phát triển và kiểm thử.
+2.19 Thư viện PDFKit
+2.19.1 Giới thiệu
+Hình 2.18 Ảnh logo PDFKit
+          PDFKit là thư viện sinh file PDF chạy trên Node.js, cho phép tạo tài liệu PDF chất lượng cao bằng mã JavaScript thông qua API lập trình trực quan. PDFKit hỗ trợ đầy đủ các thành phần của một tài liệu PDF chuyên nghiệp như văn bản đa font, bảng, hình ảnh, đường vẽ, trang nhiều khổ và cả tính năng mã hóa.
+          Trong đề tài, PDFKit được sử dụng để sinh hóa đơn điện tử cho mỗi đơn đặt phòng tại endpoint GET /bookings/:id/invoice. File PDF được stream trực tiếp về trình duyệt, cho phép khách hàng tải hoặc in ngay mà không cần lưu trữ trên server.
+2.19.2 Tính năng nổi bật
+Sinh PDF dạng stream, không cần lưu file tạm trên server, tiết kiệm tài nguyên đĩa và phù hợp với mô hình stateless của API.
+Hỗ trợ font Unicode tiếng Việt giúp xuất hóa đơn đúng chuẩn cho khách hàng trong nước.
+Layout tự do cho phép thiết kế hóa đơn theo đúng nhận diện thương hiệu của chuỗi khách sạn (logo, màu sắc, bố cục).
+Tích hợp dễ dàng với Express.js qua API stream, đặt header Content-Type: application/pdf và Content-Disposition: attachment để trình duyệt tự động tải file.
+Hiệu năng cao kể cả khi sinh hóa đơn cho hàng loạt đơn đặt phòng đồng thời.
+2.20 Thư viện SheetJS (XLSX)
+2.20.1 Giới thiệu
+Hình 2.19 Ảnh logo SheetJS
+          SheetJS (gói npm xlsx) là thư viện JavaScript chuyên xử lý các định dạng bảng tính phổ biến như XLSX, XLS, CSV. Thư viện hoạt động được trên cả Node.js và trình duyệt, hỗ trợ đọc, ghi và biến đổi dữ liệu bảng tính một cách linh hoạt.
+          Trong đề tài, SheetJS được tích hợp vào backend Express.js để xây dựng chức năng xuất báo cáo Excel tại endpoint GET /admin/reports/export?type=excel, phục vụ nhu cầu quản trị và phân tích kinh doanh của chuỗi khách sạn. Báo cáo bao gồm doanh thu theo kỳ, danh sách đặt phòng, công suất phòng và thống kê khách hàng.
+2.20.2 Tính năng nổi bật
+Hỗ trợ đầy đủ định dạng XLSX chuẩn Office Open XML, mở được bằng Microsoft Excel, Google Sheets và LibreOffice Calc.
+Cho phép tạo nhiều sheet trong một workbook, phù hợp với báo cáo nhiều phần (doanh thu, đặt phòng, khách hàng).
+Định dạng ô (số, ngày, tiền tệ) và gộp cell giúp báo cáo trực quan, chuyên nghiệp.
+Hiệu năng tốt, có thể xử lý hàng nghìn dòng dữ liệu mà không gây áp lực lên server.
+Tích hợp dễ dàng với Express qua việc stream buffer trực tiếp về trình duyệt, đảm bảo trải nghiệm tải file mượt mà cho người quản trị.
+2.21 Bảo mật ứng dụng Web
+2.21.1 Giới thiệu
+          Bảo mật là yêu cầu bắt buộc đối với mọi hệ thống quản lý thông tin khách hàng và giao dịch thanh toán. Đề tài áp dụng các giải pháp bảo mật theo khuyến nghị của OWASP Top 10, kết hợp nhiều thư viện middleware chuyên dụng trên nền tảng Express.js nhằm phòng chống các lỗ hổng phổ biến.
+2.21.2 Các thư viện bảo mật được sử dụng
+Helmet: thiết lập tự động các HTTP security headers (Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security…) giúp phòng chống các tấn công clickjacking, MIME-sniffing và XSS.
+express-rate-limit: giới hạn số lượng request từ cùng một địa chỉ IP trong khoảng thời gian nhất định, đặc biệt áp dụng cho các endpoint nhạy cảm như đăng nhập, đăng ký và quên mật khẩu, phòng chống brute-force và DDoS lớp ứng dụng.
+express-mongo-sanitize: loại bỏ các ký tự đặc biệt $ và . trong input người dùng, ngăn chặn NoSQL Injection vào MongoDB.
+xss-clean: làm sạch input nhằm chống tấn công Cross-Site Scripting (XSS) lưu trữ trong cơ sở dữ liệu.
+HPP (HTTP Parameter Pollution): chống tấn công ô nhiễm tham số HTTP bằng cách loại bỏ tham số trùng lặp trong query string.
+CORS: cấu hình kiểm soát chính xác các domain được phép truy cập API, đảm bảo chỉ giao diện React.js của hệ thống mới giao tiếp được với backend.
+bcrypt (với cost 12) và JWT đã được trình bày ở mục 2.14 đóng vai trò bảo vệ thông tin xác thực người dùng.
+2.22 Thư viện ghi log Winston
+2.22.1 Giới thiệu
+Hình 2.20 Ảnh logo Winston
+          Winston là thư viện ghi log linh hoạt và phổ biến nhất trong hệ sinh thái Node.js, cho phép ghi log ra nhiều đích (transport) khác nhau như console, file, cơ sở dữ liệu hoặc dịch vụ giám sát bên thứ ba. Winston hỗ trợ phân cấp mức độ log (error, warn, info, http, debug) và định dạng log linh hoạt (JSON, plain text, color).
+          Trong đề tài, Winston được sử dụng để ghi nhận toàn bộ hoạt động của hệ thống quản lý chuỗi khách sạn vào thư mục logs/ của server, phục vụ giám sát, gỡ lỗi và truy vết sự cố trong quá trình vận hành production.
+2.22.2 Tính năng nổi bật
+Phân cấp log level giúp lọc thông tin theo mức độ quan trọng, dễ dàng tách biệt log lỗi và log debug.
+Multi-transport cho phép ghi log đồng thời ra console (cho môi trường dev) và file xoay vòng theo ngày (cho môi trường production).
+Định dạng JSON thuận tiện cho việc tích hợp với các hệ thống phân tích log như ELK Stack (Elasticsearch, Logstash, Kibana).
+Ghi log không đồng bộ, không ảnh hưởng hiệu năng xử lý request của Express.js.
+Tích hợp với middleware HTTP logger (morgan) để ghi nhận chi tiết mọi request đến server.
+2.23 Thư viện Recharts
+2.23.1 Giới thiệu
+Hình 2.21 Ảnh logo Recharts
+          Recharts là thư viện biểu đồ mã nguồn mở dành cho React, được xây dựng trên nền D3.js và SVG, theo triết lý component-based phù hợp với React. Recharts cung cấp đầy đủ các loại biểu đồ phổ biến như Line, Bar, Area, Pie, Radar, Scatter… với API khai báo trực quan, dễ tùy biến.
+          Trong đề tài, Recharts được sử dụng để xây dựng dashboard quản trị của hệ thống quản lý chuỗi khách sạn, hiển thị trực quan các số liệu kinh doanh quan trọng như doanh thu theo tháng, công suất phòng, top khách sạn theo doanh thu và phân bố đặt phòng theo trạng thái.
+2.23.2 Tính năng nổi bật
+Component-based, cú pháp khai báo giống JSX của React, dễ tích hợp và bảo trì.
+Hỗ trợ responsive container, biểu đồ tự động điều chỉnh kích thước theo khung chứa, hiển thị tốt trên cả desktop và mobile.
+Tooltip, Legend, Animation tích hợp sẵn, giúp tăng trải nghiệm tương tác mà không cần cấu hình phức tạp.
+Tùy biến cao về màu sắc, font, label, phù hợp với nhận diện thương hiệu của chuỗi khách sạn.
+Render bằng SVG giúp biểu đồ sắc nét trên mọi độ phân giải và hỗ trợ xuất ảnh chất lượng cao.
+2.24 Thư viện bản đồ Leaflet
+2.24.1 Giới thiệu
+Hình 2.22 Ảnh logo Leaflet
+          Leaflet là thư viện JavaScript mã nguồn mở dùng để hiển thị bản đồ tương tác trên trình duyệt, nổi tiếng nhờ kích thước nhẹ (~42KB), hiệu năng cao và API đơn giản. Leaflet hỗ trợ nhiều nguồn tile map khác nhau như OpenStreetMap, Mapbox, Google Maps và cho phép tùy biến marker, popup, layer linh hoạt.
+          Trong đề tài, Leaflet được tích hợp vào giao diện React.js (thông qua react-leaflet) để hiển thị vị trí của các khách sạn trong chuỗi trên trang chi tiết khách sạn, giúp khách hàng dễ dàng xác định địa điểm lưu trú và lên kế hoạch di chuyển.
+2.24.2 Tính năng nổi bật
+Kích thước nhẹ và hiệu năng cao, không làm tăng đáng kể dung lượng bundle của ứng dụng React.
+Marker và Popup tùy biến cho phép gắn thông tin chi tiết khách sạn ngay trên bản đồ.
+Hỗ trợ thiết bị di động với cử chỉ pinch-to-zoom, drag mượt mà.
+Mã nguồn mở miễn phí, không phụ thuộc vào API key tính phí như Google Maps khi dùng OpenStreetMap.
+Hệ sinh thái plugin phong phú cho phép mở rộng các tính năng như clustering marker, vẽ vùng, định tuyến nếu cần trong tương lai. 
+2.25 Kiến trúc RESTful API và mô hình phân lớp
+2.25.1 Giới thiệu
+          REST (Representational State Transfer) là kiến trúc phần mềm do Roy Fielding đề xuất năm 2000, được sử dụng rộng rãi để thiết kế các Web API hiện đại. RESTful API sử dụng các phương thức HTTP chuẩn (GET, POST, PUT, PATCH, DELETE) để thao tác trên các tài nguyên (resource) được biểu diễn dưới dạng URL, dữ liệu trao đổi thường ở định dạng JSON.
+          Toàn bộ backend của hệ thống quản lý chuỗi khách sạn được thiết kế theo chuẩn RESTful API với tiền tố phiên bản /api/v1, đảm bảo tính nhất quán, dễ mở rộng và thuận tiện cho việc tích hợp với các client khác trong tương lai (ứng dụng di động, hệ thống đối tác).
+2.25.2 Mô hình phân lớp của hệ thống
+          Backend của đề tài được tổ chức theo mô hình phân lớp rõ ràng, lấy cảm hứng từ kiến trúc MVC mở rộng:
+Routes: định nghĩa các tuyến đường URL và gắn middleware tương ứng (server/src/routes).
+Middlewares: lớp xử lý trung gian cho xác thực JWT (protect), phân quyền (restrictTo), validate input, upload file, rate-limit và xử lý lỗi tập trung.
+Controllers: chứa logic xử lý nghiệp vụ cho từng nhóm chức năng (auth, booking, payment, chatbot…).
+Services: lớp dịch vụ chuyên biệt như availabilityService cho kiểm tra trùng lịch, emailService cho gửi email.
+Models: định nghĩa Mongoose schema của các collection.
+Config: cấu hình kết nối các dịch vụ ngoài (MongoDB, Cloudinary, Stripe, Socket.io).
+2.25.3 Đặc điểm nổi bật
+Stateless: mọi request đều mang đủ thông tin xác thực (JWT), server không lưu phiên, thuận lợi cho việc mở rộng theo chiều ngang.
+Versioning URL (/api/v1) giúp duy trì khả năng tương thích ngược khi nâng cấp API.
+Mã trạng thái HTTP chuẩn (200, 201, 400, 401, 403, 404, 409, 500) giúp client xử lý phản hồi nhất quán.
+Tách biệt rõ ràng client – server, frontend React.js và backend Express.js có thể triển khai trên các domain khác nhau.
+Tài liệu hóa dễ dàng bằng Postman / Swagger nhờ cấu trúc URL nhất quán theo resource.
+CHƯƠNG 3
+PHÂN TÍCH THIẾT KẾ HỆ THỐNG
+3.1 Nghiên cứu bài toán
+3.1.1 Mô tả đề tài
+          Đề tài tập trung nghiên cứu và xây dựng hệ thống quản lý đặt phòng chuỗi khách sạn 2T Hotel ứng dụng trí tuệ nhân tạo (AI). Hệ thống được phát triển theo kiến trúc fullstack MERN: Node.js – Express cho backend, MongoDB (Mongoose) làm cơ sở dữ liệu, React 18 + Vite + Redux Toolkit kết hợp Tailwind CSS cho frontend, cùng các dịch vụ tích hợp như Stripe / MoMo / VNPay cho thanh toán trực tuyến, Socket.io cho thông báo thời gian thực, Cloudinary cho lưu trữ hình ảnh và Gemini AI cho chatbot tư vấn.
+          Hệ thống phục vụ ba nhóm đối tượng chính: khách hàng, nhân viên/quản lý khách sạn và quản trị viên hệ thống, hướng đến mục tiêu tạo ra một nền tảng đặt phòng hiện đại, toàn diện và thân thiện với người dùng.
+          Đối với khách hàng, hệ thống cung cấp đầy đủ các chức năng như: tìm kiếm và lọc khách sạn theo địa điểm – ngày nhận/trả phòng – loại phòng – mức giá, xem chi tiết khách sạn và phòng kèm hình ảnh, đặt phòng trực tuyến với cơ chế kiểm tra trùng lịch an toàn (MongoDB transaction), áp dụng mã giảm giá, thanh toán đa kênh, nhận hóa đơn PDF, đánh giá sau khi lưu trú và tra cứu lịch sử đặt phòng. Khách hàng còn được hỗ trợ bởi chatbot AI tích hợp Gemini để tư vấn, giải đáp thắc mắc và gợi ý phòng phù hợp 24/7.
+          Đối với nhân viên và quản lý khách sạn, hệ thống cung cấp công cụ quản lý phòng, đặt phòng, khách lưu trú, hóa đơn và đánh giá; hỗ trợ phản hồi đánh giá của khách và theo dõi tình trạng phòng theo thời gian thực thông qua kênh Socket.io.
+          Đối với quản trị viên, hệ thống cung cấp bảng điều khiển (dashboard) trực quan với biểu đồ doanh thu, công suất phòng, báo cáo theo tháng/quý/năm và chức năng xuất báo cáo Excel, giúp việc ra quyết định kinh doanh nhanh chóng và chính xác.
+3.1.2 Phạm vi dự án ứng dụng
+          Phạm vi của hệ thống bao gồm các chức năng quản lý chuỗi khách sạn theo từng vai trò người dùng, được triển khai trên nền tảng web (responsive cho cả desktop và mobile):
+Khách hàng: đăng ký, đăng nhập (JWT + refresh token), quản lý hồ sơ cá nhân; tìm kiếm – lọc – xem chi tiết khách sạn/phòng; đặt phòng trực tuyến với kiểm tra trùng lịch an toàn theo cơ chế giao dịch (transaction); áp dụng mã khuyến mãi (coupon); thanh toán qua Stripe, MoMo, VNPay; tải hóa đơn PDF; viết đánh giá; tra cứu nhanh đơn đặt phòng; tương tác với chatbot AI.
+Nhân viên / Quản lý khách sạn: quản lý danh mục khách sạn, phòng, giá phòng động (giá cuối tuần, giá theo mùa); xác nhận / hủy đơn đặt phòng; xử lý check-in / check-out; phản hồi đánh giá của khách; nhận thông báo thời gian thực qua Socket.io.
+Quản trị viên hệ thống (Admin): quản lý người dùng và phân quyền (Admin, Manager, Staff, Customer); quản lý bài viết – tin tức – nội dung tĩnh; quản lý mã giảm giá; theo dõi dashboard (doanh thu, lượt đặt, công suất); xuất báo cáo Excel, kết xuất thống kê theo kỳ.
+Phi chức năng: bảo mật theo OWASP (Helmet, HPP, XSS-clean, Mongo-sanitize, rate limiting, bcrypt 12 rounds); kiến trúc tách biệt client/server qua REST API /api/v1; tối ưu hiệu năng bằng code splitting + lazy loading; chịu được tải cao nhờ index hợp lý và transaction.
+          Hệ thống không bao gồm các chức năng nằm ngoài phạm vi như quản lý nhân sự nội bộ, quản lý kho vật tư, kế toán chi tiết hay tích hợp với hệ thống PMS (Property Management System) của bên thứ ba.
+3.1.3 Đối tượng sử dụng
+          Hệ thống hướng đến bốn nhóm người dùng chính, tương ứng với bốn vai trò (role) được phân quyền rõ ràng trong cơ sở dữ liệu:
+Khách hàng (Customer): là người dùng cuối có nhu cầu tìm và đặt phòng khách sạn. Họ sử dụng hệ thống để tra cứu thông tin, so sánh giá, đặt phòng – thanh toán trực tuyến, nhận hóa đơn điện tử, viết đánh giá và được chatbot AI hỗ trợ trong suốt hành trình trải nghiệm.
+Nhân viên khách sạn (Staff): phụ trách vận hành nghiệp vụ hằng ngày tại một khách sạn cụ thể, bao gồm: xác nhận đặt phòng, làm thủ tục check-in/check-out, cập nhật tình trạng phòng và xử lý các yêu cầu của khách.
+Quản lý khách sạn (Manager): được phân quyền quản lý một hoặc nhiều khách sạn trong chuỗi; chịu trách nhiệm cấu hình phòng, giá phòng động, khuyến mãi, theo dõi báo cáo doanh thu của khách sạn mình phụ trách và phản hồi đánh giá khách hàng.
+Quản trị viên hệ thống (Admin): có toàn quyền trên hệ thống, quản lý toàn bộ chuỗi khách sạn, người dùng, nội dung, mã giảm giá và xem báo cáo tổng hợp toàn hệ thống.
+3.1.4 Mục đích sử dụng
+          Mục đích chính của hệ thống là cung cấp một nền tảng đặt phòng chuỗi khách sạn hiện đại, tin cậy và toàn diện, ứng dụng AI để nâng cao trải nghiệm người dùng và tự động hóa quy trình vận hành.
+          Đối với khách hàng, hệ thống mang lại trải nghiệm đặt phòng nhanh chóng, minh bạch và an toàn: tìm phòng theo nhu cầu chỉ trong vài thao tác, thanh toán đa kênh, nhận hóa đơn tức thì, và được chatbot Gemini AI tư vấn 24/7 — giúp giảm thời gian quyết định và tăng tỷ lệ chuyển đổi.
+          Đối với nhân viên và quản lý khách sạn, hệ thống là công cụ vận hành tập trung: quản lý phòng – đặt phòng – giá – đánh giá trên cùng một giao diện, nhận thông báo realtime khi có biến động (đặt mới, hủy, thanh toán thành công), từ đó nâng cao hiệu suất phục vụ và giảm sai sót thủ công.
+          Đối với quản trị viên, hệ thống cung cấp công cụ ra quyết định dựa trên dữ liệu: dashboard trực quan (Recharts), báo cáo doanh thu theo kỳ, xuất Excel/PDF, và thống kê công suất phòng — hỗ trợ hoạch định chiến lược kinh doanh cho toàn chuỗi.
+          Bên cạnh đó, việc tích hợp chatbot Gemini AI, thanh toán đa cổng, thông báo realtime qua Socket.io và cơ chế đặt phòng an toàn với MongoDB transaction không chỉ giúp giải đáp thắc mắc, xử lý giao dịch tức thì mà còn khẳng định tính hiện đại, khác biệt và khả năng mở rộng của hệ thống so với các giải pháp đặt phòng truyền thống.
+3.2 Đặc tả Usecase
+3.2.1 Mô hình Usecase
+Hình 3.1 Mô hình use case tổng quát
+3.2.2. Đặc tả Use Case
+          Hệ thống được thiết kế với sự tham gia của bốn tác nhân chính, bao gồm Quản trị viên (Admin), Quản lý khách sạn (Manager), Nhân viên (Staff) và Khách hàng (Customer). Mỗi tác nhân đóng vai trò quan trọng trong việc vận hành và sử dụng hệ thống. Sự phân chia rõ ràng giữa các tác nhân này đảm bảo tính hiệu quả, bảo mật và phù hợp với nhu cầu thực tế của từng đối tượng người dùng. 
+          Tác nhân Quản trị viên (Admin) giữ vai trò giám sát và điều phối các hoạt động cốt lõi của toàn bộ hệ thống. Các chức năng chính bao gồm quản lý người dùng và phân quyền, quản lý mã giảm giá, quản lý nội dung (bài viết, banner), xem dashboard tổng hợp, xuất báo cáo Excel và xử lý hoàn tiền. Nhiệm vụ của Admin tập trung vào việc đảm bảo hệ thống vận hành ổn định, dữ liệu chính xác và cung cấp công cụ ra quyết định kinh doanh cho ban lãnh đạo chuỗi khách sạn.
+          Tác nhân Quản lý khách sạn (Manager) đảm nhận vai trò quản lý nghiệp vụ tại một hoặc nhiều khách sạn trong chuỗi. Các chức năng bao gồm quản lý khách sạn, phòng, giá phòng động, phản hồi đánh giá khách hàng và xem báo cáo doanh thu theo khách sạn được phân quyền.
+          Tác nhân Nhân viên (Staff) phụ trách vận hành nghiệp vụ hằng ngày tại khách sạn cụ thể. Các chức năng chính bao gồm xác nhận đặt phòng, thực hiện check-in/check-out, cập nhật tình trạng phòng và nhận thông báo thời gian thực khi có biến động.
+          Tác nhân Khách hàng (Customer) là nhóm người dùng cuối có nhu cầu tìm kiếm và đặt phòng khách sạn. Các chức năng chính bao gồm đăng ký tài khoản, tìm kiếm và đặt phòng, thanh toán đa cổng, xem lịch sử đặt phòng, tải hóa đơn PDF, viết đánh giá, quản lý thông tin cá nhân và tương tác với Chatbot AI.
+3.2.2.1. Chức năng đăng ký tài khoản
+Bảng 3.1 Bảng mô tả Use Case đăng ký tài khoản
+Tên use case
+Use case "Đăng ký tài khoản"
+Tác nhân
+Khách vãng lai
+Mục đích
+Use case này cho phép khách vãng lai đăng ký tài khoản mới trên hệ thống 2T Hotel để trở thành Khách hàng, từ đó có thể đặt phòng và sử dụng các dịch vụ trực tuyến.
+Điều kiện trước
+Khách vãng lai có địa chỉ email hợp lệ và chưa được đăng ký trên hệ thống.
+Luồng sự kiện chính
+1. Người dùng truy cập trang chủ và chọn "Đăng ký". 2. Hệ thống hiển thị biểu mẫu đăng ký gồm: họ tên, email, số điện thoại (tuỳ chọn), mật khẩu và xác nhận mật khẩu. 3. Người dùng điền đầy đủ thông tin, đồng ý điều khoản dịch vụ và nhấn nút "Đăng ký". 4. Hệ thống kiểm tra tính hợp lệ: email chưa tồn tại, mật khẩu đủ 6 ký tự, xác nhận mật khẩu khớp. 5. Hệ thống tạo tài khoản mới với vai trò "customer", mã hoá mật khẩu bằng bcrypt 12 rounds. 6. Hệ thống gửi email xác minh đến địa chỉ email đã đăng ký kèm link kích hoạt có thời hạn. 7. Hệ thống cấp access token và refresh token, điều hướng người dùng về trang chủ.
+Luồng rẽ nhánh
+- Email đã tồn tại trong hệ thống: thông báo "Email đã được đăng ký" và đề xuất đăng nhập. - Mật khẩu không đủ 6 ký tự: thông báo lỗi tại trường mật khẩu. - Xác nhận mật khẩu không khớp: thông báo "Mật khẩu không khớp". - Chưa đồng ý điều khoản: thông báo yêu cầu tick đồng ý.
+Điều kiện sau
+Tài khoản được tạo thành công. Email xác minh được gửi đi. Người dùng được đăng nhập tự động và có thể sử dụng hệ thống với vai trò khách hàng.
+3.2.2.2. Chức năng đăng nhập
+Bảng 3.2 Bảng mô tả Use Case đăng nhập hệ thống
+Tên use case
+Use case "Đăng nhập"
+Tác nhân
+Khách hàng, Nhân viên, Quản lý, Quản trị viên
+Mục đích
+Use case này cho phép người dùng đã có tài khoản đăng nhập vào hệ thống để truy cập các chức năng tương ứng với vai trò được phân quyền.
+Điều kiện trước
+Người dùng đã có tài khoản trên hệ thống.
+Luồng sự kiện chính
+1. Người dùng truy cập trang đăng nhập. 2. Hệ thống hiển thị biểu mẫu gồm email và mật khẩu. 3. Người dùng nhập email và mật khẩu, nhấn "Đăng nhập". 4. Hệ thống kiểm tra email tồn tại, so khớp mật khẩu bằng bcrypt. 5. Hệ thống phát hành access token (JWT) và refresh token (lưu HttpOnly cookie). 6. Hệ thống điều hướng đến trang phù hợp với vai trò: khách hàng về trang chủ, nhân viên/quản lý về dashboard khách sạn, admin về dashboard quản trị.
+Luồng rẽ nhánh
+- Email hoặc mật khẩu không đúng: thông báo "Thông tin đăng nhập không hợp lệ". - Tài khoản bị khoá (isBlocked): thông báo "Tài khoản đã bị khoá, vui lòng liên hệ quản trị viên". - Vượt quá giới hạn đăng nhập (rate limit): thông báo "Quá nhiều lần thử, vui lòng thử lại sau".
+Điều kiện sau
+Người dùng được xác thực thành công, có thể truy cập các chức năng được phân quyền theo vai trò.
+3.2.2.3. Chức năng tìm kiếm khách sạn
+Bảng 3.3 Bảng mô tả Use Case tìm kiếm khách sạn
+Tên use case
+Use case "Tìm kiếm khách sạn"
+Tác nhân
+Khách vãng lai, Khách hàng
+Mục đích
+Use case này cho phép người dùng tìm kiếm và lọc danh sách khách sạn trong chuỗi 2T Hotel theo nhiều tiêu chí khác nhau.
+Điều kiện trước
+Người dùng đã truy cập vào hệ thống (không yêu cầu đăng nhập).
+Luồng sự kiện chính
+1. Người dùng truy cập trang chủ hoặc trang danh sách khách sạn. 2. Hệ thống hiển thị thanh tìm kiếm với các bộ lọc: địa điểm, ngày nhận phòng, ngày trả phòng, số khách, khoảng giá. 3. Người dùng nhập tiêu chí tìm kiếm và nhấn "Tìm kiếm". 4. Hệ thống truy vấn cơ sở dữ liệu, lọc theo điều kiện và trả về danh sách khách sạn phù hợp kèm ảnh, đánh giá trung bình, giá khởi điểm. 5. Người dùng xem danh sách kết quả và có thể sắp xếp theo giá, đánh giá hoặc khoảng cách. 6. Người dùng chọn khách sạn quan tâm để xem chi tiết.
+Luồng rẽ nhánh
+- Không tìm thấy kết quả phù hợp: thông báo "Không có khách sạn phù hợp với tiêu chí" và gợi ý mở rộng bộ lọc. - Người dùng không nhập bộ lọc: hiển thị toàn bộ khách sạn trong hệ thống, phân trang.
+Điều kiện sau
+Danh sách khách sạn được hiển thị theo tiêu chí người dùng đã chọn.
+3.2.2.4. Chức năng đặt phòng
+Bảng 3.4 Bảng mô tả Use Case đặt phòng
+Tên use case
+Use case "Đặt phòng"
+Tác nhân
+Khách hàng
+Mục đích
+Use case này cho phép khách hàng đặt phòng tại một khách sạn trong chuỗi 2T Hotel cho khoảng thời gian mong muốn, với cơ chế đảm bảo không bị đặt trùng.
+Điều kiện trước
+Khách hàng đã đăng nhập vào hệ thống. Khách sạn có phòng trống trong khoảng thời gian được chọn.
+Luồng sự kiện chính
+1. Khách hàng truy cập trang chi tiết khách sạn. 2. Hệ thống hiển thị danh sách phòng còn trống theo ngày check-in/check-out, kèm giá (đã tính giá động: ngày thường/cuối tuần/mùa cao điểm). 3. Khách hàng chọn phòng phù hợp, nhấn "Đặt phòng". 4. Hệ thống hiển thị trang xác nhận với thông tin: phòng đã chọn, số đêm, giá từng đêm và tổng tiền. 5. Khách hàng có thể nhập mã giảm giá (tuỳ chọn). Hệ thống kiểm tra và áp dụng nếu hợp lệ. 6. Khách hàng nhấn "Xác nhận đặt phòng". 7. Hệ thống mở MongoDB transaction, kiểm tra trùng lịch (overlap query), nếu còn trống thì tạo đơn đặt phòng với trạng thái "pending" và sinh mã đặt phòng (bookingCode) duy nhất. 8. Hệ thống gửi thông báo realtime (Socket.io) đến nhân viên khách sạn. 9. Hệ thống điều hướng sang bước thanh toán.
+Luồng rẽ nhánh
+- Phòng đã bị đặt trong khoảng thời gian này (phát hiện qua transaction): hệ thống rollback, thông báo "Phòng đã hết, vui lòng chọn phòng khác" và quay lại danh sách phòng. - Mã giảm giá không hợp lệ hoặc hết hạn: thông báo lỗi, cho phép tiếp tục đặt phòng mà không áp mã. - Khách hàng chưa đăng nhập: hệ thống chuyển đến trang đăng nhập, sau khi đăng nhập quay lại trang đặt phòng.
+Điều kiện sau
+Đơn đặt phòng được tạo thành công với trạng thái "pending", phòng được giữ chờ thanh toán. Mã đặt phòng được sinh và hiển thị cho khách hàng.
+3.2.2.5. Chức năng thanh toán trực tuyến
+Bảng 3.5 Bảng mô tả Use Case thanh toán trực tuyến
+Tên use case
+Use case "Thanh toán trực tuyến"
+Tác nhân
+Khách hàng
+Mục đích
+Use case này cho phép khách hàng thanh toán đơn đặt phòng thông qua một trong ba cổng thanh toán: Stripe (thẻ quốc tế), MoMo (ví điện tử) hoặc VNPay (ATM/QR nội địa).
+Điều kiện trước
+Khách hàng đã đặt phòng thành công và có đơn ở trạng thái "pending".
+Luồng sự kiện chính
+1. Hệ thống hiển thị trang thanh toán với thông tin đơn đặt phòng và 3 phương thức thanh toán. 2. Khách hàng chọn phương thức thanh toán mong muốn. 3a. Stripe: Hệ thống tạo PaymentIntent, hiển thị form nhập thẻ (Stripe Elements). Khách nhập thẻ và xác nhận. 3b. MoMo/VNPay: Hệ thống tạo URL thanh toán, chuyển hướng khách sang trang cổng thanh toán. Khách hoàn tất thanh toán trên cổng. 4. Cổng thanh toán gửi webhook/IPN xác nhận giao dịch thành công (có kiểm tra chữ ký HMAC). 5. Hệ thống cập nhật trạng thái thanh toán thành "paid", đơn đặt phòng thành "confirmed". 6. Hệ thống gửi email xác nhận đặt phòng kèm chi tiết đơn hàng. 7. Hệ thống gửi thông báo realtime đến khách hàng và nhân viên khách sạn. 8. Hệ thống hiển thị trang xác nhận thành công với mã đặt phòng.
+Luồng rẽ nhánh
+- Thanh toán thất bại (thẻ bị từ chối / hủy trên cổng): hệ thống giữ đơn ở trạng thái "pending", thông báo lỗi và cho phép thử lại. - Sai chữ ký webhook: hệ thống ghi log cảnh báo, không cập nhật trạng thái. - Khách hàng đóng trình duyệt trước khi quay lại: webhook vẫn xác nhận giao dịch, đơn vẫn được cập nhật đúng.
+Điều kiện sau
+Đơn đặt phòng được xác nhận, thanh toán thành công. Hóa đơn PDF sẵn sàng tải. Khách hàng nhận email xác nhận.
+3.2.2.6. Chức năng hủy đặt phòng
+Bảng 3.6 Bảng mô tả Use Case hủy đặt phòng
+Tên use case
+Use case "Hủy đặt phòng"
+Tác nhân
+Khách hàng
+Mục đích
+Use case này cho phép khách hàng hủy đơn đặt phòng đã tạo trước đó, giải phóng phòng cho khách khác.
+Điều kiện trước
+Khách hàng đã đăng nhập. Đơn đặt phòng ở trạng thái "pending" hoặc "confirmed" (chưa check-in).
+Luồng sự kiện chính
+1. Khách hàng truy cập mục "Đơn đặt phòng của tôi". 2. Hệ thống hiển thị danh sách đơn đặt phòng. 3. Khách hàng chọn đơn cần hủy, nhấn nút "Hủy đặt phòng". 4. Hệ thống hiển thị hộp thoại xác nhận: "Bạn có chắc chắn muốn hủy đơn này?" kèm ô nhập lý do hủy. 5. Khách hàng xác nhận hủy. 6. Hệ thống cập nhật trạng thái đơn thành "cancelled", giải phóng phòng trong khoảng thời gian đã đặt. 7. Hệ thống gửi email thông báo hủy đặt phòng. 8. Hệ thống gửi thông báo realtime đến nhân viên khách sạn.
+Luồng rẽ nhánh
+- Đơn đã ở trạng thái "checked_in" hoặc "completed": không cho phép hủy, thông báo "Đơn đã check-in, không thể hủy". - Đơn đã thanh toán: hệ thống tạo yêu cầu hoàn tiền (refund), trạng thái chờ admin xử lý. - Ngày hủy quá gần ngày check-in (tuỳ chính sách): thông báo chính sách hủy và phí hủy (nếu có).
+Điều kiện sau
+Đơn đặt phòng bị hủy, phòng được giải phóng. Nếu đã thanh toán, yêu cầu hoàn tiền được tạo.
+3.2.2.7 Chức năng tải hóa đơn PDF
+Bảng 3.7 Bảng mô tả Use Case tải hóa đơn PDF
+Tên use case
+Use case "Tải hóa đơn PDF"
+Tác nhân
+Khách hàng
+Mục đích
+Use case này cho phép khách hàng tải xuống hóa đơn điện tử dạng PDF cho đơn đặt phòng đã thanh toán thành công.
+Điều kiện trước
+Khách hàng đã đăng nhập. Đơn đặt phòng đã được thanh toán.
+Luồng sự kiện chính
+1. Khách hàng truy cập chi tiết đơn đặt phòng đã thanh toán. 2. Hệ thống hiển thị nút "Tải hóa đơn PDF". 3. Khách hàng nhấn nút tải. 4. Server sinh file PDF bằng PDFKit chứa: logo 2T Hotel, thông tin khách sạn, chi tiết phòng, số đêm, giá từng đêm, tổng tiền, phương thức thanh toán, ngày thanh toán. 5. Hệ thống stream file PDF về trình duyệt, kích hoạt tải xuống tự động.
+Luồng rẽ nhánh
+- Đơn chưa thanh toán: nút tải bị ẩn hoặc vô hiệu hóa. - Lỗi sinh PDF: thông báo "Không thể tạo hóa đơn, vui lòng thử lại".
+Điều kiện sau
+Khách hàng tải thành công file PDF hóa đơn về thiết bị cá nhân.
+3.2.2.8 Chức năng viết đánh giá
+Bảng 3.8 Bảng mô tả Use Case viết đánh giá
+Tên use case
+Use case "Viết đánh giá"
+Tác nhân
+Khách hàng
+Mục đích
+Use case này cho phép khách hàng viết đánh giá về trải nghiệm lưu trú tại khách sạn sau khi hoàn tất kỳ nghỉ.
+Điều kiện trước
+Khách hàng đã đăng nhập. Khách hàng có đơn đặt phòng ở trạng thái "completed" tại khách sạn đó và chưa viết đánh giá cho đơn này.
+Luồng sự kiện chính
+1. Khách hàng truy cập trang chi tiết khách sạn hoặc mục "Đơn đã hoàn thành". 2. Hệ thống hiển thị nút "Viết đánh giá" cho đơn đủ điều kiện. 3. Khách hàng nhấn "Viết đánh giá". 4. Hệ thống hiển thị biểu mẫu gồm: chọn số sao (1-5), nội dung đánh giá (text). 5. Khách hàng điền nội dung và nhấn "Gửi đánh giá". 6. Hệ thống lưu đánh giá vào collection Review, cập nhật điểm trung bình và số lượng đánh giá của khách sạn (atomic update). 7. Hệ thống gửi thông báo realtime đến nhân viên/quản lý khách sạn.
+Luồng rẽ nhánh
+- Khách hàng chưa lưu trú tại khách sạn này: ẩn nút "Viết đánh giá", trả về lỗi 403 nếu cố gắng gọi API. - Đã viết đánh giá rồi: thông báo "Bạn đã đánh giá đơn này". - Nội dung đánh giá trống: thông báo yêu cầu nhập nội dung.
+Điều kiện sau
+Đánh giá được lưu thành công. Điểm trung bình của khách sạn được cập nhật. Quản lý có thể phản hồi đánh giá.
+3.2.2.9 Chức năng tương tác Chatbot AI
+Bảng 3.9 Bảng mô tả Use Case tương tác Chatbot AI
+Tên use case
+Use case "Tương tác Chatbot AI"
+Tác nhân
+Khách vãng lai, Khách hàng
+Mục đích
+Use case này cho phép người dùng đặt câu hỏi, yêu cầu tư vấn hoặc tìm kiếm phòng phù hợp thông qua chatbot AI tích hợp Google Gemini, hoạt động 24/7.
+Điều kiện trước
+Người dùng đã truy cập vào trang web (không yêu cầu đăng nhập).
+Luồng sự kiện chính
+1. Người dùng nhấn biểu tượng chatbot ở góc phải màn hình. 2. Hệ thống mở cửa sổ chat với lời chào từ "Trợ lý 2T Hotel". 3. Người dùng gõ câu hỏi (ví dụ: "Tìm phòng ở Đà Nẵng dưới 1 triệu"). 4. Client gửi tin nhắn đến API backend kèm lịch sử hội thoại ngắn. 5. Server phân tích intent: nếu là yêu cầu tìm kiếm thì truy vấn MongoDB lấy danh sách khách sạn/phòng phù hợp. 6. Server ghép DB context + câu hỏi người dùng vào prompt, gọi Gemini 2.0 Flash API. 7. Gemini trả về phản hồi tự nhiên bằng tiếng Việt. 8. Hệ thống hiển thị phản hồi trong cửa sổ chat, có thể kèm link đến trang khách sạn gợi ý.
+Luồng rẽ nhánh
+- Gemini API lỗi hoặc timeout: hệ thống fallback sang phản hồi local (rule-based), vẫn trả lời được các câu hỏi cơ bản. - Không tìm thấy khách sạn/phòng phù hợp: chatbot trả lời gợi ý chung và đề xuất mở rộng tiêu chí. - API key thiếu hoặc không hợp lệ: chuyển hoàn toàn sang fallback, log cảnh báo cho admin.
+Điều kiện sau
+Người dùng nhận được phản hồi tư vấn từ chatbot. Có thể tiếp tục hội thoại nhiều lượt hoặc đóng cửa sổ chat.
+3.2.2.10 Chức năng quản lý thông tin cá nhân
+Bảng 3.10 Bảng mô tả Use Case quản lý thông tin cá nhân
+Tên use case
+Use case "Quản lý thông tin cá nhân"
+Tác nhân
+Khách hàng, Quản lý
+Mục đích
+Use case này cho phép người dùng xem và cập nhật thông tin cá nhân của mình trong hệ thống, bao gồm họ tên, số điện thoại và ảnh đại diện.
+Điều kiện trước
+Người dùng đã đăng nhập vào hệ thống.
+Luồng sự kiện chính
+1. Người dùng chọn mục "Hồ sơ cá nhân" từ menu. 2. Hệ thống hiển thị trang thông tin cá nhân với các trường: họ tên, email (chỉ đọc), số điện thoại, ảnh đại diện. 3. Người dùng chỉnh sửa các trường cần thay đổi. 4. Người dùng nhấn "Lưu thay đổi". 5. Hệ thống kiểm tra tính hợp lệ của dữ liệu, cập nhật thông tin trong cơ sở dữ liệu. 6. Hệ thống hiển thị thông báo "Cập nhật thành công".
+Luồng rẽ nhánh
+- Người dùng chưa đăng nhập: chuyển đến trang đăng nhập. - Dữ liệu không hợp lệ (số điện thoại sai định dạng): thông báo lỗi tại trường tương ứng.
+Điều kiện sau
+Thông tin cá nhân được cập nhật thành công trong cơ sở dữ liệu.
+3.2.2.11 Chức năng đổi mật khẩu
+Bảng 3.11 Bảng mô tả Use Case đổi mật khẩu
+Tên use case
+Use case "Đổi mật khẩu"
+Tác nhân
+Khách hàng, Quản lý
+Mục đích
+Use case này cho phép người dùng thay đổi mật khẩu đăng nhập hiện tại của mình.
+Điều kiện trước
+Người dùng đã đăng nhập vào hệ thống.
+Luồng sự kiện chính
+1. Người dùng truy cập trang "Hồ sơ cá nhân", chọn "Đổi mật khẩu". 2. Hệ thống hiển thị biểu mẫu gồm: mật khẩu hiện tại, mật khẩu mới, xác nhận mật khẩu mới. 3. Người dùng nhập đầy đủ thông tin và nhấn "Đổi mật khẩu". 4. Hệ thống kiểm tra mật khẩu hiện tại bằng bcrypt. 5. Hệ thống mã hoá mật khẩu mới và cập nhật vào cơ sở dữ liệu. 6. Hệ thống thông báo "Đổi mật khẩu thành công".
+Luồng rẽ nhánh
+- Mật khẩu hiện tại không đúng: thông báo "Mật khẩu hiện tại không chính xác". - Mật khẩu mới dưới 6 ký tự: thông báo "Mật khẩu tối thiểu 6 ký tự". - Xác nhận mật khẩu không khớp: thông báo "Mật khẩu xác nhận không khớp".
+Điều kiện sau
+Mật khẩu được thay đổi thành công. Lần đăng nhập tiếp theo sử dụng mật khẩu mới.
+3.2.2.12 Chức năng quản lý khách sạn và phòng
+Bảng 3.12 Bảng mô tả Use Case quản lý khách sạn và phòng
+Tên use case
+Use case "Quản lý khách sạn và phòng"
+Tác nhân
+Quản lý, Quản trị viên
+Mục đích
+Use case này cho phép quản lý hoặc quản trị viên thực hiện các thao tác quản lý thông tin khách sạn, danh mục phòng và cấu hình giá phòng trong hệ thống.
+Điều kiện trước
+Người dùng đã đăng nhập với vai trò Quản lý hoặc Quản trị viên.
+Luồng sự kiện chính
+1. Người dùng truy cập khu vực quản trị, chọn mục "Quản lý khách sạn". 2. Hệ thống hiển thị danh sách khách sạn mà người dùng có quyền quản lý (Manager chỉ thấy khách sạn được phân quyền, Admin thấy tất cả). 3. Người dùng có thể thêm mới, chỉnh sửa hoặc xoá khách sạn/phòng. 4. Khi thêm/sửa khách sạn: nhập tên, địa chỉ, mô tả, tiện ích, ảnh (upload Cloudinary), toạ độ bản đồ. 5. Khi thêm/sửa phòng: nhập tên, loại phòng, sức chứa, tiện ích, ảnh, giá ngày thường, giá cuối tuần, giá mùa cao điểm. 6. Hệ thống kiểm tra dữ liệu hợp lệ và lưu vào cơ sở dữ liệu. 7. Hệ thống hiển thị thông báo thành công.
+Luồng rẽ nhánh
+- Không có quyền quản lý khách sạn đó (Manager truy cập khách sạn không được phân): trả lỗi 403. - Upload ảnh thất bại: thông báo lỗi, giữ nguyên ảnh cũ. - Xoá phòng đang có đặt phòng trong tương lai: cảnh báo và yêu cầu xác nhận.
+Điều kiện sau
+Thông tin khách sạn/phòng được cập nhật thành công. Khách hàng có thể thấy thay đổi khi tìm kiếm.
+3.2.2.13 Chức năng cập nhật trạng thái đặt phòng
+Bảng 3.13 Bảng mô tả Use Case cập nhật trạng thái đặt phòng
+Tên use case
+Use case "Cập nhật trạng thái đặt phòng"
+Tác nhân
+Nhân viên, Quản lý, Quản trị viên
+Mục đích
+Use case này cho phép nhân viên hoặc quản lý cập nhật trạng thái đơn đặt phòng theo quy trình nghiệp vụ: xác nhận, check-in, check-out, hoàn thành.
+Điều kiện trước
+Người dùng đã đăng nhập với vai trò Staff, Manager hoặc Admin.
+Luồng sự kiện chính
+1. Nhân viên truy cập danh sách đặt phòng của khách sạn mình phụ trách. 2. Hệ thống hiển thị danh sách đơn có thể lọc theo trạng thái, ngày check-in. 3. Nhân viên chọn đơn cần xử lý. 4. Nhân viên cập nhật trạng thái theo luồng: pending → confirmed → checked_in → checked_out → completed. 5. Hệ thống kiểm tra chuyển trạng thái hợp lệ (không cho nhảy bậc hoặc quay lại). 6. Hệ thống cập nhật trạng thái đơn và gửi thông báo realtime đến khách hàng (room user:&lt;id&gt;).
+Luồng rẽ nhánh
+- Chuyển trạng thái không hợp lệ (ví dụ: completed → pending): thông báo lỗi "Không thể chuyển trạng thái này". - Nhân viên không thuộc khách sạn đó: trả lỗi 403.
+Điều kiện sau
+Trạng thái đơn đặt phòng được cập nhật. Khách hàng nhận thông báo realtime về thay đổi trạng thái.
+3.2.2.14 Chức năng quản lý người dùng và phân quyền
+Bảng 3.14 Bảng mô tả Use Case quản lý người dùng và phân quyền
+Tên use case
+Use case "Quản lý người dùng và phân quyền"
+Tác nhân
+Quản trị viên
+Mục đích
+Use case này cho phép quản trị viên xem danh sách người dùng, tạo mới người dùng, chỉnh sửa thông tin và thay đổi vai trò (phân quyền) cho các tài khoản trong hệ thống.
+Điều kiện trước
+Người dùng đã đăng nhập với vai trò Admin.
+Luồng sự kiện chính
+1. Admin truy cập mục "Quản lý người dùng" trong dashboard quản trị. 2. Hệ thống hiển thị danh sách người dùng có hỗ trợ tìm kiếm theo tên/email và lọc theo vai trò. 3. Admin có thể: tạo tài khoản mới (chọn vai trò), sửa thông tin, đổi vai trò (customer/staff/manager/admin). 4. Admin nhấn "Lưu" sau khi chỉnh sửa. 5. Hệ thống kiểm tra: email không trùng, vai trò hợp lệ. 6. Hệ thống cập nhật thông tin và hiển thị thông báo thành công.
+Luồng rẽ nhánh
+- Email trùng khi tạo mới: thông báo "Email đã tồn tại". - Cố gắng hạ quyền chính mình: cảnh báo và ngăn chặn. - Tài khoản không tồn tại: trả lỗi 404.
+Điều kiện sau
+Thông tin hoặc vai trò người dùng được cập nhật thành công. Người dùng bị ảnh hưởng sẽ nhận quyền mới ở lần đăng nhập tiếp theo.
+3.2.2.15 Chức năng xem dashboard và xuất báo cáo
+Bảng 3.15 Bảng mô tả Use Case xem dashboard và xuất báo cáo
+Tên use case
+Use case "Xem dashboard và xuất báo cáo"
+Tác nhân
+Quản lý (xem), Quản trị viên (xem + xuất)
+Mục đích
+Use case này cho phép quản lý hoặc quản trị viên xem các số liệu kinh doanh tổng hợp dưới dạng biểu đồ trực quan, đồng thời cho phép Admin xuất báo cáo Excel để phân tích ngoại tuyến.
+Điều kiện trước
+Người dùng đã đăng nhập với vai trò Manager hoặc Admin.
+Luồng sự kiện chính
+1. Người dùng truy cập Dashboard trong khu vực quản trị. 2. Hệ thống gọi các API analytics (doanh thu, công suất, top khách sạn) và hiển thị: tổng doanh thu, số đơn đặt phòng, công suất phòng trung bình, biểu đồ doanh thu theo tháng (Recharts), danh sách top 5 khách sạn theo doanh thu. 3. Người dùng có thể lọc theo kỳ: tuần / tháng / quý / năm. 4. (Chỉ Admin) Người dùng nhấn "Xuất báo cáo Excel". 5. Hệ thống tổng hợp dữ liệu, sinh file XLSX nhiều sheet (doanh thu, đặt phòng, khách hàng) bằng SheetJS. 6. File Excel được stream về trình duyệt, kích hoạt tải xuống.
+Luồng rẽ nhánh
+- Không có dữ liệu trong kỳ được chọn: biểu đồ hiển thị trống, thông báo "Không có dữ liệu trong kỳ này". - Manager chỉ thấy dữ liệu của khách sạn được phân quyền; Admin thấy toàn hệ thống. - Manager không có quyền xuất Excel: ẩn nút xuất.
+Điều kiện sau
+Số liệu kinh doanh được hiển thị trực quan. File Excel (nếu xuất) được tải thành công về thiết bị.
+3.2.2.16 Chức năng quản lý mã giảm giá
+Bảng 3.16 Bảng mô tả Use Case quản lý mã giảm giá.
+Tên use case
+Use case "Quản lý mã giảm giá"
+Tác nhân
+Quản trị viên
+Mục đích
+Use case này cho phép quản trị viên tạo, chỉnh sửa, kích hoạt hoặc vô hiệu hóa các mã giảm giá (coupon) áp dụng cho khách hàng khi đặt phòng.
+Điều kiện trước
+Người dùng đã đăng nhập với vai trò Admin.
+Luồng sự kiện chính
+1. Admin truy cập mục "Quản lý mã giảm giá" trong dashboard. 2. Hệ thống hiển thị danh sách coupon hiện có. 3. Admin chọn tạo mới coupon: nhập mã code, loại giảm (phần trăm / số tiền cố định), giá trị giảm, điều kiện đơn tối thiểu, số lần sử dụng tối đa, ngày bắt đầu và kết thúc. 4. Admin nhấn "Tạo mã". 5. Hệ thống kiểm tra mã không trùng, điều kiện hợp lệ, lưu vào cơ sở dữ liệu. 6. Hệ thống hiển thị thông báo thành công, cập nhật danh sách.
+Luồng rẽ nhánh
+- Mã code đã tồn tại: thông báo "Mã giảm giá đã tồn tại". - Ngày kết thúc trước ngày bắt đầu: thông báo lỗi. - Giá trị giảm theo phần trăm lớn hơn 100%: thông báo lỗi.
+Điều kiện sau
+Mã giảm giá được tạo/cập nhật thành công. Khách hàng có thể áp dụng mã khi đặt phòng (nếu đủ điều kiện).
+3.2.2.17 Chức năng hoàn tiền
+Bảng 3.17 Bảng mô tả Use Case hoàn tiền
+Tên use case
+Use case "Hoàn tiền"
+Tác nhân
+Quản trị viên
+Mục đích
+Use case này cho phép quản trị viên xử lý hoàn tiền cho khách hàng khi đơn đặt phòng bị hủy hoặc có khiếu nại hợp lệ, thông qua API của cổng thanh toán tương ứng.
+Điều kiện trước
+Người dùng đã đăng nhập với vai trò Admin. Đơn đặt phòng đã được thanh toán (status paid).
+Luồng sự kiện chính
+1. Admin truy cập chi tiết đơn đặt phòng cần hoàn tiền. 2. Admin nhấn "Hoàn tiền", nhập lý do và số tiền hoàn (toàn bộ hoặc một phần). 3. Hệ thống xác định cổng thanh toán ban đầu (Stripe/MoMo/VNPay). 4. Hệ thống gọi API refund của cổng tương ứng (Stripe: refunde.create, MoMo/VNPay: theo tài liệu API). 5. Cổng xác nhận hoàn tiền thành công. 6. Hệ thống cập nhật trạng thái Payment thành "refunded", Booking thành "cancelled". 7. Hệ thống gửi email thông báo hoàn tiền cho khách hàng. 8. Hệ thống gửi thông báo realtime đến khách.
+Luồng rẽ nhánh
+- Đơn chưa được thanh toán: nút hoàn tiền bị ẩn, trả lỗi 400 nếu gọi API. - Cổng thanh toán từ chối hoàn tiền (quá thời hạn / hết số dư): thông báo lỗi cho admin, ghi log chi tiết. - Đơn đã hoàn tiền trước đó: thông báo "Đơn này đã được hoàn tiền".
+Điều kiện sau
+Tiền được hoàn trả về tài khoản/ví khách hàng thông qua cổng thanh toán ban đầu. Trạng thái đơn và thanh toán được cập nhật. Khách hàng nhận email thông báo.
+3.2.2.18 Chức năng phản hồi đánh giá
+Bảng 3.18 Bảng mô tả Use Case phản hồi đánh giá
+Tên use case
+Use case "Phản hồi đánh giá"
+Tác nhân
+Nhân viên, Quản lý, Quản trị viên
+Mục đích
+Use case này cho phép nhân viên hoặc quản lý phản hồi công khai các đánh giá của khách hàng, thể hiện sự quan tâm và chuyên nghiệp trong dịch vụ.
+Điều kiện trước
+Người dùng đã đăng nhập với vai trò Staff, Manager hoặc Admin. Có đánh giá của khách hàng cần phản hồi.
+Luồng sự kiện chính
+1. Nhân viên/Quản lý truy cập danh sách đánh giá của khách sạn mình phụ trách. 2. Hệ thống hiển thị các đánh giá, phân biệt đã phản hồi và chưa phản hồi. 3. Người dùng chọn đánh giá chưa phản hồi, nhập nội dung phản hồi. 4. Nhấn "Gửi phản hồi". 5. Hệ thống lưu phản hồi gắn với đánh giá tương ứng. 6. Phản hồi hiển thị công khai bên dưới đánh giá trên trang chi tiết khách sạn.
+Luồng rẽ nhánh
+- Đánh giá đã được phản hồi: chỉ cho phép sửa phản hồi, không cho tạo thêm. - Nội dung phản hồi trống: thông báo yêu cầu nhập nội dung.
+Điều kiện sau
+Phản hồi được hiển thị công khai trên trang chi tiết khách sạn, bên dưới đánh giá của khách hàng.
+3.2.2.19 Chức năng tra cứu đơn theo mã
+Bảng 3.19 Bảng mô tả Use Case tra cứu đơn theo mã
+Tên use case
+Use case "Tra cứu đơn theo mã"
+Tác nhân
+Khách vãng lai, Khách hàng
+Mục đích
+Use case này cho phép người dùng tra cứu nhanh thông tin đơn đặt phòng bằng mã đặt phòng (booking code) mà không cần đăng nhập.
+Điều kiện trước
+Người dùng có mã đặt phòng hợp lệ (nhận qua email hoặc trang xác nhận).
+Luồng sự kiện chính
+1. Người dùng truy cập trang "Tra cứu đơn đặt phòng". 2. Hệ thống hiển thị ô nhập mã đặt phòng. 3. Người dùng nhập mã và nhấn "Tra cứu". 4. Hệ thống tìm kiếm đơn theo mã trong cơ sở dữ liệu. 5. Hệ thống hiển thị thông tin đơn: tên khách sạn, phòng, ngày check-in/out, trạng thái hiện tại, tổng tiền.
+Luồng rẽ nhánh
+- Mã không tồn tại: thông báo "Không tìm thấy đơn đặt phòng với mã này". - Mã để trống: thông báo yêu cầu nhập mã.
+Điều kiện sau
+Thông tin đơn đặt phòng được hiển thị cho người dùng tra cứu.
+CHƯƠNG 4
+ THIẾT KẾ CƠ SỞ DỮ LIỆU
+4.1 Sơ đồ quan hệ thực thể mức vật lý (Physical ERD)
+          Dựa trên các yêu cầu nghiệp vụ của hệ thống đặt phòng khách sạn, cấu trúc cơ sở dữ liệu vật lý bao gồm 11 collection được thiết kế với mối quan hệ ràng buộc chặt chẽ, đảm bảo tính toàn vẹn dữ liệu và hiệu năng truy xuất tốc độ cao.
+4.1.1 Hình ảnh sơ đồ dữ liệu hệ thống
+Hình 4.1: Sơ đồ quan hệ thực thể mức vật lý (Physical ERD) của hệ thống
+4.1.2 Các thực thể (Collection) trong sơ đồ
+Hệ thống bao gồm các thành phần cốt lõi sau:
+Users: Quản lý tài khoản, phân quyền (role), trạng thái và điểm tích lũy của toàn bộ người dùng (Khách hàng, Đối tác, Admin).
+Hotels: Lưu trữ thông tin khách sạn, địa chỉ chi tiết, đánh giá trung bình và liên kết với người sở hữu/quản lý.
+Rooms: Định nghĩa các phòng thuộc khách sạn, diện tích, sức chứa và các mốc cấu hình giá (pricePerNight, weekendPrice).
+Bookings: Ghi nhận thông tin giao dịch đặt phòng, thông tin khách lưu trú tại thời điểm đặt, trạng thái đơn và tính toán chi tiết doanh thu.
+Payments: Lưu vết lịch sử thanh toán qua cổng trực tuyến (Stripe), phục vụ đối soát tài chính và hoàn tiền (refundAmount).
+Reviews: Nơi khách hàng để lại điểm số chi tiết theo từng tiêu chí (vệ sinh, vị trí, dịch vụ, giá trị) và phản hồi từ khách sạn.
+Coupons: Quản lý mã giảm giá, giới hạn sử dụng và điều kiện áp dụng cho đơn hàng.
+Notifications: Hệ thống thông báo đẩy tới từng đối tượng người dùng cụ thể.
+Articles: Bài viết blog, cẩm nang du lịch hỗ trợ tăng tương tác và SEO cho nền tảng.
+Site_Banner: Quản lý các banner quảng cáo truyền thông trên giao diện trang chủ.
+Contact_Message: Tiếp nhận và lưu trữ các biểu mẫu liên hệ, hỗ trợ trực tuyến từ người dùng.
+4.2 Chiến lược thiết kế Schema trên MongoDB (Mô hình Logic)
+          Khi ánh xạ sơ đồ quan hệ trên sang cơ sở dữ liệu NoSQL MongoDB, hệ thống không áp dụng quy tắc chuẩn hóa 3NF của cơ sở dữ liệu quan hệ truyền thống (SQL) nhằm tránh các truy vấn lồng nhau phức tạp hay các phép toán $lookup (JOIN) gây giảm hiệu năng. Thay vào đó, cấu trúc dữ liệu được quyết định dựa trên hai giải pháp.
+4.2.1 Giải pháp Nhúng dữ liệu (Embedding)
+          Chiến lược này lồng các tài liệu liên quan vào làm một trường (Sub-document hoặc Array) bên trong tài liệu cha. Được áp dụng cho các mối quan hệ có tần suất truy cập đồng thời cao hoặc cần giữ nguyên trạng thông tin lịch sử:
+Thông tin khách hàng trong Đơn đặt (guestInfo_* trong Bookings): Họ tên, email, số điện thoại và căn cước của khách được nhúng trực tiếp vào bản ghi Booking. Điều này giúp hóa đơn không bị thay đổi nội dung lịch sử kể cả khi tài khoản User đó cập nhật thông tin mới trong tương lai.
+Cấu trúc địa chỉ (address_* trong Hotels): Các trường đường phố, thành phố, quốc gia được gom chung vào bản ghi khách sạn giúp việc hiển thị thông tin nhanh chóng chỉ qua một lần đọc.
+4.2.2 Giải pháp Tham chiếu dữ liệu (Referencing)
+          Chiến lược này sử dụng ObjectId của tài liệu này để làm khóa ngoại liên kết sang collection khác. Được áp dụng khi dữ liệu có kích thước lớn, tăng trưởng không giới hạn (Unbounded) hoặc cần quản lý độc lập:
+Quan hệ giữa Khách sạn – Phòng – Đơn đặt: Bản ghi Rooms tham chiếu đến Hotels, và Bookings tham chiếu ngược lại đến Hotels và Rooms. Do mỗi thực thể này đều có các luồng nghiệp vụ quản lý, cập nhật trạng thái riêng biệt.
+Hệ thống thông báo và Phản hồi (Notifications, Reviews): Liên kết tới Users qua ID tham chiếu vì số lượng thông báo hoặc đánh giá của một tài khoản sẽ tăng lên liên tục theo thời gian, nếu nhúng trực tiếp sẽ làm vượt giới hạn dung lượng 16MB cho một tài liệu của MongoDB.
+4.3 Chi tiết cấu trúc các Collection (Mô hình Vật lý)
+4.3.1 Collection Users
+          Lưu trữ thông tin tài khoản của tất cả người dùng trong hệ thống.
+Bảng 4.1 – Cấu trúc collection Users
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính của tài khoản.
+name
+String
+NN
+Họ và tên đầy đủ.
+email
+String
+Required, Unique
+Địa chỉ email dùng để đăng nhập.
+password
+String
+Required
+Mật khẩu đã mã hóa.
+phone
+String
+Required
+Số điện thoại liên hệ.
+avatar_url
+String
+Optional
+Đường dẫn ảnh đại diện.
+role
+String
+Required
+Phân quyền người dùng.
+isEmailVerified
+Boolean
+Required
+Trạng thái xác thực email.
+isBlocked
+Boolean
+Required
+Trạng thái khóa tài khoản.
+loyaltyPoints
+Number
+Required
+Điểm tích lũy thành viên.
+createdAt
+Date
+Auto
+Thời điểm tạo.
+updatedAt
+Date
+Auto
+Thời điểm cập nhật.
+4.3.2 Collection Hotels
+          Lưu trữ thông tin chi tiết về khách sạn và tham chiếu đến chủ sở hữu/người quản lý.
+Bảng 4.2 – Cấu trúc collection Hotels
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính.
+name
+String
+NN
+Tên khách sạn.
+slug
+String
+Unique
+Định danh URL thân thiện phục vụ SEO.
+description
+String
+Optional
+Mô tả chi tiết khách sạn.
+chain
+String
+Optional
+Thuộc chuỗi khách sạn nào.
+stars
+Number
+Required
+Xếp hạng số sao.
+address_street
+String
+Required
+Tên đường, số nhà.
+address_city
+String
+Required
+Thành phố.
+address_province
+String
+Optional
+Tỉnh / Thành.
+address_country
+String
+Required
+Quốc gia.
+coordinates
+String
+Optional
+Tọa độ bản đồ.
+images
+String
+Optional
+Đường dẫn chuỗi ảnh khách sạn.
+amenities
+String
+Optional
+Các tiện ích tổng thể.
+checkInTime
+String
+Optional
+Giờ nhận phòng tiêu chuẩn.
+checkOutTime
+String
+Optional
+Giờ trả phòng tiêu chuẩn.
+policies
+String
+Optional
+Các chính sách chung.
+isActive
+Boolean
+Required
+Trạng thái kích hoạt kinh doanh.
+ownerId
+ObjectId
+FK → Users
+Tham chiếu đến tài khoản chủ khách sạn.
+managerId
+ObjectId
+FK → Users
+Tham chiếu đến tài khoản người quản lý.
+avgRating
+Number
+Required
+Điểm đánh giá trung bình.
+totalReviews
+Number
+Required
+Tổng số lượt đánh giá.
+basePrice
+Number
+Required
+Giá phòng cơ bản thấp nhất.
+createdAt
+Date
+Auto
+Thời điểm tạo.
+updatedAt
+Date
+Auto
+Thời điểm cập nhật.
+4.3.3 Collection Rooms
+Quản lý các phòng, loại phòng cụ thể trực thuộc một khách sạn.
+Bảng 4.3 – Cấu trúc collection Rooms
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính.
+hotel
+ObjectId
+FK → Hotels
+Tham chiếu tới khách sạn chủ quản.
+roomNumber
+String
+Required
+Số phòng / Tên phòng.
+type
+String
+Required
+Phân loại phòng.
+floor
+Number
+Required
+Vị trí tầng.
+capacity_adults
+Number
+Required
+Sức chứa người lớn tối đa.
+capacity_children
+Number
+Required
+Sức chứa trẻ em tối đa.
+bedType
+String
+Required
+Loại giường trang bị.
+size
+Number
+Required
+Diện tích phòng.
+pricePerNight
+Number
+Required
+Giá phòng/đêm tiêu chuẩn.
+weekendPrice
+Number
+Required
+Giá áp dụng ngày cuối tuần.
+amenities
+String
+Optional
+Tiện nghi riêng của phòng.
+images
+String
+Optional
+Hình ảnh phòng.
+status
+String
+Required
+Trạng thái phòng hiện tại.
+isActive
+Boolean
+Required
+Phòng có đang sẵn sàng kinh doanh.
+createdAt
+Date
+Auto
+Thời điểm tạo.
+updatedAt
+Date
+Auto
+Thời điểm cập nhật.
+4.3.4 Collection Bookings
+          Ghi lại chi tiết mọi phiên đặt phòng của khách hàng.
+Bảng 4.4 – Cấu trúc collection Bookings
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính đơn đặt phòng.
+bookingCode
+String
+Required
+Mã đặt phòng hệ thống.
+customer
+ObjectId
+FK → Users
+Người đặt phòng.
+hotel
+ObjectId
+FK → Hotels
+Khách sạn được đặt.
+room
+ObjectId
+FK → Rooms
+Phòng được lựa chọn đặt.
+checkIn
+Date
+Required
+Ngày nhận phòng thực tế.
+checkOut
+Date
+Required
+Ngày trả phòng dự kiến.
+nights
+Number
+Required
+Tổng số đêm lưu trú.
+guests_adults
+Number
+Required
+Số khách người lớn thực tế.
+guests_children
+Number
+Required
+Số khách trẻ em thực tế.
+guestInfo_name
+String
+Required
+Tên khách đại diện (Embed).
+guestInfo_email
+String
+Required
+Email liên hệ khách (Embed).
+guestInfo_phone
+String
+Required
+Số điện thoại khách (Embed).
+guestInfo_idCard
+String
+Required
+Số CMND/CCCD/Passport (Embed).
+specialRequests
+String
+Optional
+Yêu cầu đặc biệt bổ sung.
+services
+String
+Optional
+Chuỗi dịch vụ đi kèm.
+pricing_roomTotal
+Number
+Required
+Tổng chi phí tiền phòng gốc.
+pricing_servicesTotal
+Number
+Required
+Tổng chi phí dịch vụ phát sinh.
+pricing_tax
+Number
+Required
+Chi phí thuế VAT/phí dịch vụ.
+pricing_discount
+Number
+Required
+Số tiền được giảm trừ.
+pricing_total
+Number
+Required
+Số tiền cuối cùng cần thanh toán.
+status
+String
+Required
+Trạng thái đơn đặt phòng.
+paymentStatus
+String
+Required
+Trạng thái thanh toán.
+cancelReason
+String
+Optional
+Lý do hủy đơn nếu có.
+cancelledAt
+Date
+Optional
+Thời điểm thực hiện hủy.
+createdAt
+Date
+Auto
+Thời điểm tạo.
+updatedAt
+Date
+Auto
+Thời điểm cập nhật.
+4.3.5 Collection Payments
+          Quản lý thông tin thanh toán tài chính của các đơn đặt phòng.
+Bảng 4.5 – Cấu trúc collection Payments
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính giao dịch.
+booking
+ObjectId
+FK → Bookings
+Tham chiếu đơn hàng tương ứng.
+user
+ObjectId
+FK → Users
+Người thực hiện thanh toán.
+amount
+Number
+Required
+Số tiền giao dịch.
+currency
+String
+Required
+Đơn vị tiền tệ lưu trữ.
+method
+String
+Required
+Phương thức thanh toán áp dụng.
+stripePaymentIntentId
+String
+Required
+Mã giao dịch Intent từ cổng Stripe.
+stripeChargeId
+String
+Required
+Mã Charge ID từ Stripe.
+status
+String
+Required
+Trạng thái xử lý thanh toán.
+refundAmount
+Number
+Required
+Số tiền hoàn trả (nếu hủy đơn).
+refundReason
+String
+Optional
+Lý do hoàn trả tiền.
+receiptUrl
+String
+Required
+URL hóa đơn/biên nhận điện tử.
+paidAt
+Date
+Required
+Thời điểm thanh toán thành công.
+createdAt
+Date
+Auto
+Thời điểm tạo dữ liệu.
+updatedAt
+Date
+Auto
+Thời điểm cập nhật dữ liệu.
+4.3.6 Collection Reviews
+          Lưu trữ toàn bộ thông tin phản hồi, chấm điểm của khách hàng sau kì lưu trú.
+Bảng 4.6 – Cấu trúc collection Reviews
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính review.
+hotel
+ObjectId
+FK → Hotels
+Tham chiếu khách sạn được đánh giá.
+room
+ObjectId
+FK → Rooms
+Tham chiếu phòng được đánh giá.
+user
+ObjectId
+FK → Users
+Tác giả bài viết đánh giá.
+booking
+ObjectId
+FK → Bookings
+Gắn liền với mã đơn đặt phòng cụ thể.
+rating
+Number
+Required
+Điểm đánh giá chung.
+title
+String
+Required
+Tiêu đề tóm tắt đánh giá.
+comment
+String
+Required
+Nội dung nhận xét chi tiết.
+images
+String
+Optional
+Ảnh đính kèm từ khách hàng.
+cleanliness
+Number
+Required
+Điểm tiêu chí vệ sinh.
+service
+Number
+Required
+Điểm tiêu chí chất lượng dịch vụ.
+location
+Number
+Required
+Điểm tiêu chí vị trí thuận lợi.
+value
+Number
+Required
+Điểm tiêu chí mức giá/giá trị nhận lại.
+response_text
+String
+Optional
+Phản hồi từ phía quản lý khách sạn.
+response_respondedAt
+Date
+Optional
+Thời điểm phản hồi từ khách sạn.
+response_respondedBy
+ObjectId
+FK → Users
+Tài khoản thực hiện phản hồi.
+isVerified
+Boolean
+Required
+Đã kiểm chứng (Đúng là khách đã ở).
+isApproved
+Boolean
+Required
+Quản trị viên hệ thống đã phê duyệt.
+createdAt
+Date
+Auto
+Thời điểm viết đánh giá.
+updatedAt
+Date
+Auto
+Thời điểm cập nhật đánh giá.
+4.3.7 Collection Coupons
+          Quản lý các mã khuyến mãi và thông tin giảm giá.
+Bảng 4.7 – Cấu trúc collection Coupons
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính.
+code
+String
+Required
+Ký tự mã giảm giá.
+description
+String
+Required
+Mô tả thể lệ giảm giá.
+discountType
+String
+Required
+Hình thức giảm (% hoặc số tiền cố định).
+discountValue
+Number
+Required
+Giá trị được giảm bớt.
+maxDiscount
+Number
+Required
+Mức giảm kịch trần cho phép.
+minOrderAmount
+Number
+Required
+Giá trị đơn hàng tối thiểu để áp dụng.
+validFrom
+Date
+Required
+Thời gian bắt đầu có hiệu lực.
+validTo
+Date
+Required
+Thời gian hết hiệu lực áp dụng.
+maxUses
+Number
+Required
+Tổng số lượt sử dụng tối đa của mã.
+usedCount
+Number
+Required
+Số lượt thực tế hệ thống đã áp dụng.
+isActive
+Boolean
+Required
+Trạng thái kích hoạt khả dụng.
+ownerId
+ObjectId
+FK → Users
+Tài khoản tạo ra coupon này.
+createdAt
+Date
+Auto
+Thời điểm khởi tạo.
+updatedAt
+Date
+Auto
+Thời điểm cập nhật.
+4.3.8 Collection Notifications
+          Lưu trữ thông báo đẩy gửi tới người dùng trong ứng dụng.
+Bảng 4.8 – Cấu trúc collection Notifications
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính.
+user
+ObjectId
+FK → Users
+Người nhận thông báo.
+audience
+String
+Required
+Nhóm đối tượng đích.
+type
+String
+Required
+Phân loại loại thông báo.
+title
+String
+Required
+Tiêu đề thông báo.
+message
+String
+Required
+Nội dung chi tiết thông báo.
+link
+String
+Required
+Đường dẫn liên kết khi nhấn vào.
+data
+String
+Required
+Chuỗi dữ liệu đính kèm kèm theo.
+isRead
+Boolean
+Required
+Trạng thái người dùng đã đọc hay chưa.
+createdAt
+Date
+Auto
+Thời điểm phát hành thông báo.
+4.3.9 Collection Articles
+          Lưu trữ các bài blog, tin tức, chia sẻ kinh nghiệm du lịch.
+Bảng 4.9 – Cấu trúc collection Articles
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính.
+title
+String
+Required
+Tiêu đề bài viết.
+slug
+String
+Required
+URL bài viết chuẩn SEO.
+summary
+String
+Required
+Nội dung tóm tắt ngắn.
+content
+String
+Required
+Toàn bộ nội dung bài viết.
+coverImage
+String
+Required
+Ảnh nền hiển thị của bài viết.
+couponCode
+String
+Required
+Mã coupon liên kết trong bài viết.
+tags
+String
+Required
+Các thẻ phân loại tìm kiếm bài viết.
+isPublished
+Boolean
+Required
+Trạng thái công khai xuất bản.
+views
+Number
+Required
+Số lượt truy cập xem bài viết.
+authorId
+ObjectId
+FK → Users
+ID tài khoản người biên soạn bài viết.
+createdAt
+Date
+Auto
+Thời điểm viết bài.
+updatedAt
+Date
+Auto
+Thời điểm chỉnh sửa bài.
+4.3.10 Collection Site_Banner
+          Quản lý thông tin hình ảnh trình chiếu quảng cáo hiển thị trên trang chủ.
+Bảng 4.10 – Cấu trúc collection Site_Banner
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính của Banner.
+type
+String
+Required
+Vị trí/Kiểu thiết kế banner.
+title
+String
+Required
+Tiêu đề chữ hiển thị lớn trên banner.
+subtitle
+String
+Required
+Phụ đề thông tin nhỏ đi kèm.
+image
+String
+Required
+URL đường dẫn ảnh của banner.
+link
+String
+Required
+Liên kết hướng đi khi người dùng nhấn banner.
+order
+Number
+Required
+Thứ tự ưu tiên hiển thị trước/sau.
+isActive
+Boolean
+Required
+Trạng thái kích hoạt trình chiếu.
+createdAt
+Date
+Auto
+Thời điểm tạo.
+4.3.11 Collection Contact_Message
+          Lưu trữ thông tin hòm thư góp ý, liên hệ trực tiếp từ phía khách hàng.
+Bảng 4.11 – Cấu trúc collection Contact_Message
+Tên trường
+Kiểu dữ liệu
+Ràng buộc
+Mô tả
+_id
+ObjectId
+PK, auto
+Khóa chính của thông điệp liên hệ.
+name
+String
+Required
+Tên của người gửi yêu cầu liên hệ.
+email
+String
+Required
+Email nhận phản hồi.
+phone
+String
+Required
+Số điện thoại người gửi.
+subject
+String
+Required
+Chủ đề chính của thư.
+message
+String
+Required
+Chi tiết nội dung lời nhắn.
+isRead
+Boolean
+Required
+Trạng thái quản trị viên đã xem thư.
+createdAt
+Date
+Auto
+Thời điểm gửi liên hệ.
+4.3.12 Tổng hợp Index tối ưu hóa truy vấn
+          Việc thiết kế index đúng đắn có vai trò quyết định đến hiệu năng hệ thống MongoDB. Bảng 4.12 tổng hợp các index quan trọng được tạo trên toàn bộ hệ thống dựa theo quy tắc thiết kế tối ưu hóa truy vấn.
+Bảng 4.12 – Tổng hợp các Index thiết lập trong hệ thống
+Collection
+Trường đặt Index
+Loại Index
+Mục đích sử dụng
+Users
+email
+Unique
+Đăng nhập hệ thống, ngăn chặn trùng lặp email.
+Users
+phone
+Unique
+Quản lý định danh số điện thoại người dùng.
+Hotels
+slug
+Unique
+Tối ưu hóa tốc độ tải trang chi tiết khách sạn.
+Hotels
+ownerId
+Single Field
+Tìm nhanh danh sách khách sạn thuộc một đối tác.
+Rooms
+hotel + roomNumber
+Compound Unique
+Đảm bảo không trùng số phòng trong một khách sạn.
+Bookings
+bookingCode
+Unique
+Tra cứu trực tiếp thông tin đơn từ mã tra cứu nhanh.
+Bookings
+customer
+Single Field
+Tải lịch sử đặt phòng của khách hàng tốc độ cao.
+Payments
+booking
+Unique
+Kiểm tra nhanh trạng thái thanh toán từ một đơn đặt.
+Coupons
+code
+Unique
+Kiểm tra hiệu lực áp dụng mã giảm giá khi checkout.
+Articles
+slug
+Unique
+Truy cập bài viết du lịch chuẩn SEO.
+4.4 Kết luận chương
+          Chương 4 đã hoàn thành việc thiết kế chi tiết cơ sở dữ liệu vật lý cho hệ thống đặt phòng khách sạn trực tuyến trên nền tảng MongoDB. Cấu trúc gồm 11 collection được xây dựng và chuẩn hóa dựa trên mô hình quan hệ thực thể (Physical ERD), kết hợp nhuần nhuyễn giữa giải pháp nhúng (Embed) cho các dữ liệu ít biến động nhằm tăng tốc đọc, và giải pháp tham chiếu (Reference) cho các luồng dữ liệu lớn độc lập nhằm tối ưu dung lượng bộ nhớ. Đi kèm hệ thống lập chỉ mục (Index) toàn diện, cơ sở dữ liệu này hoàn toàn đáp ứng được tính toàn vẹn và bài toán chịu tải cao của ứng dụng thực tế.
+CHƯƠNG 5
+CÀI ĐẶT GIẢI PHÁP VÀ KẾT QUẢ THỰC HIỆN
+5.1 Cài đặt hệ thống
+5.1.1 Chuẩn bị môi trường phát triển
+          Để đảm bảo tính tương thích và vận hành ổn định, hệ thống đặt phòng khách sạn 2T Hotel yêu cầu môi trường phần cứng và phần mềm đáp ứng các thông số cấu hình sau:
+Hệ điều hành tối thiểu: Windows 10/11, macOS (Big Sur trở lên) hoặc Linux (Ubuntu 20.04 LTS trở lên).
+Môi trường thực thi và Phần mềm:
+Node.js phiên bản từ 18.x trở lên và Trình quản lý gói npm phiên bản từ 9.x trở lên.
+MongoDB phiên bản từ 6.x trở lên (Cài đặt cục bộ để phát triển) hoặc dịch vụ đám mây MongoDB Atlas.
+Git (Quản lý mã nguồn) và Trình duyệt web hiện đại (Google Chrome, Mozilla Firefox, Microsoft Edge).
+IDE khuyến nghị: Visual Studio Code tích hợp các tiện ích mở rộng hỗ trợ React và Node.js.
+Tài khoản dịch vụ bên thứ ba (Third-party Cloud Services):
+Cloudinary API: Lưu trữ và tối ưu hóa tài nguyên hình ảnh (Ảnh khách sạn, phòng, avatar).
+Google AI Studio API Key: Tích hợp và cấu hình mô hình ngôn ngữ lớn Chatbot Gemini.
+Cổng thanh toán Sandbox: Tài khoản nhà phát triển thử nghiệm của VNPay, MoMo và Stripe (Thẻ quốc tế).
+5.1.2 Cài đặt MongoDB và cấu hình cơ sở dữ liệu
+          Hệ thống hỗ trợ cả hai giải pháp lưu trữ: MongoDB Community Server cục bộ và cơ sở dữ liệu đám mây MongoDB Atlas. Để khởi động dịch vụ cơ sở dữ liệu MongoDB trên môi trường cục bộ (Local), sử dụng lệnh.
+Bash
+mongod --dbpath /path/to/data/db
+          Đối với môi trường triển khai thực tế, hệ thống kết nối tới cụm Cluster trên MongoDB Atlas thông qua chuỗi định danh kết nối (Connection String) bảo mật:
+Plaintext
+mongodb+srv://&lt;username&gt;:&lt;password&gt;@cluster2t.mongodb.net/2thotel_db?retryWrites=true&amp;w=majority
+          Chuỗi kết nối này được thiết lập trực tiếp vào biến môi trường MONGODB_URI. Hệ thống sử dụng thư viện Mongoose ORM để định nghĩa cấu trúc Schema và thực hiện ánh xạ dữ liệu trực tiếp xuống cơ sở dữ liệu với 11 Collection chính bao gồm:
+Users: Quản lý tài khoản, thông tin định danh và phân quyền người dùng.
+Hotels &amp; Rooms: Lưu trữ thông tin chi tiết khách sạn và các hạng phòng tương ứng trực thuộc.
+Bookings &amp; Payments: Quản lý trạng thái đặt phòng, thông tin lưu trú lịch sử và nhật ký giao dịch tài chính.
+Reviews: Lưu trữ phản hồi, ý kiến đóng góp và điểm số đánh giá chi tiết của khách hàng.
+Coupons: Quản lý các chiến dịch khuyến mãi, mã giảm giá và điều kiện áp dụng.
+Notifications: Điều phối hệ thống thông báo thời gian thực (Real-time).
+Articles, Site_Banner &amp; Contact_Message: Bộ ba collection chịu trách nhiệm quản lý nội dung số của hệ thống quản trị nội dung (CMS Module).
+5.1.3 Cài đặt Node.js và cấu hình phân hệ Backend
+          Môi trường Backend được phát triển dựa trên nền tảng Node.js và Express.js framework. Người thực hiện điều hướng vào thư mục server/ và thực hiện khởi chạy cài đặt các module phụ thuộc:
+Bash
+cd server
+npm install
+          Tiếp theo, tiến hành khởi tạo và cấu hình tệp tin môi trường .env nằm tại thư mục gốc của phân hệ backend với các tham số cấu hình hệ thống:
+Plaintext
+PORT=5000
+NODE_ENV=development
+MONGODB_URI=mongodb+srv://admin:2thotel2026@cluster2t.mongodb.net/2thotel_db
+JWT_SECRET=2t_hotel_backend_secret_key_validation_2026
+JWT_REFRESH_SECRET=2t_hotel_refresh_token_string_secure
+CLOUDINARY_CLOUD_NAME=dxt_2thotel_cloud
+CLOUDINARY_API_KEY=871239485721943
+CLOUDINARY_API_SECRET=abc_xyz_cloudinary_secret_key
+GEMINI_API_KEY=AIzaSyB_Gemini_20_Flash_Key_Secure
+VNP_TMNCODE=2THOTEL01
+VNP_HASHSECRET=VNPAY_SECRET_KEY_SANDBOX
+MOMO_PARTNER_CODE=MOMO_PARTNER_2T
+MOMO_ACCESS_KEY=MOMO_ACCESS_KEY_2T
+MOMO_SECRET_KEY=MOMO_SECRET_KEY_2T
+STRIPE_SECRET_KEY=sk_test_stripe_secret_key_2t
+EMAIL_FROM=noreply@2thotel.com
+SMTP_HOST=smtp.mailtrap.io
+SMTP_PORT=2525
+SMTP_USER=smtp_username_test
+SMTP_PASS=smtp_password_test
+          Khởi chạy máy chủ Backend ở chế độ dành cho lập trình viên (Development Mode) bằng công cụ tự động theo dõi và cập nhật mã nguồn (Nodemon):
+Bash
+npm run dev
+          Sau khi khởi chạy thành công, máy chủ lắng nghe tại cổng http://localhost:5000. Toàn bộ các tài nguyên API RESTful đều được định cấu hình bằng tiền tố nhất quán /api/v1/ và phân tách rõ ràng thành các nhóm định tuyến (Routes): auth, hotels, rooms, bookings, payments, reviews, coupons, notifications, chatbot, content, admin.
+5.1.4 Cài đặt React và cấu hình phân hệ Frontend
+          Phân hệ Frontend được xây dựng dựa trên cấu trúc ứng dụng đơn trang Single Page Application (SPA) của React 18 kết hợp cùng công cụ đóng gói siêu tốc Vite. Tiến hành điều hướng vào thư mục client/ và thiết lập môi trường:
+Bash
+cd client
+npm install
+          Tạo tệp cấu hình biến môi trường .env phục vụ riêng cho phân hệ Client nhằm định tuyến luồng gọi API và thiết lập khóa công khai cho cổng thanh toán quốc tế:
+Plaintext
+VITE_API_URL=http://localhost:5000/api/v1
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_stripe_public_key_2t
+VITE_SOCKET_URL=http://localhost:5000
+          Kích hoạt môi trường thực thi ứng dụng Frontend:
+Bash
+npm run dev
+Hệ thống Frontend sẽ tự động thiết lập một máy chủ phát triển cục bộ tại địa chỉ http://localhost:5173. Các công nghệ cốt lõi cấu thành nên kiến trúc client bao gồm:
+Redux Toolkit: Đảm nhiệm vai trò quản lý trạng thái tập trung toàn cục (Global State Management).
+React Router DOM v6: Xử lý điều hướng luồng trang và quản lý hệ thống URL nội bộ.
+React Hook Form &amp; Yup Validation: Quản lý vòng đời và xác thực tính hợp lệ của toàn bộ dữ liệu biểu mẫu đầu vào.
+5.1.5 Tích hợp Tailwind CSS
+        Dự án ứng dụng thư viện Tailwind CSS (phiên bản 3.3.6) để xây dựng giao diện tùy biến tương thích đa thiết bị (Responsive UI). Cấu trúc cấu hình phân lớp được định nghĩa chi tiết trong tệp tailwind.config.js ở thư mục client, cho phép đồng bộ hóa bảng màu thương hiệu, cấu hình font chữ hệ thống và các tiện ích mở rộng CSS tùy chỉnh.
+          Trong môi trường phát triển, công cụ Vite tự động biên dịch và nạp các lớp CSS động thông qua PostCSS. Khi tiến hành đóng gói sản phẩm để đưa lên môi trường triển khai thực tế (Production), thực hiện lệnh biên dịch.
+Bash
+npm run build
+          Hệ thống sẽ tự động tối ưu hóa mã nguồn, áp dụng cơ chế Tree-shaking loại bỏ hoàn toàn các đoạn mã CSS thừa không sử dụng và kết xuất toàn bộ tệp tin tĩnh (HTML, JS, CSS) vào thư mục tập trung dist/ phục vụ cho việc triển khai hosting.
+5.1.6 Tích hợp Chatbot AI Gemini
+          Hệ thống tích hợp mô hình ngôn ngữ lớn Gemini 2.0 Flash bằng cách đăng ký khóa ứng dụng thông qua nền tảng Google AI Studio và nhúng thư viện chính thức @google/generative-ai vào phía Backend. Quy trình xử lý logic của Chatbot AI được thiết lập qua mô hình 4 bước nghiêm ngặt:
+Phát hiện ý định (Intent Detection): Phân tích ngữ nghĩa từ câu lệnh đầu vào của người dùng để bóc tách ý định thực tế (như tra cứu giá phòng, tìm vị trí khách sạn, chính sách hủy phòng...).
+Truy vấn cơ sở dữ liệu (Database Retrieval): Trường hợp người dùng có nhu cầu tìm kiếm phòng trống hoặc thông tin lưu trú, Backend tiến hành thực hiện các câu lệnh tìm kiếm tương ứng trên cơ sở dữ liệu MongoDB để trích xuất dữ liệu thực tế dựa trên các tham số bộ lọc (Thành phố, Ngân sách, Hạng sao).
+Tích hợp Context vào Prompt (Augmented Prompting): Dữ liệu động trích xuất từ database sẽ được chuẩn hóa cấu trúc và đính kèm vào khối ngữ cảnh (Context) gửi lên API Gemini, yêu cầu mô hình phản hồi tự nhiên, chuẩn xác bằng ngôn ngữ tiếng Việt.
+Cơ chế dự phòng (Fallback): Trong tình huống lỗi kết nối mạng hoặc vượt quá hạn mức API (Rate limit), hệ thống tự động kích hoạt Module phản hồi cục bộ dựa trên tập luật định sẵn nhằm duy trì trải nghiệm liền mạch cho người dùng.
+          Giao diện tương tác hiển thị dưới dạng một Widget nổi thông minh đặt cố định tại góc dưới bên phải màn hình, mang lại trải nghiệm tiện ích mọi lúc cho người sử dụng.
+5.1.7 Tích hợp các cổng thanh toán (VNPay, MoMo, Stripe)
+          Hệ thống tích hợp thành công giải pháp đa kênh thanh toán nhằm tối ưu hóa hành vi thanh toán của từng đối tượng khách hàng:
+Cổng thanh toán VNPay: Tích hợp môi trường thử nghiệm Sandbox của VNPay. Quá trình thanh toán được mã hóa tạo chuỗi bảo mật bằng thuật toán mã hóa mạnh HMAC-SHA512 kết hợp với các tham số cấu hình mã Merchant (vnp_TmnCode) và chuỗi khóa bí mật (vnp_HashSecret). Sau giao dịch, hệ thống bắt bộ lắng nghe thông tin phản hồi từ URL phản hồi (vnp_ReturnUrl) để cập nhật trạng thái hóa đơn.
+Ví điện tử MoMo: Kết nối thông qua bộ API chính thức dành cho nhà phát triển của MoMo, mã hóa các tham số Payload bằng thuật toán chữ ký điện tử HMAC-SHA256 cùng các cặp khóa accessKey và secretKey. Kết quả thanh toán được điều hướng đồng bộ qua returnUrl và cập nhật bất đồng bộ an toàn qua kênh notifyUrl (IPN).
+Cổng thanh toán thẻ quốc tế Stripe: Sử dụng dịch vụ Stripe Payment Intent ở backend phối hợp chặt chẽ với thư viện bảo mật giao diện @stripe/react-stripe-js và @stripe/stripe-js phía frontend, cho phép khách hàng thanh toán thẻ tín dụng quốc tế Visa/Mastercard an toàn tuyệt đối mà không cần lưu thông tin thẻ trên máy chủ hệ thống (đạt chuẩn bảo mật khắt khe PCI-DSS).
+5.1.8 Khởi chạy toàn bộ dự án
+          Để vận hành đồng bộ và kiểm thử toàn diện toàn bộ giải pháp phần mềm, người vận hành mở hai cửa sổ dòng lệnh độc lập để thực thi các tiến trình song song:
+Cửa sổ lệnh 1 (Phân hệ Backend):
+Bash
+cd server
+npm run dev
+Cửa sổ lệnh 2 (Phân hệ Frontend):
+Bash
+cd client
+npm run dev
+          Ứng dụng hoàn chỉnh được truy cập trực tiếp qua trình duyệt tại địa chỉ: http://localhost:5173.
+          Để thiết lập dữ liệu ban đầu phục vụ mục đích kiểm thử hệ thống (bao gồm các bản ghi mẫu về khách sạn, phòng trống và một tài khoản Quản trị tối cao mặc định), thực hiện lệnh chạy script seeding cơ sở dữ liệu:
+Bash
+cd server
+npm run seed
+5.2 Kết quả thực hiện và mô tả giao diện
+          Hệ thống sau khi hoàn thiện được phân tách thành hai phân hệ giao diện trực quan rõ rệt tương thích với cấu trúc phân quyền người dùng.
+5.2.1 Phân hệ chức năng dành cho khách hàng (Frontend Client)
+5.2.1.1 Giao diện trang chủ
+          Trang chủ đóng vai trò là bộ mặt thương hiệu của hệ thống 2T Hotel, tích hợp Banner động trượt mượt mà cho phép Quản trị viên cập nhật liên tục các chiến dịch tiếp thị. Hệ thống trang bị Thanh tìm kiếm thông minh (Search Bar) ở vị trí trung tâm, hỗ trợ người dùng nhập liệu nhanh các thông số cấu hình phòng bao gồm: Địa điểm đến, Ngày nhận phòng (Check-in), Ngày trả phòng (Check-out) và Số lượng khách lưu trú dự kiến.
+          Phía bên dưới cấu trúc trang hiển thị danh sách các khách sạn nổi bật theo thẻ lưới (Grid view) trực quan, hiển thị các trường dữ liệu tóm lược như: Tên khách sạn, Địa chỉ cụ thể, Xếp hạng sao, Điểm đánh giá trung bình từ phía khách hàng và Mức giá sàn thấp nhất của cơ sở lưu trú đó. Ngoài ra, module bài viết cẩm nang du lịch và Widget Chatbot AI được bố trí tinh tế nhằm giữ chân người dùng.
+Hình 5.1: Giao diện trang chủ hệ thống 2T Hotel
+5.2.1.2 Giao diện tìm kiếm khách sạn
+          Được trang bị Khung bộ lọc nâng cao (Advanced Filter) đa chiều chạy dọc hành lang trái của trang web, cho phép khách hàng tinh chỉnh nhanh kết quả tìm kiếm theo nhu cầu thực tế:
+Phân loại theo khu vực địa lý: Lọc nhanh theo các thành phố trọng điểm du lịch như Hà Nội, TP. Hồ Chí Minh, Đà Nẵng, Nha Trang, Đà Lạt...
+Hạng sao và Ngân sách: Lọc từ 1 đến 5 sao và kéo thanh trượt khoảng giá theo đêm (VNĐ).
+Tiện ích đi kèm: Check-box chọn lọc các cơ sở có WiFi miễn phí, Hồ bơi, Spa, Phòng Gym, Nhà hàng, Bãi đỗ xe ô tô...
+Cơ chế sắp xếp: Hỗ trợ sắp xếp động theo giá tăng/giảm dần, điểm đánh giá cao nhất hoặc cơ sở mới nhất trên hệ thống.
+          Trang kết quả tích hợp công nghệ phân trang (Pagination) thông minh giúp tối ưu hóa băng thông truyền tải dữ liệu từ máy chủ.
+Hình 5.2: Giao diện tìm kiếm khách sạn.
+5.2.1.3 Giao diện chi tiết khách sạn
+          Trang chi tiết cung cấp bức tranh toàn cảnh về cơ sở lưu trú bao gồm: Bộ sưu tập ảnh chất lượng cao (Gallery Slider), thông tin giới thiệu chi tiết, bản đồ số trực quan tương tác dựa trên thư viện mã nguồn mở Leaflet Map, cùng chính sách nhận/trả phòng.
+          Khu vực lõi hiển thị danh sách các hạng phòng còn trống kèm các thẻ thông số chi tiết như: Sức chứa tối đa, Diện tích phòng (tính theo mét vuông), Loại giường trang bị và   Giá niêm yết theo đêm. Người dùng nhấn nút "Đặt phòng ngay" để kích hoạt tiến trình   Booking. Cuối trang là khu vực đóng góp ý kiến (Reviews), phân tách điểm đánh giá chi tiết theo từng tiêu chí nhỏ bao gồm Vị trí, Độ sạch sẽ, Chất lượng dịch vụ và Tiện nghi phòng.
+Hình 5.3: Giao diện chi tiết khách sạn và danh sách phòng.
+5.2.1.4 Giao diện tiến trình đặt phòng (Booking Flow)
+          Quy trình đặt phòng được chuẩn hóa thành biểu mẫu 2 bước tinh gọn nhằm giảm thiểu tỷ lệ bỏ rơi đơn hàng:
+Bước 1 – Khai báo thông tin: Khách hàng nhập liệu thông tin cá nhân (Họ tên, Email nhận hóa đơn, Số điện thoại, Mã định danh CCCD/Passport) và chọn các dịch vụ gia tăng tùy chọn. Khung tóm tắt chi phí (Booking Summary) bên phải tự động tính toán tổng số tiền dựa trên công thức thời gian thực có bao gồm Phí dịch vụ và Thuế VAT, đồng thời hỗ trợ áp dụng mã giảm giá Coupon ngay tại chỗ.
+Bước 2 – Xác nhận điều khoản và Chọn cổng thanh toán: Hiển thị lại toàn bộ thông tin đặt phòng dưới dạng phiếu kiểm tra để người dùng rà soát lần cuối trước khi tiến hành chọn một trong ba phương thức thanh toán tích hợp (VNPay, MoMo, Stripe) để hoàn tất.
+Hình 5.4: Giao diện đặt phòng
+5.2.1.5 Giao diện thanh toán và phản hồi kết quả
+          Sau khi gửi đơn đặt phòng, người dùng được chuyển hướng trực tiếp đến giao diện bảo mật của cổng thanh toán tương ứng:
+Giao diện ứng dụng VNPay hoặc quét mã QR đối với cổng thanh toán MoMo.
+Giao diện nhập form thẻ bảo mật Stripe Elements trực tiếp trên nền tảng web đối với khách dùng thẻ tín dụng quốc tế.
+          Khi giao dịch xử lý xong, hệ thống nhận tín hiệu Webhook/IPN phản hồi từ phía cổng thanh toán để cập nhật trường dữ liệu trạng thái đặt phòng thành Paid, đồng thời chuyển hướng người dùng về trang kết quả /payment/vnpay-return hoặc /payment/momo-return hiển thị thông báo chúc mừng thành công, kích hoạt hệ thống gửi email xác nhận tự động.
+Hình 5.5: Giao diện trang thanh toán
+5.2.1.6 Giao diện quản lý lịch sử đặt phòng cá nhân
+          Trang "Đặt phòng của tôi" cung cấp không gian quản lý cá nhân hóa, cho phép khách hàng theo dõi toàn bộ trạng thái đơn hàng của mình được phân loại trực quan theo các Tab trạng thái hệ thống: Chờ xác nhận, Đã xác nhận, Đã thanh toán, Đang lưu trú, Đã trả phòng, Đã hủy.
+          Tại đây, khách hàng có quyền thực hiện các thao tác mở rộng tùy thuộc vào trạng thái đơn phòng bao gồm: Xem chi tiết hóa đơn điện tử, Gửi yêu cầu Hủy đặt phòng (Hệ thống tự động đối soát chính sách hoàn tiền theo số ngày quy định), Gửi biểu mẫu Đánh giá chất lượng sau khi Check-out và Xuất/Tải file hóa đơn định dạng PDF để lưu trữ.
+Hình 5.6: Giao diện quản lý đặt phòng của khách hàng
+5.2.1.7 Giao diện Chatbot AI trợ giúp trực tuyến
+          Cửa sổ hội thoại Chatbot AI hoạt động mượt mà như một trợ lý ảo thực thụ. Ứng dụng mô hình xử lý ngôn ngữ tự nhiên tối tân giúp Chatbot hiểu sâu sắc ngữ cảnh câu hỏi, thực hiện tư vấn lựa chọn khách sạn theo khoảng giá tiền, gợi ý điểm đến phù hợp, trả lời nhanh các câu hỏi thường gặp (FAQs) về quy chế hủy phòng, giờ nhận phòng của hệ thống mà không cần đến sự can thiệp thủ công của nhân viên hỗ trợ.
+Hình 5.7: Giao diện Chatbot AI
+5.2.1.8 Giao diện xác thực tài khoản người dùng
+          Hệ thống bảo mật trang bị luồng xác thực khép kín.
+Đăng ký tài khoản: Thu thập thông tin cơ bản, mật khẩu đầu vào được băm bảo mật bằng thuật toán mã hóa mạnh bcryptjs (với 12 rounds kích thước muối) trước khi lưu kho cơ sở dữ liệu và kích hoạt gửi mail xác thực.
+Đăng nhập: Xác thực chữ ký điện tử thông qua cơ chế cặp chuỗi mã hóa JWT (JSON Web Token) bao gồm Access Token (Thời hạn ngắn, lưu trữ bộ nhớ an toàn tạm thời) và Refresh Token (Lưu trữ an toàn trong Cookie trình duyệt dạng HTTP-only giúp phòng chống triệt để các lỗ hổng bảo mật XSS và CSRF).
+Quên mật khẩu: Cấp mã Token khôi phục mật khẩu có thời hiệu giới hạn 15 phút gửi trực tiếp qua Email cá nhân của người dùng được yêu cầu.
+Hình 5.8: Giao diện đăng nhập và đăng ký
+5.2.2 Phân hệ chức năng dành cho Quản trị viên và Nhân viên (Admin &amp; Staff Dashboard)
+5.2.2.1 Giao diện Dashboard quản trị tổng quan
+          Là trung tâm đầu não hiển thị toàn bộ các chỉ số đo lường hiệu năng kinh doanh (KPIs) của hệ thống theo thời gian thực (Real-time):
+Khung thẻ số liệu (Metrics Cards) trực quan về: Tổng doanh thu, Tổng số lượt đặt phòng thành công, Tổng số khách sạn hoạt động và Tốc độ tăng trưởng người dùng mới.
+Biểu đồ đường (Line Chart) mô hình hóa trực quan xu hướng biến động doanh thu theo dòng thời gian (Ngày/Tuần/Tháng) phát triển dựa trên thư viện đồ họa Recharts.
+Biểu đồ hình tròn (Pie Chart) bóc tách cơ cấu tỷ lệ trạng thái đơn hàng.
+Bảng dữ liệu xếp hạng Top danh sách khách sạn đạt doanh số cao nhất cùng lưới hiển thị 10 giao dịch đặt phòng vừa phát sinh trên toàn hệ thống.
+Hình 5.9: Giao diện Dashboard tổng quan.
+5.2.2.2 Giao diện quản lý cơ sở khách sạn
+          Giao diện cung cấp cho Quản trị viên tối cao (Super Admin) quyền hạn trong việc kiểm soát toàn bộ cơ sở lưu trú trên hệ thống. Admin có thể thêm mới một cơ sở khách sạn (tải ảnh trực tiếp lên đám mây Cloudinary), biên tập sửa đổi thông tin mô tả chi tiết, ghim tọa độ địa lý, thiết lập bật/tắt trạng thái hiển thị của khách sạn trên trang tìm kiếm và thực hiện phân quyền chỉ định tài khoản Quản lý (Manager) chịu trách nhiệm vận hành cơ sở đó.
+Hình 5.10: Giao diện quản lý khách sạn.
+5.2.2.3 Giao diện cấu hình và quản lý phòng trống
+          Dành cho đối tượng người dùng có vai trò là Quản lý cơ sở (Manager) và Nhân viên được phân quyền. Module cho phép định nghĩa chi tiết từng phòng trong khách sạn bao gồm: Số phòng, Tầng, Loại hạng phòng (Basic, Standard, VIP), diện tích, sức chứa.
+          Đặc biệt, hệ thống hỗ trợ Module cấu hình giá linh hoạt (Dynamic Pricing Setup), cho phép thiết lập biểu giá phòng thay đổi động theo ngày cuối tuần hoặc thiết lập các khung giá riêng biệt theo mùa cao điểm du lịch. Trạng thái phòng được cập nhật tự động qua các nhãn màu phân biệt: Available (Sẵn sàng), Occupied (Đang có khách), Maintenance (Đang bảo trì), Cleaning (Đang dọn dẹp).
+Hình 5.11: Giao diện quản lý phòng
+5.2.2.4 Giao diện điều phối đặt phòng và Phân hệ FrontDesk (Lễ tân)
+          Trang quản lý đơn phòng cung cấp các bộ lọc nâng cao để nhân viên xử lý nhanh các tác vụ duyệt đơn, hủy phòng hoặc hoàn tiền cho khách hàng, đồng thời hỗ trợ xuất dữ liệu báo cáo ra tệp tin Excel (.xlsx) hoặc in trực tiếp hóa đơn PDF tại quầy.
+          Bên cạnh đó, hệ thống phát triển một giao diện chuyên biệt dành riêng cho Bộ phận Lễ tân (FrontDesk View). Giao diện này tối ưu hóa việc hiển thị danh sách tất cả các hành khách dự kiến sẽ Check-in hoặc Check-out trong ngày hiện tại, giúp nhân viên lễ tân thực hiện đổi trạng thái phòng và bàn giao phòng cho khách chỉ với một cú nhấp chuột.
+Hình 5.12: Giao diện quản lý đặt phòng và FrontDesk
+5.2.2.5 Giao diện quản lý người dùng và phân quyền hệ thống
+          Admin quản lý toàn bộ cơ sở dữ liệu người dùng, cho phép tra cứu hồ sơ cá nhân, lịch sử giao dịch lưu trú và theo dõi điểm thưởng tích lũy của từng khách hàng. Admin có toàn quyền quyết định nâng hạ vai trò của một tài khoản (Customer, Staff, Manager, Admin) hoặc tiến hành thực hiện lệnh khóa (Ban) tài khoản tạm thời đối với các trường hợp phát hiện hành vi vi phạm chính sách hệ thống.
+Hình 5.13: Giao diện quản lý người dùng
+5.2.2.6 Giao diện quản lý chiến dịch Coupon và Khuyến mãi
+          Hỗ trợ bộ phận vận hành tạo lập và kiểm soát các chương trình kích cầu mua sắm. Khi khởi tạo một mã Coupon mới, hệ thống cho phép cấu hình chi tiết các tham số ràng buộc bao gồm: Hình thức chiết khấu (Giảm theo tỷ lệ phần trăm hoặc trừ trực tiếp số tiền cố định), Ngưỡng giá trị đặt phòng tối thiểu được áp dụng mã, Giới hạn tổng số lượng lượt sử dụng tối đa và Thiết lập mốc thời gian hết hạn của mã giảm giá.
+Hình 5.14: Giao diện quản lý coupon
+5.2.2.7 Giao diện quản lý nội dung (CMS Module)
+          Module hỗ trợ đắc lực cho việc tối ưu SEO và tương tác khách hàng thông qua hai tính năng chính:
+Hệ thống biên tập bài viết: Hỗ trợ soạn thảo bài viết chia sẻ cẩm nang du lịch, tin tức sự kiện với công cụ định dạng Rich Text Editor trực quan, ảnh đại diện lưu trữ tự động trên Cloudinary.
+Quản lý Banner quảng cáo: Tùy biến hình ảnh giao diện, thông điệp truyền tải kêu gọi hành động (CTA Button) và sắp xếp thứ tự hiển thị của các Banner trên trang chủ.
+          Ngoài ra, phân hệ tích hợp hộp thư đến (Contact Inbox) tiếp nhận mọi thông tin đóng góp, khiếu nại của người dùng gửi về từ trang liên hệ (Contact_Message).
+Hình 5.15: Giao diện quản lý nội dung và banner
+5.2.2.8 Giao diện quản lý hóa đơn
+          Giao diện quản lý hóa đơn cho phép admin và staff theo dõi, xuất bản và in ấn toàn bộ hóa đơn tài chính phát sinh từ các giao dịch đặt phòng thành công. Thông tin trên hóa đơn bao gồm: Mã hóa đơn, Mã đặt phòng, Tên khách hàng, Tên khách sạn, Chi tiết hạng phòng, Thời gian lưu trú, Tổng tiền phòng, Các khoản thuế phí và Phương thức thanh toán điện tử đã áp dụng. 
+          Hệ thống hỗ trợ xuất dữ liệu hóa đơn ra tệp tin định dạng PDF để phục vụ công tác in ấn trực tiếp tại quầy lễ tân hoặc tự động đính kèm gửi về Email của khách hàng sau khi tiến hành thủ tục trả phòng (Check-out).
+Hình 5.16: Giao diện quản lý hóa đơn
+5.2.2.9 Giao diện quản lý bài viết
+          Hệ thống cung cấp phân hệ quản lý nội dung số (CMS) cho phép đội ngũ biên tập viên tạo mới, chỉnh sửa và xuất bản các bài viết thuộc chủ đề cẩm nang du lịch, kinh nghiệm đặt phòng và tin tức khuyến mãi của hệ thống. Giao diện tích hợp bộ soạn thảo văn bản đa tính năng (Rich Text Editor), hỗ trợ người dùng tùy biến định dạng phông chữ, chèn liên kết và tải lên hình ảnh đại diện (Thumbnail). 
+          Tất cả tài nguyên hình ảnh trong bài viết được tự động upload và tối ưu hóa dung lượng thông qua nền tảng đám mây Cloudinary trước khi hiển thị tới người dùng ở phân hệ Client để tăng tốc độ tải trang.
+Hình 5.17: Giao diện quản lý bài viết
+5.2.2.10 Giao diện quản lý liên hệ
+          Hộp thư liên hệ (Contact Inbox) là nơi tập trung tiếp nhận toàn bộ các phản hồi, đóng góp ý kiến hoặc yêu cầu hỗ trợ từ phía khách hàng gửi về thông qua biểu mẫu tại trang liên hệ của hệ thống. Danh sách liên hệ được hiển thị trực quan dạng bảng với các trường thông tin: Họ tên người gửi, Địa chỉ Email, Số điện thoại, Tiêu đề và Nội dung tin nhắn chi tiết.
+          Admin và nhân viên chăm sóc khách hàng có thể cập nhật trạng thái xử lý của từng tin nhắn (Chưa đọc, Đang xử lý, Đã phản hồi), đồng thời kích hoạt hệ thống gửi thư điện tử phản hồi trực tiếp tới Email của khách hàng ngay trên giao diện quản trị.
+Hình 5.18: Giao diện quản lý liên hệ
+5.2.2.11 Giao diện thông báo Real-time tích hợp
+          Tận dụng sức mạnh của công nghệ kết nối hai chiều Socket.IO, mọi biến động sự kiện diễn ra trên hệ thống (như xuất hiện đơn đặt phòng mới, giao dịch thanh toán thành công, có yêu cầu hủy phòng hoặc phản hồi đánh giá mới) đều được đẩy trực tiếp lên màn hình quản trị của Admin/Staff dưới dạng thông báo đẩy (Push Notification) tức thời mà không yêu cầu tải lại trang. Biểu tượng chuông thông báo hiển thị số lượng bản tin chưa đọc trực quan trên thanh điều hướng.
+Hình 5.19: Giao diện thông báo real-time.
+KẾT LUẬN
+1. Tổng kết
+          Đề tài "Nghiên cứu và xây dựng hệ thống đặt phòng khách sạn trực tuyến tích hợp trí tuệ nhân tạo" đã hoàn thành trọn vẹn các mục tiêu đề ra, mang lại một giải pháp số hóa hiệu quả cho việc quản lý và vận hành chuỗi khách sạn. Bằng sự kết hợp giữa nghiên cứu lý thuyết và ứng dụng thực tiễn, đề tài đã giải quyết triệt để những tồn tại của phương thức quản lý truyền thống, đóng góp tích cực vào xu hướng chuyển đổi số trong lĩnh vực kinh doanh lưu trú tại Việt Nam.
+          Các nội dung chính của đề tài được tổng hợp cụ thể như sau:
+Mục tiêu nghiên cứu: Xây dựng nền tảng trực tuyến tích hợp trí tuệ nhân tạo (AI) nhằm tối ưu hóa trải nghiệm đặt phòng, hỗ trợ vận hành khách sạn và nâng cao hiệu quả quản lý đa vai trò.
+Phương pháp triển khai: Kết hợp chặt chẽ giữa nghiên cứu khoa học, khảo sát thực trạng, phân tích yêu cầu, thiết kế kiến trúc hệ thống, phát triển phần mềm và kiểm thử nghiêm ngặt.
+Công nghệ áp dụng: Sử dụng Node.js và Express làm Backend REST API; React 18 kết hợp Vite và Tailwind CSS cho giao diện người dùng (Frontend); MongoDB làm cơ sở dữ liệu và tích hợp Google Gemini AI API cho hệ thống Chatbot.
+Đối tượng phục vụ: Đáp ứng tối ưu nhu cầu của 4 nhóm đối tượng gồm: Khách hàng, nhân viên lễ tân, quản lý khách sạn và quản trị viên hệ thống (Admin).
+Ý nghĩa thực tế: Khắc phục hoàn toàn các hạn chế của mô hình quản lý truyền thống như: đặt phòng thủ công, thông tin bất đồng bộ, phản hồi khách hàng chậm trễ và thiếu công cụ phân tích kinh doanh.
+Giá trị học thuật: Củng cố và nâng cao kiến thức chuyên sâu về lập trình web Full-stack, tối ưu hóa cơ sở dữ liệu NoSQL, tích hợp các cổng thanh toán điện tử và ứng dụng thực tế trí tuệ nhân tạo vào hệ thống sản phẩm.
+Tầm nhìn dài hạn: Đặt nền móng vững chắc cho các nghiên cứu tiếp theo về ứng dụng AI nâng cao, phân tích dữ liệu lớn (Big Data) và Internet vạn vật (IoT) trong ngành công nghiệp quản lý khách sạn thông minh.
+2. Kết quả thu được
+          Qua quá trình nghiên cứu và phát triển, đề tài đã đạt được nhiều thành tựu nổi bật, khẳng định tính khả thi và giá trị thực tiễn cao. Hệ thống hoạt động ổn định và mang lại lợi ích thiết thực cho từng vai trò người dùng:
+Nền tảng hoàn chỉnh: Phát triển thành công hệ thống Web App với giao diện trực quan, responsive tốt, hỗ trợ đầy đủ 4 vai trò với phân quyền nghiêm ngặt; các tính năng cốt lõi vận hành mượt mà, không phát sinh lỗi hệ thống.
+Chatbot thông minh: Tích hợp thành công Google Gemini AI API (mô hình gemini-2.0-flash), hỗ trợ tư vấn tìm phòng thông minh dựa trên địa điểm, ngân sách, sở thích; có khả năng giải đáp tự nhiên bằng tiếng Việt dựa trên ngữ cảnh dữ liệu thực từ hệ thống.
+Cơ sở dữ liệu tối ưu: Thiết kế chi tiết 11 collections trên MongoDB, cấu hình các index chuyên sâu (Text index, 2dsphere index, Compound index) giúp đảm bảo hiệu suất truy vấn tối đa và tính nhất quán của dữ liệu.
+Thanh toán đa kênh: Tích hợp thành công 3 cổng thanh toán phổ biến: VNPay, MoMo và Stripe; xử lý trọn vẹn luồng giao dịch tự động từ khởi tạo, xác thực kết quả (IPN/Webhook) đến cập nhật trạng thái đặt phòng.
+Chức năng quản trị mạnh mẽ: Cung cấp bộ công cụ CRUD toàn diện cho khách sạn, phòng, đơn đặt phòng, hóa đơn; tích hợp hệ thống báo cáo doanh thu trực quan bằng biểu đồ động (Recharts) và hỗ trợ xuất dữ liệu ra file Excel/PDF.
+Trải nghiệm khách hàng tối ưu: Hỗ trợ bộ lọc phòng đa tiêu chí; quy trình đặt phòng trực tuyến rút gọn trong 2 bước; cho phép quản lý lịch sử, xem hóa đơn và gửi đánh giá (review) sau khi trả phòng.
+Thông báo thời gian thực (Real-time): Ứng dụng Socket.IO để truyền tải thông báo tức thời đến nhân viên và quản lý khi có đơn đặt phòng mới, thanh toán thành công hoặc thay đổi trạng thái phòng.
+Triển khai và kiểm thử: Quản lý mã nguồn chặt chẽ qua GitHub, phát triển trên VS Code và kiểm thử, xác minh vận hành an toàn trên môi trường Windows kết hợp cơ sở dữ liệu đám mây MongoDB Atlas.
+Bảo mật nghiêm ngặt: Áp dụng cơ chế xác thực JWT (Access Token + Refresh Token), mã hóa mật khẩu bằng bcryptjs, đồng thời triển khai các thư viện phòng chống tấn công như Helmet, rate-limiting, mongo-sanitize, xss-clean, tuân thủ nghiêm ngặt các nguyên tắc bảo mật theo tiêu chuẩn OWASP Top 10.
+3. Khó khăn gặp phải
+          Trong quá trình thực hiện đề tài, người thực hiện đã đối mặt với một số thách thức kỹ thuật lớn, đòi hỏi sự nghiên cứu và tinh chỉnh liên tục.
+Tích hợp AI chuyên biệt: Việc cấu hình Google Gemini AI API để nhận diện chính xác ý định (intent) của khách hàng và nạp ngữ cảnh dữ liệu động từ MongoDB vào prompt đòi hỏi phải thử nghiệm và tối ưu câu lệnh (Prompt Engineering) nhiều lần.
+Chuẩn hóa dữ liệu NoSQL: Bản chất MongoDB là phi quan hệ, do đó việc thiết lập mô hình và tối ưu hóa các câu lệnh kết hợp (Aggregation Queries) giữa các thực thể có mối quan hệ phức tạp như Hotels, Rooms, Bookings, Payments để đảm bảo hiệu năng khi dữ liệu tăng trưởng là một bài toán khó.
+Đồng bộ hóa các cổng thanh toán: Việc kết nối đồng thời cả 3 cổng thanh toán với 3 cơ chế xử lý callback/webhook hoàn toàn khác nhau yêu cầu quá trình kiểm thử giả lập (Sandbox) cực kỳ tỉ mỉ để tránh lỗi bất đồng bộ trạng thái đơn hàng.
+Thiết kế giao diện thích ứng: Xây dựng giao diện đồng nhất trên nhiều kích thước màn hình bằng Tailwind CSS, đặc biệt tại các trang có mật độ thông tin cao như Dashboard Admin hay trang quản lý đặt phòng, tiêu tốn rất nhiều thời gian căn chỉnh.
+Yêu cầu an toàn thông tin: Việc tiếp cận và xử lý các thông tin nhạy cảm của khách hàng (Căn cước công dân, thông tin thẻ thanh toán) đòi hỏi phải nghiên cứu kỹ các quy định pháp lý và giải pháp mã hóa dữ liệu phù hợp.
+Hạn chế về nguồn lực: Áp lực về mặt thời gian thực hiện và kinh nghiệm thực tế ban đầu của người thực hiện đề tài phần nào gây khó khăn trong việc mở rộng quy mô hệ thống ngay từ đầu.
+Môi trường kiểm thử: Thiếu điều kiện tiếp cận các công cụ giả lập tải với dữ liệu cực lớn (Stress Test / Load Test) khiến việc đánh giá chính xác hiệu suất hệ thống ở quy mô thực tế gặp hạn chế.
+4. Hạn chế của đề tài
+          Mặc dù đã đạt được những kết quả rất tích cực, hệ thống vẫn tồn tại một số điểm hạn chế cần được tiếp tục cải thiện:
+Độ chính xác của Chatbot: AI đôi khi chưa xử lý thật sự mượt mà các câu hỏi mang tính chất lồng ghép quá phức tạp hoặc yêu cầu kiểm tra trạng thái phòng trống theo thời gian thực tuyệt đối tại một thời điểm cụ thể.
+Môi trường thanh toán thực tế: Toàn bộ hệ thống thanh toán trực tuyến hiện tại mới dừng lại ở việc kiểm thử và xác minh trên môi trường thử nghiệm (Sandbox), chưa được vận hành trên tài khoản doanh nghiệp thực tế (Production).
+Giới hạn dữ liệu: Kiến trúc cơ sở dữ liệu hiện tại chưa được cấu hình phân tán (Sharding/Replication) để tối ưu hoàn toàn cho khối lượng dữ liệu khổng lồ lên đến hàng triệu bản ghi.
+Trải nghiệm di động: Hệ thống hiện tại là Web Responsive, chưa phát triển ứng dụng di động độc lập (Native Mobile App) nên trải nghiệm vuốt chạm trên điện thoại thông minh ở một số phân hệ quản trị chưa đạt mức tối đa.
+Thiếu vắng kết nối IoT: Hệ thống chưa được tích hợp với các thiết bị phần cứng thông minh (như khóa từ điện tử, hệ thống điện thông minh tại phòng), làm giảm bớt tính tự động hóa trong khâu nhận/trả phòng.
+Cơ chế bảo mật nâng cao: Chưa tích hợp các phương thức đăng nhập một chạm OAuth 2.0 (Google, Facebook) và cơ chế xác thực hai lớp (2FA), điều cần thiết khi mở rộng quy mô người dùng.
+Phân tích và dự báo: Hệ thống dừng lại ở mức thống kê dữ liệu quá khứ, chưa có các mô hình Machine Learning để phân tích hành vi khách hàng hay dự báo xu hướng đặt phòng theo mùa để tối ưu giá linh hoạt.
+Hỗ trợ bản đồ (GIS): Thiếu hệ thống bản đồ tương tác trực quan để khách hàng dễ dàng định vị vị trí khách sạn và các tiện ích xung quanh trực tiếp trên giao diện.
+5. Hướng phát triển trong tương lai
+          Để nâng cao giá trị thương mại và khả năng ứng dụng rộng rãi, hệ thống hướng tới các cải tiến và mở rộng trọng tâm sau:
+Nâng cấp kiến trúc AI: Ứng dụng kỹ thuật RAG (Retrieval-Augmented Generation) kết hợp các mô hình ngôn ngữ lớn tiên tiến hơn để tối ưu hóa khả năng truy vấn dữ liệu phòng trống theo thời gian thực của Chatbot.
+Đưa vào vận hành thực tế: Hoàn thiện hồ sơ pháp lý để cấu hình môi trường Production cho các cổng thanh toán (VNPay, MoMo), sẵn sàng đưa hệ thống vào khai thác thương mại.
+Nâng cấp hiệu năng bằng Cloud: Tận dụng hạ tầng điện toán đám mây (AWS hoặc Google Cloud) để triển khai các giải pháp lưu trữ phân tán, tối ưu hóa cơ sở dữ liệu khi hệ thống mở rộng.
+Phát triển Ứng dụng di động (Mobile App): Sử dụng các framework như React Native hoặc Flutter để xây dựng ứng dụng di động riêng biệt cho khách hàng và nhân viên, tối ưu hóa trải nghiệm người dùng cuối.
+Tích hợp hệ sinh thái IoT: Nghiên cứu kết nối hệ thống với các API của thiết bị khóa cửa thông minh, hỗ trợ khách hàng nhận phòng tự động (Self Check-in) qua mã QR hoặc ứng dụng di động.
+Tăng cường bảo mật: Triển khai giao thức OAuth 2.0, tích hợp xác thực 2FA (gửi mã OTP qua SMS/Email) và đảm bảo các tiêu chuẩn an toàn thông tin theo Luật An ninh mạng và GDPR.
+Tích hợp hệ thống thông tin địa lý (GIS): Nhúng bản đồ tương tác nâng cao (Google Maps API hoặc Leaflet) vào trang tìm kiếm giúp khách hàng có cái nhìn trực quan nhất về vị trí và lộ trình di chuyển.
+Ứng dụng Trí tuệ nhân tạo trong quản trị: Phát triển phân hệ phân tích thông minh, tự động hóa việc đưa ra đề xuất giá phòng linh hoạt (Dynamic Pricing) dựa trên tỷ lệ lấp đầy phòng và dữ liệu thị trường.
+Thương mại hóa mô hình SaaS: Đóng gói giải pháp theo mô hình Phần mềm như một dịch vụ (SaaS) để cung cấp cho nhiều chuỗi khách sạn, resort hoặc homestay cùng khai thác trên một nền tảng chung.
+Chuẩn hóa tài liệu vận hành: Xây dựng bộ tài liệu hướng dẫn sử dụng chi tiết (User Manual) và hệ thống video đào tạo chuẩn hóa, giúp các đơn vị tiếp cận và làm quen với hệ thống một cách nhanh chóng nhất.
+TÀI LIỆU THAM KHẢO
+ [1]  Node.js Foundation. (2024). Node.js Documentation. Truy cập từ https://nodejs.org/en/docs.
+ [2]  OpenJS Foundation. (2024). Express.js – Fast, unopinionated, minimalist web framework for Node.js. Truy cập từ https://expressjs.com.
+ [3]  Meta Open Source. (2024). React – The library for web and native user interfaces. Truy cập từ https://react.dev.
+ [4]  Vite. (2024). Vite – Next Generation Frontend Tooling. Truy cập từ https://vitejs.dev.
+ [5]  MongoDB, Inc. (2024). MongoDB Documentation. Truy cập từ https://www.mongodb.com/docs.
+ [6]  Mongoose. (2024). Mongoose – Elegant MongoDB object modeling for Node.js. Truy cập từ https://mongoosejs.com/docs.
+ [7]  Redux Toolkit. (2024). Redux Toolkit – The official, opinionated, batteries-included toolset for efficient Redux development. Truy cập từ https://redux-toolkit.js.org.
+ [8]  Tailwind Labs. (2024). Tailwind CSS Documentation. Truy cập từ https://tailwindcss.com/docs.
+ [9]  Google AI for Developers. (2024). Gemini API Reference. Truy cập từ https://ai.google.dev/api.
+ [10]  Google AI. (2024). Google AI Generative AI Documentation. Truy cập từ https://ai.google.dev/docs.
+ [11]  VNPay. (2024). VNPay Payment Gateway – Tài liệu tích hợp dành cho nhà phát triển. Truy cập từ https://sandbox.vnpayment.vn/apis/docs/thanh-toan-pay/pay.html.
+ [12]  MoMo for Developers. (2024). MoMo Payment API Documentation. Truy cập từ https://developers.momo.vn.
+ [13]  Stripe, Inc. (2024). Stripe API Reference. Truy cập từ https://stripe.com/docs/api.
+ [14]  Socket.IO. (2024). Socket.IO Documentation – Bidirectional and low-latency communication. Truy cập từ https://socket.io/docs/v4.
+ [15]  Cloudinary. (2024). Cloudinary Developer Documentation. Truy cập từ https://cloudinary.com/documentation.
+ [16]  Auth0 by Okta. (2024). JSON Web Tokens – Introduction. Truy cập từ https://jwt.io/introduction.
+ [17]  OWASP Foundation. (2024). OWASP Top Ten – The Ten Most Critical Web Application Security Risks. Truy cập từ https://owasp.org/www-project-top-ten.
+ [18]  React Router. (2024). React Router v6 Documentation. Truy cập từ https://reactrouter.com/en/main.
+ [19]  Recharts. (2024). Recharts – A composable charting library built on React components. Truy cập từ https://recharts.org.
+ [20]  React Hook Form. (2024). React Hook Form – Performant, flexible and extensible forms. Truy cập từ https://react-hook-form.com.
+ [21]  Leaflet. (2024). Leaflet – An open-source JavaScript library for mobile-friendly interactive maps. Truy cập từ https://leafletjs.com.
+ [22]  npm, Inc. (2024). bcryptjs – Optimized bcrypt in JavaScript. Truy cập từ https://www.npmjs.com/package/bcryptjs.
+ [23]  Helmetjs. (2024). Helmet – Help secure Express apps with various HTTP headers. Truy cập từ https://helmetjs.github.io.
+ [24]  GeeksforGeeks. (2025). REST API Design – Best Practices. Truy cập từ https://www.geeksforgeeks.org/rest-api-introduction.
+ [25]  Fullstack.edu.vn. (2024). Khóa học ReactJS từ cơ bản đến nâng cao. Truy cập từ https://fullstack.edu.vn/learning/reactjs.
