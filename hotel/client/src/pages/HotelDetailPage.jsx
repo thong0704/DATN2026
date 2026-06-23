@@ -26,7 +26,7 @@ function ReviewForm({ hotel, onSuccess }) {
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
 
-  // Filter bookings for this hotel
+  
   const eligibleBookings = (bookingsData?.data?.bookings || []).filter(
     (b) => (b.hotel?._id || b.hotel) === hotel._id
   );
@@ -263,7 +263,7 @@ export default function HotelDetailPage() {
 
   return (
     <div className="animate-fade-in-up">
-      {/* Hero Section with Zoom Effect */}
+      {}
       <div className="relative overflow-hidden h-72 md:h-96 group">
         <div
           className="h-full w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-1000 ease-out"

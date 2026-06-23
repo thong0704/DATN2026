@@ -78,7 +78,7 @@ function MockCheckoutForm({ booking, intentId, onSuccess, method }) {
     }
   };
 
-  // Cash - pay at check-in
+  
   if (method === 'cash') {
     return (
       <div className="space-y-4">

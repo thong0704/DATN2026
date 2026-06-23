@@ -4,7 +4,7 @@ const { protect, restrictTo } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get('/', ctrl.list); // public — needed for frontend pricing display
+router.get('/', ctrl.list); 
 
 router.use(protect, restrictTo('admin', 'manager'));
 router.post('/', ctrl.create);

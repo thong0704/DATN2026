@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
   return (
     <div className="admin-theme min-h-screen flex items-center justify-center p-4 bg-[#EDE8DF]">
       <div className="w-full max-w-[900px] grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-xl border border-[#E2D9CC]">
-        {/* Left branding panel */}
+        {}
         <div className="relative flex flex-col items-center justify-center px-8 py-12 text-center bg-[#C4972A]">
           <div className="w-16 h-16 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-6 backdrop-blur-sm">
             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">

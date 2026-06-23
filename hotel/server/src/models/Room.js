@@ -16,7 +16,7 @@ const roomSchema = new mongoose.Schema(
       children: { type: Number, default: 0, min: 0 },
     },
     bedType: { type: String, default: 'Queen' },
-    size: { type: Number, default: 25 }, // m²
+    size: { type: Number, default: 25 }, 
     pricePerNight: { type: Number, required: true, min: 0 },
     weekendPrice: { type: Number, default: 0 },
     seasonalPricing: [

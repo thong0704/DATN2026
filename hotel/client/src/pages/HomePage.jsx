@@ -6,7 +6,7 @@ import Spinner from '../components/Spinner';
 import { useListHotelsQuery, useGetPersonalizedRecommendationsQuery } from '../features/hotels/hotelsApi';
 import { useListPublicBannersQuery } from '../features/content/contentApi';
 
-// Micro-interaction: Word Swapper for Hero headline
+
 function WordSwapper({ words = ['kỷ niệm', 'di sản', 'kiệt tác'] }) {
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);
@@ -18,7 +18,7 @@ function WordSwapper({ words = ['kỷ niệm', 'di sản', 'kiệt tác'] }) {
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % words.length);
         setFade(true);
-      }, 300); // matches opacity transition duration
+      }, 300); 
     }, 2500);
     return () => clearInterval(interval);
   }, [words]);
@@ -114,12 +114,12 @@ export default function HomePage() {
 
   return (
     <div className="bg-surface-bg min-h-screen">
-      {/* Hero Section */}
+      {}
       <section className="relative pt-12 pb-12 md:pt-20 md:pb-16 overflow-hidden px-6">
         <div className="mx-auto w-full max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
-            {/* Left Column: Premium Copy */}
+            {}
             <div className="lg:col-span-7 space-y-8 text-left z-10">
               <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-accent anim-load-eyebrow">
                 <span>✦</span> Trải nghiệm nghỉ dưỡng tinh hoa
@@ -145,7 +145,7 @@ export default function HomePage() {
                 {heroSubtitle || 'Đắm mình trong không gian thiết kế độc bản, dịch vụ may đo tinh tế và những điểm đến ngoạn mục của chuỗi khách sạn 2T Hotel.'}
               </p>
 
-              {/* Trust/Stars indicator */}
+              {}
               <div className="flex items-center gap-4 pt-2 anim-load-subheadline">
                 <div className="flex gap-1">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -157,7 +157,7 @@ export default function HomePage() {
                 <span className="text-xs uppercase tracking-wider font-bold text-slate-400">Tiêu chuẩn 5 sao quốc tế</span>
               </div>
 
-              {/* Action Buttons */}
+              {}
               <div className="flex flex-wrap gap-4 pt-4 anim-load-cta">
                 <Link to="/hotels" className="btn-accent rounded-full">
                   Đặt phòng ngay
@@ -168,10 +168,10 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Column: Signature Element - The Archway Portal */}
+            {}
             <div className="lg:col-span-5 flex justify-center z-10 anim-load-visual">
               <div className="relative w-full max-w-[380px] md:max-w-[420px] aspect-[4/5] rounded-t-full overflow-hidden shadow-[0_24px_50px_rgba(15,26,44,0.12)] border border-accent/15 group">
-                {/* Background Images with Cross-Fade */}
+                {}
                 <div className="absolute inset-0 overflow-hidden">
                   {slides.map((slide, idx) => (
                     <div
@@ -186,7 +186,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
                 <div className="absolute inset-0 border border-white/10 rounded-t-full pointer-events-none" />
                 
-                {/* Monogram floating inside the arch */}
+                {}
                 <div className="absolute bottom-8 left-8 right-8 text-white text-left z-20">
                   {slides.map((slide, idx) => (
                     <div
@@ -216,7 +216,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Floating Luxury Search Bar Section */}
+      {}
       <section className="relative z-30 px-6 anim-load-cta">
         <div className="mx-auto max-w-5xl">
           <form
@@ -225,7 +225,7 @@ export default function HomePage() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center divide-y lg:divide-y-0 lg:divide-x divide-border">
               
-              {/* Địa điểm */}
+              {}
               <div className="lg:col-span-4 px-6 py-3 hover:bg-slate-50/50 rounded-2xl lg:rounded-l-full transition-colors duration-300 text-left">
                 <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                   <span className="text-accent">
@@ -253,7 +253,7 @@ export default function HomePage() {
                 </datalist>
               </div>
 
-              {/* Ngày nhận phòng */}
+              {}
               <div className="lg:col-span-2 px-6 py-3 hover:bg-slate-50/50 transition-colors duration-300 text-left">
                 <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                   <span className="text-accent">

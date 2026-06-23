@@ -9,9 +9,9 @@ const { filterAvailableRooms } = require('../services/availabilityService');
 
 exports.list = catchAsync(async (req, res) => {
   const baseQuery = {};
-  // Admin sees all hotels; owner sees their own chain; public sees only active
+  
   if (req.user?.role === 'admin') {
-    // no filter — admin sees everything
+    
   } else if (req.query.mine === 'true' && req.user) {
     baseQuery.ownerId = req.user._id;
   } else {
@@ -28,7 +28,7 @@ exports.list = catchAsync(async (req, res) => {
     if (req.query.maxPrice) baseQuery.basePrice.$lte = Number(req.query.maxPrice);
   }
 
-  // Filter by availability if checkIn/checkOut provided
+  
   const { checkIn, checkOut, adults, children } = req.query;
   if (checkIn && checkOut) {
     const roomFilter = { isActive: true };
@@ -111,7 +111,7 @@ exports.getAvailableRooms = catchAsync(async (req, res) => {
   const idSet = new Set(availableIds.map(String));
   const available = rooms.filter((r) => idSet.has(String(r._id)));
 
-  // Calculate dynamic pricing details for display
+  
   const { getHolidaysForRange, calculateRoomPrice } = require('../services/availabilityService');
   const holidays = await getHolidaysForRange(req.params.id, checkIn, checkOut);
 
@@ -141,7 +141,7 @@ exports.getReviews = catchAsync(async (req, res) => {
   res.json({ status: 'success', results: reviews.length, data: { reviews } });
 });
 
-// Helper: ensure current user is owner (or admin) of the hotel
+
 async function loadOwnedHotel(req) {
   const hotel = await Hotel.findById(req.params.id);
   if (!hotel) throw new AppError('Không tìm thấy khách sạn', 404);
@@ -153,9 +153,9 @@ async function loadOwnedHotel(req) {
 }
 
 exports.create = catchAsync(async (req, res) => {
-  // Force single-owner: ownerId is always the logged-in user
+  
   const payload = { ...req.body, ownerId: req.user._id };
-  // Auto-sync chain name with user's existing chain (one chain per owner)
+  
   const existing = await Hotel.findOne({ ownerId: req.user._id }).select('chain');
   if (existing?.chain && existing.chain !== 'Independent') {
     payload.chain = existing.chain;
@@ -166,9 +166,9 @@ exports.create = catchAsync(async (req, res) => {
 
 exports.update = catchAsync(async (req, res) => {
   const existing = await loadOwnedHotel(req);
-  // Prevent transferring ownership via update
+  
   const { ownerId, ...rest } = req.body;
-  // If chain renamed, propagate to all hotels of this owner
+  
   if (rest.chain && rest.chain !== existing.chain) {
     await Hotel.updateMany({ ownerId: req.user._id }, { chain: rest.chain });
   }
@@ -182,7 +182,7 @@ exports.update = catchAsync(async (req, res) => {
 exports.remove = catchAsync(async (req, res) => {
   await loadOwnedHotel(req);
   const hotel = await Hotel.findByIdAndDelete(req.params.id);
-  // Best-effort cleanup of Cloudinary assets
+  
   for (const img of hotel.images || []) {
     if (img.public_id) cloudinary.uploader.destroy(img.public_id).catch(() => {});
   }
@@ -195,7 +195,7 @@ exports.uploadImages = catchAsync(async (req, res) => {
   const baseUrl = `${req.protocol}://${req.get('host')}`;
   const newImages = files.map((f) => {
     let url = f.path || f.secure_url || '';
-    // Local disk fallback: convert absolute disk path to /uploads/... URL
+    
     if (url && !/^https?:\/\//i.test(url)) {
       const rel = url.replace(/\\/g, '/').split('/uploads/').pop();
       url = `${baseUrl}/uploads/${rel}`;
@@ -250,7 +250,7 @@ exports.getPersonalizedRecommendations = catchAsync(async (req, res) => {
     const Booking = require('../models/Booking');
     const User = require('../models/User');
 
-    // Fetch bookings (with hotel populated) and user wishlist in parallel, selecting only needed fields
+    
     const [bookings, userWithWishlist] = await Promise.all([
       Booking.find({ customer: req.user._id, status: { $ne: 'cancelled' } })
         .select('hotel')

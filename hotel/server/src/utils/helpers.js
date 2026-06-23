@@ -20,7 +20,7 @@ const signEmailToken = (payload, exp = '1d') =>
 const verifyEmailToken = (token) =>
   jwt.verify(token, process.env.JWT_EMAIL_SECRET || process.env.JWT_ACCESS_SECRET);
 
-/** Generates a short, random, human-friendly booking code like "BK-9F3K2A" */
+
 const generateBookingCode = () => {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let code = '';

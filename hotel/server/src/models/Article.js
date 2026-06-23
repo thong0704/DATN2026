@@ -8,7 +8,7 @@ const articleSchema = new mongoose.Schema(
     summary: { type: String, default: '' },
     content: { type: String, default: '' },
     coverImage: { type: String, default: '' },
-    couponCode: { type: String, default: '' }, // optional related coupon
+    couponCode: { type: String, default: '' }, 
     tags: [{ type: String }],
     isPublished: { type: Boolean, default: true },
     views: { type: Number, default: 0 },

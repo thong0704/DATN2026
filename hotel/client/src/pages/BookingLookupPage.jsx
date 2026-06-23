@@ -10,7 +10,7 @@ export default function BookingLookupPage() {
   const [trigger, { data, isFetching, isError }] = bookingsApi.useLazyGetBookingByCodeQuery();
   const booking = data?.data?.booking;
 
-  // Auto-show bookings for logged-in users
+  
   const { data: myData, isLoading: myLoading } = useMyBookingsQuery(undefined, { skip: !isAuthenticated });
   const myBookings = myData?.data?.bookings || [];
 

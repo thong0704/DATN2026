@@ -1,17 +1,17 @@
 const stripe = require('../config/stripe');
 
-// Mock mode: enabled when no real Stripe key is set (development/demo).
-// Detects common placeholder patterns so devs don't need to wire up Stripe.
+
+
 const KEY = process.env.STRIPE_SECRET_KEY || '';
 const PLACEHOLDER_PATTERNS = [/placeholder/i, /dummy/i, /_dev\b/i, /xxx/i, /\*+/, /your[-_]?key/i];
 const MOCK_MODE = !KEY || PLACEHOLDER_PATTERNS.some((re) => re.test(KEY));
 
 exports.MOCK_MODE = MOCK_MODE;
 
-/**
- * Stripe charges in the smallest currency unit. VND has 0 decimal places,
- * so we send the integer VND amount directly.
- */
+
+
+
+
 exports.createPaymentIntent = ({ amount, currency = 'vnd', metadata = {} }) => {
   if (MOCK_MODE) {
     const id = `pi_mock_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;

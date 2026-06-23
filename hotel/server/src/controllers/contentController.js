@@ -4,7 +4,7 @@ const SiteBanner = require('../models/SiteBanner');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
-// ----- Articles -----
+
 exports.listArticles = catchAsync(async (req, res) => {
   const filter = { isPublished: true };
   if (req.query.tag) filter.tags = req.query.tag;
@@ -55,7 +55,7 @@ exports.uploadArticleCover = catchAsync(async (req, res) => {
   res.json({ status: 'success', data: { url, public_id: req.file.filename || req.file.public_id || '' } });
 });
 
-// ----- Contact -----
+
 exports.createContact = catchAsync(async (req, res) => {
   const { name, email, phone, subject, message } = req.body;
   if (!name || !email || !message) throw new AppError('Thiếu thông tin bắt buộc', 400);
@@ -80,7 +80,7 @@ exports.deleteContact = catchAsync(async (req, res) => {
   res.json({ status: 'success', message: 'Đã xoá' });
 });
 
-// ----- Site Banners -----
+
 exports.listBanners = catchAsync(async (req, res) => {
   const filter = {};
   if (req.query.type) filter.type = req.query.type;

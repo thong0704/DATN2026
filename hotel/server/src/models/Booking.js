@@ -5,7 +5,7 @@ const bookingSchema = new mongoose.Schema(
     bookingCode: { type: String, unique: true, required: true, index: true },
     customer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
     hotel: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel', required: true, index: true },
-    room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', index: true }, // legacy single room
+    room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', index: true }, 
     rooms: [
       {
         room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true },
@@ -52,7 +52,7 @@ const bookingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Compound index used by availability lookup
+
 bookingSchema.index({ room: 1, checkIn: 1, checkOut: 1, status: 1 });
 
 module.exports = mongoose.model('Booking', bookingSchema);

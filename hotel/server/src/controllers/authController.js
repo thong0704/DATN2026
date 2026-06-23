@@ -38,7 +38,7 @@ exports.register = catchAsync(async (req, res) => {
   const exists = await User.findOne({ email });
   if (exists && exists.isEmailVerified) throw new AppError('Email đã được đăng ký', 400);
 
-  // If exists but not verified, delete old record to allow re-registration
+  
   if (exists && !exists.isEmailVerified) {
     await User.findByIdAndDelete(exists._id);
   }
@@ -50,7 +50,7 @@ exports.register = catchAsync(async (req, res) => {
     if (phoneExists.isEmailVerified) {
       throw new AppError('Số điện thoại đã được sử dụng', 400);
     } else {
-      // Delete old unverified record with this phone to allow re-registration
+      
       const stillExists = await User.findById(phoneExists._id);
       if (stillExists) {
         await User.findByIdAndDelete(phoneExists._id);
@@ -64,7 +64,7 @@ exports.register = catchAsync(async (req, res) => {
   const user = await User.create({
     name, email, password, phone,
     emailVerificationCode: hashedCode,
-    emailVerificationExpire: Date.now() + 10 * 60 * 1000, // 10 minutes
+    emailVerificationExpire: Date.now() + 10 * 60 * 1000, 
   });
 
   sendVerificationCode(email, code).catch(() => {});
@@ -135,7 +135,7 @@ exports.logout = catchAsync(async (req, res) => {
       const decoded = verifyRefresh(token);
       await User.findByIdAndUpdate(decoded.id, { refreshToken: null });
     } catch (e) {
-      /* ignore */
+      
     }
   }
   res.clearCookie(REFRESH_COOKIE, cookieOpts);
@@ -155,7 +155,7 @@ exports.refreshToken = catchAsync(async (req, res) => {
   if (!user) throw new AppError('Tài khoản không tồn tại', 401);
   if (user.isBlocked) throw new AppError('Tài khoản đã bị khóa', 403);
 
-  // Issue new access token + rotate refresh token
+  
   const { accessToken } = await issueTokens(user, res);
   res.json({ status: 'success', data: { accessToken } });
 });
@@ -184,7 +184,7 @@ exports.forgotPassword = catchAsync(async (req, res) => {
   const code = generateVerificationCode();
   const hashed = crypto.createHash('sha256').update(code).digest('hex');
   user.resetPasswordToken = hashed;
-  user.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+  user.resetPasswordExpire = Date.now() + 10 * 60 * 1000; 
   await user.save({ validateBeforeSave: false });
 
   sendResetPasswordCode(user.email, code).catch(() => {});
@@ -228,7 +228,7 @@ exports.updateProfile = catchAsync(async (req, res) => {
   const updates = {};
   allowed.forEach((k) => req.body[k] !== undefined && (updates[k] = req.body[k]));
 
-  // Check phone uniqueness if being updated
+  
   if (updates.phone) {
     const phoneExists = await User.findOne({ phone: updates.phone, _id: { $ne: req.user._id } });
     if (phoneExists) throw new AppError('Số điện thoại đã được sử dụng bởi tài khoản khác', 400);
@@ -250,7 +250,7 @@ exports.changePassword = catchAsync(async (req, res) => {
 exports.uploadAvatar = catchAsync(async (req, res) => {
   if (!req.file) throw new AppError('Chưa chọn file ảnh', 400);
   let url = req.file.path || req.file.secure_url || '';
-  // Local disk fallback: convert absolute disk path to /uploads/... URL
+  
   if (url && !/^https?:\/\//i.test(url)) {
     const baseUrl = `${req.protocol}://${req.get('host')}`;
     const rel = url.replace(/\\/g, '/').split('/uploads/').pop();

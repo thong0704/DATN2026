@@ -15,20 +15,20 @@ import Spinner from '../../components/Spinner';
 import { formatCurrency, formatDate } from '../../utils/format';
 
 export default function DynamicPricingManagement() {
-  const [activeTab, setActiveTab] = useState('holiday'); // 'holiday' | 'weekend'
+  const [activeTab, setActiveTab] = useState('holiday'); 
   const { data: hotelsData, isLoading: hotelsLoading } = useListHotelsQuery();
   const hotels = hotelsData?.data?.hotels || [];
   
   const [selectedHotelId, setSelectedHotelId] = useState('');
 
-  // Auto-select first hotel
+  
   useEffect(() => {
     if (hotels.length && !selectedHotelId) {
       setSelectedHotelId(hotels[0]._id);
     }
   }, [hotels, selectedHotelId]);
 
-  // Holiday Pricing Queries
+  
   const { data: holidayData, isLoading: holidayLoading, refetch: refetchHolidays } = useListHolidayPricingQuery(
     { hotel: selectedHotelId },
     { skip: !selectedHotelId }
@@ -40,7 +40,7 @@ export default function DynamicPricingManagement() {
   const [deleteHoliday] = useDeleteHolidayPricingMutation();
   const [applyAllHoliday] = useApplyAllHolidayPricingMutation();
 
-  // Weekend Pricing Queries (Rooms)
+  
   const { data: roomsData, isLoading: roomsLoading, refetch: refetchRooms } = useRoomsByHotelQuery(
     selectedHotelId,
     { skip: !selectedHotelId }
@@ -48,16 +48,16 @@ export default function DynamicPricingManagement() {
   const rooms = roomsData?.data?.rooms || [];
   const [updateRoom] = useUpdateRoomMutation();
 
-  // Holiday Form State
+  
   const [editingHoliday, setEditingHoliday] = useState(null);
   const formDefaults = { name: '', from: '', to: '', multiplier: 1.5, isActive: true };
   const { register, handleSubmit, reset, setValue } = useForm({ defaultValues: formDefaults });
 
-  // Weekend Quick Edit State
+  
   const [editingRoomId, setEditingRoomId] = useState(null);
   const [quickWeekendPrice, setQuickWeekendPrice] = useState('');
 
-  // Apply All toggle
+  
   const [isApplyAll, setIsApplyAll] = useState(false);
 
   const handleEditHoliday = (h) => {
@@ -142,7 +142,7 @@ export default function DynamicPricingManagement() {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner */}
+      {}
       <div className="bg-white rounded-xl border border-border p-6 shadow-sm flex items-center justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý giá</h1>
@@ -171,7 +171,7 @@ export default function DynamicPricingManagement() {
         </div>
       </div>
 
-      {/* Tabs */}
+      {}
       <div className="flex gap-2 border-b border-border">
         <button
           onClick={() => setActiveTab('holiday')}

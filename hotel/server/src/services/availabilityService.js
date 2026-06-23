@@ -5,10 +5,10 @@ const AppError = require('../utils/AppError');
 
 const ACTIVE_BOOKING_STATUSES = ['pending', 'confirmed', 'paid', 'checked_in'];
 
-/**
- * Returns true if the given room has NO conflicting active bookings within
- * [checkIn, checkOut). Two ranges conflict if booking.checkIn < checkOut AND booking.checkOut > checkIn.
- */
+
+
+
+
 async function isRoomAvailable({ roomId, checkIn, checkOut, excludeBookingId = null, session }) {
   const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
   const query = {
@@ -32,10 +32,10 @@ async function isRoomAvailable({ roomId, checkIn, checkOut, excludeBookingId = n
   return !conflict;
 }
 
-/**
- * Returns an array of room IDs (from candidates) that are free between dates.
- * Uses one aggregation query for efficiency.
- */
+
+
+
+
 async function filterAvailableRooms({ roomIds, checkIn, checkOut }) {
   const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
   const busy = await Booking.aggregate([
@@ -75,10 +75,10 @@ async function filterAvailableRooms({ roomIds, checkIn, checkOut }) {
   return roomIds.filter((id) => !busySet.has(String(id)));
 }
 
-/**
- * Pricing engine — calculates room cost per night considering weekend,
- * seasonal and holiday pricing. Returns { nights, roomTotal, perNight: [...] }.
- */
+
+
+
+
 function calculateRoomPrice({ room, checkIn, checkOut, holidays = [] }) {
   const inDate = new Date(checkIn);
   const outDate = new Date(checkOut);
@@ -86,7 +86,7 @@ function calculateRoomPrice({ room, checkIn, checkOut, holidays = [] }) {
   if (ms <= 0) throw new AppError('check-out must be after check-in', 400);
   const nights = Math.ceil(ms / (24 * 60 * 60 * 1000));
 
-  // Helper to normalize a date to midnight UTC for consistent comparison
+  
   const toDateOnly = (d) => {
     const dt = new Date(d);
     return new Date(Date.UTC(dt.getFullYear(), dt.getMonth(), dt.getDate()));
@@ -101,7 +101,7 @@ function calculateRoomPrice({ room, checkIn, checkOut, holidays = [] }) {
     let price = room.pricePerNight;
     let label = '';
 
-    // Seasonal override (first matching window wins)
+    
     if (room.seasonalPricing?.length) {
       const season = room.seasonalPricing.find(
         (s) => dayNorm >= toDateOnly(s.from) && dayNorm <= toDateOnly(s.to)
@@ -112,15 +112,15 @@ function calculateRoomPrice({ room, checkIn, checkOut, holidays = [] }) {
       }
     }
 
-    // Weekend premium (Fri/Sat) if weekendPrice > 0
+    
     const dow = day.getDay();
     if ((dow === 5 || dow === 6) && room.weekendPrice) {
       price = Math.max(price, room.weekendPrice);
       label = label || 'Cuối tuần';
     }
 
-    // Holiday multiplier (stack on top of seasonal/weekend price)
-    // Note: getHolidaysForRange already filters isActive:true
+    
+    
     if (holidays.length) {
       const holiday = holidays.find(
         (h) => dayNorm >= toDateOnly(h.from) && dayNorm <= toDateOnly(h.to)
@@ -137,9 +137,9 @@ function calculateRoomPrice({ room, checkIn, checkOut, holidays = [] }) {
   return { nights, roomTotal: total, perNight };
 }
 
-/**
- * Fetches active holidays for a hotel within the given date range.
- */
+
+
+
 async function getHolidaysForRange(hotelId, checkIn, checkOut) {
   return HolidayPricing.find({
     hotel: hotelId,
@@ -168,9 +168,9 @@ async function computeBookingPricing({ room, checkIn, checkOut, services = [], t
   };
 }
 
-/**
- * Compute pricing for multiple rooms (same dates).
- */
+
+
+
 async function computeMultiRoomPricing({ roomDocs, checkIn, checkOut, services = [], taxRate = 0.08, discount = 0, holidays = [] }) {
   const inDate = new Date(checkIn);
   const outDate = new Date(checkOut);

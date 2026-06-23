@@ -4,7 +4,7 @@ const { protect, restrictTo } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get('/code/:code', ctrl.getByCode); // public lookup
+router.get('/code/:code', ctrl.getByCode); 
 
 router.use(protect);
 router.post('/', ctrl.create);

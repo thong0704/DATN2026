@@ -36,7 +36,7 @@ async function sendMail({ to, subject, html, text, attachments }) {
   return info;
 }
 
-// ----- Templates --------------------------------------------------------------
+
 const base = (title, body) => `
 <!doctype html><html><body style="font-family:Arial,sans-serif;background:#f5f6fa;padding:24px">
   <div style="max-width:600px;margin:auto;background:#fff;border-radius:8px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
@@ -158,10 +158,10 @@ exports.sendBookingConfirmationWithInvoice = async (to, bookingIdOrObj) => {
     const room = populatedBooking.room || (populatedBooking.rooms && populatedBooking.rooms[0]?.room);
     const user = populatedBooking.customer;
 
-    // Generate the PDF invoice buffer
+    
     const pdfBuffer = await generateInvoicePdfBuffer({ booking: populatedBooking, hotel, room, user });
 
-    // Send the email with the PDF attached
+    
     await exports.sendBookingConfirmation(to, populatedBooking, [
       {
         filename: `invoice-${populatedBooking.bookingCode}.pdf`,

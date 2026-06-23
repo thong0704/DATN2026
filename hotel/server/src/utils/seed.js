@@ -1,7 +1,7 @@
-/**
- * Seed sample data: admin user, 10 x 2T Hotels, 5 rooms each.
- * Usage: npm run seed
- */
+
+
+
+
 require('dotenv').config();
 const mongoose = require('mongoose');
 const connectDB = require('../config/db');
@@ -14,61 +14,61 @@ const logger = require('./logger');
 
 const AMENITIES_ALL = ['wifi', 'pool', 'gym', 'spa', 'parking', 'restaurant', 'bar', 'airport_shuttle', 'laundry', 'concierge'];
 
-// Ảnh khách sạn thực tế từ Unsplash (mỗi khách sạn 3 ảnh)
+
 const HOTEL_IMAGES = [
-  [ // Hà Nội
+  [ 
     'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&h=800&fit=crop',
   ],
-  [ // TP.HCM
+  [ 
     'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=1200&h=800&fit=crop',
   ],
-  [ // Đà Nẵng
+  [ 
     'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&h=800&fit=crop',
   ],
-  [ // Nha Trang
+  [ 
     'https://images.unsplash.com/photo-1549294413-26f195200c16?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&h=800&fit=crop',
   ],
-  [ // Đà Lạt
+  [ 
     'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=1200&h=800&fit=crop',
   ],
-  [ // Hội An
+  [ 
     'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1200&h=800&fit=crop',
   ],
-  [ // Huế
+  [ 
     'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1549294413-26f195200c16?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&h=800&fit=crop',
   ],
-  [ // Phú Quốc
+  [ 
     'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&h=800&fit=crop',
   ],
-  [ // Cần Thơ
+  [ 
     'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&h=800&fit=crop',
   ],
-  [ // Hạ Long
+  [ 
     'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1549294413-26f195200c16?w=1200&h=800&fit=crop',
     'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&h=800&fit=crop',
   ],
 ];
 
-// Ảnh phòng khách sạn theo loại phòng
+
 const ROOM_IMAGES = {
   basic: [
     'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1000&h=700&fit=crop',
@@ -84,7 +84,7 @@ const ROOM_IMAGES = {
   ],
 };
 
-// 10 thành phố trải dài Việt Nam
+
 const HOTEL_LIST = [
   { city: 'Hà Nội',    province: 'Hà Nội',        street: '58 Lý Thường Kiệt',       coords: [105.8412, 21.0245], stars: 5, amenities: [0,1,2,3,4,5,6,7,8,9] },
   { city: 'TP.HCM',    province: 'TP. Hồ Chí Minh', street: '19 Nguyễn Huệ',          coords: [106.7009, 10.7769], stars: 5, amenities: [0,1,2,3,4,5,6,7,8,9] },
@@ -98,7 +98,7 @@ const HOTEL_LIST = [
   { city: 'Hạ Long',   province: 'Quảng Ninh',       street: '12 Hạ Long',             coords: [107.0680, 20.9101], stars: 5, amenities: [0,1,2,3,4,5,6,7,9] },
 ];
 
-// 5 loại phòng cố định mỗi khách sạn
+
 const ROOM_TEMPLATES = [
   { roomNumber: '101', type: 'basic',    floor: 1, adults: 2, children: 1, bedType: 'Single', size: 20, price: 600000  },
   { roomNumber: '201', type: 'basic',    floor: 2, adults: 2, children: 1, bedType: 'Twin',   size: 22, price: 700000  },
@@ -112,14 +112,14 @@ const ROOM_TEMPLATES = [
     await connectDB();
     logger.info('🌱 Xóa dữ liệu cũ...');
     await Promise.all([
-      User.deleteMany({ role: { $ne: 'admin' } }),  // giữ lại admin nếu đã có
+      User.deleteMany({ role: { $ne: 'admin' } }),  
       Hotel.deleteMany({}),
       Room.deleteMany({}),
       Booking.deleteMany({}),
       Review.deleteMany({}),
     ]);
 
-    // ----- Admin -----
+    
     let admin = await User.findOne({ role: 'admin' });
     if (!admin) {
       admin = await User.create({
@@ -135,7 +135,7 @@ const ROOM_TEMPLATES = [
       logger.info(`✅ Giữ nguyên admin: ${admin.email}`);
     }
 
-    // ----- Hotels -----
+    
     const hotels = [];
     for (let idx = 0; idx < HOTEL_LIST.length; idx++) {
       const h = HOTEL_LIST[idx];
@@ -167,7 +167,7 @@ const ROOM_TEMPLATES = [
     }
     logger.info(`✅ Tạo ${hotels.length} khách sạn`);
 
-    // ----- Rooms (5 phòng / khách sạn) -----
+    
     let totalRooms = 0;
     for (const hotel of hotels) {
       const starBonus = hotel.stars >= 5 ? 1.3 : hotel.stars === 4 ? 1.1 : 1.0;

@@ -31,7 +31,7 @@ exports.remove = catchAsync(async (req, res) => {
   res.json({ status: 'success', message: 'Đã xoá' });
 });
 
-// Public: validate a coupon for a given amount + optional roomId
+
 exports.validate = catchAsync(async (req, res) => {
   const { code, amount, roomId } = req.body;
   if (!code || !amount) throw new AppError('Thiếu mã hoặc số tiền', 400);
@@ -46,7 +46,7 @@ exports.validate = catchAsync(async (req, res) => {
   if (coupon.minOrderAmount && amount < coupon.minOrderAmount) {
     throw new AppError(`Đơn tối thiểu ${coupon.minOrderAmount.toLocaleString('vi-VN')}đ`, 400);
   }
-  // Optional: restrict by hotel
+  
   if (coupon.hotels?.length && roomId) {
     const room = await Room.findById(roomId).select('hotel');
     if (!room || !coupon.hotels.map(String).includes(String(room.hotel))) {

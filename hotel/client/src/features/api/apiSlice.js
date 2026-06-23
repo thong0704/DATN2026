@@ -34,7 +34,7 @@ const normalizeUrls = (obj) => {
   return obj;
 };
 
-// Refresh-token wrapper — if 401, try /auth/refresh-token once, then retry.
+
 const baseQueryWithRefresh = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 401) {

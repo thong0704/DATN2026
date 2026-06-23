@@ -16,14 +16,14 @@ const { sendBookingConfirmationWithInvoice, sendBookingCancelled } = require('..
 const { notify, emitToHotel } = require('../services/notificationService');
 const { streamInvoicePdf } = require('../services/invoiceService');
 
-/**
- * Create a booking using a transaction to prevent race conditions.
- * Supports multi-room bookings via `roomIds` array (or legacy single `roomId`).
- */
+
+
+
+
 exports.create = catchAsync(async (req, res) => {
   const { roomId, roomIds: rawRoomIds, checkIn, checkOut, guests, guestInfo, specialRequests, services, couponCode } = req.body;
   
-  // Support both single roomId and multiple roomIds
+  
   const roomIds = rawRoomIds?.length ? rawRoomIds : roomId ? [roomId] : [];
   if (!roomIds.length || !checkIn || !checkOut) throw new AppError('Vui lòng điền đầy đủ thông tin bắt buộc', 400);
 
@@ -34,33 +34,33 @@ exports.create = catchAsync(async (req, res) => {
     throw new AppError('Ngày nhận phòng không được ở quá khứ', 400);
   }
 
-  // Transactions require a replica set; gracefully degrade if standalone.
+  
   const useTxn = mongoose.connection.client?.topology?.s?.description?.type !== 'Single';
   const session = useTxn ? await mongoose.startSession() : null;
   if (session) session.startTransaction();
 
   try {
-    // Fetch all rooms
+    
     const roomDocs = await Room.find({ _id: { $in: roomIds } }).session(session || null);
     if (roomDocs.length !== roomIds.length) throw new AppError('Một hoặc nhiều phòng không tồn tại', 404);
     if (roomDocs.some((r) => !r.isActive)) throw new AppError('Một hoặc nhiều phòng hiện không khả dụng', 400);
 
-    // Verify all rooms belong to the same hotel
+    
     const hotelId = String(roomDocs[0].hotel);
     if (roomDocs.some((r) => String(r.hotel) !== hotelId)) {
       throw new AppError('Tất cả phòng phải thuộc cùng một khách sạn', 400);
     }
 
-    // Check availability for each room
+    
     for (const room of roomDocs) {
       const available = await isRoomAvailable({ roomId: room._id, checkIn: inDate, checkOut: outDate, session });
       if (!available) throw new AppError(`Phòng ${room.roomNumber} đã được đặt trong khoảng thời gian này`, 409);
     }
 
-    // Fetch holiday pricing for the hotel
+    
     const holidays = await getHolidaysForRange(hotelId, inDate, outDate);
 
-    // Calculate pricing for all rooms
+    
     const { nights, roomBreakdowns, pricing } = await computeMultiRoomPricing({
       roomDocs,
       checkIn: inDate,
@@ -69,7 +69,7 @@ exports.create = catchAsync(async (req, res) => {
       holidays,
     });
 
-    // Apply coupon if provided
+    
     let appliedCoupon = null;
     if (couponCode) {
       const Coupon = require('../models/Coupon');
@@ -94,7 +94,7 @@ exports.create = catchAsync(async (req, res) => {
       bookingCode: generateBookingCode(),
       customer: req.user._id,
       hotel: roomDocs[0].hotel,
-      room: roomDocs[0]._id, // legacy field — first room
+      room: roomDocs[0]._id, 
       rooms: roomBreakdowns.map((rb) => ({ room: rb.room, roomTotal: rb.roomTotal })),
       checkIn: inDate,
       checkOut: outDate,
@@ -116,7 +116,7 @@ exports.create = catchAsync(async (req, res) => {
 
     await User.findByIdAndUpdate(req.user._id, { $push: { bookingHistory: booking._id } }, { session: session || undefined });
 
-    // Increment coupon usage count
+    
     if (appliedCoupon) {
       await require('../models/Coupon').findByIdAndUpdate(
         appliedCoupon._id,
@@ -127,7 +127,7 @@ exports.create = catchAsync(async (req, res) => {
 
     if (session) await session.commitTransaction();
 
-    // Side-effects (don't block response)
+    
     notify({
       audience: 'staff',
       type: 'booking_created',
@@ -166,7 +166,7 @@ exports.getById = catchAsync(async (req, res) => {
     .populate('customer', 'name email phone')
     .populate('paymentId');
   if (!booking) throw new AppError('Không tìm thấy đơn đặt phòng', 404);
-  // Only owner or staff/admin can view
+  
   if (
     String(booking.customer._id) !== String(req.user._id) &&
     !['admin', 'manager', 'staff'].includes(req.user.role)
@@ -194,13 +194,13 @@ exports.cancel = catchAsync(async (req, res) => {
     throw new AppError('Bạn không có quyền hủy đơn này', 403);
   }
 
-  // Only pending/confirmed/paid can be cancelled
+  
   const cancellable = ['pending', 'confirmed', 'paid'];
   if (!cancellable.includes(booking.status)) {
     throw new AppError(`Không thể hủy đơn ở trạng thái "${booking.status}"`, 400);
   }
 
-  // Policy: if paid and less than 24h before check-in, mark as late cancellation
+  
   const hoursUntil = (new Date(booking.checkIn) - new Date()) / (1000 * 60 * 60);
   const isLateCancellation = hoursUntil < 24 && booking.paymentStatus === 'paid';
 
@@ -208,20 +208,20 @@ exports.cancel = catchAsync(async (req, res) => {
   booking.cancelReason = req.body.reason || 'Khách hàng yêu cầu hủy';
   booking.cancelledAt = new Date();
 
-  // If already paid, set paymentStatus to trigger refund flow
+  
   if (booking.paymentStatus === 'paid') {
     booking.paymentStatus = isLateCancellation ? 'paid' : 'refunded';
-    // Note: actual refund via payment gateway is handled by admin (UC-15)
-    // For late cancellation, admin decides refund amount manually
+    
+    
   }
 
   await booking.save();
 
-  // Send cancellation email
+  
   const recipientEmail = booking.guestInfo?.email || req.user.email;
   sendBookingCancelled(recipientEmail, booking).catch(() => {});
 
-  // Notify the customer via socket
+  
   notify({
     user: booking.customer,
     audience: 'user',
@@ -231,7 +231,7 @@ exports.cancel = catchAsync(async (req, res) => {
     data: { bookingId: booking._id },
   }).catch(() => {});
 
-  // Notify staff room
+  
   notify({
     audience: 'staff',
     type: 'booking_cancelled',
@@ -240,7 +240,7 @@ exports.cancel = catchAsync(async (req, res) => {
     data: { bookingId: booking._id },
   }).catch(() => {});
 
-  // Emit to hotel room for realtime update
+  
   if (booking.hotel?._id) {
     emitToHotel(booking.hotel._id, 'booking_cancelled', {
       bookingId: booking._id,
@@ -291,11 +291,11 @@ exports.updateStatus = catchAsync(async (req, res) => {
   const oldStatus = booking.status;
   booking.status = req.body.status;
 
-  // If status is changed to paid
+  
   if (req.body.status === 'paid') {
     booking.paymentStatus = 'paid';
 
-    // Find the associated Payment record and mark it succeeded if it was pending/unpaid
+    
     const Payment = require('../models/Payment');
     let payment = await Payment.findOne({ booking: booking._id });
     if (payment) {
@@ -306,13 +306,13 @@ exports.updateStatus = catchAsync(async (req, res) => {
       }
       booking.paymentId = payment._id;
     } else {
-      // If no payment record exists, create one
+      
       payment = await Payment.create({
         booking: booking._id,
         user: booking.customer,
         amount: booking.pricing.total,
         currency: 'VND',
-        method: 'cash', // fallback to cash
+        method: 'cash', 
         status: 'succeeded',
         paidAt: new Date(),
         stripePaymentIntentId: `pi_cash_manual_${Date.now()}`
@@ -320,7 +320,7 @@ exports.updateStatus = catchAsync(async (req, res) => {
       booking.paymentId = payment._id;
     }
 
-    // Send confirmation email if it wasn't paid/sent before
+    
     if (oldStatus !== 'paid') {
       const User = require('../models/User');
       const customerUser = await User.findById(booking.customer);
@@ -334,7 +334,7 @@ exports.updateStatus = catchAsync(async (req, res) => {
 
   await booking.save();
 
-  // Sync room status (all rooms in the booking)
+  
   const allRoomIds = booking.rooms?.length
     ? booking.rooms.map((r) => r.room)
     : booking.room ? [booking.room] : [];
@@ -345,7 +345,7 @@ exports.updateStatus = catchAsync(async (req, res) => {
   } else if (req.body.status === 'checked_out') {
     await Room.updateMany({ _id: { $in: allRoomIds } }, { status: 'cleaning' });
     allRoomIds.forEach((rid) => emitToHotel(booking.hotel, 'room_status', { roomId: rid, status: 'cleaning' }));
-    // Auto-finish cleaning after 30 minutes
+    
     const CLEANING_MS = Number(process.env.ROOM_CLEANING_MINUTES || 30) * 60 * 1000;
     setTimeout(async () => {
       try {
@@ -357,10 +357,10 @@ exports.updateStatus = catchAsync(async (req, res) => {
             emitToHotel(booking.hotel, 'room_status', { roomId: room._id, status: 'available' });
           }
         }
-      } catch (e) { /* ignore */ }
+      } catch (e) {  }
     }, CLEANING_MS);
   } else if (['cancelled', 'refunded'].includes(req.body.status)) {
-    // Release rooms if occupied
+    
     for (const rid of allRoomIds) {
       const room = await Room.findById(rid);
       if (room && room.status === 'occupied') {
@@ -369,7 +369,7 @@ exports.updateStatus = catchAsync(async (req, res) => {
         emitToHotel(booking.hotel, 'room_status', { roomId: room._id, status: 'available' });
       }
     }
-    // Set cancelledAt if transitioning to cancelled
+    
     if (req.body.status === 'cancelled' && !booking.cancelledAt) {
       booking.cancelledAt = new Date();
       booking.cancelReason = req.body.reason || 'Nhân viên hủy';
@@ -377,7 +377,7 @@ exports.updateStatus = catchAsync(async (req, res) => {
     }
   }
 
-  // Notify customer
+  
   notify({
     user: booking.customer,
     audience: 'user',

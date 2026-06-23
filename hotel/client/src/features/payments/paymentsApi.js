@@ -22,7 +22,7 @@ export const paymentsApi = api.injectEndpoints({
       invalidatesTags: ['Booking', 'Payment'],
     }),
 
-    // ── Invoice management ──
+    
     listInvoices: b.query({
       query: (params = {}) => ({ url: '/payments/admin/list', params }),
       providesTags: ['Payment'],

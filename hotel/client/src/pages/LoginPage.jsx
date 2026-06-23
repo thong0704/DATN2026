@@ -29,7 +29,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-5xl grid md:grid-cols-2 rounded-3xl overflow-hidden shadow-2xl bg-white animate-fade-in-up">
-        {/* LEFT — Brand panel */}
+        {}
         <div className="relative hidden md:flex flex-col justify-between p-10 text-white bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 overflow-hidden">
           <div className="absolute -top-24 -right-24 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
           <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-white/10 rounded-full blur-3xl" />

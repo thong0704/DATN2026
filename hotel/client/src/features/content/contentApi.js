@@ -29,7 +29,7 @@ export const contentApi = api.injectEndpoints({
     uploadArticleCover: b.mutation({
       query: (formData) => ({ url: '/articles/upload-cover', method: 'POST', body: formData }),
     }),
-    // Banners
+    
     listPublicBanners: b.query({
       query: (params = {}) => ({ url: '/banners', params }),
       providesTags: ['Banner'],
@@ -53,7 +53,7 @@ export const contentApi = api.injectEndpoints({
     uploadBannerImage: b.mutation({
       query: (formData) => ({ url: '/banners/upload-image', method: 'POST', body: formData }),
     }),
-    // Contact
+    
     submitContact: b.mutation({
       query: (body) => ({ url: '/contact', method: 'POST', body }),
     }),

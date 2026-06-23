@@ -14,7 +14,7 @@ import Chatbot from './components/Chatbot';
 import ChatWidget from './components/ChatWidget';
 import { toast } from 'react-toastify';
 
-// Lazy-loaded pages for code splitting
+
 const HomePage = lazy(() => import('./pages/HomePage'));
 const HotelListPage = lazy(() => import('./pages/HotelListPage'));
 const HotelDetailPage = lazy(() => import('./pages/HotelDetailPage'));
@@ -35,7 +35,7 @@ const MoMoReturnPage = lazy(() => import('./pages/MoMoReturnPage'));
 const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 import { ForgotPasswordPage, ResetPasswordPage } from './pages/PasswordPages';
 
-// Admin
+
 const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'));
 const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
 const DashboardOverview = lazy(() => import('./pages/admin/DashboardOverview'));
@@ -78,7 +78,7 @@ function PublicShell({ children }) {
 
   return (
     <div className="relative overflow-hidden min-h-screen flex flex-col justify-between">
-      {/* Ambient floating shape portals */}
+      {}
       <div className="ambient-shape ambient-shape-1 top-20 -left-24" />
       <div className="ambient-shape ambient-shape-2 top-[35%] -right-32" />
       

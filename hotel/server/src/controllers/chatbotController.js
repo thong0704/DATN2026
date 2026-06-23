@@ -5,7 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
 const { filterAvailableRooms } = require('../services/availabilityService');
 
-// ─── Gemini AI Setup ───
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 const SYSTEM_PROMPT = `Bạn là trợ lý Concierge chuyên nghiệp và sang trọng của chuỗi khách sạn boutique "2T Hotel".

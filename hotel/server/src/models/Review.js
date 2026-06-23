@@ -27,7 +27,7 @@ const reviewSchema = new mongoose.Schema(
 
 reviewSchema.index({ hotel: 1, user: 1, booking: 1 }, { unique: true });
 
-// Recalculate avg rating after save/remove
+
 reviewSchema.statics.recalcHotelRating = async function (hotelId) {
   const stats = await this.aggregate([
     { $match: { hotel: new mongoose.Types.ObjectId(hotelId), isApproved: true } },

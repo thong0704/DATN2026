@@ -24,9 +24,9 @@ const PERIODS = [
 ];
 
 const ROOM_TYPE_COLORS = {
-  basic: '#A89E92',     // Clay muted
-  standard: '#10B981',  // Bright emerald green
-  vip: '#F59E0B',       // Bright amber gold
+  basic: '#A89E92',     
+  standard: '#10B981',  
+  vip: '#F59E0B',       
 };
 
 const THEMES = {
@@ -296,7 +296,7 @@ export default function DashboardOverview() {
 
   return (
     <div className="space-y-8">
-      {/* Header Banner */}
+      {}
       <div className="rounded-xl overflow-hidden border border-border bg-surface shadow-sm">
         <div className="px-6 py-6 border-b border-border bg-surface text-left">
           <h1 className="text-2xl font-medium text-primary font-serif-display">
@@ -305,7 +305,7 @@ export default function DashboardOverview() {
           <p className="text-slate-500 text-xs mt-1 font-light">Thống kê dữ liệu hoạt động chuỗi khách sạn 2T Hotel</p>
         </div>
         <div className="bg-surface px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-          {/* Period Filter Tabs */}
+          {}
           <div className="flex flex-wrap items-center gap-2">
             {PERIODS.map((p) => (
               <button 
@@ -321,7 +321,7 @@ export default function DashboardOverview() {
               </button>
             ))}
           </div>
-          {/* Custom Date Pickers & Actions */}
+          {}
           <div className="flex flex-wrap items-center gap-3">
             {(period === 'day' || period === 'week') && (
               <input type="date" className="input !py-1.5 !px-3 !w-auto bg-surface" value={pickDate} onChange={(e) => setPickDate(e.target.value)} />
@@ -402,7 +402,7 @@ export default function DashboardOverview() {
 
       {isLoading ? <Spinner className="py-16" /> : (
         <>
-          {/* Summary Cards */}
+          {}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
              <StatCard
               title="Doanh Thu"
@@ -535,7 +535,7 @@ export default function DashboardOverview() {
             </div>
           </div>
 
-          {/* Main Chart */}
+          {}
           <div className="bg-surface rounded-xl border border-border p-6 text-left shadow-sm">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
               <h2 className="text-lg font-serif-display font-medium text-primary">
@@ -607,9 +607,9 @@ export default function DashboardOverview() {
             </div>
           </div>
 
-          {/* Secondary Stats Grid */}
+          {}
           <div className="grid lg:grid-cols-3 gap-6 text-left">
-            {/* Room Type */}
+            {}
             <div className="bg-surface rounded-xl border border-border p-6 shadow-sm">
               <h3 className="text-md font-serif-display font-medium text-primary mb-4">🏨 Phân Bổ Loại Phòng</h3>
               {roomTypeDist.length === 0 ? (

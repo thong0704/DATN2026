@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
   return (
     <footer className="relative mt-0 overflow-hidden bg-primary text-slate-300 border-t border-border/10">
-      {/* Delicate background illumination */}
+      {}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(196,154,69,0.08),transparent_50%)]" />
       <div className="absolute -left-32 top-24 h-64 w-64 rounded-full bg-accent/5 blur-[100px]" />
 
       <div className="relative mx-auto max-w-7xl px-6 pb-12 pt-16">
-        {/* Footer Top Banner */}
+        {}
         <div className="mb-16 rounded-2xl border border-white/5 bg-white/[0.02] p-8 md:p-10 backdrop-blur-sm md:flex md:items-center md:justify-between transition-all duration-300 hover:border-accent/10">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-accent">Stay different</span>
@@ -27,9 +27,9 @@ export default function Footer() {
           </Link>
         </div>
 
-        {/* Footer Links Grid */}
+        {}
         <div className="grid gap-12 md:grid-cols-4 border-b border-white/5 pb-12">
-          {/* Brand Info */}
+          {}
           <div>
             <h3 className="text-xl font-medium tracking-widest text-white font-serif-display">2T HOTEL</h3>
             <p className="mt-4 text-xs leading-relaxed text-slate-400">
@@ -48,7 +48,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Support */}
+          {}
           <div>
             <h4 className="mb-5 text-[10px] font-bold uppercase tracking-[0.2em] text-white">Hỗ trợ</h4>
             <ul className="space-y-3.5 text-xs text-slate-400">

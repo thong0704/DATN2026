@@ -27,14 +27,14 @@ export default function SupportChat({ initialSearch = '' }) {
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  // Sync sessions from API query
+  
   useEffect(() => {
     if (sessionsData?.data?.sessions) {
       setSessions(sessionsData.data.sessions);
     }
   }, [sessionsData]);
 
-  // Connect to Socket.io to receive real-time updates for session lists and current chat
+  
   useEffect(() => {
     const socket = io(SOCKET_URL, {
       withCredentials: true,
@@ -47,9 +47,9 @@ export default function SupportChat({ initialSearch = '' }) {
       console.log('[admin chat socket] connected', socket.id);
     });
 
-    // Listen to messages from ANY chat room (triggers update on active sessions list)
+    
     socket.on('staff_receive_message', ({ room, message }) => {
-      // Update session snippet in the list
+      
       setSessions((prev) => {
         const index = prev.findIndex((s) => s.room === room);
         if (index !== -1) {
@@ -61,17 +61,17 @@ export default function SupportChat({ initialSearch = '' }) {
             senderName: message.senderName,
             senderType: message.senderType,
           };
-          // Move the active session to the top
+          
           const item = updated.splice(index, 1)[0];
           return [item, ...updated];
         } else {
-          // If a new chat session started that wasn't in our list, reload sessions
+          
           refetchSessions();
           return prev;
         }
       });
 
-      // If this message belongs to the currently selected chat room, append it to the chat messages list
+      
       if (selectedSession && selectedSession.room === room) {
         setMessages((prev) => {
           if (prev.some((m) => m._id === message._id)) return prev;
@@ -81,7 +81,7 @@ export default function SupportChat({ initialSearch = '' }) {
     });
 
     socket.on('new_chat_message', (message) => {
-      // Handles messages in rooms the staff has explicitly joined
+      
       if (selectedSession) {
         const targetRoom = selectedSession.room;
         setMessages((prev) => {
@@ -97,7 +97,7 @@ export default function SupportChat({ initialSearch = '' }) {
     };
   }, [token, selectedSession, refetchSessions]);
 
-  // Fetch messages when a session is selected
+  
   useEffect(() => {
     if (!selectedSession) {
       setMessages([]);
@@ -123,13 +123,13 @@ export default function SupportChat({ initialSearch = '' }) {
 
     fetchMessages();
 
-    // Join room for the selected chat
+    
     if (socketRef.current) {
       socketRef.current.emit('staff_join_chat', { room: selectedSession.room });
     }
   }, [selectedSession, token]);
 
-  // Scroll to bottom on new messages
+  
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -151,7 +151,7 @@ export default function SupportChat({ initialSearch = '' }) {
 
   return (
     <div className="flex rounded-xl border border-border bg-surface overflow-hidden h-[72vh] shadow-sm">
-      {/* Sidebar Chat Sessions List */}
+      {}
       <div className="w-[300px] border-r border-border flex flex-col bg-slate-50/50">
         <div className="p-4 border-b border-border bg-surface text-left">
           <h2 className="text-md font-serif-display font-bold text-primary mb-3">💬 Trò chuyện hỗ trợ</h2>
@@ -202,11 +202,11 @@ export default function SupportChat({ initialSearch = '' }) {
         </div>
       </div>
 
-      {/* Main Conversation Window */}
+      {}
       <div className="flex-1 flex flex-col bg-surface">
         {selectedSession ? (
           <>
-            {/* Header */}
+            {}
             <div className="p-4 border-b border-border flex items-center justify-between text-left shadow-sm bg-surface">
               <div>
                 <h3 className="font-bold text-sm text-primary">{selectedSession.name}</h3>
@@ -216,7 +216,7 @@ export default function SupportChat({ initialSearch = '' }) {
               </div>
             </div>
 
-            {/* Messages body */}
+            {}
             <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50">
               {messagesLoading ? (
                 <Spinner className="py-12" />
@@ -245,7 +245,7 @@ export default function SupportChat({ initialSearch = '' }) {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Footer */}
+            {}
             <form onSubmit={handleSend} className="p-4 border-t border-border flex gap-3 items-center bg-surface">
               <input
                 type="text"

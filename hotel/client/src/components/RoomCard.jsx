@@ -11,7 +11,7 @@ export default function RoomCard({ room, onSelect, selected }) {
 
   return (
     <div className={`card overflow-hidden flex flex-col md:flex-row group bg-white border border-border transition-all duration-500 ${selected ? 'ring-1 ring-accent border-accent/40 shadow-glow' : ''}`}>
-      {/* Media Window */}
+      {}
       <div className="md:w-64 h-48 md:h-auto overflow-hidden flex-shrink-0 relative">
         <img src={img} alt={room.roomNumber} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent pointer-events-none" />
@@ -35,7 +35,7 @@ export default function RoomCard({ room, onSelect, selected }) {
             </span>
           </div>
 
-          {/* Sức chứa */}
+          {}
           <p className="text-xs text-slate-500 mt-2 font-light">
             Sức chứa tối đa: {room.capacity?.adults} người lớn · {room.capacity?.children} trẻ em
           </p>

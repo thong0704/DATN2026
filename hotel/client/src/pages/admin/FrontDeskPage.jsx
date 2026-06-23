@@ -41,13 +41,13 @@ export default function FrontDeskPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {}
       <div className="bg-white rounded-xl border border-border p-6 shadow-sm">
         <h1 className="text-2xl font-serif-display font-medium text-primary">Lễ tân</h1>
         <p className="text-slate-400 text-xs mt-1 font-light">Tra cứu và xử lý check-in / check-out</p>
       </div>
 
-      {/* Search */}
+      {}
       <div className="bg-white rounded-xl border border-border shadow-sm p-6 max-w-xl">
         <label className="label text-sm font-bold uppercase tracking-wider text-slate-500">Tìm booking theo mã đặt phòng</label>
         <div className="flex gap-2 mt-2">

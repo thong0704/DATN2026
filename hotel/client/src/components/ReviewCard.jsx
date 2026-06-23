@@ -21,7 +21,7 @@ export default function ReviewCard({ review }) {
       {review.title && <h4 className="mt-3 font-bold text-gray-950 text-base">{review.title}</h4>}
       <p className="text-sm text-gray-700 mt-1.5 leading-relaxed">{review.comment}</p>
 
-      {/* Hình ảnh thực tế từ khách hàng */}
+      {}
       {review.images && review.images.length > 0 && (
         <div className="flex gap-2 mt-4 flex-wrap">
           {review.images.map((img, idx) => (

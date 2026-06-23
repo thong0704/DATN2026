@@ -74,16 +74,16 @@ exports.verifyReturnUrl = (query) => {
 
 const VNP_REFUND_URL = process.env.VNPAY_REFUND_URL || 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction';
 
-/**
- * VNPay Refund API
- * @param {Object} params
- * @param {string} params.txnRef - Original vnp_TxnRef (orderId)
- * @param {number} params.amount - Refund amount in VND
- * @param {string} params.transactionDate - Original transaction date (yyyyMMddHHmmss)
- * @param {string} params.transactionId - VNPay transaction ID (vnp_TransactionNo)
- * @param {string} params.reason - Refund reason
- * @param {string} params.ipAddr - Request IP address
- */
+
+
+
+
+
+
+
+
+
+
 exports.refund = async ({ txnRef, amount, transactionDate, transactionId, reason, ipAddr = '127.0.0.1' }) => {
   const axios = require('axios');
   const date = new Date();
@@ -95,7 +95,7 @@ exports.refund = async ({ txnRef, amount, transactionDate, transactionId, reason
   vnpParams['vnp_Version'] = '2.1.0';
   vnpParams['vnp_Command'] = 'refund';
   vnpParams['vnp_TmnCode'] = VNP_TMN_CODE;
-  vnpParams['vnp_TransactionType'] = '02'; // Full refund
+  vnpParams['vnp_TransactionType'] = '02'; 
   vnpParams['vnp_TxnRef'] = txnRef;
   vnpParams['vnp_Amount'] = String(Math.round(amount * 100));
   vnpParams['vnp_OrderInfo'] = `Hoan tien giao dich ${txnRef}`;
@@ -105,7 +105,7 @@ exports.refund = async ({ txnRef, amount, transactionDate, transactionId, reason
   vnpParams['vnp_CreateBy'] = 'admin';
   vnpParams['vnp_IpAddr'] = ipAddr;
 
-  // Signature for refund: concatenation in specific order
+  
   const signData = [
     vnpParams['vnp_RequestId'],
     vnpParams['vnp_Version'],

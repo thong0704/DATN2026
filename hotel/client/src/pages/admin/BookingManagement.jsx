@@ -76,7 +76,7 @@ export default function BookingManagement() {
 
   return (
     <div className="space-y-6">
-      {/* Page header */}
+      {}
       <div className="bg-white rounded-xl border border-border p-6 shadow-sm flex items-center justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý đặt phòng</h1>
@@ -95,7 +95,7 @@ export default function BookingManagement() {
         </div>
       </div>
 
-      {/* Filter bar */}
+      {}
       <div className="bg-white rounded-xl border border-border p-4 flex flex-wrap gap-3 items-center shadow-sm">
         <div className="relative flex-1 min-w-[200px] max-w-sm">
           <input

@@ -20,7 +20,7 @@ export default function Navbar() {
   }, [avatarUrl]);
 
   const onLogout = async () => {
-    try { await doLogout().unwrap(); } catch (e) { /* ignore */ }
+    try { await doLogout().unwrap(); } catch (e) {  }
     dispatch(logout());
     navigate('/');
     setMobileOpen(false);
@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/30 bg-white/80 backdrop-blur-md anim-load-nav">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        {/* Logo */}
+        {}
         <Link to="/" className="flex items-center gap-2.5 group" onClick={() => setMobileOpen(false)}>
           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-xs font-semibold text-accent border border-accent/20 shadow-md group-hover:bg-accent group-hover:text-white group-hover:border-accent transition-all duration-500">
             II

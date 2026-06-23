@@ -25,7 +25,7 @@ export default function ContactInbox() {
 
   return (
     <div className="space-y-6">
-      {/* Header with Tabs */}
+      {}
       <div className="bg-white rounded-xl border border-border p-6 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="text-left">
           <h1 className="text-2xl font-serif-display font-medium text-primary">Liên hệ & Hỗ trợ</h1>

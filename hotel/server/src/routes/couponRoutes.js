@@ -4,7 +4,7 @@ const { protect, restrictTo } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.post('/validate', ctrl.validate); // public
+router.post('/validate', ctrl.validate); 
 
 router.use(protect);
 router.get('/mine', restrictTo('admin', 'manager'), ctrl.listMine);

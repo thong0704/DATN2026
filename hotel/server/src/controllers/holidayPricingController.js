@@ -20,7 +20,7 @@ exports.create = catchAsync(async (req, res) => {
   res.status(201).json({ status: 'success', data: { holiday } });
 });
 
-// Apply the same holiday pricing to ALL hotels at once
+
 exports.applyAll = catchAsync(async (req, res) => {
   const { name, from, to, multiplier, isActive } = req.body;
   if (!name || !from || !to) throw new AppError('Vui lòng điền đầy đủ thông tin', 400);

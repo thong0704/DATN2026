@@ -216,7 +216,7 @@ export default function InvoiceManagement() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {}
       <div className="bg-white rounded-xl border border-border p-6 shadow-sm">
         <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý hóa đơn</h1>
         <p className="text-slate-400 text-xs mt-1 font-light">
@@ -244,7 +244,7 @@ export default function InvoiceManagement() {
         </div>
       </div>
 
-      {/* Filters */}
+      {}
       <div className="bg-white rounded-xl border border-border p-4 flex flex-wrap gap-3 items-center shadow-sm">
         <div className="relative flex-1 min-w-[200px] max-w-sm">
           <input
@@ -267,7 +267,7 @@ export default function InvoiceManagement() {
         <button onClick={() => refetch()} className="btn-outline text-xs px-4 py-2.5 rounded-lg">Làm mới</button>
       </div>
 
-      {/* Table */}
+      {}
       {isLoading ? (
         <Spinner className="py-16" />
       ) : (

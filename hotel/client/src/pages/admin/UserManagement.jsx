@@ -69,8 +69,8 @@ export default function UserManagement() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      {/* Header */}
+      {}
+      {}
       <div className="bg-white rounded-xl border border-border p-6 shadow-sm flex items-center justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý người dùng</h1>

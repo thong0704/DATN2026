@@ -14,9 +14,9 @@ function applyFont(doc, isBold = false) {
   }
 }
 
-/**
- * Streams an invoice PDF to the provided Express response.
- */
+
+
+
 function streamInvoicePdf(res, { booking, hotel, room, user }) {
   const doc = new PDFDocument({ size: 'A4', margin: 50 });
   res.setHeader('Content-Type', 'application/pdf');
@@ -43,7 +43,7 @@ function generateInvoicePdfBuffer({ booking, hotel, room, user }) {
 }
 
 function drawInvoiceContent(doc, { booking, hotel, room, user }) {
-  // Title
+  
   applyFont(doc, true);
   doc.fontSize(22).fillColor('#0f766e').text('HOÁ ĐƠN THANH TOÁN', { align: 'center' });
   doc.moveDown();
@@ -55,7 +55,7 @@ function drawInvoiceContent(doc, { booking, hotel, room, user }) {
   doc.text(`Ngày lập: ${new Date(booking.createdAt).toLocaleString('vi-VN')}`);
   doc.moveDown();
 
-  // Customer Section
+  
   applyFont(doc, true);
   doc.fontSize(13).text('Khách hàng', { underline: true });
   applyFont(doc, false);
@@ -64,7 +64,7 @@ function drawInvoiceContent(doc, { booking, hotel, room, user }) {
   doc.text(`Số điện thoại: ${booking.guestInfo?.phone || ''}`);
   doc.moveDown();
 
-  // Hotel & Room Section
+  
   applyFont(doc, true);
   doc.fontSize(13).text('Khách sạn & Phòng nghỉ', { underline: true });
   applyFont(doc, false);
@@ -83,7 +83,7 @@ function drawInvoiceContent(doc, { booking, hotel, room, user }) {
   }
   doc.moveDown();
 
-  // Stay Section
+  
   applyFont(doc, true);
   doc.fontSize(13).text('Thông tin lưu trú', { underline: true });
   applyFont(doc, false);
@@ -93,7 +93,7 @@ function drawInvoiceContent(doc, { booking, hotel, room, user }) {
   doc.text(`Số khách:         ${booking.guests?.adults || 1} người lớn, ${booking.guests?.children || 0} trẻ em`);
   doc.moveDown();
 
-  // Pricing Section
+  
   applyFont(doc, true);
   doc.fontSize(13).text('Chi tiết thanh toán', { underline: true });
   applyFont(doc, false);
@@ -108,7 +108,7 @@ function drawInvoiceContent(doc, { booking, hotel, room, user }) {
   doc.fontSize(13).fillColor('#0f766e').text(`TỔNG CỘNG: ${(p.total || 0).toLocaleString('vi-VN')} VND`);
   doc.fillColor('#000');
 
-  // PAID stamp if paid
+  
   if (booking.paymentStatus === 'paid') {
     doc.save();
     doc.rotate(15, { origin: [450, 90] });

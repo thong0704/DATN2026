@@ -127,8 +127,8 @@ export default function RoomManagement() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      {/* Header */}
+      {}
+      {}
       <div className="bg-white rounded-xl border border-border p-6 shadow-sm flex items-center justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý phòng</h1>
@@ -148,7 +148,7 @@ export default function RoomManagement() {
 
       {hotelId && (
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Form */}
+          {}
           {isManager && (
           <form onSubmit={handleSubmit(onSave)} className="bg-white rounded-xl border border-border shadow-sm p-6 space-y-3 h-fit">
             <h2 className="font-serif-display font-medium text-lg text-primary flex items-center gap-2 mb-2">
@@ -223,7 +223,6 @@ export default function RoomManagement() {
           </form>
           )}
 
-          {/* Room cards */}
           <div className={`${isManager ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
             {isLoading ? <Spinner className="py-12" /> : (
               <div className="grid sm:grid-cols-2 gap-4">

@@ -12,7 +12,7 @@ function initSocket(httpServer) {
     },
   });
 
-  // Optional auth handshake using access token
+  
   io.use((socket, next) => {
     try {
       const token = socket.handshake.auth?.token;
@@ -22,14 +22,14 @@ function initSocket(httpServer) {
       }
       next();
     } catch (e) {
-      next(); // allow anonymous
+      next(); 
     }
   });
 
   io.on('connection', (socket) => {
     logger.info(`Socket connected: ${socket.id}`);
 
-    // Join role-based rooms
+    
     if (socket.user) {
       socket.join(`user:${socket.user.id}`);
       if (['admin', 'manager', 'staff'].includes(socket.user.role)) {
@@ -38,7 +38,7 @@ function initSocket(httpServer) {
       if (socket.user.role === 'admin') socket.join('admin_room');
     }
 
-    // --- SUPPORT CHAT SOCKET EVENTS ---
+    
     socket.on('join_chat', ({ guestId }) => {
       const targetRoom = socket.user ? `chat:user:${socket.user.id}` : `chat:guest:${guestId}`;
       if (targetRoom) {

@@ -1,7 +1,7 @@
-/**
- * APIFeatures — chainable Mongoose query helper for filtering, sorting,
- * field-limiting and pagination based on Express query strings.
- */
+
+
+
+
 class APIFeatures {
   constructor(query, queryString) {
     this.query = query;
@@ -15,7 +15,7 @@ class APIFeatures {
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt|in|ne)\b/g, (m) => `$${m}`);
     const parsed = JSON.parse(queryStr);
-    // Convert comma-separated $in lists to arrays
+    
     Object.keys(parsed).forEach((k) => {
       if (parsed[k] && typeof parsed[k] === 'object') {
         Object.keys(parsed[k]).forEach((op) => {

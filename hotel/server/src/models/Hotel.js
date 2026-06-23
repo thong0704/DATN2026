@@ -16,7 +16,7 @@ const hotelSchema = new mongoose.Schema(
     },
     location: {
       type: { type: String, enum: ['Point'], default: 'Point' },
-      coordinates: { type: [Number], default: [0, 0] }, // [lng, lat]
+      coordinates: { type: [Number], default: [0, 0] }, 
     },
     images: [{ url: String, public_id: String }],
     amenities: [{ type: String }],
@@ -29,7 +29,7 @@ const hotelSchema = new mongoose.Schema(
     staff: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     avgRating: { type: Number, default: 0, min: 0, max: 5 },
     totalReviews: { type: Number, default: 0 },
-    basePrice: { type: Number, default: 0 }, // denormalized lowest price for filtering
+    basePrice: { type: Number, default: 0 }, 
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

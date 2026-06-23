@@ -24,7 +24,7 @@ exports.getAvailable = catchAsync(async (req, res) => {
   const set = new Set(availableIds.map(String));
   const result = rooms.filter((r) => set.has(String(r._id)));
 
-  // Calculate dynamic pricing details for display
+  
   const resultWithPricing = await Promise.all(
     result.map(async (room) => {
       try {
@@ -63,7 +63,7 @@ exports.create = catchAsync(async (req, res) => {
   if (!hotel) throw new AppError('Không tìm thấy khách sạn', 404);
   const room = await Room.create(req.body);
 
-  // Update hotel.basePrice if needed
+  
   if (!hotel.basePrice || room.basePrice < hotel.basePrice) {
     hotel.basePrice = room.basePrice;
     await hotel.save();
@@ -71,7 +71,7 @@ exports.create = catchAsync(async (req, res) => {
   res.status(201).json({ status: 'success', data: { room } });
 });
 
-// API tính giá dự kiến cho khách (Dynamic Pricing)
+
 exports.getQuote = catchAsync(async (req, res) => {
   const { roomId, checkIn, checkOut } = req.query;
   
@@ -90,7 +90,7 @@ exports.getQuote = catchAsync(async (req, res) => {
   });
 });
 
-// API tính giá cho nhiều phòng cùng lúc
+
 exports.getMultiQuote = catchAsync(async (req, res) => {
   const { roomIds, checkIn, checkOut } = req.body;
   if (!roomIds?.length || !checkIn || !checkOut) {

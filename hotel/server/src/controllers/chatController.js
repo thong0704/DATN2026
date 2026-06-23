@@ -2,19 +2,19 @@ const ChatMessage = require('../models/ChatMessage');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
 
-// Get history of messages for a chat session
+
 exports.getMessages = catchAsync(async (req, res) => {
   const { userId, guestId } = req.query;
 
   let filter = {};
   
-  // Staff/Admin can query any room
+  
   if (req.user && ['admin', 'manager', 'staff'].includes(req.user.role)) {
     if (userId) filter.user = userId;
     else if (guestId) filter.guestId = guestId;
     else return res.json({ status: 'success', data: { messages: [] } });
   } else {
-    // Customers can only query their own
+    
     if (req.user) {
       filter.user = req.user.id;
     } else if (guestId) {
@@ -28,7 +28,7 @@ exports.getMessages = catchAsync(async (req, res) => {
   res.json({ status: 'success', data: { messages } });
 });
 
-// Get all active chat sessions (Admin/Staff only)
+
 exports.getSessions = catchAsync(async (req, res) => {
   if (!req.user || !['admin', 'manager', 'staff'].includes(req.user.role)) {
     throw new AppError('Bạn không có quyền thực hiện hành động này', 403);

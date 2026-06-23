@@ -6,15 +6,15 @@ const couponSchema = new mongoose.Schema(
     description: { type: String, default: '' },
     discountType: { type: String, enum: ['percent', 'fixed'], default: 'percent' },
     discountValue: { type: Number, required: true, min: 0 },
-    maxDiscount: { type: Number, default: 0 }, // 0 = không giới hạn
+    maxDiscount: { type: Number, default: 0 }, 
     minOrderAmount: { type: Number, default: 0 },
     validFrom: { type: Date, default: Date.now },
     validTo: { type: Date },
-    maxUses: { type: Number, default: 0 }, // 0 = không giới hạn
+    maxUses: { type: Number, default: 0 }, 
     usedCount: { type: Number, default: 0 },
     isActive: { type: Boolean, default: true },
     ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
-    hotels: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }], // rỗng = áp mọi khách sạn của owner
+    hotels: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }], 
   },
   { timestamps: true }
 );

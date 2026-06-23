@@ -27,7 +27,7 @@ app.use(
 app.use(cookieParser());
 app.use(compression());
 
-// Stripe webhook must receive RAW body — register BEFORE json parser.
+
 app.post('/api/v1/payments/webhook', express.raw({ type: 'application/json' }), paymentCtrl.webhook);
 
 app.use(express.json({ limit: '2mb' }));
@@ -41,7 +41,7 @@ app.use('/api', globalLimiter);
 
 app.get('/health', (req, res) => res.json({ status: 'ok', uptime: process.uptime() }));
 
-// Serve locally-uploaded files (fallback when Cloudinary not configured)
+
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 app.use('/api/v1', require('./routes'));

@@ -67,7 +67,7 @@ export default function CouponManagement() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {}
       <div className="bg-white rounded-xl border border-border p-6 shadow-sm">
         <h1 className="text-2xl font-serif-display font-medium text-primary">Quản lý mã giảm giá</h1>
         <p className="text-slate-400 text-xs mt-1 font-light">{coupons.length} mã giảm giá trong hệ thống</p>

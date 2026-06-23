@@ -97,10 +97,10 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Chat Window */}
+      {}
       {open && (
         <div className="chatbot-enter fixed bottom-6 right-6 z-50 flex h-[500px] max-h-[75vh] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-3xl border border-white/40 bg-white/90 shadow-[0_24px_80px_rgba(15,23,42,0.25)] backdrop-blur-xl text-left">
-          {/* Header */}
+          {}
           <div className="relative overflow-hidden border-b border-white/30 bg-gradient-to-r from-emerald-800 to-teal-600 px-4 py-4 text-white">
             <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-white/10 blur-lg" />
             <div className="relative flex items-center gap-3">

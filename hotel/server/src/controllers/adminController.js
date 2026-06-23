@@ -15,7 +15,7 @@ const getPeriodStart = (period) => {
   d.setHours(0, 0, 0, 0);
   if (period === 'week') {
     const day = d.getDay();
-    const diff = day === 0 ? -6 : 1 - day; // start Monday
+    const diff = day === 0 ? -6 : 1 - day; 
     d.setDate(d.getDate() + diff);
   } else if (period === 'month') {
     d.setDate(1);
@@ -26,7 +26,7 @@ const getPeriodStart = (period) => {
 };
 
 exports.dashboard = catchAsync(async (req, res) => {
-  const period = req.query.period || 'day'; // day|week|month|year
+  const period = req.query.period || 'day'; 
   const hotelId = req.query.hotelId && mongoose.Types.ObjectId.isValid(req.query.hotelId)
     ? new mongoose.Types.ObjectId(req.query.hotelId)
     : null;
@@ -40,7 +40,7 @@ exports.dashboard = catchAsync(async (req, res) => {
     end = new Date();
   }
 
-  // If filtering by hotel, get booking ids for that hotel
+  
   let bookingIdsFilter = null;
   if (hotelId) {
     const ids = await Booking.find({ hotel: hotelId }).distinct('_id');
@@ -79,7 +79,7 @@ exports.dashboard = catchAsync(async (req, res) => {
       hotelId: hotelId ? hotelId.toString() : null,
       periodRevenue: periodRevenueAgg[0]?.total || 0,
       periodBookings,
-      // Backward-compat aliases
+      
       todayRevenue: periodRevenueAgg[0]?.total || 0,
       todayBookings: periodBookings,
       totalCustomers,
@@ -91,8 +91,12 @@ exports.dashboard = catchAsync(async (req, res) => {
   });
 });
 
+// Phân tích doanh thu khách sạn theo các mốc thời gian: ngày, tuần, tháng, năm.
+// Hàm sử dụng MongoDB Aggregation để gom nhóm các khoản thanh toán thành công (succeeded).
+// Phân tích doanh thu khách sạn theo các mốc thời gian: ngày, tuần, tháng, năm.
+// Hàm sử dụng MongoDB Aggregation để gom nhóm các khoản thanh toán thành công (succeeded).
 exports.revenueAnalytics = catchAsync(async (req, res) => {
-  const period = req.query.period || 'month'; // day|week|month|year
+  const period = req.query.period || 'month'; 
   const hotelId = req.query.hotelId && mongoose.Types.ObjectId.isValid(req.query.hotelId)
     ? new mongoose.Types.ObjectId(req.query.hotelId)
     : null;
@@ -123,6 +127,10 @@ exports.revenueAnalytics = catchAsync(async (req, res) => {
   res.json({ status: 'success', data: { revenue: data, period } });
 });
 
+// Thống kê tỷ lệ lấp đầy phòng dựa trên số lượng đơn đặt phòng hoạt động 
+// (confirmed, paid, checked_in, checked_out) trong khoảng thời gian chỉ định.
+// Thống kê tỷ lệ lấp đầy phòng dựa trên số lượng đơn đặt phòng hoạt động 
+// (confirmed, paid, checked_in, checked_out) trong khoảng thời gian chỉ định.
 exports.occupancyAnalytics = catchAsync(async (req, res) => {
   const startStr = req.query.start;
   const endStr = req.query.end;
@@ -148,6 +156,10 @@ exports.occupancyAnalytics = catchAsync(async (req, res) => {
   res.json({ status: 'success', data: { occupancy: data } });
 });
 
+// Thống kê Top 10 khách sạn có doanh thu và số lượng đặt phòng cao nhất.
+// Hàm thực hiện gom nhóm trên bảng Booking và liên kết ($lookup) với bảng Hotel để lấy thông tin khách sạn.
+// Thống kê Top 10 khách sạn có doanh thu và số lượng đặt phòng cao nhất.
+// Hàm thực hiện gom nhóm trên bảng Booking và liên kết ($lookup) với bảng Hotel để lấy thông tin khách sạn.
 exports.topHotels = catchAsync(async (req, res) => {
   const top = await Booking.aggregate([
     { $match: { status: { $in: ['paid', 'checked_in', 'checked_out'] } } },
@@ -182,7 +194,7 @@ exports.dashboardRich = catchAsync(async (req, res) => {
     end = new Date();
   }
 
-  // Hotel scope filters
+  
   let bookingIdsForHotel = null;
   if (hotelId) {
     bookingIdsForHotel = await Booking.find({ hotel: hotelId }).distinct('_id');
@@ -197,7 +209,7 @@ exports.dashboardRich = catchAsync(async (req, res) => {
   const roomBase = hotelId ? { hotel: hotelId } : {};
   const roomActive = { ...roomBase, isActive: true };
 
-  // ===== Trend grouping =====
+  
   const groupId =
     period === 'year'
       ? { y: { $year: '$paidAt' }, m: { $month: '$paidAt' } }
@@ -310,12 +322,12 @@ exports.dashboardRich = catchAsync(async (req, res) => {
 
   const periodBookings = periodBookingsAgg[0]?.total || 0;
 
-  // Build room status map
+  
   const roomStatusMap = { available: 0, occupied: 0, maintenance: 0, cleaning: 0 };
   roomsByStatus.forEach((r) => { roomStatusMap[r._id] = r.count; });
   const totalRooms = Object.values(roomStatusMap).reduce((a, b) => a + b, 0);
 
-  // Merge revenue + booking trends by label
+  
   const keyOf = (id) => {
     const y = id.y;
     const m = String(id.m || '').padStart(2, '0');
@@ -345,11 +357,11 @@ exports.dashboardRich = catchAsync(async (req, res) => {
     .sort((a, b) => a[0].localeCompare(b[0]))
     .map((entry) => entry[1]);
 
-  // Review breakdown 1..5
+  
   const breakdown = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
   reviewBreakdown.forEach((r) => { breakdown[r._id] = r.count; });
 
-  // Occupancy rate
+  
   const occupancyPercent = totalRooms > 0
     ? Math.round((roomStatusMap.occupied / totalRooms) * 100)
     : 0;
@@ -393,7 +405,7 @@ exports.listUsers = catchAsync(async (req, res) => {
 exports.updateUserRole = catchAsync(async (req, res) => {
   const { role, isBlocked } = req.body;
 
-  // Admin không được tự thay đổi role của mình
+  
   if (role && String(req.params.id) === String(req.user._id)) {
     throw new AppError('Bạn không thể thay đổi quyền của chính mình', 403);
   }
@@ -409,7 +421,7 @@ exports.updateUserRole = catchAsync(async (req, res) => {
 exports.updateUser = catchAsync(async (req, res) => {
   const { name, email, phone, password, role, isBlocked } = req.body;
 
-  // Admin không được tự thay đổi role của mình
+  
   if (role && String(req.params.id) === String(req.user._id)) {
     throw new AppError('Bạn không thể thay đổi quyền của chính mình', 403);
   }
@@ -417,13 +429,13 @@ exports.updateUser = catchAsync(async (req, res) => {
   const user = await User.findById(req.params.id).select('+password');
   if (!user) throw new AppError('Không tìm thấy người dùng', 404);
 
-  // Check email uniqueness
+  
   if (email && email !== user.email) {
     const emailExists = await User.findOne({ email, _id: { $ne: user._id } });
     if (emailExists) throw new AppError('Email đã được sử dụng bởi tài khoản khác', 400);
     user.email = email;
   }
-  // Check phone uniqueness
+  
   if (phone !== undefined && phone !== user.phone) {
     if (phone) {
       const phoneExists = await User.findOne({ phone, _id: { $ne: user._id } });
@@ -435,7 +447,7 @@ exports.updateUser = catchAsync(async (req, res) => {
   if (name) user.name = name;
   if (role) user.role = role;
   if (typeof isBlocked === 'boolean') user.isBlocked = isBlocked;
-  if (password) user.password = password; // pre-save hook will hash
+  if (password) user.password = password; 
 
   await user.save();
   res.json({ status: 'success', data: { user } });

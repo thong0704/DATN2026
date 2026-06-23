@@ -27,14 +27,14 @@ export default function HotelListPage() {
   const today = dayjs().format('YYYY-MM-DD');
   const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
 
-  // Read from URL params
+  
   const city = searchParams.get('city') || '';
   const checkIn = searchParams.get('checkIn') || today;
   const checkOut = searchParams.get('checkOut') || tomorrow;
   const adults = Number(searchParams.get('adults')) || 2;
   const children = Number(searchParams.get('children')) || 0;
 
-  // Local search form state
+  
   const [formCity, setFormCity] = useState(city);
   const [formCheckIn, setFormCheckIn] = useState(checkIn);
   const [formCheckOut, setFormCheckOut] = useState(checkOut);
@@ -73,7 +73,7 @@ export default function HotelListPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 animate-fade-in-up">
       <div className="grid lg:grid-cols-4 gap-6">
-        {/* Sidebar Search Panel */}
+        {}
         <aside className="lg:col-span-1">
           <form onSubmit={onSearch} className="card p-5 space-y-5 lg:sticky lg:top-20">
             <h2 className="font-bold text-lg flex items-center gap-2">
@@ -81,7 +81,7 @@ export default function HotelListPage() {
               Tìm Khách Sạn Hoàn Hảo
             </h2>
 
-            {/* Destination */}
+            {}
             <div>
               <label className="label">Điểm đến</label>
               <input className="input" placeholder="Hà Nội, Đà Nẵng, ..." value={formCity} onChange={(e) => setFormCity(e.target.value)} />
@@ -99,7 +99,7 @@ export default function HotelListPage() {
               </div>
             </div>
 
-            {/* Guest count */}
+            {}
             <div>
               <label className="label flex items-center gap-2">
                 <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
@@ -125,7 +125,7 @@ export default function HotelListPage() {
               </div>
             </div>
 
-            {/* Submit */}
+            {}
             <button type="submit" className="btn-primary w-full py-3">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
               Tìm Khách Sạn
@@ -133,9 +133,9 @@ export default function HotelListPage() {
           </form>
         </aside>
 
-        {/* Results */}
+        {}
         <div className="lg:col-span-3">
-          {/* Results header */}
+          {}
           <div className="flex flex-wrap items-center justify-between mb-4 gap-3">
             <div>
               <h1 className="text-xl font-bold">
@@ -170,11 +170,11 @@ export default function HotelListPage() {
                   const img = hotel.images?.[0]?.url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop';
                   return (
                     <div key={hotel._id} className="card overflow-hidden flex flex-col md:flex-row group">
-                      {/* Image */}
+                      {}
                       <div className="relative md:w-72 h-48 md:h-auto flex-shrink-0 overflow-hidden">
                         <img src={img} alt={hotel.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         
-                        {/* Heart Favorite Button */}
+                        {}
                         <button
                           type="button"
                           onClick={() => handleFavoriteClick(hotel._id)}
@@ -210,7 +210,7 @@ export default function HotelListPage() {
                       </div>
 
 
-                      {/* Details */}
+                      {}
                       <div className="flex-1 p-5 flex flex-col justify-between">
                         <div>
                           <h3 className="text-lg font-bold text-gray-900">{hotel.name}</h3>

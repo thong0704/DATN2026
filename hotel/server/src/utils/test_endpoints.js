@@ -3,7 +3,7 @@ const http = require('http');
 const path = require('path');
 const dotenv = require('dotenv');
 
-// Load environment variables from the server directory .env
+
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 const app = require('../app');

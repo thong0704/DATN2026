@@ -20,7 +20,7 @@ function makeUploader(folder = 'hotel') {
       },
     });
   } else {
-    // Fallback: save to local disk under server/uploads/<folder>
+    
     const subFolder = folder.replace(/[^a-z0-9_-]/gi, '_');
     const uploadDir = path.join(process.cwd(), 'uploads', subFolder);
     if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
@@ -36,7 +36,7 @@ function makeUploader(folder = 'hotel') {
 
   return multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+    limits: { fileSize: 5 * 1024 * 1024 }, 
     fileFilter: (req, file, cb) => {
       if (!ALLOWED.includes(file.mimetype)) {
         return cb(new AppError('Only JPEG, PNG, WEBP images allowed', 400));

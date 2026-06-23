@@ -17,10 +17,10 @@ exports.toggle = catchAsync(async (req, res) => {
   let isFavorite = false;
 
   if (index >= 0) {
-    // Already in wishlist, remove it
+    
     user.wishlist.splice(index, 1);
   } else {
-    // Add to wishlist
+    
     user.wishlist.push(hotelId);
     isFavorite = true;
   }
@@ -37,7 +37,7 @@ exports.toggle = catchAsync(async (req, res) => {
 exports.list = catchAsync(async (req, res) => {
   const user = await User.findById(req.user._id).populate({
     path: 'wishlist',
-    match: { isActive: true }, // Only show active hotels
+    match: { isActive: true }, 
   });
 
   if (!user) throw new AppError('Người dùng không tồn tại', 404);

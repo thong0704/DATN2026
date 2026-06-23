@@ -29,9 +29,9 @@ export const statusColor = (status) => {
   return map[status] || 'bg-gray-100 text-gray-700';
 };
 
-// ----- Vietnamese label dictionaries -----
+
 const STATUS_LABELS = {
-  // Booking statuses
+  
   pending: 'Chờ xử lý',
   confirmed: 'Đã xử lý',
   paid: 'Đã thanh toán',
@@ -40,7 +40,7 @@ const STATUS_LABELS = {
   cancelled: 'Đã huỷ',
   refunded: 'Đã hoàn tiền',
   no_show: 'Không đến',
-  // Room statuses
+  
   available: 'Trống',
   occupied: 'Có khách',
   cleaning: 'Đang dọn',
@@ -66,7 +66,7 @@ const ROOM_TYPE_LABELS = {
   basic: 'Phòng thường',
   standard: 'Tiêu chuẩn',
   vip: 'VIP',
-  // Legacy fallbacks
+  
   deluxe: 'VIP',
   suite: 'VIP',
   presidential: 'VIP',
@@ -80,7 +80,7 @@ export const tRole = (r) => ROLE_LABELS[r] || r || '';
 export const tRoomType = (t) => ROOM_TYPE_LABELS[t] || t || '';
 
 const AMENITY_LABELS = {
-  // Hotel amenities
+  
   wifi: 'WiFi',
   pool: 'Hồ bơi',
   gym: 'Gym',
@@ -92,7 +92,7 @@ const AMENITY_LABELS = {
   laundry: 'Giặt ủi',
   concierge: 'Hỗ trợ khách hàng',
 
-  // Room amenities
+  
   air_conditioning: 'Điều hòa',
   tv: 'TV',
   fridge: 'Tủ lạnh',

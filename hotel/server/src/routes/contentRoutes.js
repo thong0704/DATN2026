@@ -7,15 +7,15 @@ const router = express.Router();
 const upload = makeUploader('hotel/articles');
 const uploadBanner = makeUploader('hotel/banners');
 
-// Public — Articles
+
 router.get('/articles', ctrl.listArticles);
 router.get('/articles/:slug', ctrl.getArticle);
-// Public — Contact form submit
+
 router.post('/contact', ctrl.createContact);
-// Public — Banners
+
 router.get('/banners', ctrl.listPublicBanners);
 
-// Admin
+
 router.use(protect);
 router.get('/admin/articles', restrictTo('admin', 'manager'), ctrl.listAllArticlesAdmin);
 router.post('/articles', restrictTo('admin', 'manager'), ctrl.createArticle);

@@ -42,7 +42,7 @@ export default function BookingPage() {
   const [createBooking, { isLoading: creating }] = useCreateBookingMutation();
   const [validateCoupon, { isLoading: validating }] = useValidateCouponMutation();
   const [couponInput, setCouponInput] = useState('');
-  const [coupon, setCoupon] = useState(null); // { code, discount, description }
+  const [coupon, setCoupon] = useState(null); 
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {

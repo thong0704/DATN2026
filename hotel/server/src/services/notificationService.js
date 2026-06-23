@@ -2,10 +2,10 @@ const Notification = require('../models/Notification');
 const { getIO } = require('../config/socket');
 const logger = require('../utils/logger');
 
-/**
- * Create a Notification document and emit it via Socket.io.
- * Targets: a specific user, or a role-based room.
- */
+
+
+
+
 async function notify({ user, audience = 'user', type, title, message, link, data }) {
   const doc = await Notification.create({ user, audience, type, title, message, link, data });
   try {
@@ -25,7 +25,7 @@ function emitToHotel(hotelId, event, payload) {
   try {
     getIO().to(`hotel:${hotelId}`).emit(event, payload);
   } catch (e) {
-    /* socket not ready */
+    
   }
 }
 

@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
 export default function VNPayReturnPage() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const [status, setStatus] = useState('loading'); // loading | success | failed
+  const [status, setStatus] = useState('loading'); 
   const [bookingId, setBookingId] = useState('');
 
   useEffect(() => {

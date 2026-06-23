@@ -12,7 +12,7 @@ export default function HotelCard({ hotel }) {
   const isFavorite = user?.wishlist?.includes(hotel._id);
 
   const handleFavoriteClick = async (e) => {
-    e.preventDefault(); // Ngăn chặn nhảy trang chi tiết
+    e.preventDefault(); 
     if (!isAuthenticated) {
       return toast.info('Vui lòng đăng nhập để lưu khách sạn yêu thích');
     }
@@ -28,7 +28,7 @@ export default function HotelCard({ hotel }) {
       to={`/hotels/${hotel.slug}`}
       className="card group flex flex-col h-full bg-white border border-border"
     >
-      {/* Media Window */}
+      {}
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 flex-shrink-0">
         <img
           src={img}
@@ -38,7 +38,7 @@ export default function HotelCard({ hotel }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
-        {/* Heart Favorite Button */}
+        {}
         <button
           type="button"
           onClick={handleFavoriteClick}
@@ -60,7 +60,7 @@ export default function HotelCard({ hotel }) {
           </svg>
         </button>
 
-        {/* Rating Badge */}
+        {}
         {hotel.avgRating > 0 && (
           <span className="absolute right-3.5 top-3.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold font-mono text-primary shadow-sm backdrop-blur-sm border border-border/40">
             ★ {hotel.avgRating.toFixed(1)}
@@ -68,10 +68,10 @@ export default function HotelCard({ hotel }) {
         )}
       </div>
 
-      {/* Info Content */}
+      {}
       <div className="p-6 flex flex-col flex-1 justify-between">
         <div>
-          {/* Stars & Location Row */}
+          {}
           <div className="flex items-center justify-between gap-2 mb-2">
             <span className="text-[10px] text-accent tracking-widest font-mono uppercase">
               {'★'.repeat(hotel.stars || 0)}

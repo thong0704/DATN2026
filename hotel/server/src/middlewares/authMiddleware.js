@@ -36,7 +36,7 @@ exports.restrictTo =
     next();
   };
 
-// Soft auth: attach user if token present but don't fail otherwise (unless token is invalid/expired)
+
 exports.softAuth = catchAsync(async (req, res, next) => {
   let token;
   if (req.headers.authorization?.startsWith('Bearer ')) {
