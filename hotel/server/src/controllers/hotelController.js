@@ -244,49 +244,35 @@ exports.getSimilarHotels = catchAsync(async (req, res) => {
 });
 
 exports.getPersonalizedRecommendations = catchAsync(async (req, res) => {
-  let cities = [];
+  let targetHotelIds = [];
 
   if (req.user) {
     const Booking = require('../models/Booking');
     const User = require('../models/User');
 
-    
     const [bookings, userWithWishlist] = await Promise.all([
       Booking.find({ customer: req.user._id, status: { $ne: 'cancelled' } })
-        .select('hotel')
-        .populate('hotel', 'address.city'),
+        .select('hotel'),
       User.findById(req.user._id)
         .select('wishlist')
-        .populate({ path: 'wishlist', select: 'address.city' })
     ]);
 
-    const bookingCities = bookings.map((b) => b.hotel?.address?.city).filter(Boolean);
-    const wishlistCities = userWithWishlist?.wishlist?.map((h) => h.address?.city).filter(Boolean) || [];
+    const bookedHotelIds = bookings.map((b) => b.hotel && b.hotel._id ? b.hotel._id.toString() : null).filter(Boolean);
+    const wishlistHotelIds = userWithWishlist?.wishlist?.map((h) => h.toString()) || [];
 
-    cities = [...new Set([...bookingCities, ...wishlistCities])];
+    targetHotelIds = [...new Set([...bookedHotelIds, ...wishlistHotelIds])];
   }
 
-  let recommended = [];
-  if (cities.length > 0) {
-    recommended = await Hotel.find({
-      isActive: true,
-      'address.city': { $in: cities },
-    })
-      .sort('-avgRating')
-      .limit(8);
+  if (targetHotelIds.length === 0) {
+    return res.json({ status: 'success', data: { hotels: [] } });
   }
 
-  if (recommended.length < 4) {
-    const excludeIds = recommended.map((h) => h._id);
-    const topRated = await Hotel.find({
-      isActive: true,
-      _id: { $nin: excludeIds },
-    })
-      .sort('-avgRating')
-      .limit(8 - recommended.length);
-
-    recommended = [...recommended, ...topRated];
-  }
+  let recommended = await Hotel.find({
+    isActive: true,
+    _id: { $in: targetHotelIds }
+  })
+    .sort('-avgRating')
+    .limit(4);
 
   res.json({ status: 'success', data: { hotels: recommended } });
 });
