@@ -57,26 +57,43 @@ exports.uploadArticleCover = catchAsync(async (req, res) => {
 
 
 exports.createContact = catchAsync(async (req, res) => {
-  const { name, email, phone, subject, message } = req.body;
+  const { name, email, phone, subject, message, hotel } = req.body;
   if (!name || !email || !message) throw new AppError('Thiếu thông tin bắt buộc', 400);
-  const msg = await ContactMessage.create({ name, email, phone, subject, message });
+  const msg = await ContactMessage.create({ name, email, phone, subject, message, hotel: hotel || null });
   res.status(201).json({ status: 'success', message: 'Đã gửi liên hệ, chúng tôi sẽ phản hồi sớm', data: { id: msg._id } });
 });
 
 exports.listContacts = catchAsync(async (req, res) => {
-  const messages = await ContactMessage.find().sort('-createdAt');
+  const filter = {};
+  if (['manager', 'staff'].includes(req.user.role)) {
+    filter.hotel = req.user.assignedHotel;
+  }
+  const messages = await ContactMessage.find(filter).populate('hotel', 'name').sort('-createdAt');
   res.json({ status: 'success', data: { messages } });
 });
 
 exports.markContactRead = catchAsync(async (req, res) => {
-  const msg = await ContactMessage.findByIdAndUpdate(req.params.id, { isRead: true }, { new: true });
+  const msg = await ContactMessage.findById(req.params.id);
   if (!msg) throw new AppError('Không tìm thấy', 404);
+  
+  if (req.user.role !== 'admin' && String(msg.hotel) !== String(req.user.assignedHotel)) {
+    throw new AppError('Bạn không có quyền quản lý tin nhắn này', 403);
+  }
+
+  msg.isRead = true;
+  await msg.save();
   res.json({ status: 'success', data: { message: msg } });
 });
 
 exports.deleteContact = catchAsync(async (req, res) => {
-  const msg = await ContactMessage.findByIdAndDelete(req.params.id);
+  const msg = await ContactMessage.findById(req.params.id);
   if (!msg) throw new AppError('Không tìm thấy', 404);
+  
+  if (req.user.role !== 'admin' && String(msg.hotel) !== String(req.user.assignedHotel)) {
+    throw new AppError('Bạn không có quyền quản lý tin nhắn này', 403);
+  }
+
+  await ContactMessage.findByIdAndDelete(req.params.id);
   res.json({ status: 'success', message: 'Đã xoá' });
 });
 

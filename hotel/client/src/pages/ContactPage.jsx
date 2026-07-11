@@ -1,10 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useSubmitContactMutation } from '../features/content/contentApi';
+import { useListHotelsQuery } from '../features/hotels/hotelsApi';
 
 export default function ContactPage() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [submit, { isLoading }] = useSubmitContactMutation();
+  const { data: hotelsData } = useListHotelsQuery({ limit: 100 });
+  const hotels = hotelsData?.data?.hotels || [];
 
   const onSend = async (form) => {
     try {
@@ -50,6 +53,13 @@ export default function ContactPage() {
         </div>
 
         <form onSubmit={handleSubmit(onSend)} className="card p-6 md:col-span-2 space-y-4">
+          <div>
+            <label className="label">Khách sạn liên hệ</label>
+            <select className="input text-sm" {...register('hotel')}>
+              <option value="">— Liên hệ chung —</option>
+              {hotels.map((h) => <option key={h._id} value={h._id}>{h.name}</option>)}
+            </select>
+          </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label className="label">Họ tên *</label>

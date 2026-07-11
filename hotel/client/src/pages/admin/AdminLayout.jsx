@@ -15,7 +15,7 @@ const NAV = [
   { to: '/admin/dynamic-pricing', label: 'Quản lý giá', roles: ['admin', 'manager'] },
   { to: '/admin/banners', label: 'Banner & Điểm đến', roles: ['admin', 'manager'] },
   { to: '/admin/articles', label: 'Bài viết', roles: ['admin', 'manager'] },
-  { to: '/admin/contacts', label: 'Liên hệ', roles: ['admin', 'manager'] },
+  { to: '/admin/contacts', label: 'Liên hệ', roles: ['admin', 'manager', 'staff'] },
   { to: '/admin/users', label: 'Người dùng', roles: ['admin'] },
   { to: '/admin/front-desk', label: 'Lễ tân', roles: ['admin', 'manager', 'staff'] },
 ];

@@ -14,7 +14,7 @@ import { useAuth } from '../../hooks/useAuth';
 
 export default function HotelManagement() {
   const { isAdmin, isManager } = useAuth();
-  const { data, isLoading, refetch } = useListHotelsQuery({ limit: 100 });
+  const { data, isLoading, refetch } = useListHotelsQuery({ limit: 100, isAdminView: true });
   const [create, { isLoading: creating }] = useCreateHotelMutation();
   const [update] = useUpdateHotelMutation();
   const [del] = useDeleteHotelMutation();

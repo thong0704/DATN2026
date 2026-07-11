@@ -76,6 +76,7 @@ export default function ContactInbox() {
                   <div>
                     <p className="font-bold text-primary">{m.name} <span className="text-slate-400 font-normal font-light">· {m.email}</span></p>
                     {m.phone && <p className="text-xs text-slate-400 font-light mt-0.5">SĐT: {m.phone}</p>}
+                    {m.hotel && <p className="text-xs text-indigo-600 font-semibold mt-0.5">🏨 Khách sạn: {m.hotel.name}</p>}
                     {m.subject && <p className="text-xs font-bold uppercase tracking-wider text-accent mt-1">{m.subject}</p>}
                   </div>
                 </div>

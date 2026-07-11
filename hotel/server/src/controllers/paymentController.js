@@ -454,6 +454,10 @@ exports.adminList = catchAsync(async (req, res) => {
   const filter = {};
   if (status) filter.status = status;
   if (method) filter.method = method;
+  if (['manager', 'staff'].includes(req.user.role)) {
+    const assignedBookings = await Booking.find({ hotel: req.user.assignedHotel }).distinct('_id');
+    filter.booking = { $in: assignedBookings };
+  }
   if (dateFrom || dateTo) {
     filter.createdAt = {};
     if (dateFrom) filter.createdAt.$gte = new Date(dateFrom);
@@ -527,6 +531,10 @@ exports.getInvoice = catchAsync(async (req, res) => {
     throw new AppError('Forbidden', 403);
   }
 
+  if (['manager', 'staff'].includes(req.user.role) && String(payment.booking?.hotel?._id || payment.booking?.hotel) !== String(req.user.assignedHotel)) {
+    throw new AppError('Forbidden', 403);
+  }
+
   res.json({ status: 'success', data: { invoice: payment } });
 });
 
@@ -534,8 +542,15 @@ exports.getInvoice = catchAsync(async (req, res) => {
 
 
 exports.markPaid = catchAsync(async (req, res) => {
-  const payment = await Payment.findById(req.params.id);
+  const payment = await Payment.findById(req.params.id).populate('booking');
   if (!payment) throw new AppError('Invoice not found', 404);
+  
+  if (req.user.role !== 'admin' && ['manager', 'staff'].includes(req.user.role)) {
+    if (String(payment.booking?.hotel) !== String(req.user.assignedHotel)) {
+      throw new AppError('Bạn không có quyền đánh dấu hóa đơn của khách sạn khác', 403);
+    }
+  }
+
   if (payment.status === 'succeeded') throw new AppError('Already paid', 400);
 
   payment.status = 'succeeded';

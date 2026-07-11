@@ -29,8 +29,8 @@ router.post('/banners/upload-image', restrictTo('admin', 'manager'), uploadBanne
 router.put('/banners/:id', restrictTo('admin', 'manager'), ctrl.updateBanner);
 router.delete('/banners/:id', restrictTo('admin', 'manager'), ctrl.deleteBanner);
 
-router.get('/contact', restrictTo('admin', 'manager'), ctrl.listContacts);
-router.put('/contact/:id/read', restrictTo('admin', 'manager'), ctrl.markContactRead);
-router.delete('/contact/:id', restrictTo('admin', 'manager'), ctrl.deleteContact);
+router.get('/contact', restrictTo('admin', 'manager', 'staff'), ctrl.listContacts);
+router.put('/contact/:id/read', restrictTo('admin', 'manager', 'staff'), ctrl.markContactRead);
+router.delete('/contact/:id', restrictTo('admin', 'manager', 'staff'), ctrl.deleteContact);
 
 module.exports = router;

@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema(
       enum: ['customer', 'staff', 'manager', 'admin'],
       default: 'customer',
     },
+    assignedHotel: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' },
     refreshToken: { type: String, select: false },
     resetPasswordToken: { type: String, select: false },
     resetPasswordExpire: { type: Date, select: false },

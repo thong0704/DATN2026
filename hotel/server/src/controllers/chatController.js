@@ -8,19 +8,24 @@ exports.getMessages = catchAsync(async (req, res) => {
 
   let filter = {};
   
-  
   if (req.user && ['admin', 'manager', 'staff'].includes(req.user.role)) {
     if (userId) filter.user = userId;
     else if (guestId) filter.guestId = guestId;
     else return res.json({ status: 'success', data: { messages: [] } });
+
+    if (['manager', 'staff'].includes(req.user.role)) {
+      filter.hotel = req.user.assignedHotel;
+    }
   } else {
-    
     if (req.user) {
       filter.user = req.user.id;
     } else if (guestId) {
       filter.guestId = guestId;
     } else {
       return res.json({ status: 'success', data: { messages: [] } });
+    }
+    if (req.query.hotel) {
+      filter.hotel = req.query.hotel;
     }
   }
 
@@ -34,7 +39,13 @@ exports.getSessions = catchAsync(async (req, res) => {
     throw new AppError('Bạn không có quyền thực hiện hành động này', 403);
   }
 
+  const matchFilter = {};
+  if (['manager', 'staff'].includes(req.user.role)) {
+    matchFilter.hotel = req.user.assignedHotel;
+  }
+
   const sessions = await ChatMessage.aggregate([
+    { $match: matchFilter },
     {
       $group: {
         _id: {
@@ -47,7 +58,8 @@ exports.getSessions = catchAsync(async (req, res) => {
         lastMessage: { $last: '$content' },
         lastMessageAt: { $last: '$createdAt' },
         senderName: { $last: '$senderName' },
-        senderType: { $last: '$senderType' }
+        senderType: { $last: '$senderType' },
+        hotel: { $last: '$hotel' }
       }
     },
     { $sort: { lastMessageAt: -1 } }
@@ -64,6 +76,14 @@ exports.getSessions = catchAsync(async (req, res) => {
         senderType: sess.senderType,
         room: sess._id.type === 'user' ? `chat:user:${sess._id.id}` : `chat:guest:${sess._id.id}`,
       };
+
+      if (sess.hotel) {
+        const Hotel = require('../models/Hotel');
+        const h = await Hotel.findById(sess.hotel).select('name');
+        if (h) {
+          s.hotel = { _id: h._id, name: h.name };
+        }
+      }
 
       if (s.type === 'user') {
         const User = require('../models/User');

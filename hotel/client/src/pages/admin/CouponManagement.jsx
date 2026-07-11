@@ -10,8 +10,13 @@ import {
 } from '../../features/coupons/couponsApi';
 import Spinner from '../../components/Spinner';
 import { formatCurrency, formatDate } from '../../utils/format';
+import { useAuth } from '../../hooks/useAuth';
+import { useListHotelsQuery } from '../../features/hotels/hotelsApi';
 
 export default function CouponManagement() {
+  const { user, isAdmin } = useAuth();
+  const { data: hotelsData } = useListHotelsQuery({ limit: 100 });
+  const hotels = hotelsData?.data?.hotels || [];
   const { data, isLoading, refetch } = useListMyCouponsQuery();
   const [create] = useCreateCouponMutation();
   const [update] = useUpdateCouponMutation();
@@ -33,6 +38,7 @@ export default function CouponManagement() {
       validFrom: c.validFrom ? dayjs(c.validFrom).format('YYYY-MM-DD') : '',
       validTo: c.validTo ? dayjs(c.validTo).format('YYYY-MM-DD') : '',
       isActive: c.isActive !== false,
+      targetHotel: c.hotels?.[0]?._id || c.hotels?.[0] || '',
     });
   };
 
@@ -48,6 +54,7 @@ export default function CouponManagement() {
       validFrom: form.validFrom || null,
       validTo: form.validTo || null,
       isActive: form.isActive !== false,
+      hotels: form.targetHotel ? [form.targetHotel] : [],
     };
     try {
       if (editing) await update({ id: editing._id, ...payload }).unwrap();
@@ -115,6 +122,22 @@ export default function CouponManagement() {
 
           <div><label className="label">Số lượt tối đa (0 = không giới hạn)</label><input type="number" className="input" {...register('maxUses')} /></div>
 
+          {isAdmin ? (
+            <div>
+              <label className="label">Áp dụng cho khách sạn</label>
+              <select className="input text-sm" {...register('targetHotel')}>
+                <option value="">— Tất cả khách sạn (Toàn hệ thống) —</option>
+                {hotels.map((h) => <option key={h._id} value={h._id}>{h.name}</option>)}
+              </select>
+            </div>
+          ) : (
+            user?.assignedHotel && (
+              <div className="p-3 bg-slate-50 border border-border rounded-xl text-xs text-slate-500 font-semibold">
+                🏨 Chỉ áp dụng cho: {user.assignedHotel.name}
+              </div>
+            )
+          )}
+
           <label className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-slate-500 cursor-pointer p-3.5 rounded-xl bg-[#FAF9F6] border border-border">
             <input type="checkbox" className="w-4 h-4 accent-accent" {...register('isActive')} />
             <span>Đang kích hoạt</span>
@@ -143,6 +166,12 @@ export default function CouponManagement() {
                     </span>
                   </div>
                   <div className="text-xs text-slate-500 space-y-1 font-light">
+                    {c.hotels && c.hotels.length > 0 && (
+                      <p>Áp dụng tại: <span className="font-semibold text-indigo-650">🏨 {c.hotels.map(h => h.name || 'Khách sạn').join(', ')}</span></p>
+                    )}
+                    {(!c.hotels || c.hotels.length === 0) && (
+                      <p>Áp dụng tại: <span className="font-semibold text-emerald-600">🌍 Toàn hệ thống (Tất cả KS)</span></p>
+                    )}
                     {c.maxDiscount > 0 && <p>Giảm tối đa: <span className="font-semibold text-slate-700">{formatCurrency(c.maxDiscount)}</span></p>}
                     {c.minOrderAmount > 0 && <p>Đơn tối thiểu: <span className="font-semibold text-slate-700">{formatCurrency(c.minOrderAmount)}</span></p>}
                     {(c.validFrom || c.validTo) && (

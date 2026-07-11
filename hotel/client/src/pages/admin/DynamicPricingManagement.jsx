@@ -13,20 +13,24 @@ import {
 } from '../../features/holidayPricing/holidayPricingApi';
 import Spinner from '../../components/Spinner';
 import { formatCurrency, formatDate } from '../../utils/format';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function DynamicPricingManagement() {
   const [activeTab, setActiveTab] = useState('holiday'); 
-  const { data: hotelsData, isLoading: hotelsLoading } = useListHotelsQuery();
+  const { user, isAdmin } = useAuth();
+  const { data: hotelsData, isLoading: hotelsLoading } = useListHotelsQuery({ isAdminView: true });
   const hotels = hotelsData?.data?.hotels || [];
   
   const [selectedHotelId, setSelectedHotelId] = useState('');
 
   
   useEffect(() => {
-    if (hotels.length && !selectedHotelId) {
+    if (!isAdmin && user?.assignedHotel) {
+      setSelectedHotelId(user.assignedHotel._id || user.assignedHotel);
+    } else if (hotels.length && !selectedHotelId) {
       setSelectedHotelId(hotels[0]._id);
     }
-  }, [hotels, selectedHotelId]);
+  }, [hotels, selectedHotelId, user, isAdmin]);
 
   
   const { data: holidayData, isLoading: holidayLoading, refetch: refetchHolidays } = useListHolidayPricingQuery(
@@ -160,6 +164,7 @@ export default function DynamicPricingManagement() {
               setEditingHoliday(null);
               reset(formDefaults);
             }}
+            disabled={!isAdmin}
             className="bg-transparent font-bold border-none focus:ring-0 text-primary text-sm cursor-pointer outline-none min-w-[180px] max-w-[280px]"
           >
             {hotels.map((h) => (
@@ -252,7 +257,7 @@ export default function DynamicPricingManagement() {
             </label>
 
             {/* Apply All Toggle */}
-            {!editingHoliday && (
+            {isAdmin && !editingHoliday && (
               <label
                 className={`flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-slate-500 cursor-pointer p-3.5 rounded-xl border transition-all ${
                   isApplyAll

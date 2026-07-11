@@ -27,9 +27,13 @@ const getPeriodStart = (period) => {
 
 exports.dashboard = catchAsync(async (req, res) => {
   const period = req.query.period || 'day'; 
-  const hotelId = req.query.hotelId && mongoose.Types.ObjectId.isValid(req.query.hotelId)
+  let hotelId = req.query.hotelId && mongoose.Types.ObjectId.isValid(req.query.hotelId)
     ? new mongoose.Types.ObjectId(req.query.hotelId)
     : null;
+
+  if (req.user && ['manager', 'staff'].includes(req.user.role)) {
+    hotelId = req.user.assignedHotel;
+  }
 
   let start, end;
   if (req.query.start && req.query.end) {
@@ -97,9 +101,13 @@ exports.dashboard = catchAsync(async (req, res) => {
 // Hàm sử dụng MongoDB Aggregation để gom nhóm các khoản thanh toán thành công (succeeded).
 exports.revenueAnalytics = catchAsync(async (req, res) => {
   const period = req.query.period || 'month'; 
-  const hotelId = req.query.hotelId && mongoose.Types.ObjectId.isValid(req.query.hotelId)
+  let hotelId = req.query.hotelId && mongoose.Types.ObjectId.isValid(req.query.hotelId)
     ? new mongoose.Types.ObjectId(req.query.hotelId)
     : null;
+
+  if (req.user && ['manager', 'staff'].includes(req.user.role)) {
+    hotelId = req.user.assignedHotel;
+  }
 
   const groupId =
     period === 'year'
@@ -181,9 +189,13 @@ exports.topHotels = catchAsync(async (req, res) => {
 
 exports.dashboardRich = catchAsync(async (req, res) => {
   const period = req.query.period || 'month';
-  const hotelId = req.query.hotelId && mongoose.Types.ObjectId.isValid(req.query.hotelId)
+  let hotelId = req.query.hotelId && mongoose.Types.ObjectId.isValid(req.query.hotelId)
     ? new mongoose.Types.ObjectId(req.query.hotelId)
     : null;
+
+  if (req.user && ['manager', 'staff'].includes(req.user.role)) {
+    hotelId = req.user.assignedHotel;
+  }
 
   let start, end;
   if (req.query.start && req.query.end) {
@@ -398,7 +410,7 @@ exports.listUsers = catchAsync(async (req, res) => {
   const filter = {};
   if (req.query.role) filter.role = req.query.role;
   if (req.query.q) filter.$or = [{ name: new RegExp(req.query.q, 'i') }, { email: new RegExp(req.query.q, 'i') }];
-  const users = await User.find(filter).sort('-createdAt').limit(200);
+  const users = await User.find(filter).populate('assignedHotel', 'name').sort('-createdAt').limit(200);
   res.json({ status: 'success', results: users.length, data: { users } });
 });
 
@@ -419,7 +431,7 @@ exports.updateUserRole = catchAsync(async (req, res) => {
 });
 
 exports.updateUser = catchAsync(async (req, res) => {
-  const { name, email, phone, password, role, isBlocked } = req.body;
+  const { name, email, phone, password, role, isBlocked, assignedHotel } = req.body;
 
   
   if (role && String(req.params.id) === String(req.user._id)) {
@@ -448,13 +460,16 @@ exports.updateUser = catchAsync(async (req, res) => {
   if (role) user.role = role;
   if (typeof isBlocked === 'boolean') user.isBlocked = isBlocked;
   if (password) user.password = password; 
+  if (assignedHotel !== undefined) {
+    user.assignedHotel = assignedHotel || null;
+  }
 
   await user.save();
   res.json({ status: 'success', data: { user } });
 });
 
 exports.createUser = catchAsync(async (req, res) => {
-  const { name, email, password, phone, role } = req.body;
+  const { name, email, password, phone, role, assignedHotel } = req.body;
   if (!name || !email || !password) {
     throw new AppError('Tên, email và mật khẩu là bắt buộc', 400);
   }
@@ -472,6 +487,7 @@ exports.createUser = catchAsync(async (req, res) => {
     password,
     phone: phone || '',
     role: role || 'customer',
+    assignedHotel: assignedHotel || null,
   });
   res.status(201).json({ status: 'success', data: { user } });
 });

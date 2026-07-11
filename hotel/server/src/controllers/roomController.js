@@ -59,6 +59,9 @@ exports.getByHotel = catchAsync(async (req, res) => {
 });
 
 exports.create = catchAsync(async (req, res) => {
+  if (req.user.role !== 'admin' && String(req.body.hotel) !== String(req.user.assignedHotel)) {
+    throw new AppError('Bạn không có quyền tạo phòng cho khách sạn này', 403);
+  }
   const hotel = await Hotel.findById(req.body.hotel);
   if (!hotel) throw new AppError('Không tìm thấy khách sạn', 404);
   const room = await Room.create(req.body);
@@ -114,17 +117,27 @@ exports.getMultiQuote = catchAsync(async (req, res) => {
 });
 
 exports.update = catchAsync(async (req, res) => {
+  const roomToUpdate = await Room.findById(req.params.id);
+  if (!roomToUpdate) throw new AppError('Không tìm thấy phòng', 404);
+  if (req.user.role !== 'admin' && String(roomToUpdate.hotel) !== String(req.user.assignedHotel)) {
+    throw new AppError('Bạn không có quyền quản lý phòng của khách sạn này', 403);
+  }
+
   const room = await Room.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
-  if (!room) throw new AppError('Không tìm thấy phòng', 404);
   res.json({ status: 'success', data: { room } });
 });
 
 exports.remove = catchAsync(async (req, res) => {
+  const roomToRemove = await Room.findById(req.params.id);
+  if (!roomToRemove) throw new AppError('Không tìm thấy phòng', 404);
+  if (req.user.role !== 'admin' && String(roomToRemove.hotel) !== String(req.user.assignedHotel)) {
+    throw new AppError('Bạn không có quyền quản lý phòng của khách sạn này', 403);
+  }
+
   const room = await Room.findByIdAndDelete(req.params.id);
-  if (!room) throw new AppError('Không tìm thấy phòng', 404);
   for (const img of room.images || []) {
     if (img.public_id) cloudinary.uploader.destroy(img.public_id).catch(() => {});
   }
@@ -133,8 +146,13 @@ exports.remove = catchAsync(async (req, res) => {
 
 exports.updateStatus = catchAsync(async (req, res) => {
   const { status } = req.body;
+  const roomToUpdate = await Room.findById(req.params.id);
+  if (!roomToUpdate) throw new AppError('Không tìm thấy phòng', 404);
+  if (req.user.role !== 'admin' && String(roomToUpdate.hotel) !== String(req.user.assignedHotel)) {
+    throw new AppError('Bạn không có quyền quản lý phòng của khách sạn này', 403);
+  }
+
   const room = await Room.findByIdAndUpdate(req.params.id, { status }, { new: true });
-  if (!room) throw new AppError('Không tìm thấy phòng', 404);
   emitToHotel(room.hotel, 'room_status', { roomId: room._id, status: room.status });
   res.json({ status: 'success', data: { room } });
 });
@@ -142,6 +160,10 @@ exports.updateStatus = catchAsync(async (req, res) => {
 exports.uploadImages = catchAsync(async (req, res) => {
   const room = await Room.findById(req.params.id);
   if (!room) throw new AppError('Không tìm thấy phòng', 404);
+  if (req.user.role !== 'admin' && String(room.hotel) !== String(req.user.assignedHotel)) {
+    throw new AppError('Bạn không có quyền quản lý phòng của khách sạn này', 403);
+  }
+
   const files = req.files || [];
   const baseUrl = `${req.protocol}://${req.get('host')}`;
   const newImages = files.map((f) => {

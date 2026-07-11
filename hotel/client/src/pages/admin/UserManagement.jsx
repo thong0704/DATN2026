@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useListUsersQuery, useUpdateUserRoleMutation, useUpdateUserMutation, useCreateUserMutation } from '../../features/admin/adminApi';
+import { useListHotelsQuery } from '../../features/hotels/hotelsApi';
 import { useDebounce } from '../../hooks/useDebounce';
 import Spinner from '../../components/Spinner';
 import { tRole } from '../../utils/format';
@@ -16,9 +17,12 @@ export default function UserManagement() {
   const [createUser] = useCreateUserMutation();
   const users = data?.data?.users || [];
 
+  const { data: hotelsData } = useListHotelsQuery({ limit: 100 });
+  const hotels = hotelsData?.data?.hotels || [];
+
   const [editingUser, setEditingUser] = useState(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', role: 'customer' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', role: 'customer', assignedHotel: '' });
 
   const onChangeRole = async (id, role) => {
     try { await updateRole({ id, role }).unwrap(); toast.success('Đã cập nhật'); refetch(); }
@@ -32,18 +36,24 @@ export default function UserManagement() {
   const openEdit = (user) => {
     setEditingUser(user);
     setShowCreateForm(false);
-    setForm({ name: user.name, email: user.email, phone: user.phone || '', password: '', role: user.role });
+    setForm({ name: user.name, email: user.email, phone: user.phone || '', password: '', role: user.role, assignedHotel: user.assignedHotel?._id || user.assignedHotel || '' });
   };
 
   const openCreate = () => {
     setEditingUser(null);
     setShowCreateForm(true);
-    setForm({ name: '', email: '', phone: '', password: '', role: 'customer' });
+    setForm({ name: '', email: '', phone: '', password: '', role: 'customer', assignedHotel: '' });
   };
 
   const onSaveEdit = async (e) => {
     e.preventDefault();
-    const body = { name: form.name, email: form.email, phone: form.phone, role: form.role };
+    const body = { 
+      name: form.name, 
+      email: form.email, 
+      phone: form.phone, 
+      role: form.role, 
+      assignedHotel: ['manager', 'staff'].includes(form.role) ? (form.assignedHotel || null) : null
+    };
     if (form.password) body.password = form.password;
     try {
       await updateUser({ id: editingUser._id, ...body }).unwrap();
@@ -59,10 +69,17 @@ export default function UserManagement() {
       return toast.error('Tên, email và mật khẩu là bắt buộc');
     }
     try {
-      await createUser({ name: form.name, email: form.email, password: form.password, phone: form.phone, role: form.role }).unwrap();
+      await createUser({ 
+        name: form.name, 
+        email: form.email, 
+        password: form.password, 
+        phone: form.phone, 
+        role: form.role,
+        assignedHotel: ['manager', 'staff'].includes(form.role) ? (form.assignedHotel || null) : null
+      }).unwrap();
       toast.success('Đã tạo người dùng');
       setShowCreateForm(false);
-      setForm({ name: '', email: '', phone: '', password: '', role: 'customer' });
+      setForm({ name: '', email: '', phone: '', password: '', role: 'customer', assignedHotel: '' });
       refetch();
     } catch (err) { toast.error(err?.data?.message || 'Lỗi'); }
   };
@@ -105,7 +122,16 @@ export default function UserManagement() {
                 {ROLES.map((r) => <option key={r} value={r}>{tRole(r)}</option>)}
               </select>
             </div>
-            <div className="flex items-end gap-2">
+            {['manager', 'staff'].includes(form.role) && (
+              <div>
+                <label className="label">Khách sạn quản lý/làm việc *</label>
+                <select className="input" value={form.assignedHotel} onChange={(e) => setForm({ ...form, assignedHotel: e.target.value })} required>
+                  <option value="">— Chọn khách sạn —</option>
+                  {hotels.map((h) => <option key={h._id} value={h._id}>{h.name}</option>)}
+                </select>
+              </div>
+            )}
+            <div className="flex items-end gap-2 col-span-2">
               <button type="submit" className="btn-primary px-5">💾 Lưu</button>
               <button type="button" onClick={() => { setEditingUser(null); setShowCreateForm(false); }} className="btn-outline px-5">Huỷ</button>
             </div>
@@ -141,10 +167,15 @@ export default function UserManagement() {
                     </td>
                     <td className="p-3 text-gray-600">{u.email}</td>
                     <td className="p-3">
-                      <select className="text-xs border border-border rounded-lg px-2.5 py-1.5 bg-white focus:outline-none focus:border-accent" value={u.role}
-                        onChange={(e) => onChangeRole(u._id, e.target.value)}>
-                        {ROLES.map((r) => <option key={r} value={r}>{tRole(r)}</option>)}
-                      </select>
+                      <div className="flex flex-col gap-1">
+                        <select className="text-xs border border-border rounded-lg px-2.5 py-1.5 bg-white focus:outline-none focus:border-accent w-fit" value={u.role}
+                          onChange={(e) => onChangeRole(u._id, e.target.value)}>
+                          {ROLES.map((r) => <option key={r} value={r}>{tRole(r)}</option>)}
+                        </select>
+                        {['manager', 'staff'].includes(u.role) && u.assignedHotel && (
+                          <span className="text-[10px] text-slate-500 font-semibold">🏨 {u.assignedHotel.name}</span>
+                        )}
+                      </div>
                     </td>
                     <td className="p-3">
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${u.isBlocked ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>

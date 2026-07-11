@@ -9,7 +9,7 @@ const upload = makeUploader('hotel/hotels');
 router.get('/search', ctrl.search);
 router.get('/recommendations/personalized', softAuth, ctrl.getPersonalizedRecommendations);
 router.get('/recommendations/similar/:id', ctrl.getSimilarHotels);
-router.get('/', ctrl.list);
+router.get('/', softAuth, ctrl.list);
 router.get('/:slug', ctrl.getBySlug);
 router.get('/id/:id', ctrl.getById);
 router.get('/:id/rooms', ctrl.getAvailableRooms);

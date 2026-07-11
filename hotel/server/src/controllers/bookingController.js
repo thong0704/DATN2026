@@ -167,10 +167,11 @@ exports.getById = catchAsync(async (req, res) => {
     .populate('paymentId');
   if (!booking) throw new AppError('Không tìm thấy đơn đặt phòng', 404);
   
-  if (
-    String(booking.customer._id) !== String(req.user._id) &&
-    !['admin', 'manager', 'staff'].includes(req.user.role)
-  ) {
+  const isCustomer = String(booking.customer._id) === String(req.user._id);
+  const isAdmin = req.user.role === 'admin';
+  const isAssignedStaff = ['manager', 'staff'].includes(req.user.role) && String(booking.hotel._id || booking.hotel) === String(req.user.assignedHotel);
+  
+  if (!isCustomer && !isAdmin && !isAssignedStaff) {
     throw new AppError('Bạn không có quyền xem đơn này', 403);
   }
   res.json({ status: 'success', data: { booking } });
@@ -187,10 +188,11 @@ exports.getByCode = catchAsync(async (req, res) => {
 exports.cancel = catchAsync(async (req, res) => {
   const booking = await Booking.findById(req.params.id).populate('hotel', 'name');
   if (!booking) throw new AppError('Không tìm thấy đơn đặt phòng', 404);
-  if (
-    String(booking.customer) !== String(req.user._id) &&
-    !['admin', 'manager', 'staff'].includes(req.user.role)
-  ) {
+  const isCustomer = String(booking.customer) === String(req.user._id);
+  const isAdmin = req.user.role === 'admin';
+  const isAssignedStaff = ['manager', 'staff'].includes(req.user.role) && String(booking.hotel._id || booking.hotel) === String(req.user.assignedHotel);
+  
+  if (!isCustomer && !isAdmin && !isAssignedStaff) {
     throw new AppError('Bạn không có quyền hủy đơn này', 403);
   }
 
@@ -255,6 +257,9 @@ exports.listAll = catchAsync(async (req, res) => {
   const filter = {};
   if (req.query.status) filter.status = req.query.status;
   if (req.query.hotel) filter.hotel = req.query.hotel;
+  if (['manager', 'staff'].includes(req.user.role)) {
+    filter.hotel = req.user.assignedHotel;
+  }
   if (req.query.q) {
     filter.$or = [
       { bookingCode: new RegExp(req.query.q, 'i') },
@@ -287,6 +292,10 @@ exports.updateStatus = catchAsync(async (req, res) => {
 
   const booking = await Booking.findById(req.params.id);
   if (!booking) throw new AppError('Không tìm thấy đơn đặt phòng', 404);
+
+  if (req.user.role !== 'admin' && String(booking.hotel) !== String(req.user.assignedHotel)) {
+    throw new AppError('Bạn không có quyền cập nhật trạng thái đơn đặt phòng này', 403);
+  }
 
   const oldStatus = booking.status;
   booking.status = req.body.status;
@@ -392,6 +401,9 @@ exports.updateStatus = catchAsync(async (req, res) => {
 });
 
 exports.byHotel = catchAsync(async (req, res) => {
+  if (req.user.role !== 'admin' && String(req.params.hotelId) !== String(req.user.assignedHotel)) {
+    throw new AppError('Bạn không có quyền xem đơn đặt phòng của khách sạn này', 403);
+  }
   const bookings = await Booking.find({ hotel: req.params.hotelId })
     .populate('room', 'roomNumber')
     .populate('customer', 'name email')
@@ -406,10 +418,11 @@ exports.downloadInvoice = catchAsync(async (req, res) => {
     .populate('rooms.room')
     .populate('customer', 'name email');
   if (!booking) throw new AppError('Không tìm thấy đơn đặt phòng', 404);
-  if (
-    String(booking.customer._id) !== String(req.user._id) &&
-    !['admin', 'manager', 'staff'].includes(req.user.role)
-  ) {
+  const isCustomer = String(booking.customer._id) === String(req.user._id);
+  const isAdmin = req.user.role === 'admin';
+  const isAssignedStaff = ['manager', 'staff'].includes(req.user.role) && String(booking.hotel._id || booking.hotel) === String(req.user.assignedHotel);
+  
+  if (!isCustomer && !isAdmin && !isAssignedStaff) {
     throw new AppError('Bạn không có quyền xem hóa đơn này', 403);
   }
   streamInvoicePdf(res, {

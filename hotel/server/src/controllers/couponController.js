@@ -4,18 +4,24 @@ const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.listMine = catchAsync(async (req, res) => {
-  const coupons = await Coupon.find({ ownerId: req.user._id }).sort('-createdAt');
+  const coupons = await Coupon.find({ ownerId: req.user._id }).populate('hotels', 'name').sort('-createdAt');
   res.json({ status: 'success', data: { coupons } });
 });
 
 exports.create = catchAsync(async (req, res) => {
   const payload = { ...req.body, ownerId: req.user._id, code: String(req.body.code || '').toUpperCase() };
+  if (['manager', 'staff'].includes(req.user.role)) {
+    payload.hotels = [req.user.assignedHotel];
+  }
   const coupon = await Coupon.create(payload);
   res.status(201).json({ status: 'success', data: { coupon } });
 });
 
 exports.update = catchAsync(async (req, res) => {
   if (req.body.code) req.body.code = String(req.body.code).toUpperCase();
+  if (['manager', 'staff'].includes(req.user.role)) {
+    req.body.hotels = [req.user.assignedHotel];
+  }
   const coupon = await Coupon.findOneAndUpdate(
     { _id: req.params.id, ownerId: req.user._id },
     req.body,

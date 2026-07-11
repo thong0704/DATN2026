@@ -1,10 +1,10 @@
 const express = require('express');
 const ctrl = require('../controllers/holidayPricingController');
-const { protect, restrictTo } = require('../middlewares/authMiddleware');
+const { protect, restrictTo, softAuth } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get('/', ctrl.list); 
+router.get('/', softAuth, ctrl.list); 
 
 router.use(protect, restrictTo('admin', 'manager'));
 router.post('/', ctrl.create);

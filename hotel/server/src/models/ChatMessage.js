@@ -12,6 +12,7 @@ const chatMessageSchema = new mongoose.Schema(
     },
     senderName: { type: String, required: true },
     content: { type: String, required: true },
+    hotel: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel', index: true },
   },
   { timestamps: true }
 );

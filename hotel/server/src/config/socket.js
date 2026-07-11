@@ -34,6 +34,9 @@ function initSocket(httpServer) {
       socket.join(`user:${socket.user.id}`);
       if (['admin', 'manager', 'staff'].includes(socket.user.role)) {
         socket.join('staff_room');
+        if (socket.user.assignedHotel) {
+          socket.join(`staff_hotel:${socket.user.assignedHotel._id || socket.user.assignedHotel}`);
+        }
       }
       if (socket.user.role === 'admin') socket.join('admin_room');
     }
@@ -47,7 +50,7 @@ function initSocket(httpServer) {
       }
     });
 
-    socket.on('send_chat_message', async ({ content, guestId, senderName }) => {
+    socket.on('send_chat_message', async ({ content, guestId, senderName, hotelId }) => {
       try {
         const ChatMessage = require('../models/ChatMessage');
         const msg = await ChatMessage.create({
@@ -57,11 +60,17 @@ function initSocket(httpServer) {
           senderType: 'customer',
           senderName: socket.user ? socket.user.name || 'Thành viên' : senderName || 'Khách vãng lai',
           content,
+          hotel: hotelId || undefined,
         });
 
         const targetRoom = socket.user ? `chat:user:${socket.user.id}` : `chat:guest:${guestId}`;
         io.to(targetRoom).emit('new_chat_message', msg);
-        io.to('staff_room').emit('staff_receive_message', { room: targetRoom, message: msg });
+        
+        if (msg.hotel) {
+          io.to(`staff_hotel:${msg.hotel}`).to('admin_room').emit('staff_receive_message', { room: targetRoom, message: msg });
+        } else {
+          io.to('staff_room').emit('staff_receive_message', { room: targetRoom, message: msg });
+        }
       } catch (err) {
         logger.error('Error in send_chat_message socket:', err);
       }
@@ -97,10 +106,16 @@ function initSocket(httpServer) {
           senderType: 'staff',
           senderName: socket.user.name || 'Lễ tân 2T Hotel',
           content,
+          hotel: socket.user.assignedHotel || undefined,
         });
 
         io.to(room).emit('new_chat_message', msg);
-        io.to('staff_room').emit('staff_receive_message', { room, message: msg });
+        
+        if (msg.hotel) {
+          io.to(`staff_hotel:${msg.hotel}`).to('admin_room').emit('staff_receive_message', { room, message: msg });
+        } else {
+          io.to('staff_room').emit('staff_receive_message', { room, message: msg });
+        }
       } catch (err) {
         logger.error('Error in staff_send_chat_message socket:', err);
       }

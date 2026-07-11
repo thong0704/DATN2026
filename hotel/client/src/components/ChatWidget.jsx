@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from '../hooks/useAuth';
 import { useGetChatMessagesQuery } from '../features/chat/chatApi';
+import { useListHotelsQuery } from '../features/hotels/hotelsApi';
 
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
 
@@ -10,6 +11,9 @@ export default function ChatWidget() {
   const { user, isAuthenticated, token } = useAuth();
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
+  const [selectedHotelId, setSelectedHotelId] = useState('');
+  const { data: hotelsData } = useListHotelsQuery({ limit: 100 });
+  const hotels = hotelsData?.data?.hotels || [];
   
   const [guestId] = useState(() => {
     let id = localStorage.getItem('chat_guest_id');
@@ -20,7 +24,10 @@ export default function ChatWidget() {
     return id;
   });
 
-  const queryParams = isAuthenticated ? { userId: user?._id } : { guestId };
+  const queryParams = {
+    ...(isAuthenticated ? { userId: user?._id } : { guestId }),
+    ...(selectedHotelId ? { hotel: selectedHotelId } : {}),
+  };
   
   const { data: initialData, refetch } = useGetChatMessagesQuery(queryParams, {
     skip: !open,
@@ -91,6 +98,7 @@ export default function ChatWidget() {
       content: input.trim(),
       guestId,
       senderName: user ? user.name : 'Khách vãng lai',
+      hotelId: selectedHotelId || undefined,
     });
     setInput('');
   };
@@ -123,6 +131,23 @@ export default function ChatWidget() {
                 Đóng
               </button>
             </div>
+          </div>
+
+          {/* Hotel selector */}
+          <div className="bg-slate-100 px-3.5 py-2 border-b border-slate-200 flex items-center gap-2">
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider whitespace-nowrap">Khách sạn:</span>
+            <select
+              value={selectedHotelId}
+              onChange={(e) => {
+                setSelectedHotelId(e.target.value);
+              }}
+              className="bg-white border border-slate-200 rounded-lg text-[11px] font-medium py-1 px-1.5 flex-1 focus:outline-none text-slate-700"
+            >
+              <option value="">— Chọn chi nhánh cần liên hệ —</option>
+              {hotels.map((h) => (
+                <option key={h._id} value={h._id}>{h.name}</option>
+              ))}
+            </select>
           </div>
 
           {/* Messages Area */}

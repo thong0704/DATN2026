@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useListHotelsQuery } from '../../features/hotels/hotelsApi';
 import {
@@ -52,10 +52,16 @@ const mapToKey = (a) => {
 };
 
 export default function RoomManagement() {
-  const { isAdmin, isManager } = useAuth();
+  const { user, isAdmin, isManager } = useAuth();
   const { data: hotelsData } = useListHotelsQuery({ limit: 100 });
   const hotels = hotelsData?.data?.hotels || [];
   const [hotelId, setHotelId] = useState('');
+
+  useEffect(() => {
+    if (!isAdmin && user?.assignedHotel) {
+      setHotelId(user.assignedHotel._id || user.assignedHotel);
+    }
+  }, [user, isAdmin]);
 
   const { data, isLoading, refetch } = useRoomsByHotelQuery(hotelId, { skip: !hotelId });
   const rooms = data?.data?.rooms || [];
@@ -139,6 +145,7 @@ export default function RoomManagement() {
             className="input max-w-md"
             value={hotelId}
             onChange={(e) => setHotelId(e.target.value)}
+            disabled={!isAdmin}
           >
             <option value="">— Chọn khách sạn —</option>
             {hotels.map((h) => <option key={h._id} value={h._id}>{h.name}</option>)}

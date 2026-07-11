@@ -186,12 +186,17 @@ export default function SupportChat({ initialSearch = '' }) {
                   {initials}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="flex justify-between items-baseline mb-1">
+                  <div className="flex justify-between items-baseline mb-0.5">
                     <span className="font-semibold text-xs text-primary truncate">{s.name}</span>
                     <span className="text-[9px] text-slate-400 shrink-0 font-mono">
                       {new Date(s.lastMessageAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
+                  {s.hotel && (
+                    <span className="inline-block text-[9px] text-indigo-600 font-semibold mb-1">
+                      🏨 {s.hotel.name}
+                    </span>
+                  )}
                   <p className="text-[11px] text-slate-500 truncate">
                     {s.senderType === 'staff' ? 'Bạn: ' : ''}{s.lastMessage}
                   </p>

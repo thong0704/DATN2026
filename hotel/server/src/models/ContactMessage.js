@@ -7,6 +7,7 @@ const contactMessageSchema = new mongoose.Schema(
     phone: { type: String, trim: true },
     subject: { type: String, trim: true },
     message: { type: String, required: true },
+    hotel: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' },
     isRead: { type: Boolean, default: false },
   },
   { timestamps: true }

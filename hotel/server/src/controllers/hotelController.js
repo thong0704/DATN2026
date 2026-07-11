@@ -12,6 +12,8 @@ exports.list = catchAsync(async (req, res) => {
   
   if (req.user?.role === 'admin') {
     
+  } else if (req.query.isAdminView === 'true' && req.user && ['manager', 'staff'].includes(req.user.role)) {
+    baseQuery._id = req.user.assignedHotel;
   } else if (req.query.mine === 'true' && req.user) {
     baseQuery.ownerId = req.user._id;
   } else {
@@ -146,8 +148,9 @@ async function loadOwnedHotel(req) {
   const hotel = await Hotel.findById(req.params.id);
   if (!hotel) throw new AppError('Không tìm thấy khách sạn', 404);
   const isAdmin = req.user?.role === 'admin';
-  if (String(hotel.ownerId) !== String(req.user._id) && !isAdmin) {
-    throw new AppError('Bạn không phải chủ sở hữu của khách sạn/chuỗi này', 403);
+  const isAssigned = ['manager', 'staff'].includes(req.user?.role) && String(hotel._id) === String(req.user.assignedHotel);
+  if (String(hotel.ownerId) !== String(req.user._id) && !isAdmin && !isAssigned) {
+    throw new AppError('Bạn không có quyền quản lý khách sạn này', 403);
   }
   return hotel;
 }
