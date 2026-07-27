@@ -52,7 +52,7 @@ const mapToKey = (a) => {
 };
 
 export default function RoomManagement() {
-  const { user, isAdmin, isManager } = useAuth();
+  const { user, isAdmin, isManager, isStaff } = useAuth();
   const { data: hotelsData } = useListHotelsQuery({ limit: 100 });
   const hotels = hotelsData?.data?.hotels || [];
   const [hotelId, setHotelId] = useState('');
@@ -155,8 +155,9 @@ export default function RoomManagement() {
 
       {hotelId && (
         <div className="grid lg:grid-cols-3 gap-6">
-          {}
-          {isManager && (
+          
+          
+          {(isManager || (isStaff && editing)) && (
           <form onSubmit={handleSubmit(onSave)} className="bg-white rounded-xl border border-border shadow-sm p-6 space-y-3 h-fit">
             <h2 className="font-serif-display font-medium text-lg text-primary flex items-center gap-2 mb-2">
               <span className="w-1.5 h-6 bg-accent rounded-full" />
@@ -230,7 +231,7 @@ export default function RoomManagement() {
           </form>
           )}
 
-          <div className={`${isManager ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
+          <div className={`${(isManager || (isStaff && editing)) ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
             {isLoading ? <Spinner className="py-12" /> : (
               <div className="grid sm:grid-cols-2 gap-4">
                 {rooms.map((r) => (
@@ -271,12 +272,12 @@ export default function RoomManagement() {
                           onChange={(e) => updateStatus({ id: r._id, status: e.target.value }).unwrap().then(() => refetch())}>
                           {STATUSES.map((s) => <option key={s} value={s}>{tStatus(s)}</option>)}
                         </select>
-                        {isManager && (
+                        {isStaff && (
                           <label className="text-xs px-2.5 py-1.5 bg-blue-50 text-blue-700 rounded-lg border border-blue-200 cursor-pointer hover:bg-blue-100 transition">
                             + Ảnh<input type="file" multiple accept="image/*" hidden onChange={(e) => onUploadExisting(r._id, e.target.files)} />
                           </label>
                         )}
-                        {isManager && (
+                        {isStaff && (
                           <button onClick={() => {
                             setEditing(r);
                             setAmenities((r.amenities || []).map(mapToKey));

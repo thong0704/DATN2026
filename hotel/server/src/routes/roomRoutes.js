@@ -14,9 +14,9 @@ router.get('/:id', ctrl.getById);
 
 router.use(protect);
 router.post('/', restrictTo('admin', 'manager'), ctrl.create);
-router.put('/:id', restrictTo('admin', 'manager'), ctrl.update);
+router.put('/:id', restrictTo('admin', 'manager', 'staff'), ctrl.update);
 router.delete('/:id', restrictTo('admin'), ctrl.remove);
 router.put('/:id/status', restrictTo('admin', 'manager', 'staff'), ctrl.updateStatus);
-router.post('/:id/images', restrictTo('admin', 'manager'), upload.array('images', 10), ctrl.uploadImages);
+router.post('/:id/images', restrictTo('admin', 'manager', 'staff'), upload.array('images', 10), ctrl.uploadImages);
 
 module.exports = router;

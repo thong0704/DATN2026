@@ -10,7 +10,7 @@ const NAV = [
   { to: '/admin/bookings', label: 'Quản lý đặt phòng', roles: ['admin', 'manager', 'staff'] },
   { to: '/admin/invoices', label: 'Quản lý hóa đơn', roles: ['admin', 'manager', 'staff'] },
   { to: '/admin/hotels', label: 'Quản lý khách sạn', roles: ['admin', 'manager'] },
-  { to: '/admin/rooms', label: 'Quản lý phòng', roles: ['admin', 'manager'] },
+  { to: '/admin/rooms', label: 'Quản lý phòng', roles: ['admin', 'manager', 'staff'] },
   { to: '/admin/coupons', label: 'Mã giảm giá', roles: ['admin', 'manager'] },
   { to: '/admin/dynamic-pricing', label: 'Quản lý giá', roles: ['admin', 'manager'] },
   { to: '/admin/banners', label: 'Banner & Điểm đến', roles: ['admin', 'manager'] },
