@@ -8,11 +8,12 @@ const MOMO_ENDPOINT = process.env.MOMO_ENDPOINT || 'https://test-payment.momo.vn
 const MOMO_RETURN_URL = process.env.MOMO_RETURN_URL || 'http://localhost:5173/payment/momo-return';
 const MOMO_IPN_URL = process.env.MOMO_IPN_URL || 'http://localhost:5000/api/v1/payments/momo-ipn';
 
-exports.createPaymentUrl = async ({ amount, bookingCode, bookingId }) => {
+exports.createPaymentUrl = async ({ amount, bookingCode, bookingId, redirectUrl }) => {
   const orderId = `${MOMO_PARTNER_CODE}${Date.now()}`;
   const requestId = orderId;
   const orderInfo = `Thanh toan dat phong ${bookingCode}`;
-  const redirectUrl = MOMO_RETURN_URL;
+  const redirectUrlToUse = redirectUrl || MOMO_RETURN_URL;
+  console.log('[MoMo] createPaymentUrl - redirectUrl:', redirectUrl, 'MOMO_RETURN_URL:', MOMO_RETURN_URL, 'final:', redirectUrlToUse);
   const ipnUrl = MOMO_IPN_URL;
   const requestType = 'payWithMethod';
   const extraData = Buffer.from(JSON.stringify({ bookingId })).toString('base64');
@@ -21,7 +22,7 @@ exports.createPaymentUrl = async ({ amount, bookingCode, bookingId }) => {
   amount = Math.round(Number(amount));
 
   
-  const rawSignature = `accessKey=${MOMO_ACCESS_KEY}&amount=${amount}&extraData=${extraData}&ipnUrl=${ipnUrl}&orderId=${orderId}&orderInfo=${orderInfo}&partnerCode=${MOMO_PARTNER_CODE}&redirectUrl=${redirectUrl}&requestId=${requestId}&requestType=${requestType}`;
+  const rawSignature = `accessKey=${MOMO_ACCESS_KEY}&amount=${amount}&extraData=${extraData}&ipnUrl=${ipnUrl}&orderId=${orderId}&orderInfo=${orderInfo}&partnerCode=${MOMO_PARTNER_CODE}&redirectUrl=${redirectUrlToUse}&requestId=${requestId}&requestType=${requestType}`;
   const signature = crypto.createHmac('sha256', MOMO_SECRET_KEY).update(rawSignature).digest('hex');
 
   const requestBody = {
@@ -32,7 +33,7 @@ exports.createPaymentUrl = async ({ amount, bookingCode, bookingId }) => {
     amount,
     orderId,
     orderInfo,
-    redirectUrl,
+    redirectUrl: redirectUrlToUse,
     ipnUrl,
     lang: 'vi',
     requestType,

@@ -249,7 +249,7 @@ export const createBookingApi = async (bookingPayload, token) => {
 
         const resIntent = await api.post(
           '/payments/create-intent',
-          { bookingId: booking._id, method },
+          { bookingId: booking._id, method, platform: 'mobile' },
           token ? authHeader(token) : {}
         );
         paymentData = resIntent.data?.data;

@@ -25,7 +25,7 @@ function formatDate(date) {
   return `${y}${m}${d}${h}${min}${s}`;
 }
 
-exports.createPaymentUrl = ({ amount, bookingCode, bookingId, ipAddr = '127.0.0.1' }) => {
+exports.createPaymentUrl = ({ amount, bookingCode, bookingId, ipAddr = '127.0.0.1', redirectUrl }) => {
   const date = new Date();
   const createDate = formatDate(date);
   const orderId = createDate + bookingCode.slice(-4);
@@ -40,7 +40,8 @@ exports.createPaymentUrl = ({ amount, bookingCode, bookingId, ipAddr = '127.0.0.
   vnpParams['vnp_OrderInfo'] = 'Thanh toan dat phong ' + bookingCode;
   vnpParams['vnp_OrderType'] = 'other';
   vnpParams['vnp_Amount'] = String(Math.round(amount * 100));
-  vnpParams['vnp_ReturnUrl'] = VNP_RETURN_URL;
+  vnpParams['vnp_ReturnUrl'] = redirectUrl || VNP_RETURN_URL;
+  console.log('[VNPay] createPaymentUrl - redirectUrl:', redirectUrl, 'VNP_RETURN_URL:', VNP_RETURN_URL, 'final:', vnpParams['vnp_ReturnUrl']);
   vnpParams['vnp_IpAddr'] = ipAddr;
   vnpParams['vnp_CreateDate'] = createDate;
 

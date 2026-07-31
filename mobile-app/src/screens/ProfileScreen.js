@@ -147,7 +147,7 @@ export default function ProfileScreen({ navigation }) {
 
         {/* Quick Features Menu */}
         <View style={[styles.section, { backgroundColor: theme.cardBackground, borderColor: theme.border }]}>
-          <Text style={[styles.sectionTitle, { color: theme.textSecondary }]}>Tài Khoản & Tiện Ích Đầy Đủ Như Bản Web</Text>
+          <Text style={[styles.sectionTitle, { color: theme.textSecondary }]}>Tài Khoản & Tiện Ích</Text>
 
           <TouchableOpacity
             style={[styles.menuItem, { borderBottomColor: theme.border }]}
@@ -245,7 +245,7 @@ export default function ProfileScreen({ navigation }) {
         )}
 
         <Text style={[styles.versionText, { color: theme.textMuted }]}>
-          Phiên bản App Hotel Booking v1.0.0 (Tương thích 100% CSDL Web)
+          Phiên bản App Hotel Booking v1.0.0
         </Text>
       </ScrollView>
 

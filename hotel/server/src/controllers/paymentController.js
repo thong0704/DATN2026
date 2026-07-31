@@ -22,21 +22,27 @@ function formatVnDate(date) {
 }
 
 exports.createIntent = catchAsync(async (req, res) => {
-  const { bookingId, method = 'credit_card' } = req.body;
+  const { bookingId, method = 'credit_card', platform } = req.body;
   const booking = await Booking.findById(bookingId);
   if (!booking) throw new AppError('Không tìm thấy đơn đặt phòng', 404);
   if (String(booking.customer) !== String(req.user._id)) throw new AppError('Bạn không có quyền thanh toán đơn này', 403);
   if (booking.paymentStatus === 'paid') throw new AppError('Đơn này đã được thanh toán', 400);
 
   const ipAddr = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';
+  const isMobile = platform === 'mobile';
 
   
   if (method === 'vnpay' || method === 'bank_transfer') {
+    const redirectUrl = isMobile 
+      ? 'http://192.168.26.141:5000/api/v1/payments/vnpay-return' 
+      : undefined;
+
     const { paymentUrl, orderId } = vnpayService.createPaymentUrl({
       amount: booking.pricing.total,
       bookingCode: booking.bookingCode,
       bookingId: String(booking._id),
       ipAddr,
+      redirectUrl,
     });
     await Payment.findOneAndUpdate(
       { booking: booking._id, status: 'pending' },
@@ -59,10 +65,15 @@ exports.createIntent = catchAsync(async (req, res) => {
 
   
   if (method === 'momo') {
+    const redirectUrl = isMobile 
+      ? 'http://192.168.26.141:5000/api/v1/payments/momo-return' 
+      : undefined;
+
     const { paymentUrl, orderId } = await momoService.createPaymentUrl({
       amount: booking.pricing.total,
       bookingCode: booking.bookingCode,
       bookingId: String(booking._id),
+      redirectUrl,
     });
     await Payment.findOneAndUpdate(
       { booking: booking._id, status: 'pending' },
@@ -416,6 +427,18 @@ exports.vnpayReturn = catchAsync(async (req, res) => {
     await payment.save();
   }
 
+  const acceptsHtml = req.headers.accept && req.headers.accept.includes('text/html');
+  if (!acceptsHtml) {
+    return res.json({
+      status: 'success',
+      data: {
+        resultCode: responseCode,
+        bookingId: payment.booking,
+        payment
+      }
+    });
+  }
+
   const isSuccess = responseCode === '00';
   const clientUrl = process.env.CLIENT_URL || 'http://192.168.26.141:5173';
   res.send(`
@@ -536,6 +559,18 @@ exports.momoReturn = catchAsync(async (req, res) => {
       status: 'paid',
       paymentStatus: 'paid',
       paymentId: payment._id,
+    });
+  }
+
+  const acceptsHtml = req.headers.accept && req.headers.accept.includes('text/html');
+  if (!acceptsHtml) {
+    return res.json({
+      status: 'success',
+      data: {
+        resultCode: String(resultCode),
+        bookingId: payment.booking,
+        payment
+      }
     });
   }
 

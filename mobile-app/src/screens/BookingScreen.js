@@ -427,13 +427,13 @@ export default function BookingScreen({ route, navigation }) {
 
         {/* Payment Methods */}
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Chọn Phương Thức Thanh Toán (Tích Hợp Thật Với Web)</Text>
+          <Text style={styles.sectionTitle}>Chọn Phương Thức Thanh Toán</Text>
 
           {[
-            { id: 'card', name: 'Thẻ Quốc Tế Visa / Mastercard (Stripe Gateway)', icon: 'card-outline' },
-            { id: 'momo', name: 'Ví Điện Tử MoMo (Tích hợp MoMo Sandbox Thật)', icon: 'qr-code-outline' },
-            { id: 'vnpay', name: 'Cổng Thanh Toán VNPay (Tích hợp Cổng Thật)', icon: 'globe-outline' },
-            { id: 'cash', name: 'Thanh toán tiền mặt trực tiếp tại Lễ Tân', icon: 'cash-outline' },
+            { id: 'card', name: 'Thẻ Quốc Tế Visa / Mastercard', icon: 'card-outline' },
+            { id: 'momo', name: 'Ví Điện Tử MoMo', icon: 'qr-code-outline' },
+            { id: 'vnpay', name: 'Cổng Thanh Toán VNPay', icon: 'globe-outline' },
+            { id: 'cash', name: 'Thanh toán tiền mặt tại Lễ Tân', icon: 'cash-outline' },
           ].map((method) => {
             const isSelected = paymentMethod === method.id;
             return (
@@ -628,7 +628,7 @@ export default function BookingScreen({ route, navigation }) {
               Mã đơn hàng: <Text style={{ fontWeight: 'bold' }}>{bookingResult?.bookingId}</Text>
             </Text>
             <Text style={styles.modalDesc}>
-              Giao dịch thanh toán & đơn hàng đã được ghi nhận trực tiếp vào CSDL MongoDB và xuất hiện trên **Admin Web Dashboard** & **Hóa Đơn của Tôi**.
+              Đơn hàng của bạn đã được ghi nhận thành công trên hệ thống. Bạn có thể kiểm tra chi tiết tại Hóa Đơn của Tôi.
             </Text>
 
             <TouchableOpacity
