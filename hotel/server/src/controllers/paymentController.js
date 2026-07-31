@@ -136,17 +136,18 @@ exports.createIntent = catchAsync(async (req, res) => {
 exports.confirm = catchAsync(async (req, res) => {
   const { intentId } = req.body;
 
-  
-  if (intentId.startsWith('pi_cash_') || intentId.startsWith('pi_momo_') || intentId.startsWith('pi_vnpay_') || intentId.startsWith('pi_bank_transfer_')) {
-    const payment = await Payment.findOneAndUpdate(
-      { stripePaymentIntentId: intentId },
-      { status: intentId.startsWith('pi_cash_') ? 'pending' : 'succeeded', paidAt: intentId.startsWith('pi_cash_') ? undefined : new Date() },
-      { new: true }
-    );
-    if (!payment) throw new AppError('Không tìm thấy bản ghi thanh toán', 404);
+  // 1. Tìm bản ghi thanh toán trước
+  const payment = await Payment.findOne({ stripePaymentIntentId: intentId });
+  if (!payment) throw new AppError('Không tìm thấy bản ghi thanh toán', 404);
 
-    const newStatus = intentId.startsWith('pi_cash_') ? 'pending' : 'paid';
-    const paymentStatus = intentId.startsWith('pi_cash_') ? 'pending' : 'paid';
+  // 2. Nếu là cash, momo, vnpay, hoặc bank_transfer: xác nhận trực tiếp (ATM/Sandbox mode)
+  if (payment.method === 'cash' || payment.method === 'momo' || payment.method === 'vnpay' || payment.method === 'bank_transfer') {
+    payment.status = payment.method === 'cash' ? 'pending' : 'succeeded';
+    payment.paidAt = payment.method === 'cash' ? undefined : new Date();
+    await payment.save();
+
+    const newStatus = payment.method === 'cash' ? 'pending' : 'paid';
+    const paymentStatus = payment.method === 'cash' ? 'pending' : 'paid';
 
     const booking = await Booking.findByIdAndUpdate(
       payment.booking,
@@ -157,13 +158,12 @@ exports.confirm = catchAsync(async (req, res) => {
     notify({
       user: payment.user,
       type: 'booking_paid',
-      title: intentId.startsWith('pi_cash_') ? 'Booking pending' : 'Payment successful',
-      message: `Booking ${booking.bookingCode} ${intentId.startsWith('pi_cash_') ? 'pending - pay at check-in' : 'has been paid'}`,
+      title: payment.method === 'cash' ? 'Booking pending' : 'Payment successful',
+      message: `Booking ${booking.bookingCode} ${payment.method === 'cash' ? 'pending - pay at check-in' : 'has been paid'}`,
       data: { bookingId: booking._id },
     }).catch(() => {});
 
-    
-    if (!intentId.startsWith('pi_cash_')) {
+    if (payment.method !== 'cash') {
       const User = require('../models/User');
       User.findById(payment.user).then(u => {
         if (u?.email) sendBookingConfirmationWithInvoice(u.email, booking).catch(() => {});
@@ -173,16 +173,14 @@ exports.confirm = catchAsync(async (req, res) => {
     return res.json({ status: 'success', data: { booking, payment } });
   }
 
-  
+  // 3. Nếu là thẻ quốc tế (Stripe):
   const intent = await paymentService.retrievePaymentIntent(intentId);
   if (intent.status !== 'succeeded') throw new AppError('Thanh toán chưa hoàn tất', 400);
 
-  const payment = await Payment.findOneAndUpdate(
-    { stripePaymentIntentId: intentId },
-    { status: 'succeeded', paidAt: new Date(), stripeChargeId: intent.latest_charge || '' },
-    { new: true }
-  );
-  if (!payment) throw new AppError('Không tìm thấy bản ghi thanh toán', 404);
+  payment.status = 'succeeded';
+  payment.paidAt = new Date();
+  payment.stripeChargeId = intent.latest_charge || '';
+  await payment.save();
 
   const booking = await Booking.findByIdAndUpdate(
     payment.booking,
@@ -198,7 +196,6 @@ exports.confirm = catchAsync(async (req, res) => {
     data: { bookingId: booking._id },
   }).catch(() => {});
 
-  
   const User = require('../models/User');
   User.findById(payment.user).then(u => {
     if (u?.email) sendBookingConfirmationWithInvoice(u.email, booking).catch(() => {});
@@ -314,6 +311,72 @@ exports.refund = catchAsync(async (req, res) => {
 
 exports.getByBooking = catchAsync(async (req, res) => {
   const payment = await Payment.findOne({ booking: req.params.bookingId });
+  
+  if (payment && payment.status !== 'succeeded') {
+    // 1. Kiểm tra MoMo qua API truy vấn giao dịch
+    if (payment.method === 'momo') {
+      const momoService = require('../services/momoService');
+      try {
+        const queryRes = await momoService.queryTransaction(payment.stripePaymentIntentId);
+        if (queryRes && (queryRes.resultCode === 0 || queryRes.resultCode === '0')) {
+          payment.status = 'succeeded';
+          payment.paidAt = new Date();
+          if (queryRes.transId) payment.transactionId = queryRes.transId;
+          await payment.save();
+          
+          await Booking.findByIdAndUpdate(payment.booking, {
+            status: 'paid',
+            paymentStatus: 'paid',
+            paymentId: payment._id,
+          });
+
+          // Gửi mail xác nhận thanh toán
+          const User = require('../models/User');
+          const bk = await Booking.findById(payment.booking);
+          User.findById(payment.user).then(u => {
+            if (u?.email && bk) {
+              const { sendBookingConfirmationWithInvoice } = require('../services/emailService');
+              sendBookingConfirmationWithInvoice(u.email, bk).catch(() => {});
+            }
+          }).catch(() => {});
+        }
+      } catch (e) {
+        console.log('MoMo query error:', e.message);
+      }
+    }
+    // 2. Kiểm tra VNPay qua API truy vấn giao dịch
+    else if (payment.method === 'vnpay') {
+      const vnpayService = require('../services/vnpayService');
+      try {
+        const queryRes = await vnpayService.queryTransaction(payment.stripePaymentIntentId);
+        if (queryRes && (queryRes.vnp_ResponseCode === '00' || queryRes.vnp_TransactionStatus === '00')) {
+          payment.status = 'succeeded';
+          payment.paidAt = new Date();
+          if (queryRes.vnp_TransactionNo) payment.transactionId = queryRes.vnp_TransactionNo;
+          await payment.save();
+
+          await Booking.findByIdAndUpdate(payment.booking, {
+            status: 'paid',
+            paymentStatus: 'paid',
+            paymentId: payment._id,
+          });
+
+          // Gửi mail xác nhận thanh toán
+          const User = require('../models/User');
+          const bk = await Booking.findById(payment.booking);
+          User.findById(payment.user).then(u => {
+            if (u?.email && bk) {
+              const { sendBookingConfirmationWithInvoice } = require('../services/emailService');
+              sendBookingConfirmationWithInvoice(u.email, bk).catch(() => {});
+            }
+          }).catch(() => {});
+        }
+      } catch (e) {
+        console.log('VNPay query error:', e.message);
+      }
+    }
+  }
+
   res.json({ status: 'success', data: { payment } });
 });
 
@@ -353,7 +416,44 @@ exports.vnpayReturn = catchAsync(async (req, res) => {
     await payment.save();
   }
 
-  res.json({ status: 'success', data: { resultCode: responseCode, bookingId: payment.booking } });
+  const isSuccess = responseCode === '00';
+  const clientUrl = process.env.CLIENT_URL || 'http://192.168.26.141:5173';
+  res.send(`
+    <html>
+      <head>
+        <title>Kết quả thanh toán</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; text-align: center; padding: 40px 20px; background: #f8fafc; color: #1e293b; }
+          .card { background: white; padding: 30px; border-radius: 16px; display: inline-block; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); max-width: 450px; width: 100%; box-sizing: border-box; }
+          .icon { font-size: 64px; margin-bottom: 20px; }
+          h1 { font-size: 24px; font-weight: 700; margin: 0 0 12px 0; }
+          .success h1 { color: #10b981; }
+          .error h1 { color: #ef4444; }
+          p { color: #64748b; font-size: 15px; line-height: 1.6; margin: 0 0 24px 0; }
+          .loader { border: 3px solid #f3f3f3; border-top: 3px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
+          @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+          .footer { font-size: 13px; color: #94a3b8; margin-top: 20px; }
+        </style>
+      </head>
+      <body>
+        <div class="card ${isSuccess ? 'success' : 'error'}">
+          <div class="icon">${isSuccess ? '✅' : '❌'}</div>
+          <h1>${isSuccess ? 'Thanh Toán Thành Công' : 'Thanh Toán Thất Bại'}</h1>
+          <p>${isSuccess ? 'Giao dịch đã được ghi nhận. Bạn có thể đóng trình duyệt này để quay lại ứng dụng di động 2T Hotel.' : 'Đã có lỗi xảy ra trong quá trình thanh toán. Vui lòng quay lại ứng dụng để thử lại.'}</p>
+          <div class="footer">
+            <div class="loader"></div> Đang tự động chuyển hướng về trang chủ Web...
+          </div>
+        </div>
+        <script>
+          setTimeout(function() {
+            window.location.href = "${clientUrl}/profile?tab=bookings";
+          }, 3000);
+        </script>
+      </body>
+    </html>
+  `);
 });
 
 
@@ -439,7 +539,44 @@ exports.momoReturn = catchAsync(async (req, res) => {
     });
   }
 
-  res.json({ status: 'success', data: { resultCode: String(resultCode), bookingId: payment.booking } });
+  const isSuccess = String(resultCode) === '0' || resultCode === 0;
+  const clientUrl = process.env.CLIENT_URL || 'http://192.168.26.141:5173';
+  res.send(`
+    <html>
+      <head>
+        <title>Kết quả thanh toán</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; text-align: center; padding: 40px 20px; background: #f8fafc; color: #1e293b; }
+          .card { background: white; padding: 30px; border-radius: 16px; display: inline-block; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); max-width: 450px; width: 100%; box-sizing: border-box; }
+          .icon { font-size: 64px; margin-bottom: 20px; }
+          h1 { font-size: 24px; font-weight: 700; margin: 0 0 12px 0; }
+          .success h1 { color: #10b981; }
+          .error h1 { color: #ef4444; }
+          p { color: #64748b; font-size: 15px; line-height: 1.6; margin: 0 0 24px 0; }
+          .loader { border: 3px solid #f3f3f3; border-top: 3px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
+          @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+          .footer { font-size: 13px; color: #94a3b8; margin-top: 20px; }
+        </style>
+      </head>
+      <body>
+        <div class="card ${isSuccess ? 'success' : 'error'}">
+          <div class="icon">${isSuccess ? '✅' : '❌'}</div>
+          <h1>${isSuccess ? 'Thanh Toán Thành Công' : 'Thanh Toán Thất Bại'}</h1>
+          <p>${isSuccess ? 'Giao dịch đã được ghi nhận. Bạn có thể đóng trình duyệt này để quay lại ứng dụng di động 2T Hotel.' : 'Đã có lỗi xảy ra trong quá trình thanh toán. Vui lòng quay lại ứng dụng để thử lại.'}</p>
+          <div class="footer">
+            <div class="loader"></div> Đang tự động chuyển hướng về trang chủ Web...
+          </div>
+        </div>
+        <script>
+          setTimeout(function() {
+            window.location.href = "${clientUrl}/profile?tab=bookings";
+          }, 3000);
+        </script>
+      </body>
+    </html>
+  `);
 });
 
 

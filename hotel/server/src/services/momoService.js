@@ -109,3 +109,26 @@ exports.refund = async ({ orderId, amount, transId, description }) => {
     throw err;
   }
 };
+
+exports.queryTransaction = async (orderId) => {
+  const MOMO_QUERY_ENDPOINT = 'https://test-payment.momo.vn/v2/gateway/api/query';
+  const requestId = `REQ_${orderId}`;
+  
+  const rawSignature = `accessKey=${MOMO_ACCESS_KEY}&orderId=${orderId}&partnerCode=${MOMO_PARTNER_CODE}&requestId=${requestId}`;
+  const signature = crypto.createHmac('sha256', MOMO_SECRET_KEY).update(rawSignature).digest('hex');
+
+  const requestBody = {
+    partnerCode: MOMO_PARTNER_CODE,
+    requestId,
+    orderId,
+    signature,
+  };
+
+  try {
+    const { data } = await axios.post(MOMO_QUERY_ENDPOINT, requestBody);
+    return data;
+  } catch (err) {
+    console.log('Error querying MoMo transaction:', err.message);
+    return null;
+  }
+};

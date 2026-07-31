@@ -136,3 +136,42 @@ exports.refund = async ({ txnRef, amount, transactionDate, transactionId, reason
     throw err;
   }
 };
+
+exports.queryTransaction = async (orderId) => {
+  const axios = require('axios');
+  const VNP_QUERY_ENDPOINT = 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction';
+  const date = new Date();
+  const createDate = formatDate(date);
+  const transDate = orderId.slice(0, 14);
+  
+  const requestId = createDate + '_' + Math.floor(Math.random() * 10000);
+  const ipAddr = '127.0.0.1';
+  const orderInfo = 'Truy van giao dich ' + orderId;
+  const version = '2.1.0';
+  const command = 'querydr';
+
+  const signData = `${requestId}|${version}|${command}|${VNP_TMN_CODE}|${orderId}|${transDate}|${createDate}|${ipAddr}|${orderInfo}`;
+  const hmac = crypto.createHmac('sha512', VNP_HASH_SECRET);
+  const secureHash = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
+
+  const requestBody = {
+    vnp_RequestId: requestId,
+    vnp_Version: version,
+    vnp_Command: command,
+    vnp_TmnCode: VNP_TMN_CODE,
+    vnp_TxnRef: orderId,
+    vnp_OrderInfo: orderInfo,
+    vnp_TransDate: transDate,
+    vnp_CreateDate: createDate,
+    vnp_IpAddr: ipAddr,
+    vnp_SecureHash: secureHash
+  };
+
+  try {
+    const { data } = await axios.post(VNP_QUERY_ENDPOINT, requestBody);
+    return data;
+  } catch (err) {
+    console.log('Error querying VNPay transaction:', err.message);
+    return null;
+  }
+};
