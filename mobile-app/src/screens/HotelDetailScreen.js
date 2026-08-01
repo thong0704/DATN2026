@@ -20,6 +20,7 @@ import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
 import { fetchHotelById, fetchRoomsByHotel, toggleWishlist as toggleWishlistApi, fetchHotelReviews, getSimilarHotels, getWishlist } from '../services/api';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
+import { ThemeContext } from '../context/ThemeContext';
 
 const { width } = Dimensions.get('window');
 
@@ -27,6 +28,7 @@ export default function HotelDetailScreen({ route, navigation }) {
   const { hotelId } = route.params || {};
 
   const { user, token, toggleWishlist, setUser } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
 
   const [hotel, setHotel] = useState(null);
   const [rooms, setRooms] = useState([]);
@@ -256,7 +258,7 @@ export default function HotelDetailScreen({ route, navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>

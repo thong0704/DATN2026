@@ -438,18 +438,31 @@ export const fetchArticles = async () => {
     const res = await api.get('/articles');
     const rawList = res.data?.data?.articles || res.data?.articles || res.data;
     if (Array.isArray(rawList)) {
-      return rawList.map((a) => ({
-        id: a._id,
-        slug: a.slug,
-        title: a.title,
-        summary: a.summary,
-        content: a.content,
-        coverImage: a.coverImage?.url || a.coverImage || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80',
-        views: a.views || 0,
-        isPublished: a.isPublished,
-        couponCode: a.couponCode,
-        createdAt: a.createdAt,
-      }));
+      const BASE = API_BASE_URL.replace('/api/v1', '');
+      return rawList.map((a) => {
+        let coverImage = a.coverImage?.url || a.coverImage || '';
+        // Nếu là đường dẫn tương đối (/uploads/...) thì thêm server URL
+        if (coverImage && coverImage.startsWith('/')) {
+          coverImage = `${BASE}${coverImage}`;
+        }
+        if (!coverImage) {
+          coverImage = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80';
+        }
+        return {
+          id: a._id,
+          slug: a.slug,
+          title: a.title,
+          summary: a.summary,
+          content: a.content,
+          image: coverImage,
+          coverImage,
+          views: a.views || 0,
+          isPublished: a.isPublished,
+          couponCode: a.couponCode,
+          createdAt: a.createdAt,
+          date: a.createdAt ? new Date(a.createdAt).toLocaleDateString('vi-VN') : '',
+        };
+      });
     }
     return [];
   } catch (error) {
@@ -462,16 +475,23 @@ export const fetchArticleBySlug = async (slug) => {
   try {
     const res = await api.get(`/articles/${slug}`);
     const a = res.data?.data?.article || res.data?.article || res.data;
+    const BASE = API_BASE_URL.replace('/api/v1', '');
+    let coverImage = a.coverImage?.url || a.coverImage || '';
+    if (coverImage && coverImage.startsWith('/')) {
+      coverImage = `${BASE}${coverImage}`;
+    }
     return {
       id: a._id,
       slug: a.slug,
       title: a.title,
       summary: a.summary,
       content: a.content,
-      coverImage: a.coverImage?.url || a.coverImage,
+      image: coverImage,
+      coverImage,
       views: a.views || 0,
       couponCode: a.couponCode,
       createdAt: a.createdAt,
+      date: a.createdAt ? new Date(a.createdAt).toLocaleDateString('vi-VN') : '',
     };
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Không tìm thấy bài viết');

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -12,9 +12,11 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
+import { ThemeContext } from '../context/ThemeContext';
 import { fetchArticles } from '../services/api';
 
 export default function ArticlesScreen({ navigation }) {
+  const { theme } = useContext(ThemeContext);
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -35,8 +37,8 @@ export default function ArticlesScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.cardBackground} />
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
+      <StatusBar barStyle={theme.isDark ? 'light-content' : 'dark-content'} backgroundColor={theme.cardBackground} />
 
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>

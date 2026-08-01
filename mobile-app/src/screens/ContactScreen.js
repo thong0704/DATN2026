@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -14,9 +14,11 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
+import { ThemeContext } from '../context/ThemeContext';
 import { submitContact } from '../services/api';
 
 export default function ContactScreen({ navigation }) {
+  const { theme } = useContext(ThemeContext);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -50,8 +52,8 @@ export default function ContactScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" backgroundColor={COLORS.cardBackground} />
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
+      <StatusBar barStyle={theme.isDark ? 'light-content' : 'dark-content'} backgroundColor={theme.cardBackground} />
       
       {/* Header */}
       <View style={styles.header}>

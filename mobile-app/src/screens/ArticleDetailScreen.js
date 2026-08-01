@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -11,13 +11,15 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, RADIUS, SPACING } from '../theme/theme';
+import { ThemeContext } from '../context/ThemeContext';
 
 export default function ArticleDetailScreen({ route, navigation }) {
   const { article } = route.params || {};
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
+      <StatusBar barStyle={theme.isDark ? 'light-content' : 'dark-content'} backgroundColor="transparent" translucent />
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.imageBox}>

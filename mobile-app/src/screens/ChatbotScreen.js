@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -13,9 +13,11 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
+import { ThemeContext } from '../context/ThemeContext';
 import { queryChatbot } from '../services/api';
 
 export default function ChatbotScreen({ navigation }) {
+  const { theme } = useContext(ThemeContext);
   const [messages, setMessages] = useState([
     {
       id: 'm1',
@@ -67,8 +69,8 @@ export default function ChatbotScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.cardBackground} />
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
+      <StatusBar barStyle={theme.isDark ? 'light-content' : 'dark-content'} backgroundColor={theme.cardBackground} />
 
       {/* Header */}
       <View style={styles.header}>

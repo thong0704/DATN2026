@@ -15,6 +15,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
 import { AuthContext } from '../context/AuthContext';
+import { ThemeContext } from '../context/ThemeContext';
 import { fetchMyBookings, cancelBooking, createReview } from '../services/api';
 import { useIsFocused } from '@react-navigation/native';
 import BookingCard from '../components/BookingCard';
@@ -31,6 +32,7 @@ const FILTER_STATUSES = [
 
 export default function MyBookingsScreen() {
   const { token } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const [filterStatus, setFilterStatus] = useState('all');
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [bookings, setBookings] = useState([]);
@@ -119,8 +121,8 @@ export default function MyBookingsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.cardBackground} />
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
+      <StatusBar barStyle={theme.isDark ? 'light-content' : 'dark-content'} backgroundColor={theme.cardBackground} />
 
       {/* Header */}
       <View style={styles.header}>

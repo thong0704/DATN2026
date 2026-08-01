@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
+import { ThemeContext } from '../context/ThemeContext';
 import { CATEGORIES } from '../data/mockData';
 import { fetchHotels, fetchBanners } from '../services/api';
 import HotelCard from '../components/HotelCard';
@@ -21,6 +22,7 @@ import CategoryFilter from '../components/CategoryFilter';
 import CitySelector from '../components/CitySelector';
 
 export default function HomeScreen({ navigation }) {
+  const { theme } = useContext(ThemeContext);
   const [selectedCity, setSelectedCity] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [hotels, setHotels] = useState([]);
@@ -160,7 +162,7 @@ export default function HomeScreen({ navigation }) {
   });
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.primaryDark} />
 
       <ScrollView 
@@ -283,7 +285,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.background, // overridden by inline theme
   },
   scrollContent: {
     paddingBottom: SPACING.xl,

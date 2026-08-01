@@ -14,6 +14,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING } from '../theme/theme';
 import { AuthContext } from '../context/AuthContext';
+import { ThemeContext } from '../context/ThemeContext';
 import { getWishlist, toggleWishlist } from '../services/api';
 import HotelCard from '../components/HotelCard';
 
@@ -21,6 +22,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 export default function WishlistScreen({ navigation }) {
   const { token } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const [favoriteHotels, setFavoriteHotels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -63,8 +65,8 @@ export default function WishlistScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
+      <StatusBar barStyle={theme.isDark ? 'light-content' : 'dark-content'} backgroundColor={theme.background} />
 
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>

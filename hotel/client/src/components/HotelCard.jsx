@@ -24,25 +24,22 @@ export default function HotelCard({ hotel }) {
   };
   
   return (
-    <Link
-      to={`/hotels/${hotel.slug}`}
-      className="card group flex flex-col h-full bg-white border border-border"
-    >
-      {}
+    <article className="card group flex flex-col h-full bg-white border border-border">
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 flex-shrink-0">
-        <img
-          src={img}
-          alt={hotel.name}
-          loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
-        {}
+        <Link to={`/hotels/${hotel.slug}`} className="block h-full w-full relative z-0">
+          <img
+            src={img}
+            alt={hotel.name}
+            loading="lazy"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        </Link>
+
         <button
           type="button"
           onClick={handleFavoriteClick}
-          className="absolute left-3.5 top-3.5 z-10 p-2 rounded-full bg-white/95 text-slate-500 hover:text-red-500 shadow-md backdrop-blur-sm border border-border/20 transition-all hover:scale-110 active:scale-95"
+          className="absolute left-3.5 top-3.5 z-20 p-2 rounded-full bg-white/95 text-slate-500 hover:text-red-500 shadow-md backdrop-blur-sm border border-border/20 transition-all hover:scale-110 active:scale-95"
           title={isFavorite ? 'Xóa khỏi danh sách yêu thích' : 'Thêm vào danh sách yêu thích'}
         >
           <svg
@@ -60,18 +57,15 @@ export default function HotelCard({ hotel }) {
           </svg>
         </button>
 
-        {}
         {hotel.avgRating > 0 && (
-          <span className="absolute right-3.5 top-3.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold font-mono text-primary shadow-sm backdrop-blur-sm border border-border/40">
+          <span className="absolute right-3.5 top-3.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold font-mono text-primary shadow-sm backdrop-blur-sm border border-border/40 z-10">
             ★ {hotel.avgRating.toFixed(1)}
           </span>
         )}
       </div>
 
-      {}
-      <div className="p-6 flex flex-col flex-1 justify-between">
+      <Link to={`/hotels/${hotel.slug}`} className="p-6 flex flex-col flex-1 justify-between relative z-10">
         <div>
-          {}
           <div className="flex items-center justify-between gap-2 mb-2">
             <span className="text-[10px] text-accent tracking-widest font-mono uppercase">
               {'★'.repeat(hotel.stars || 0)}
@@ -81,13 +75,11 @@ export default function HotelCard({ hotel }) {
             </p>
           </div>
 
-          {/* Heading */}
           <h3 className="font-serif-display font-medium text-lg text-primary group-hover:text-accent transition-colors duration-300 line-clamp-1">
             {hotel.name}
           </h3>
         </div>
 
-        {/* Price & Action Row */}
         <div className="mt-6 flex items-end justify-between border-t border-border/40 pt-4">
           <div>
             <span className="text-[9px] text-slate-400 uppercase tracking-widest font-bold block mb-0.5">Giá từ</span>
@@ -99,7 +91,7 @@ export default function HotelCard({ hotel }) {
             Khám phá →
           </span>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </article>
   );
 }

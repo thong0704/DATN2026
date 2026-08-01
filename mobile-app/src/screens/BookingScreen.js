@@ -17,11 +17,13 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
 import { AuthContext } from '../context/AuthContext';
+import { ThemeContext } from '../context/ThemeContext';
 import { createBookingApi, confirmPaymentApi, checkPaymentStatusApi, validateCoupon, cancelBooking } from '../services/api';
 
 export default function BookingScreen({ route, navigation }) {
   const { hotel, room, checkIn: routeCheckIn, checkOut: routeCheckOut } = route.params || {};
   const { user, token } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
 
   const [fullName, setFullName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
@@ -289,8 +291,8 @@ export default function BookingScreen({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.cardBackground} />
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
+      <StatusBar barStyle={theme.isDark ? 'light-content' : 'dark-content'} backgroundColor={theme.cardBackground} />
 
       {/* Top Header */}
       <View style={styles.header}>
