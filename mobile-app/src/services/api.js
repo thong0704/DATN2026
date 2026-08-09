@@ -1,9 +1,57 @@
 import axios from 'axios';
+import { Platform } from 'react-native';
+import Constants from 'expo-constants';
 import { HOTELS, MOCK_BOOKINGS } from '../data/mockData';
 
-// IP Server Backend Node.js
-const LAN_IP = '192.168.26.141';
-const API_BASE_URL = `http://${LAN_IP}:5000/api/v1`;
+// Tự động nhận diện IP Server (Máy ảo Android / Máy ảo iOS / Máy thật qua Expo QR)
+const getHostIp = () => {
+  const overrideUrl = process.env.EXPO_PUBLIC_API_URL;
+  if (overrideUrl) {
+    try {
+      const url = new URL(overrideUrl);
+      return url.hostname;
+    } catch {
+      return overrideUrl.replace(/^https?:\/\//, '').split('/')[0].split(':')[0];
+    }
+  }
+
+  // 1. Android Emulator (luôn dùng 10.0.2.2)
+  if (!Constants.isDevice && Platform.OS === 'android') {
+    return '10.0.2.2';
+  }
+  // 2. iOS Simulator (luôn dùng localhost)
+  if (!Constants.isDevice && Platform.OS === 'ios') {
+    return 'localhost';
+  }
+
+  // 3. Tự động trích xuất IP máy tính từ Expo Metro Bundler khi dùng Expo Go / QR
+  const debuggerHost = Constants.expoConfig?.hostUri || Constants.manifest?.debuggerHost || Constants.manifest2?.extra?.expoGo?.debuggerHost;
+  if (debuggerHost) {
+    const ip = debuggerHost.split(':')[0];
+    if (ip && ip !== 'localhost' && ip !== '127.0.0.1') return ip;
+  }
+
+  // 4. Fallback cho mạng LAN, nhưng không cố định nếu QR đang chạy trên thiết bị thật
+  return '192.168.1.21';
+};
+
+export const LAN_IP = getHostIp();
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || `http://${LAN_IP}:5000/api/v1`;
+export const SERVER_BASE_URL = API_BASE_URL.replace(/\/api\/v1\/?$/, '');
+
+export const normalizeMediaUrl = (url) => {
+  if (!url) return url;
+  if (typeof url !== 'string') return url;
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url.replace(/localhost|127\.0\.0\.1|10\.0\.2\.2/g, LAN_IP);
+  }
+  if (url.startsWith('/')) {
+    return `${SERVER_BASE_URL}${url}`;
+  }
+  return url;
+};
+
+console.log('[API.JS] Resolved API_BASE_URL:', API_BASE_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -25,11 +73,11 @@ export const normalizeHotel = (rawHotel) => {
   let gallery = [];
 
   if (Array.isArray(rawHotel.images) && rawHotel.images.length > 0) {
-    gallery = rawHotel.images.map((img) => (typeof img === 'string' ? img : img.url || img.secure_url));
+    gallery = rawHotel.images.map((img) => normalizeMediaUrl(typeof img === 'string' ? img : img.url || img.secure_url));
     mainImage = gallery[0] || mainImage;
   } else if (rawHotel.image) {
-    mainImage = rawHotel.image;
-    gallery = rawHotel.gallery || [rawHotel.image];
+    mainImage = normalizeMediaUrl(rawHotel.image);
+    gallery = rawHotel.gallery || [rawHotel.image].map(normalizeMediaUrl);
   }
 
   let city = 'Việt Nam';
@@ -599,8 +647,8 @@ export const fetchBanners = async () => {
     const res = await api.get('/banners');
     const banners = res.data?.data?.banners || res.data?.banners || res.data || [];
     return banners.map((b) => {
-      if (b.image && b.image.includes('localhost')) {
-        b.image = b.image.replace('localhost', LAN_IP);
+      if (b.image) {
+        b.image = normalizeMediaUrl(b.image);
       }
       return b;
     });

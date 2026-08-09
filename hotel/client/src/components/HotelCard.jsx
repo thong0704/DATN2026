@@ -26,7 +26,7 @@ export default function HotelCard({ hotel }) {
   return (
     <article className="card group flex flex-col h-full bg-white border border-border">
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 flex-shrink-0">
-        <Link to={`/hotels/${hotel.slug}`} className="block h-full w-full relative z-0">
+        <Link to={`/hotels/${hotel.slug || hotel._id}`} className="block h-full w-full relative z-0">
           <img
             src={img}
             alt={hotel.name}
@@ -64,7 +64,7 @@ export default function HotelCard({ hotel }) {
         )}
       </div>
 
-      <Link to={`/hotels/${hotel.slug}`} className="p-6 flex flex-col flex-1 justify-between relative z-10">
+      <Link to={`/hotels/${hotel.slug || hotel._id}`} className="p-6 flex flex-col flex-1 justify-between relative z-10">
         <div>
           <div className="flex items-center justify-between gap-2 mb-2">
             <span className="text-[10px] text-accent tracking-widest font-mono uppercase">

@@ -12,6 +12,7 @@ import { useMeQuery } from './features/auth/authApi';
 import { setUser } from './features/auth/authSlice';
 import Chatbot from './components/Chatbot';
 import ChatWidget from './components/ChatWidget';
+import ScrollToTop from './components/ScrollToTop';
 import { toast } from 'react-toastify';
 
 
@@ -127,6 +128,7 @@ export default function App() {
 
   return (
     <ErrorBoundary>
+      <ScrollToTop />
       <Suspense fallback={<Spinner className="py-16" />}>
         <Routes>
           {/* Public site */}

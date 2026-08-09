@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
   await connectDB();
   const server = http.createServer(app);
   initSocket(server);
-  server.listen(PORT, () => logger.info(`🚀 Server running on port ${PORT}`));
+  server.listen(PORT, '0.0.0.0', () => logger.info(`🚀 Server running on port ${PORT} (0.0.0.0)`));
 })();
 
 process.on('unhandledRejection', (err) => {

@@ -16,7 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
 import { ThemeContext } from '../context/ThemeContext';
 import { CATEGORIES } from '../data/mockData';
-import { fetchHotels, fetchBanners } from '../services/api';
+import { fetchHotels, fetchBanners, SERVER_BASE_URL } from '../services/api';
 import HotelCard from '../components/HotelCard';
 import CategoryFilter from '../components/CategoryFilter';
 import CitySelector from '../components/CitySelector';
@@ -101,19 +101,19 @@ export default function HomeScreen({ navigation }) {
           });
 
           const cityImageMap = {
-            'Hà Nội': 'http://192.168.26.141:5000/uploads/hotel_banners/1779940665902-532659.webp',
-            'TP.HCM': 'http://192.168.26.141:5000/uploads/hotel_banners/1779940607115-231293847.webp',
-            'Đà Nẵng': 'http://192.168.26.141:5000/uploads/hotel_banners/1779940709089-37611183.webp',
-            'Nha Trang': 'http://192.168.26.141:5000/uploads/hotel_banners/1779940665902-532659.webp',
-            'Đà Lạt': 'http://192.168.26.141:5000/uploads/hotel_banners/1779940643029-492815526.webp',
-            'Cần Thơ': 'http://192.168.26.141:5000/uploads/hotel_banners/1779940607115-231293847.webp',
+            'Hà Nội': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940665902-532659.webp`,
+            'TP.HCM': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
+            'Đà Nẵng': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940709089-37611183.webp`,
+            'Nha Trang': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940665902-532659.webp`,
+            'Đà Lạt': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940643029-492815526.webp`,
+            'Cần Thơ': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
           };
 
           const dynDestinations = Object.keys(cityMap).map((cityName, idx) => ({
             _id: `dest_${idx}`,
             type: 'destination',
             title: cityName,
-            image: cityImageMap[cityName] || 'http://192.168.26.141:5000/uploads/hotel_banners/1779940607115-231293847.webp',
+            image: cityImageMap[cityName] || `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
           }));
 
           setDestinations(dynDestinations);

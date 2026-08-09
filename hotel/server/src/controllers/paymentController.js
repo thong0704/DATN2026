@@ -34,7 +34,7 @@ exports.createIntent = catchAsync(async (req, res) => {
   
   if (method === 'vnpay' || method === 'bank_transfer') {
     const redirectUrl = isMobile 
-      ? 'http://192.168.26.141:5000/api/v1/payments/vnpay-return' 
+      ? `${req.protocol}://${req.get('host')}/api/v1/payments/vnpay-return` 
       : undefined;
 
     const { paymentUrl, orderId } = vnpayService.createPaymentUrl({
@@ -66,7 +66,7 @@ exports.createIntent = catchAsync(async (req, res) => {
   
   if (method === 'momo') {
     const redirectUrl = isMobile 
-      ? 'http://192.168.26.141:5000/api/v1/payments/momo-return' 
+      ? `${req.protocol}://${req.get('host')}/api/v1/payments/momo-return` 
       : undefined;
 
     const { paymentUrl, orderId } = await momoService.createPaymentUrl({

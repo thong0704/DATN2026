@@ -79,9 +79,14 @@ exports.search = catchAsync(async (req, res) => {
 });
 
 exports.getBySlug = catchAsync(async (req, res) => {
-  const hotel = await Hotel.findOne({ slug: req.params.slug })
+  let hotel = await Hotel.findOne({ slug: req.params.slug })
     .populate('rooms')
     .populate('managerId', 'name email');
+  if (!hotel && req.params.slug?.match(/^[0-9a-fA-F]{24}$/)) {
+    hotel = await Hotel.findById(req.params.slug)
+      .populate('rooms')
+      .populate('managerId', 'name email');
+  }
   if (!hotel) throw new AppError('Không tìm thấy khách sạn', 404);
   const reviews = await Review.find({ hotel: hotel._id, isApproved: true })
     .populate('user', 'name avatar')

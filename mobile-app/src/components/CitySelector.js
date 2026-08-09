@@ -8,30 +8,31 @@ import {
   StyleSheet,
 } from 'react-native';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
+import { SERVER_BASE_URL } from '../services/api';
 
 const DESTINATIONS = [
   {
     id: 'ct',
     name: 'Cần Thơ',
-    image: 'http://192.168.26.141:5000/uploads/hotel_banners/1779940607115-231293847.webp',
+    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
     subtitle: 'Tìm khách sạn →',
   },
   {
     id: 'dl',
     name: 'Đà Lạt',
-    image: 'http://192.168.26.141:5000/uploads/hotel_banners/1779940643029-492815526.webp',
+    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940643029-492815526.webp`,
     subtitle: 'Tìm khách sạn →',
   },
   {
     id: 'nt',
     name: 'Nha Trang',
-    image: 'http://192.168.26.141:5000/uploads/hotel_banners/1779940665902-532659.webp',
+    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940665902-532659.webp`,
     subtitle: 'Tìm khách sạn →',
   },
   {
     id: 'vt',
     name: 'Vũng Tàu',
-    image: 'http://192.168.26.141:5000/uploads/hotel_banners/1779940709089-37611183.webp',
+    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940709089-37611183.webp`,
     subtitle: 'Tìm khách sạn →',
   },
 ];
