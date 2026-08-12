@@ -35,8 +35,7 @@ const getHostIp = () => {
   return '192.168.1.21';
 };
 
-export const LAN_IP = getHostIp();
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || `http://${LAN_IP}:5000/api/v1`;
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://hotel-booking-api-khsw.onrender.com/api/v1';
 export const SERVER_BASE_URL = API_BASE_URL.replace(/\/api\/v1\/?$/, '');
 
 export const normalizeMediaUrl = (url) => {
