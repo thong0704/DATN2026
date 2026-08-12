@@ -40,6 +40,15 @@ if (process.env.NODE_ENV !== 'test') app.use(morgan('dev'));
 app.use('/api', globalLimiter);
 
 app.get('/health', (req, res) => res.json({ status: 'ok', uptime: process.uptime() }));
+app.get('/seed-database', async (req, res) => {
+  try {
+    const seedDatabase = require('./utils/seedFunction');
+    const result = await seedDatabase();
+    res.json({ status: 'success', message: 'Nạp dữ liệu khách sạn thành công!', data: result });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: err.message });
+  }
+});
 
 
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
