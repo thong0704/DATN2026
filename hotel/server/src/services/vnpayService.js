@@ -4,7 +4,9 @@ const qs = require('qs');
 const VNP_TMN_CODE = process.env.VNPAY_TMN_CODE || 'CGXZLS0Z';
 const VNP_HASH_SECRET = process.env.VNPAY_HASH_SECRET || 'KQINPFAZ2S95FVAWJVIWBHKXNSFYPQXB';
 const VNP_URL = process.env.VNPAY_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-const VNP_RETURN_URL = process.env.VNPAY_RETURN_URL || 'http://localhost:5173/payment/vnpay-return';
+const VNP_RETURN_URL = (process.env.VNPAY_RETURN_URL && !process.env.VNPAY_RETURN_URL.includes('localhost'))
+  ? process.env.VNPAY_RETURN_URL
+  : (process.env.CLIENT_URL ? `${process.env.CLIENT_URL.replace(/\/$/, '')}/payment/vnpay-return` : 'http://localhost:5173/payment/vnpay-return');
 
 function sortObject(obj) {
   const sorted = {};
