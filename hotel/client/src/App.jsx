@@ -106,15 +106,10 @@ export default function App() {
   useEffect(() => {
     const handleGlobalError = (event) => {
       console.error('[Global Event Error]', event.error || event.message);
-      const msg = event.error?.message || event.message || 'Lỗi không xác định';
-      toast.error(`Đã xảy ra lỗi hệ thống: ${msg}`);
     };
 
     const handleUnhandledRejection = (event) => {
       console.error('[Unhandled Promise Rejection]', event.reason);
-      const reason = event.reason;
-      const msg = reason?.data?.message || reason?.message || 'Không thể kết nối tới máy chủ hoặc lỗi xử lý.';
-      toast.error(`Lỗi bất đồng bộ: ${msg}`);
     };
 
     window.addEventListener('error', handleGlobalError);
