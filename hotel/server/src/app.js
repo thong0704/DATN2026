@@ -49,6 +49,15 @@ app.get('/seed-database', async (req, res) => {
     res.status(500).json({ status: 'error', message: err.message });
   }
 });
+app.get('/users-list', async (req, res) => {
+  try {
+    const User = require('./models/User');
+    const users = await User.find().select('name email role isEmailVerified phone createdAt');
+    res.json({ status: 'success', count: users.length, users });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: err.message });
+  }
+});
 
 
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
