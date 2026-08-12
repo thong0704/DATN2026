@@ -5,17 +5,22 @@ const VNP_TMN_CODE = process.env.VNPAY_TMN_CODE || 'CGXZLS0Z';
 const VNP_HASH_SECRET = process.env.VNPAY_HASH_SECRET || 'KQINPFAZ2S95FVAWJVIWBHKXNSFYPQXB';
 const VNP_URL = process.env.VNPAY_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
 function normalizeReturnUrl(url) {
-  if (!url || url.includes('localhost') || url.includes('192.168.')) {
-    return 'https://datn-2026-three.vercel.app/payment/vnpay-return';
+  let targetUrl = url;
+  if (!targetUrl) {
+    targetUrl = process.env.VNPAY_RETURN_URL || process.env.CLIENT_URL || 'http://localhost:5173/payment/vnpay-return';
   }
-  let fullUrl = url;
-  if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
-    fullUrl = `https://${fullUrl}`;
+  if (process.env.NODE_ENV === 'production') {
+    if (targetUrl.includes('localhost') || targetUrl.includes('192.168.')) {
+      targetUrl = process.env.CLIENT_URL ? `${process.env.CLIENT_URL.replace(/\/$/, '')}/payment/vnpay-return` : 'https://datn-2026-three.vercel.app/payment/vnpay-return';
+    }
   }
-  if (!fullUrl.includes('/payment/vnpay-return')) {
-    fullUrl = `${fullUrl.replace(/\/$/, '')}/payment/vnpay-return`;
+  if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+    targetUrl = `https://${targetUrl}`;
   }
-  return fullUrl;
+  if (!targetUrl.includes('/payment/vnpay-return')) {
+    targetUrl = `${targetUrl.replace(/\/$/, '')}/payment/vnpay-return`;
+  }
+  return targetUrl;
 }
 
 const VNP_RETURN_URL = normalizeReturnUrl(process.env.VNPAY_RETURN_URL || process.env.CLIENT_URL);

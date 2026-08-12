@@ -23,14 +23,17 @@ function formatVnDate(date) {
 
 function getClientUrl(req) {
   let url = process.env.CLIENT_URL;
-  if (url && !url.includes('192.168.') && !url.includes('localhost')) {
-    return url.replace(/\/$/, '');
+  if (process.env.NODE_ENV === 'production') {
+    if (url && !url.includes('192.168.') && !url.includes('localhost')) {
+      return url.replace(/\/$/, '');
+    }
+    const origin = req.get('origin') || req.get('referer');
+    if (origin && !origin.includes('192.168.') && !origin.includes('localhost')) {
+      return origin.replace(/\/$/, '');
+    }
+    return 'https://datn-2026-three.vercel.app';
   }
-  const origin = req.get('origin') || req.get('referer');
-  if (origin && !origin.includes('192.168.') && !origin.includes('localhost')) {
-    return origin.replace(/\/$/, '');
-  }
-  return 'https://datn-2026-three.vercel.app';
+  return (url || req.get('origin') || req.get('referer') || 'http://localhost:5173').replace(/\/$/, '');
 }
 
 exports.createIntent = catchAsync(async (req, res) => {

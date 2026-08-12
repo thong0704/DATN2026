@@ -6,17 +6,22 @@ const MOMO_ACCESS_KEY = process.env.MOMO_ACCESS_KEY || 'F8BBA842ECF85';
 const MOMO_SECRET_KEY = process.env.MOMO_SECRET_KEY || 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
 const MOMO_ENDPOINT = process.env.MOMO_ENDPOINT || 'https://test-payment.momo.vn/v2/gateway/api/create';
 function normalizeMomoReturnUrl(url) {
-  if (!url || url.includes('localhost') || url.includes('192.168.')) {
-    return 'https://datn-2026-three.vercel.app/payment/momo-return';
+  let targetUrl = url;
+  if (!targetUrl) {
+    targetUrl = process.env.MOMO_RETURN_URL || process.env.CLIENT_URL || 'http://localhost:5173/payment/momo-return';
   }
-  let fullUrl = url;
-  if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
-    fullUrl = `https://${fullUrl}`;
+  if (process.env.NODE_ENV === 'production') {
+    if (targetUrl.includes('localhost') || targetUrl.includes('192.168.')) {
+      targetUrl = process.env.CLIENT_URL ? `${process.env.CLIENT_URL.replace(/\/$/, '')}/payment/momo-return` : 'https://datn-2026-three.vercel.app/payment/momo-return';
+    }
   }
-  if (!fullUrl.includes('/payment/momo-return')) {
-    fullUrl = `${fullUrl.replace(/\/$/, '')}/payment/momo-return`;
+  if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+    targetUrl = `https://${targetUrl}`;
   }
-  return fullUrl;
+  if (!targetUrl.includes('/payment/momo-return')) {
+    targetUrl = `${targetUrl.replace(/\/$/, '')}/payment/momo-return`;
+  }
+  return targetUrl;
 }
 
 const MOMO_RETURN_URL = normalizeMomoReturnUrl(process.env.MOMO_RETURN_URL || process.env.CLIENT_URL);
