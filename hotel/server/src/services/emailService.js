@@ -41,8 +41,9 @@ async function sendMail({ to, subject, html, text, attachments }) {
     logger.info(`[EMAIL stub] to=${to} subject=${subject}`);
     return { stub: true };
   }
+  const fromAddress = process.env.MAIL_FROM || (process.env.SMTP_USER ? `"2T Hotel" <${process.env.SMTP_USER}>` : 'no-reply@hotel.dev');
   const sendPromise = t.sendMail({
-    from: process.env.MAIL_FROM || 'no-reply@hotel.dev',
+    from: fromAddress,
     to,
     subject,
     html,
