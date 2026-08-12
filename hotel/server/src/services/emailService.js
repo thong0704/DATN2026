@@ -28,7 +28,49 @@ function getTransporter() {
   return transporter;
 }
 
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+
+async function sendViaResend({ to, subject, html, text, attachments }) {
+  try {
+    const payload = {
+      from: '2T Hotel <onboarding@resend.dev>',
+      to: Array.isArray(to) ? to : [to],
+      subject,
+      html: html || `<p>${text || ''}</p>`,
+    };
+    if (attachments && attachments.length > 0) {
+      payload.attachments = attachments.map(att => ({
+        filename: att.filename,
+        content: att.content ? att.content.toString('base64') : '',
+      }));
+    }
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (data.id) {
+      logger.info(`Email sent via Resend HTTPS: ${data.id} -> ${to}`);
+      return { messageId: data.id, resend: true };
+    }
+    logger.error(`Resend API response: ${JSON.stringify(data)}`);
+    return null;
+  } catch (err) {
+    logger.error(`Resend API error: ${err.message}`);
+    return null;
+  }
+}
+
 async function sendMail({ to, subject, html, text, attachments }) {
+  if (RESEND_API_KEY) {
+    const resendResult = await sendViaResend({ to, subject, html, text, attachments });
+    if (resendResult) return resendResult;
+  }
+
   const t = getTransporter();
   if (!t) {
     logger.info(`[EMAIL stub] to=${to} subject=${subject}`);
@@ -43,7 +85,7 @@ async function sendMail({ to, subject, html, text, attachments }) {
     text,
     attachments,
   });
-  logger.info(`Email sent: ${info.messageId} -> ${to}`);
+  logger.info(`Email sent via SMTP: ${info.messageId} -> ${to}`);
   return info;
 }
 
