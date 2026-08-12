@@ -37,27 +37,25 @@ const generateVerificationCode = () => {
 
 exports.register = catchAsync(async (req, res) => {
   const { name, email, password, phone } = req.body;
-  const exists = await User.findOne({ email });
-  if (exists && exists.isEmailVerified) throw new AppError('Email đã được đăng ký', 400);
-
-  
-  if (exists && !exists.isEmailVerified) {
-    await User.findByIdAndDelete(exists._id);
-  }
-
+  if (!name) throw new AppError('Họ và tên là bắt buộc', 400);
+  if (!email) throw new AppError('Email là bắt buộc', 400);
   if (!phone) throw new AppError('Số điện thoại là bắt buộc', 400);
 
-  const phoneExists = await User.findOne({ phone });
-  if (phoneExists) {
-    if (phoneExists.isEmailVerified) {
-      throw new AppError('Số điện thoại đã được sử dụng', 400);
-    } else {
-      
-      const stillExists = await User.findById(phoneExists._id);
-      if (stillExists) {
-        await User.findByIdAndDelete(phoneExists._id);
-      }
-    }
+  const existingEmail = await User.findOne({ email });
+  if (existingEmail && existingEmail.isEmailVerified) {
+    throw new AppError('Email này đã được sử dụng. Vui lòng chọn email khác hoặc đăng nhập.', 400);
+  }
+
+  const existingPhone = await User.findOne({ phone });
+  if (existingPhone && existingPhone.isEmailVerified) {
+    throw new AppError('Số điện thoại này đã được sử dụng. Vui lòng sử dụng số điện thoại khác.', 400);
+  }
+
+  if (existingEmail && !existingEmail.isEmailVerified) {
+    await User.findByIdAndDelete(existingEmail._id);
+  }
+  if (existingPhone && !existingPhone.isEmailVerified) {
+    await User.findByIdAndDelete(existingPhone._id);
   }
 
   const code = generateVerificationCode();
