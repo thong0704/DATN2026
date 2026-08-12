@@ -47,14 +47,16 @@ exports.register = catchAsync(async (req, res) => {
   }
 
   const existingPhone = await User.findOne({ phone });
-  if (existingPhone && existingPhone.isEmailVerified) {
-    throw new AppError('Số điện thoại này đã được sử dụng. Vui lòng sử dụng số điện thoại khác.', 400);
+  if (existingPhone) {
+    if (existingPhone.isEmailVerified || existingPhone.email !== email) {
+      throw new AppError('Số điện thoại này đã được sử dụng. Vui lòng sử dụng số điện thoại khác.', 400);
+    }
   }
 
   if (existingEmail && !existingEmail.isEmailVerified) {
     await User.findByIdAndDelete(existingEmail._id);
   }
-  if (existingPhone && !existingPhone.isEmailVerified) {
+  if (existingPhone && !existingPhone.isEmailVerified && existingPhone.email === email) {
     await User.findByIdAndDelete(existingPhone._id);
   }
 
