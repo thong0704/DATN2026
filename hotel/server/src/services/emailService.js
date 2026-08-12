@@ -42,7 +42,7 @@ async function sendMail({ to, subject, html, text, attachments }) {
     return { stub: true };
   }
   const fromAddress = process.env.MAIL_FROM || (process.env.SMTP_USER ? `"2T Hotel" <${process.env.SMTP_USER}>` : 'no-reply@hotel.dev');
-  const sendPromise = t.sendMail({
+  const info = await t.sendMail({
     from: fromAddress,
     to,
     subject,
@@ -50,11 +50,6 @@ async function sendMail({ to, subject, html, text, attachments }) {
     text,
     attachments,
   });
-  const timeoutPromise = new Promise((_, reject) =>
-    setTimeout(() => reject(new Error('Email send timeout (3s limit)')), 3000)
-  );
-
-  const info = await Promise.race([sendPromise, timeoutPromise]);
   logger.info(`Email sent: ${info.messageId} -> ${to}`);
   return info;
 }
