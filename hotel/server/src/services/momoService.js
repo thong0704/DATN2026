@@ -5,16 +5,28 @@ const MOMO_PARTNER_CODE = process.env.MOMO_PARTNER_CODE || 'MOMO';
 const MOMO_ACCESS_KEY = process.env.MOMO_ACCESS_KEY || 'F8BBA842ECF85';
 const MOMO_SECRET_KEY = process.env.MOMO_SECRET_KEY || 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
 const MOMO_ENDPOINT = process.env.MOMO_ENDPOINT || 'https://test-payment.momo.vn/v2/gateway/api/create';
-const MOMO_RETURN_URL = (process.env.MOMO_RETURN_URL && !process.env.MOMO_RETURN_URL.includes('localhost') && !process.env.MOMO_RETURN_URL.includes('192.168.'))
-  ? process.env.MOMO_RETURN_URL
-  : (process.env.CLIENT_URL ? `${process.env.CLIENT_URL.replace(/\/$/, '')}/payment/momo-return` : 'http://localhost:5173/payment/momo-return');
+function normalizeMomoReturnUrl(url) {
+  if (!url || url.includes('localhost') || url.includes('192.168.')) {
+    return 'https://datn-2026-three.vercel.app/payment/momo-return';
+  }
+  let fullUrl = url;
+  if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+    fullUrl = `https://${fullUrl}`;
+  }
+  if (!fullUrl.includes('/payment/momo-return')) {
+    fullUrl = `${fullUrl.replace(/\/$/, '')}/payment/momo-return`;
+  }
+  return fullUrl;
+}
+
+const MOMO_RETURN_URL = normalizeMomoReturnUrl(process.env.MOMO_RETURN_URL || process.env.CLIENT_URL);
 const MOMO_IPN_URL = process.env.MOMO_IPN_URL || 'http://localhost:5000/api/v1/payments/momo-ipn';
 
 exports.createPaymentUrl = async ({ amount, bookingCode, bookingId, redirectUrl }) => {
   const orderId = `${MOMO_PARTNER_CODE}${Date.now()}`;
   const requestId = orderId;
   const orderInfo = `Thanh toan dat phong ${bookingCode}`;
-  const redirectUrlToUse = redirectUrl || MOMO_RETURN_URL;
+  const redirectUrlToUse = normalizeMomoReturnUrl(redirectUrl || MOMO_RETURN_URL);
   console.log('[MoMo] createPaymentUrl - redirectUrl:', redirectUrl, 'MOMO_RETURN_URL:', MOMO_RETURN_URL, 'final:', redirectUrlToUse);
   const ipnUrl = MOMO_IPN_URL;
   const requestType = 'payWithMethod';

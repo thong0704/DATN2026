@@ -4,9 +4,21 @@ const qs = require('qs');
 const VNP_TMN_CODE = process.env.VNPAY_TMN_CODE || 'CGXZLS0Z';
 const VNP_HASH_SECRET = process.env.VNPAY_HASH_SECRET || 'KQINPFAZ2S95FVAWJVIWBHKXNSFYPQXB';
 const VNP_URL = process.env.VNPAY_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-const VNP_RETURN_URL = (process.env.VNPAY_RETURN_URL && !process.env.VNPAY_RETURN_URL.includes('localhost') && !process.env.VNPAY_RETURN_URL.includes('192.168.'))
-  ? process.env.VNPAY_RETURN_URL
-  : (process.env.CLIENT_URL ? `${process.env.CLIENT_URL.replace(/\/$/, '')}/payment/vnpay-return` : 'http://localhost:5173/payment/vnpay-return');
+function normalizeReturnUrl(url) {
+  if (!url || url.includes('localhost') || url.includes('192.168.')) {
+    return 'https://datn-2026-three.vercel.app/payment/vnpay-return';
+  }
+  let fullUrl = url;
+  if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+    fullUrl = `https://${fullUrl}`;
+  }
+  if (!fullUrl.includes('/payment/vnpay-return')) {
+    fullUrl = `${fullUrl.replace(/\/$/, '')}/payment/vnpay-return`;
+  }
+  return fullUrl;
+}
+
+const VNP_RETURN_URL = normalizeReturnUrl(process.env.VNPAY_RETURN_URL || process.env.CLIENT_URL);
 
 function sortObject(obj) {
   const sorted = {};
@@ -42,7 +54,7 @@ exports.createPaymentUrl = ({ amount, bookingCode, bookingId, ipAddr = '127.0.0.
   vnpParams['vnp_OrderInfo'] = 'Thanh toan dat phong ' + bookingCode;
   vnpParams['vnp_OrderType'] = 'other';
   vnpParams['vnp_Amount'] = String(Math.round(amount * 100));
-  vnpParams['vnp_ReturnUrl'] = redirectUrl || VNP_RETURN_URL;
+  vnpParams['vnp_ReturnUrl'] = normalizeReturnUrl(redirectUrl || VNP_RETURN_URL);
   console.log('[VNPay] createPaymentUrl - redirectUrl:', redirectUrl, 'VNP_RETURN_URL:', VNP_RETURN_URL, 'final:', vnpParams['vnp_ReturnUrl']);
   vnpParams['vnp_IpAddr'] = ipAddr;
   vnpParams['vnp_CreateDate'] = createDate;
