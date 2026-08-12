@@ -9,12 +9,22 @@ function getTransporter() {
     logger.warn('SMTP not configured; emails will be logged only.');
     return null;
   }
-  transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT || 587),
-    secure: false,
-    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-  });
+  const isGmail = (process.env.SMTP_HOST && process.env.SMTP_HOST.includes('gmail')) || (process.env.SMTP_USER && process.env.SMTP_USER.endsWith('@gmail.com'));
+  if (isGmail) {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+      tls: { rejectUnauthorized: false },
+    });
+  } else {
+    transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: Number(process.env.SMTP_PORT) === 465,
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+      tls: { rejectUnauthorized: false },
+    });
+  }
   return transporter;
 }
 

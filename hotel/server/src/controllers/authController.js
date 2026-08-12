@@ -11,6 +11,8 @@ const {
 } = require('../utils/helpers');
 const { sendVerifyEmail, sendResetPassword, sendVerificationCode, sendResetPasswordCode } = require('../services/emailService');
 
+const logger = require('../utils/logger');
+
 const REFRESH_COOKIE = 'refreshToken';
 const cookieOpts = {
   httpOnly: true,
@@ -67,7 +69,9 @@ exports.register = catchAsync(async (req, res) => {
     emailVerificationExpire: Date.now() + 10 * 60 * 1000, 
   });
 
-  sendVerificationCode(email, code).catch(() => {});
+  sendVerificationCode(email, code).catch((err) => {
+    logger.error(`Failed to send verification code to ${email}: ${err.stack || err.message}`);
+  });
 
   res.status(201).json({
     status: 'success',
