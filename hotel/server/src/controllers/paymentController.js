@@ -36,6 +36,36 @@ function getClientUrl(req) {
   return (url || req.get('origin') || req.get('referer') || 'http://localhost:5173').replace(/\/$/, '');
 }
 
+async function triggerPaymentSuccessNotifications(payment) {
+  try {
+    const User = require('../models/User');
+    const bk = await Booking.findById(payment.booking).populate('customer');
+    if (!bk) return;
+
+    let targetEmail = bk.customer?.email || bk.guestInfo?.email;
+    if (!targetEmail && payment.user) {
+      const u = await User.findById(payment.user);
+      if (u) targetEmail = u.email;
+    }
+
+    notify({
+      user: payment.user || bk.customer?._id,
+      type: 'booking_paid',
+      title: 'Thanh toán thành công',
+      message: `Đơn đặt phòng ${bk.bookingCode} đã được thanh toán thành công.`,
+      data: { bookingId: payment.booking },
+    }).catch(() => {});
+
+    if (targetEmail) {
+      sendBookingConfirmationWithInvoice(targetEmail, bk).catch((err) => {
+        logger.error(`Failed sending invoice email to ${targetEmail}: ${err.stack || err.message}`);
+      });
+    }
+  } catch (err) {
+    logger.error(`Error in payment success notification: ${err.message}`);
+  }
+}
+
 exports.createIntent = catchAsync(async (req, res) => {
   const { bookingId, method = 'credit_card', platform } = req.body;
   const booking = await Booking.findById(bookingId);
@@ -424,19 +454,7 @@ exports.vnpayReturn = catchAsync(async (req, res) => {
       paymentStatus: 'paid',
       paymentId: payment._id,
     });
-    notify({
-      user: payment.user,
-      type: 'booking_paid',
-      title: 'Payment successful',
-      message: `Booking has been paid via VNPay`,
-      data: { bookingId: payment.booking },
-    }).catch(() => {});
-
-    const User = require('../models/User');
-    const bk = await Booking.findById(payment.booking);
-    User.findById(payment.user).then(u => {
-      if (u?.email && bk) sendBookingConfirmationWithInvoice(u.email, bk).catch(() => {});
-    }).catch(() => {});
+    triggerPaymentSuccessNotifications(payment);
   } else {
     payment.status = 'failed';
     await payment.save();
@@ -575,6 +593,7 @@ exports.momoReturn = catchAsync(async (req, res) => {
       paymentStatus: 'paid',
       paymentId: payment._id,
     });
+    triggerPaymentSuccessNotifications(payment);
   }
 
   const acceptsHtml = req.headers.accept && req.headers.accept.includes('text/html');
