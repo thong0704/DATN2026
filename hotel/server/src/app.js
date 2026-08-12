@@ -66,6 +66,16 @@ app.get('/env-check', (req, res) => {
     SMTP_PORT: process.env.SMTP_PORT || 'default: 587/465',
   });
 });
+app.get('/test-email', async (req, res) => {
+  const emailService = require('./services/emailService');
+  const targetEmail = req.query.email || process.env.SMTP_USER || 'ttt11072004st@gmail.com';
+  try {
+    const result = await emailService.sendVerificationCode(targetEmail, '999888');
+    res.json({ status: 'success', targetEmail, result });
+  } catch (err) {
+    res.status(500).json({ status: 'error', targetEmail, error: err.stack || err.message });
+  }
+});
 
 
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
