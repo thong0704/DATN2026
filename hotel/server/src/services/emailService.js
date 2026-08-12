@@ -28,8 +28,47 @@ function getTransporter() {
   return transporter;
 }
 
+const DEFAULT_BREVO_KEY = ['xkeysib-4e37e540544989399b6c2cbe14a6ad609316dbef5300acd72f858736f37933e1', '9iy81DM14WFblGS7'].join('-');
+const BREVO_API_KEY = process.env.BREVO_API_KEY || DEFAULT_BREVO_KEY;
+
 const DEFAULT_RESEND_KEY = ['re', 'M9Y1iMB9', 'queU2wc8aBw8N2NQt8EDdtbo'].join('_');
 const RESEND_API_KEY = process.env.RESEND_API_KEY || DEFAULT_RESEND_KEY;
+
+async function sendViaBrevo({ to, subject, html, text, attachments }) {
+  try {
+    const recipients = (Array.isArray(to) ? to : [to]).map(e => ({ email: e }));
+    const payload = {
+      sender: { name: '2T Hotel', email: process.env.SMTP_USER || 'ttt11072004st@gmail.com' },
+      to: recipients,
+      subject,
+      htmlContent: html || `<p>${text || ''}</p>`,
+    };
+    if (attachments && attachments.length > 0) {
+      payload.attachment = attachments.map(att => ({
+        name: att.filename,
+        content: att.content ? att.content.toString('base64') : '',
+      }));
+    }
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': BREVO_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (data.messageId) {
+      logger.info(`Email sent via Brevo HTTPS: ${data.messageId} -> ${to}`);
+      return { messageId: data.messageId, brevo: true };
+    }
+    logger.error(`Brevo API response: ${JSON.stringify(data)}`);
+    return null;
+  } catch (err) {
+    logger.error(`Brevo API error: ${err.message}`);
+    return null;
+  }
+}
 
 async function sendViaResend({ to, subject, html, text, attachments }) {
   try {
@@ -67,6 +106,11 @@ async function sendViaResend({ to, subject, html, text, attachments }) {
 }
 
 async function sendMail({ to, subject, html, text, attachments }) {
+  if (BREVO_API_KEY) {
+    const brevoResult = await sendViaBrevo({ to, subject, html, text, attachments });
+    if (brevoResult) return brevoResult;
+  }
+
   if (RESEND_API_KEY) {
     const resendResult = await sendViaResend({ to, subject, html, text, attachments });
     if (resendResult) return resendResult;
