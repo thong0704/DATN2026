@@ -21,6 +21,18 @@ function formatVnDate(date) {
   return `${y}${m}${day}${h}${min}${s}`;
 }
 
+function getClientUrl(req) {
+  let url = process.env.CLIENT_URL;
+  if (url && !url.includes('192.168.') && !url.includes('localhost')) {
+    return url.replace(/\/$/, '');
+  }
+  const origin = req.get('origin') || req.get('referer');
+  if (origin && !origin.includes('192.168.') && !origin.includes('localhost')) {
+    return origin.replace(/\/$/, '');
+  }
+  return 'https://datn-2026-three.vercel.app';
+}
+
 exports.createIntent = catchAsync(async (req, res) => {
   const { bookingId, method = 'credit_card', platform } = req.body;
   const booking = await Booking.findById(bookingId);
@@ -440,7 +452,7 @@ exports.vnpayReturn = catchAsync(async (req, res) => {
   }
 
   const isSuccess = responseCode === '00';
-  const clientUrl = process.env.CLIENT_URL || 'http://192.168.26.141:5173';
+  const clientUrl = getClientUrl(req);
   res.send(`
     <html>
       <head>
@@ -575,7 +587,7 @@ exports.momoReturn = catchAsync(async (req, res) => {
   }
 
   const isSuccess = String(resultCode) === '0' || resultCode === 0;
-  const clientUrl = process.env.CLIENT_URL || 'http://192.168.26.141:5173';
+  const clientUrl = getClientUrl(req);
   res.send(`
     <html>
       <head>
