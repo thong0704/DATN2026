@@ -33,11 +33,16 @@ export default function RegisterPage() {
   const onSubmit = async (data) => {
     try {
       const { confirmPassword, agree, ...payload } = data;
-      await doRegister(payload).unwrap();
+      const res = await doRegister(payload).unwrap();
       setRegisteredEmail(payload.email);
       setStep('verify');
       setCountdown(60);
-      toast.success('Mã xác thực đã được gửi đến email của bạn!');
+      if (res.data?.code) {
+        setOtp(res.data.code.split(''));
+        toast.info(res.message || `Mã xác thực của bạn là: ${res.data.code}`, { autoClose: 15000 });
+      } else {
+        toast.success(res.message || 'Mã xác thực đã được gửi đến email của bạn!');
+      }
     } catch (e) {
       toast.error(e?.data?.message || 'Đăng ký thất bại');
     }
@@ -86,10 +91,15 @@ export default function RegisterPage() {
 
   const handleResend = async () => {
     try {
-      await doResend({ email: registeredEmail }).unwrap();
-      setOtp(['', '', '', '', '', '']);
+      const res = await doResend({ email: registeredEmail }).unwrap();
       setCountdown(60);
-      toast.success('Mã xác thực mới đã được gửi!');
+      if (res.data?.code) {
+        setOtp(res.data.code.split(''));
+        toast.info(res.message || `Mã xác thực mới của bạn là: ${res.data.code}`, { autoClose: 15000 });
+      } else {
+        setOtp(['', '', '', '', '', '']);
+        toast.success(res.message || 'Mã xác thực mới đã được gửi!');
+      }
     } catch (e) {
       toast.error(e?.data?.message || 'Gửi lại mã thất bại');
     }
