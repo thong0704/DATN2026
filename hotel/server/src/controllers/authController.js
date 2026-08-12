@@ -69,14 +69,20 @@ exports.register = catchAsync(async (req, res) => {
     emailVerificationExpire: Date.now() + 10 * 60 * 1000, 
   });
 
-  sendVerificationCode(email, code).catch((err) => {
+  let mailSent = false;
+  try {
+    const info = await sendVerificationCode(email, code);
+    if (info && !info.stub) mailSent = true;
+  } catch (err) {
     logger.error(`Failed to send verification code to ${email}: ${err.stack || err.message}`);
-  });
+  }
 
   res.status(201).json({
     status: 'success',
-    message: 'Mã xác thực đã được gửi đến email của bạn',
-    data: { email },
+    message: mailSent
+      ? 'Mã xác thực đã được gửi đến email của bạn'
+      : `Hệ thống đã tạo mã xác thực thành công. Mã xác thực đăng ký của bạn là: ${code}`,
+    data: { email, code: mailSent ? undefined : code },
   });
 });
 
@@ -116,9 +122,21 @@ exports.resendVerificationCode = catchAsync(async (req, res) => {
   user.emailVerificationExpire = Date.now() + 10 * 60 * 1000;
   await user.save({ validateBeforeSave: false });
 
-  sendVerificationCode(email, code).catch(() => {});
+  let mailSent = false;
+  try {
+    const info = await sendVerificationCode(email, code);
+    if (info && !info.stub) mailSent = true;
+  } catch (err) {
+    logger.error(`Failed to resend verification code to ${email}: ${err.stack || err.message}`);
+  }
 
-  res.json({ status: 'success', message: 'Mã xác thực mới đã được gửi' });
+  res.json({
+    status: 'success',
+    message: mailSent
+      ? 'Mã xác thực mới đã được gửi'
+      : `Mã xác thực mới của bạn là: ${code}`,
+    data: { email, code: mailSent ? undefined : code },
+  });
 });
 
 exports.login = catchAsync(async (req, res) => {
