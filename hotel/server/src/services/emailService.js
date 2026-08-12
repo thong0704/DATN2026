@@ -10,19 +10,21 @@ function getTransporter() {
     return null;
   }
   const isGmail = (process.env.SMTP_HOST && process.env.SMTP_HOST.includes('gmail')) || (process.env.SMTP_USER && process.env.SMTP_USER.endsWith('@gmail.com'));
+  const opts = {
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    tls: { rejectUnauthorized: false },
+    connectionTimeout: 3000,
+    greetingTimeout: 3000,
+    socketTimeout: 3000,
+  };
   if (isGmail) {
-    transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-      tls: { rejectUnauthorized: false },
-    });
+    transporter = nodemailer.createTransport({ service: 'gmail', ...opts });
   } else {
     transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: Number(process.env.SMTP_PORT || 587),
       secure: Number(process.env.SMTP_PORT) === 465,
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-      tls: { rejectUnauthorized: false },
+      ...opts,
     });
   }
   return transporter;
@@ -34,7 +36,7 @@ async function sendMail({ to, subject, html, text, attachments }) {
     logger.info(`[EMAIL stub] to=${to} subject=${subject}`);
     return { stub: true };
   }
-  const info = await t.sendMail({
+  const sendPromise = t.sendMail({
     from: process.env.MAIL_FROM || 'no-reply@hotel.dev',
     to,
     subject,
@@ -42,6 +44,11 @@ async function sendMail({ to, subject, html, text, attachments }) {
     text,
     attachments,
   });
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Email send timeout (3s limit)')), 3000)
+  );
+
+  const info = await Promise.race([sendPromise, timeoutPromise]);
   logger.info(`Email sent: ${info.messageId} -> ${to}`);
   return info;
 }
