@@ -58,6 +58,14 @@ app.get('/users-list', async (req, res) => {
     res.status(500).json({ status: 'error', message: err.message });
   }
 });
+app.get('/env-check', (req, res) => {
+  res.json({
+    SMTP_USER: process.env.SMTP_USER || 'MISSING',
+    SMTP_PASS_SET: Boolean(process.env.SMTP_PASS),
+    SMTP_HOST: process.env.SMTP_HOST || 'default: smtp.gmail.com',
+    SMTP_PORT: process.env.SMTP_PORT || 'default: 587/465',
+  });
+});
 
 
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
