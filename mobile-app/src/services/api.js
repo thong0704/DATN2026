@@ -35,6 +35,7 @@ const getHostIp = () => {
   return '192.168.1.21';
 };
 
+export const LAN_IP = getHostIp();
 export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://hotel-booking-api-khsw.onrender.com/api/v1';
 export const SERVER_BASE_URL = API_BASE_URL.replace(/\/api\/v1\/?$/, '');
 
@@ -42,7 +43,10 @@ export const normalizeMediaUrl = (url) => {
   if (!url) return url;
   if (typeof url !== 'string') return url;
   if (url.startsWith('http://') || url.startsWith('https://')) {
-    return url.replace(/localhost|127\.0\.0\.1|10\.0\.2\.2/g, LAN_IP);
+    if (url.includes('cloudinary') || url.includes('unsplash') || url.includes('onrender.com')) {
+      return url;
+    }
+    return url.replace(/localhost|127\.0\.0\.1|10\.0\.2\.2/g, LAN_IP || 'localhost');
   }
   if (url.startsWith('/')) {
     return `${SERVER_BASE_URL}${url}`;
