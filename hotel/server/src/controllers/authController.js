@@ -60,29 +60,36 @@ exports.register = catchAsync(async (req, res) => {
     await User.findByIdAndDelete(existingPhone._id);
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    throw new AppError('Email không đúng định dạng. Vui lòng kiểm tra lại!', 400);
+  }
+
   const code = generateVerificationCode();
   const hashedCode = crypto.createHash('sha256').update(code).digest('hex');
 
   const user = await User.create({
     name, email, password, phone,
     emailVerificationCode: hashedCode,
-    emailVerificationExpire: Date.now() + 10 * 60 * 1000, 
+    emailVerificationExpire: Date.now() + 10 * 60 * 1000,
   });
 
-  let mailSent = false;
+  let info = null;
   try {
-    const info = await sendVerificationCode(email, code);
-    if (info && !info.stub) mailSent = true;
+    info = await sendVerificationCode(email, code);
   } catch (err) {
     logger.error(`Failed to send verification code to ${email}: ${err.stack || err.message}`);
   }
 
+  if (!info || info.stub) {
+    await User.findByIdAndDelete(user._id);
+    throw new AppError('Không thể gửi mã xác thực đến email này. Vui lòng kiểm tra lại địa chỉ email của bạn!', 400);
+  }
+
   res.status(201).json({
     status: 'success',
-    message: mailSent
-      ? 'Mã xác thực đã được gửi đến email của bạn'
-      : `Hệ thống đã tạo mã xác thực thành công. Mã xác thực đăng ký của bạn là: ${code}`,
-    data: { email, code: mailSent ? undefined : code },
+    message: 'Mã xác thực đã được gửi đến email của bạn',
+    data: { email },
   });
 });
 
@@ -122,20 +129,21 @@ exports.resendVerificationCode = catchAsync(async (req, res) => {
   user.emailVerificationExpire = Date.now() + 10 * 60 * 1000;
   await user.save({ validateBeforeSave: false });
 
-  let mailSent = false;
+  let info = null;
   try {
-    const info = await sendVerificationCode(email, code);
-    if (info && !info.stub) mailSent = true;
+    info = await sendVerificationCode(email, code);
   } catch (err) {
     logger.error(`Failed to resend verification code to ${email}: ${err.stack || err.message}`);
   }
 
+  if (!info || info.stub) {
+    throw new AppError('Không thể gửi mã xác thực đến email này. Vui lòng kiểm tra lại địa chỉ email!', 400);
+  }
+
   res.json({
     status: 'success',
-    message: mailSent
-      ? 'Mã xác thực mới đã được gửi'
-      : `Mã xác thực mới của bạn là: ${code}`,
-    data: { email, code: mailSent ? undefined : code },
+    message: 'Mã xác thực mới đã được gửi đến email của bạn',
+    data: { email },
   });
 });
 
