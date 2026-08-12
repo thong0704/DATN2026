@@ -86,7 +86,7 @@ exports.verifyReturnUrl = (query) => {
   const hmac = crypto.createHmac('sha512', VNP_HASH_SECRET);
   const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
 
-  if (secureHash === signed) {
+  if (secureHash && signed && secureHash.toLowerCase() === signed.toLowerCase()) {
     return { isValid: true, responseCode: vnpParams['vnp_ResponseCode'], txnRef: vnpParams['vnp_TxnRef'] };
   }
   return { isValid: false };
