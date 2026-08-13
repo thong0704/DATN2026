@@ -10,7 +10,7 @@ import {
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
 import { SERVER_BASE_URL, normalizeMediaUrl } from '../services/api';
 
-const CITY_IMAGES = {
+const DEFAULT_CITY_IMAGES = {
   'Cần Thơ': 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80',
   'Đà Lạt': 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80',
   'Nha Trang': 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
@@ -21,25 +21,25 @@ const DESTINATIONS = [
   {
     id: 'cantho',
     name: 'Cần Thơ',
-    image: CITY_IMAGES['Cần Thơ'],
+    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
     subtitle: 'Tìm khách sạn →',
   },
   {
     id: 'dalat',
     name: 'Đà Lạt',
-    image: CITY_IMAGES['Đà Lạt'],
+    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940643029-492815526.webp`,
     subtitle: 'Tìm khách sạn →',
   },
   {
     id: 'nhatrang',
     name: 'Nha Trang',
-    image: CITY_IMAGES['Nha Trang'],
+    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940665902-532659.webp`,
     subtitle: 'Tìm khách sạn →',
   },
   {
     id: 'vungtau',
     name: 'Vũng Tàu',
-    image: CITY_IMAGES['Vũng Tàu'],
+    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940709089-37611183.webp`,
     subtitle: 'Tìm khách sạn →',
   },
 ];
@@ -49,9 +49,7 @@ export default function CitySelector({ destinations, selectedCity, onSelectCity 
     ? destinations.slice(0, 4).map((d, idx) => ({
         id: d._id || `dest_${idx}`,
         name: d.title,
-        image: (d.image && !d.image.includes('/uploads/'))
-          ? normalizeMediaUrl(d.image)
-          : (CITY_IMAGES[d.title] || normalizeMediaUrl(d.image) || CITY_IMAGES['Cần Thơ']),
+        image: normalizeMediaUrl(d.image) || DEFAULT_CITY_IMAGES[d.title] || DEFAULT_CITY_IMAGES['Cần Thơ'],
         subtitle: 'Tìm khách sạn →',
       }))
     : DESTINATIONS;
