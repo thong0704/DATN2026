@@ -5,16 +5,6 @@ import { HOTELS, MOCK_BOOKINGS } from '../data/mockData';
 
 // Tự động nhận diện IP Server (Máy ảo Android / Máy ảo iOS / Máy thật qua Expo QR)
 const getHostIp = () => {
-  const overrideUrl = process.env.EXPO_PUBLIC_API_URL;
-  if (overrideUrl) {
-    try {
-      const url = new URL(overrideUrl);
-      return url.hostname;
-    } catch {
-      return overrideUrl.replace(/^https?:\/\//, '').split('/')[0].split(':')[0];
-    }
-  }
-
   // 1. Android Emulator (luôn dùng 10.0.2.2)
   if (!Constants.isDevice && Platform.OS === 'android') {
     return '10.0.2.2';
@@ -31,12 +21,11 @@ const getHostIp = () => {
     if (ip && ip !== 'localhost' && ip !== '127.0.0.1') return ip;
   }
 
-  // 4. Fallback cho mạng LAN, nhưng không cố định nếu QR đang chạy trên thiết bị thật
-  return '192.168.1.21';
+  return '192.168.1.48';
 };
 
 export const LAN_IP = getHostIp();
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://hotel-booking-api-khsw.onrender.com/api/v1';
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || `http://${LAN_IP}:5000/api/v1`;
 export const SERVER_BASE_URL = API_BASE_URL.replace(/\/api\/v1\/?$/, '');
 
 export const normalizeMediaUrl = (url) => {
