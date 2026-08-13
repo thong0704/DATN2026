@@ -8,32 +8,44 @@ import {
   StyleSheet,
 } from 'react-native';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
-import { SERVER_BASE_URL } from '../services/api';
+import { SERVER_BASE_URL, normalizeMediaUrl } from '../services/api';
 
 const DESTINATIONS = [
   {
-    id: 'ct',
-    name: 'Cần Thơ',
-    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
-    subtitle: 'Tìm khách sạn →',
+    id: 'hanoi',
+    name: 'Hà Nội',
+    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
+    subtitle: 'Khám phá →',
+  },
+  {
+    id: 'hcm',
+    name: 'TP.HCM',
+    image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=80',
+    subtitle: 'Khám phá →',
+  },
+  {
+    id: 'danang',
+    name: 'Đà Nẵng',
+    image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&auto=format&fit=crop&q=80',
+    subtitle: 'Khám phá →',
   },
   {
     id: 'dl',
     name: 'Đà Lạt',
-    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940643029-492815526.webp`,
-    subtitle: 'Tìm khách sạn →',
+    image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&auto=format&fit=crop&q=80',
+    subtitle: 'Khám phá →',
   },
   {
     id: 'nt',
     name: 'Nha Trang',
-    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940665902-532659.webp`,
-    subtitle: 'Tìm khách sạn →',
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80',
+    subtitle: 'Khám phá →',
   },
   {
     id: 'vt',
     name: 'Vũng Tàu',
-    image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940709089-37611183.webp`,
-    subtitle: 'Tìm khách sạn →',
+    image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&auto=format&fit=crop&q=80',
+    subtitle: 'Khám phá →',
   },
 ];
 
@@ -43,7 +55,7 @@ export default function CitySelector({ destinations, selectedCity, onSelectCity 
         id: d._id || `dest_${idx}`,
         name: d.title,
         image: d.image,
-        subtitle: 'Tìm khách sạn →',
+        subtitle: 'Khám phá →',
       }))
     : DESTINATIONS;
 
@@ -60,6 +72,7 @@ export default function CitySelector({ destinations, selectedCity, onSelectCity 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         {displayDestinations.map((item) => {
           const isSelected = selectedCity === item.name;
+          const imageUrl = normalizeMediaUrl(item.image) || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80';
           return (
             <TouchableOpacity
               key={item.id}
@@ -67,7 +80,7 @@ export default function CitySelector({ destinations, selectedCity, onSelectCity 
               onPress={() => onSelectCity(isSelected ? '' : item.name)}
               activeOpacity={0.85}
             >
-              <ImageBackground source={{ uri: item.image }} style={styles.cardBg} imageStyle={styles.cardBgImage}>
+              <ImageBackground source={{ uri: imageUrl }} style={styles.cardBg} imageStyle={styles.cardBgImage}>
                 <View style={styles.overlay} />
                 <View style={styles.cardContent}>
                   <Text style={styles.khamPhaSmall}>KHÁM PHÁ</Text>

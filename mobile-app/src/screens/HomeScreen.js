@@ -101,19 +101,20 @@ export default function HomeScreen({ navigation }) {
           });
 
           const cityImageMap = {
-            'Hà Nội': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940665902-532659.webp`,
-            'TP.HCM': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
-            'Đà Nẵng': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940709089-37611183.webp`,
-            'Nha Trang': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940665902-532659.webp`,
-            'Đà Lạt': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940643029-492815526.webp`,
-            'Cần Thơ': `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
+            'Hà Nội': 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
+            'TP.HCM': 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=80',
+            'Đà Nẵng': 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&auto=format&fit=crop&q=80',
+            'Nha Trang': 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80',
+            'Đà Lạt': 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&auto=format&fit=crop&q=80',
+            'Cần Thơ': 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop&q=80',
+            'Vũng Tàu': 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&auto=format&fit=crop&q=80',
           };
 
           const dynDestinations = Object.keys(cityMap).map((cityName, idx) => ({
             _id: `dest_${idx}`,
             type: 'destination',
             title: cityName,
-            image: cityImageMap[cityName] || `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
+            image: cityImageMap[cityName] || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80',
           }));
 
           setDestinations(dynDestinations);
