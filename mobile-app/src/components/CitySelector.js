@@ -14,48 +14,36 @@ const DESTINATIONS = [
   {
     id: 'hanoi',
     name: 'Hà Nội',
-    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
-    subtitle: 'Khám phá →',
-  },
-  {
-    id: 'hcm',
-    name: 'TP.HCM',
-    image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=80',
-    subtitle: 'Khám phá →',
+    image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80',
+    subtitle: 'Tìm khách sạn →',
   },
   {
     id: 'danang',
     name: 'Đà Nẵng',
-    image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&auto=format&fit=crop&q=80',
-    subtitle: 'Khám phá →',
+    image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80',
+    subtitle: 'Tìm khách sạn →',
   },
   {
-    id: 'dl',
-    name: 'Đà Lạt',
-    image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&auto=format&fit=crop&q=80',
-    subtitle: 'Khám phá →',
-  },
-  {
-    id: 'nt',
+    id: 'nhatrang',
     name: 'Nha Trang',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80',
-    subtitle: 'Khám phá →',
+    image: 'https://images.unsplash.com/photo-1573790387438-4da905039392?w=600&q=80',
+    subtitle: 'Tìm khách sạn →',
   },
   {
-    id: 'vt',
-    name: 'Vũng Tàu',
-    image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&auto=format&fit=crop&q=80',
-    subtitle: 'Khám phá →',
+    id: 'dalat',
+    name: 'Đà Lạt',
+    image: 'https://images.unsplash.com/photo-1555217851-6141535bd771?w=600&q=80',
+    subtitle: 'Tìm khách sạn →',
   },
 ];
 
 export default function CitySelector({ destinations, selectedCity, onSelectCity }) {
   const displayDestinations = Array.isArray(destinations) && destinations.length > 0
-    ? destinations.map((d, idx) => ({
+    ? destinations.slice(0, 4).map((d, idx) => ({
         id: d._id || `dest_${idx}`,
         name: d.title,
         image: d.image,
-        subtitle: 'Khám phá →',
+        subtitle: 'Tìm khách sạn →',
       }))
     : DESTINATIONS;
 
