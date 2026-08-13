@@ -406,10 +406,10 @@ export default function HomePage() {
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 reveal-stagger">
           {(destinations.length > 0 ? destinations : [
-            { _id: '1', title: 'Hà Nội', image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80', link: '/hotels?city=Hà Nội' },
-            { _id: '2', title: 'Đà Nẵng', image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80', link: '/hotels?city=Đà Nẵng' },
-            { _id: '3', title: 'Nha Trang', image: 'https://images.unsplash.com/photo-1573790387438-4da905039392?w=600&q=80', link: '/hotels?city=Nha Trang' },
-            { _id: '4', title: 'Đà Lạt', image: 'https://images.unsplash.com/photo-1555217851-6141535bd771?w=600&q=80', link: '/hotels?city=Đà Lạt' },
+            { _id: '1', title: 'Cần Thơ', image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80', link: '/hotels?city=Cần Thơ' },
+            { _id: '2', title: 'Đà Lạt', image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80', link: '/hotels?city=Đà Lạt' },
+            { _id: '3', title: 'Nha Trang', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80', link: '/hotels?city=Nha Trang' },
+            { _id: '4', title: 'Vũng Tàu', image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&q=80', link: '/hotels?city=Vũng Tàu' },
           ]).map((dest) => (
             <Link
               key={dest._id}

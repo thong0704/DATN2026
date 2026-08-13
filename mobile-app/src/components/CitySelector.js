@@ -10,29 +10,36 @@ import {
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
 import { SERVER_BASE_URL, normalizeMediaUrl } from '../services/api';
 
+const CITY_IMAGES = {
+  'Cần Thơ': 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80',
+  'Đà Lạt': 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80',
+  'Nha Trang': 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+  'Vũng Tàu': 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&q=80',
+};
+
 const DESTINATIONS = [
   {
-    id: 'hanoi',
-    name: 'Hà Nội',
-    image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80',
-    subtitle: 'Tìm khách sạn →',
-  },
-  {
-    id: 'danang',
-    name: 'Đà Nẵng',
-    image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&q=80',
-    subtitle: 'Tìm khách sạn →',
-  },
-  {
-    id: 'nhatrang',
-    name: 'Nha Trang',
-    image: 'https://images.unsplash.com/photo-1573790387438-4da905039392?w=600&q=80',
+    id: 'cantho',
+    name: 'Cần Thơ',
+    image: CITY_IMAGES['Cần Thơ'],
     subtitle: 'Tìm khách sạn →',
   },
   {
     id: 'dalat',
     name: 'Đà Lạt',
-    image: 'https://images.unsplash.com/photo-1555217851-6141535bd771?w=600&q=80',
+    image: CITY_IMAGES['Đà Lạt'],
+    subtitle: 'Tìm khách sạn →',
+  },
+  {
+    id: 'nhatrang',
+    name: 'Nha Trang',
+    image: CITY_IMAGES['Nha Trang'],
+    subtitle: 'Tìm khách sạn →',
+  },
+  {
+    id: 'vungtau',
+    name: 'Vũng Tàu',
+    image: CITY_IMAGES['Vũng Tàu'],
     subtitle: 'Tìm khách sạn →',
   },
 ];
@@ -42,7 +49,9 @@ export default function CitySelector({ destinations, selectedCity, onSelectCity 
     ? destinations.slice(0, 4).map((d, idx) => ({
         id: d._id || `dest_${idx}`,
         name: d.title,
-        image: d.image,
+        image: (d.image && !d.image.includes('/uploads/'))
+          ? normalizeMediaUrl(d.image)
+          : (CITY_IMAGES[d.title] || normalizeMediaUrl(d.image) || CITY_IMAGES['Cần Thơ']),
         subtitle: 'Tìm khách sạn →',
       }))
     : DESTINATIONS;
