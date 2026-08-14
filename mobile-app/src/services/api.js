@@ -5,6 +5,16 @@ import { HOTELS, MOCK_BOOKINGS } from '../data/mockData';
 
 // Tự động nhận diện IP Server (Máy ảo Android / Máy ảo iOS / Máy thật qua Expo QR)
 const getHostIp = () => {
+  const overrideUrl = process.env.EXPO_PUBLIC_API_URL;
+  if (overrideUrl) {
+    try {
+      const url = new URL(overrideUrl);
+      return url.hostname;
+    } catch {
+      return overrideUrl.replace(/^https?:\/\//, '').split('/')[0].split(':')[0];
+    }
+  }
+
   // 1. Android Emulator (luôn dùng 10.0.2.2)
   if (!Constants.isDevice && Platform.OS === 'android') {
     return '10.0.2.2';
@@ -21,7 +31,8 @@ const getHostIp = () => {
     if (ip && ip !== 'localhost' && ip !== '127.0.0.1') return ip;
   }
 
-  return '192.168.1.48';
+  // 4. Fallback cho mạng LAN, nhưng không cố định nếu QR đang chạy trên thiết bị thật
+  return '192.168.1.21';
 };
 
 export const LAN_IP = getHostIp();
@@ -32,10 +43,7 @@ export const normalizeMediaUrl = (url) => {
   if (!url) return url;
   if (typeof url !== 'string') return url;
   if (url.startsWith('http://') || url.startsWith('https://')) {
-    if (url.includes('cloudinary') || url.includes('unsplash') || url.includes('onrender.com')) {
-      return url;
-    }
-    return url.replace(/localhost|127\.0\.0\.1|10\.0\.2\.2/g, LAN_IP || 'localhost');
+    return url.replace(/localhost|127\.0\.0\.1|10\.0\.2\.2/g, LAN_IP);
   }
   if (url.startsWith('/')) {
     return `${SERVER_BASE_URL}${url}`;
@@ -53,9 +61,15 @@ const api = axios.create({
   },
 });
 
-const authHeader = (token) => ({
-  headers: { Authorization: `Bearer ${token}` },
-});
+const authHeader = (token) => {
+  if (!token) {
+    console.warn('[API] Warning: authHeader called with empty token');
+    return { headers: {} };
+  }
+  return {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+};
 
 // --- HELPER CHUẨN HÓA DỮ LIỆU TỪ MONGODB SANG MOBILE FORMAT ---
 export const normalizeHotel = (rawHotel) => {

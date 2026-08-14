@@ -27,7 +27,7 @@ function normalizeMomoReturnUrl(url) {
 const MOMO_RETURN_URL = normalizeMomoReturnUrl(process.env.MOMO_RETURN_URL || process.env.CLIENT_URL);
 const MOMO_IPN_URL = process.env.MOMO_IPN_URL || 'http://localhost:5000/api/v1/payments/momo-ipn';
 
-exports.createPaymentUrl = async ({ amount, bookingCode, bookingId, redirectUrl }) => {
+exports.createPaymentUrl = async ({ amount, bookingCode, bookingId, redirectUrl, isMobile }) => {
   const orderId = `${MOMO_PARTNER_CODE}${Date.now()}`;
   const requestId = orderId;
   const orderInfo = `Thanh toan dat phong ${bookingCode}`;
@@ -35,7 +35,11 @@ exports.createPaymentUrl = async ({ amount, bookingCode, bookingId, redirectUrl 
   console.log('[MoMo] createPaymentUrl - redirectUrl:', redirectUrl, 'MOMO_RETURN_URL:', MOMO_RETURN_URL, 'final:', redirectUrlToUse);
   const ipnUrl = MOMO_IPN_URL;
   const requestType = 'payWithMethod';
-  const extraData = Buffer.from(JSON.stringify({ bookingId })).toString('base64');
+  const extraDataObject = { bookingId };
+  if (isMobile) {
+    extraDataObject.platform = 'mobile-booking';
+  }
+  const extraData = Buffer.from(JSON.stringify(extraDataObject)).toString('base64');
 
   
   amount = Math.round(Number(amount));

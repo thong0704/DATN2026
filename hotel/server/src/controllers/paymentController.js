@@ -474,10 +474,13 @@ exports.vnpayReturn = catchAsync(async (req, res) => {
 
   const isSuccess = responseCode === '00';
   const clientUrl = getClientUrl(req);
+  
+  // For mobile app: Don't auto-redirect, just show message. App will detect via AppState listener.
+  // For web: Show message and user can navigate manually
   res.send(`
     <html>
       <head>
-        <title>Kết quả thanh toán</title>
+        <title>Kết quả thanh toán VNPay</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
@@ -487,26 +490,24 @@ exports.vnpayReturn = catchAsync(async (req, res) => {
           h1 { font-size: 24px; font-weight: 700; margin: 0 0 12px 0; }
           .success h1 { color: #10b981; }
           .error h1 { color: #ef4444; }
-          p { color: #64748b; font-size: 15px; line-height: 1.6; margin: 0 0 24px 0; }
-          .loader { border: 3px solid #f3f3f3; border-top: 3px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
-          @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-          .footer { font-size: 13px; color: #94a3b8; margin-top: 20px; }
+          p { color: #64748b; font-size: 15px; line-height: 1.6; margin: 0 0 20px 0; }
+          .button { display: inline-block; background: #3b82f6; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 10px; }
+          .button:hover { background: #2563eb; }
+          .mobile-message { font-size: 14px; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
         </style>
       </head>
       <body>
         <div class="card ${isSuccess ? 'success' : 'error'}">
           <div class="icon">${isSuccess ? '✅' : '❌'}</div>
           <h1>${isSuccess ? 'Thanh Toán Thành Công' : 'Thanh Toán Thất Bại'}</h1>
-          <p>${isSuccess ? 'Giao dịch đã được ghi nhận. Bạn có thể đóng trình duyệt này để quay lại ứng dụng di động 2T Hotel.' : 'Đã có lỗi xảy ra trong quá trình thanh toán. Vui lòng quay lại ứng dụng để thử lại.'}</p>
-          <div class="footer">
-            <div class="loader"></div> Đang tự động chuyển hướng về trang chủ Web...
+          <p>${isSuccess ? 'Giao dịch VNPay đã được xác nhận.' : 'Giao dịch VNPay không thành công. Vui lòng thử lại.'}</p>
+          
+          <a href="${clientUrl}/payment/vnpay-return" class="button">Chi tiết giao dịch</a>
+          
+          <div class="mobile-message">
+            📱 <strong>Nếu bạn đang dùng ứng dụng di động:</strong> Hãy bấm nút "Quay lại" hoặc tắt trình duyệt này. Ứng dụng sẽ tự động cập nhật kết quả thanh toán.
           </div>
         </div>
-        <script>
-          setTimeout(function() {
-            window.location.href = "${clientUrl}/profile?tab=bookings";
-          }, 3000);
-        </script>
       </body>
     </html>
   `);
@@ -613,7 +614,7 @@ exports.momoReturn = catchAsync(async (req, res) => {
   res.send(`
     <html>
       <head>
-        <title>Kết quả thanh toán</title>
+        <title>Kết quả thanh toán MoMo</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
@@ -623,26 +624,24 @@ exports.momoReturn = catchAsync(async (req, res) => {
           h1 { font-size: 24px; font-weight: 700; margin: 0 0 12px 0; }
           .success h1 { color: #10b981; }
           .error h1 { color: #ef4444; }
-          p { color: #64748b; font-size: 15px; line-height: 1.6; margin: 0 0 24px 0; }
-          .loader { border: 3px solid #f3f3f3; border-top: 3px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
-          @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-          .footer { font-size: 13px; color: #94a3b8; margin-top: 20px; }
+          p { color: #64748b; font-size: 15px; line-height: 1.6; margin: 0 0 20px 0; }
+          .button { display: inline-block; background: #3b82f6; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 10px; }
+          .button:hover { background: #2563eb; }
+          .mobile-message { font-size: 14px; color: #94a3b8; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
         </style>
       </head>
       <body>
         <div class="card ${isSuccess ? 'success' : 'error'}">
           <div class="icon">${isSuccess ? '✅' : '❌'}</div>
           <h1>${isSuccess ? 'Thanh Toán Thành Công' : 'Thanh Toán Thất Bại'}</h1>
-          <p>${isSuccess ? 'Giao dịch đã được ghi nhận. Bạn có thể đóng trình duyệt này để quay lại ứng dụng di động 2T Hotel.' : 'Đã có lỗi xảy ra trong quá trình thanh toán. Vui lòng quay lại ứng dụng để thử lại.'}</p>
-          <div class="footer">
-            <div class="loader"></div> Đang tự động chuyển hướng về trang chủ Web...
+          <p>${isSuccess ? 'Giao dịch MoMo đã được xác nhận.' : 'Giao dịch MoMo không thành công. Vui lòng thử lại.'}</p>
+          
+          <a href="${clientUrl}/payment/momo-return" class="button">Chi tiết giao dịch</a>
+          
+          <div class="mobile-message">
+            📱 <strong>Nếu bạn đang dùng ứng dụng di động:</strong> Hãy bấm nút "Quay lại" hoặc tắt trình duyệt này. Ứng dụng sẽ tự động cập nhật kết quả thanh toán.
           </div>
         </div>
-        <script>
-          setTimeout(function() {
-            window.location.href = "${clientUrl}/profile?tab=bookings";
-          }, 3000);
-        </script>
       </body>
     </html>
   `);

@@ -117,6 +117,18 @@ module.exports = async function seedDatabase() {
     });
   }
 
+  let demoUser = await User.findOne({ email: 'demo@gmail.com' });
+  if (!demoUser) {
+    await User.create({
+      name: 'Nguyễn Văn A',
+      email: 'demo@gmail.com',
+      password: '123456',
+      role: 'customer',
+      isEmailVerified: true,
+      phone: '0901234567',
+    });
+  }
+
   const hotels = [];
   for (let idx = 0; idx < HOTEL_LIST.length; idx++) {
     const h = HOTEL_LIST[idx];

@@ -8,36 +8,29 @@ import {
   StyleSheet,
 } from 'react-native';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
-import { SERVER_BASE_URL, normalizeMediaUrl } from '../services/api';
-
-const DEFAULT_CITY_IMAGES = {
-  'Cần Thơ': 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80',
-  'Đà Lạt': 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80',
-  'Nha Trang': 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
-  'Vũng Tàu': 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&q=80',
-};
+import { SERVER_BASE_URL } from '../services/api';
 
 const DESTINATIONS = [
   {
-    id: 'cantho',
+    id: 'ct',
     name: 'Cần Thơ',
     image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940607115-231293847.webp`,
     subtitle: 'Tìm khách sạn →',
   },
   {
-    id: 'dalat',
+    id: 'dl',
     name: 'Đà Lạt',
     image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940643029-492815526.webp`,
     subtitle: 'Tìm khách sạn →',
   },
   {
-    id: 'nhatrang',
+    id: 'nt',
     name: 'Nha Trang',
     image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940665902-532659.webp`,
     subtitle: 'Tìm khách sạn →',
   },
   {
-    id: 'vungtau',
+    id: 'vt',
     name: 'Vũng Tàu',
     image: `${SERVER_BASE_URL}/uploads/hotel_banners/1779940709089-37611183.webp`,
     subtitle: 'Tìm khách sạn →',
@@ -46,10 +39,10 @@ const DESTINATIONS = [
 
 export default function CitySelector({ destinations, selectedCity, onSelectCity }) {
   const displayDestinations = Array.isArray(destinations) && destinations.length > 0
-    ? destinations.slice(0, 4).map((d, idx) => ({
+    ? destinations.map((d, idx) => ({
         id: d._id || `dest_${idx}`,
         name: d.title,
-        image: normalizeMediaUrl(d.image) || DEFAULT_CITY_IMAGES[d.title] || DEFAULT_CITY_IMAGES['Cần Thơ'],
+        image: d.image,
         subtitle: 'Tìm khách sạn →',
       }))
     : DESTINATIONS;
@@ -67,7 +60,6 @@ export default function CitySelector({ destinations, selectedCity, onSelectCity 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         {displayDestinations.map((item) => {
           const isSelected = selectedCity === item.name;
-          const imageUrl = normalizeMediaUrl(item.image) || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80';
           return (
             <TouchableOpacity
               key={item.id}
@@ -75,7 +67,7 @@ export default function CitySelector({ destinations, selectedCity, onSelectCity 
               onPress={() => onSelectCity(isSelected ? '' : item.name)}
               activeOpacity={0.85}
             >
-              <ImageBackground source={{ uri: imageUrl }} style={styles.cardBg} imageStyle={styles.cardBgImage}>
+              <ImageBackground source={{ uri: item.image }} style={styles.cardBg} imageStyle={styles.cardBgImage}>
                 <View style={styles.overlay} />
                 <View style={styles.cardContent}>
                   <Text style={styles.khamPhaSmall}>KHÁM PHÁ</Text>

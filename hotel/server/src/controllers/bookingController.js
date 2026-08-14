@@ -138,11 +138,6 @@ exports.create = catchAsync(async (req, res) => {
     }).catch(() => {});
     emitToHotel(booking.hotel, 'booking_created', { bookingId: booking._id });
 
-    const targetEmail = req.user?.email || guestInfo?.email;
-    if (targetEmail) {
-      sendBookingConfirmationWithInvoice(targetEmail, booking).catch(() => {});
-    }
-
     res.status(201).json({ status: 'success', data: { booking } });
   } catch (err) {
     if (session) await session.abortTransaction();

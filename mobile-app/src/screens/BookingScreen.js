@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import {
   Image,
   ActivityIndicator,
   Linking,
+  AppState,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, RADIUS, SHADOWS, SPACING } from '../theme/theme';
@@ -57,6 +58,11 @@ export default function BookingScreen({ route, navigation }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [bookingResult, setBookingResult] = useState(null);
 
+  // Track app state để auto-check payment khi quay lại từ browser
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const isCheckingPaymentRef = useRef(false);
+
   useEffect(() => {
     if (user) {
       setFullName((prev) => prev || user.name || '');
@@ -71,6 +77,46 @@ export default function BookingScreen({ route, navigation }) {
       setCardHolder(fullName.toUpperCase());
     }
   }, [fullName]);
+
+  // AUTO-CHECK PAYMENT STATUS khi app quay lại từ browser
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+    return () => {
+      subscription.remove();
+    };
+  }, [bookingResult, paymentMethod, token]);
+
+  const handleAppStateChange = async (state) => {
+    appState.current = state;
+    setAppStateVisible(state);
+
+    // Chỉ check payment khi app vừa quay lại (state = 'active') từ background
+    if (state === 'active' && bookingResult?.data?._id && (paymentMethod === 'momo' || paymentMethod === 'vnpay') && !isCheckingPaymentRef.current && token) {
+      isCheckingPaymentRef.current = true;
+      console.log('[BookingScreen] App resumed - auto-checking payment status...', { bookingId: bookingResult.data._id, hasToken: !!token });
+      
+      try {
+        const paymentObj = await checkPaymentStatusApi(bookingResult.data._id, token);
+        console.log('[BookingScreen] Payment status check result:', paymentObj);
+        if (paymentObj && paymentObj.status === 'succeeded' && !showSuccessModal) {
+          console.log('[BookingScreen] Payment succeeded! Auto-showing success modal');
+          setShowPaymentModal(false);
+          setShowSuccessModal(true);
+        }
+      } catch (err) {
+        console.log('[BookingScreen] Auto-check payment error:', err.message, err.response?.data);
+      } finally {
+        isCheckingPaymentRef.current = false;
+      }
+    } else if (state === 'active') {
+      console.log('[BookingScreen] App resumed but conditions not met', {
+        bookingResultId: bookingResult?.data?._id,
+        paymentMethod,
+        isChecking: isCheckingPaymentRef.current,
+        hasToken: !!token,
+      });
+    }
+  };
 
   const roomPrice = room?.price || 780000;
   const subtotal = roomPrice * nights;
@@ -99,7 +145,18 @@ export default function BookingScreen({ route, navigation }) {
   };
 
   const handleOpenPaymentModal = async () => {
-    console.log('[BookingScreen] handleOpenPaymentModal - user:', user);
+    console.log('[BookingScreen] handleOpenPaymentModal - user:', user, 'hasToken:', !!token);
+    
+    // Kiểm tra user đã login chưa
+    if (!user || !token) {
+      Alert.alert(
+        'Yêu cầu đăng nhập', 
+        'Vui lòng đăng nhập để tiến hành thanh toán.'
+      );
+      navigation.navigate('Login');
+      return;
+    }
+    
     const missing = [];
     if (!fullName) missing.push('Họ và Tên');
     if (!phone) missing.push('Số điện thoại');
