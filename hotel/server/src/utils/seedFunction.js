@@ -5,6 +5,15 @@ const Booking = require('../models/Booking');
 const Review = require('../models/Review');
 const logger = require('./logger');
 
+function removeAccents(str) {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/đ/g, 'd')
+    .replace(/[^a-z0-9]/g, '');
+}
+
 const AMENITIES_ALL = ['wifi', 'pool', 'gym', 'spa', 'parking', 'restaurant', 'bar', 'airport_shuttle', 'laundry', 'concierge'];
 
 const HOTEL_IMAGES = [
@@ -154,8 +163,36 @@ module.exports = async function seedDatabase() {
       ownerId: admin._id,
       managerId: admin._id,
       isActive: true,
-      basePrice: ROOM_TEMPLATES[0].price,
     });
+
+    const citySlug = removeAccents(h.city);
+
+    // 1. Quản lý
+    const manager = await User.create({
+      name: `Quản lý ${h.city}`,
+      email: `quanly${citySlug}@hotel.dev`,
+      password: '123456',
+      phone: `0988000${String(idx).padStart(3, '0')}`,
+      role: 'manager',
+      assignedHotel: hotel._id,
+      isEmailVerified: true,
+    });
+
+    // 2. Nhân viên
+    await User.create({
+      name: `Nhân viên ${h.city}`,
+      email: `nhanvien${citySlug}@hotel.dev`,
+      password: '123456',
+      phone: `0977000${String(idx).padStart(3, '0')}`,
+      role: 'staff',
+      assignedHotel: hotel._id,
+      isEmailVerified: true,
+    });
+
+    // Cập nhật managerId cho hotel
+    hotel.managerId = manager._id;
+    await hotel.save();
+
     hotels.push(hotel);
   }
 
