@@ -405,7 +405,7 @@ exports.getByBooking = catchAsync(async (req, res) => {
       const vnpayService = require('../services/vnpayService');
       try {
         const queryRes = await vnpayService.queryTransaction(payment.stripePaymentIntentId);
-        if (queryRes && (queryRes.vnp_ResponseCode === '00' || queryRes.vnp_TransactionStatus === '00')) {
+        if (queryRes && queryRes.vnp_ResponseCode === '00' && queryRes.vnp_TransactionStatus === '00') {
           payment.status = 'succeeded';
           payment.paidAt = new Date();
           if (queryRes.vnp_TransactionNo) payment.transactionId = queryRes.vnp_TransactionNo;
